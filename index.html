@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        .text-color {
+            color: #212121;
+        }
+
+        .bg-color {
+            background-color: #fff;
+        }
+
+        .image {
+            background-image: url('./assets/images/rally.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: inherit;
+            width: 100%;
+            padding: 13%;
+        }
+
+        .position-abs {
+            position: absolute;
+        }
+
+        .w-30 {
+            max-width: 30%;
+        }
+
+        .w-45 {
+            width: 45%;
+        }
+
+        .mx-10 {
+            margin: 3% 15%;
+        }
+
+        .w-cover {
+            width: 100%;
+        }
+        .mx-6{
+            margin: 0 90px;
+        }
+        .container-xt{
+            margin: 0 20%;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light p-0">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/images/rally.png" alt="" width="50%" height="50%">
+            </a>
+            <!-- mobile button to triger side nave -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- menu list item -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase fs-6 text-color">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home |</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About us |</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Events |</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Trading |</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Partners</a>
+                    </li>
+                </ul>
+                <!-- second menu list item -->
+                <ul class="navbar-nav mb-2 mb-lg-0 text-uppercase">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">+234 901 874 0318</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div class="container d-none d-md-block">
+            <!-- <div>
+                <h6 style="font-size: 12px;" class="fw-bold mb-3">SignUp with RallyTrade in few minutes</h6>
+            </div> -->
+            <div class="w-25 position-abs mt-3">
+                <!-- Login form -->
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary border-0 fw-bold w-75"
+                        style="border-radius: 20px 20px 0 0; font-size: 14px;"><span class="d-flex justify-content-end"
+                            style="margin-right: 30%;">Login</span></button>
+                </div>
+                <div class="card shadow-sm border-0" style="border-radius: 0 0 10px 10px;">
+                    <div class="card-body">
+                        <form action="">
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">First Name</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Last Name</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="email" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="tel" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Phone Number</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Countryr</label>
+                            </div>
+                            <div class="form-check fw-bold" style="font-size: 10px;">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, iure inventore.
+                                    Officiis placeat officia architecto velit commodi sit fugit quos veritatis libero
+                                    vero sequi, aliquid repellat quasi voluptate a
+                                </label>
+                            </div>
+                            <div class="d-flex">
+                                <div class="container fw-bold d-flex justify-content-around">
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Demo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Read
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- second radion btn -->
+                                <div class="container fw-bold d-flex justify-content-around">
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Demo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Read
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success btn-sm rounded-pill" style="font-size: 11px;">Open
+                                    Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Login form ends here -->
+            </div>
+
+            <!-- Register form -->
+            <div class="w-25 mt-3 position-abs">
+                <div class="">
+                    <button class="btn bg-white border-0 fw-bold w-45"
+                        style="border-radius: 20px 20px 0 0; font-size: 14px;">Register</button>
+                </div>
+                <div class="card shadow-sm border-0" style="border-radius: 0 0 10px 10px;">
+                    <div class="card-body">
+                        <form action="">
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">First Name</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Last Name</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="email" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="tel" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Phone Number</label>
+                            </div>
+                            <div class="form-floating fw-bold" style="font-size: 11px;">
+                                <input type="text" class=" border-start-0 border-end-0 border-top-0 form-control"
+                                    id="floatingInput" placeholder="name@example.com" style="height: 45px;">
+                                <label for="floatingInput">Country</label>
+                            </div>
+                            <div class="form-check fw-bold" style="font-size: 10px;">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, iure inventore.
+                                    Officiis placeat officia architecto velit commodi sit fugit quos veritatis libero
+                                    vero sequi, aliquid repellat quasi voluptate a
+                                </label>
+                            </div>
+                            <div class="d-flex">
+                                <div class="container fw-bold d-flex justify-content-around">
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Demo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Read
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- second radion btn -->
+                                <div class="container fw-bold d-flex justify-content-around">
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Demo
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" style="font-size: 10px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Read
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success btn-sm rounded-pill" style="font-size: 11px;">Open
+                                    Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-with image"></div>
+    </section>
+    <div class="mx-6">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+                <div class="row mt-3 text-center">
+                    <div class="col-2">
+                        <i class="fas fa-shield-alt fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">Regulated & Secure</h6>
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-award fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">Award Winning</h6>
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-balance-scale-right fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">1:10000 Leverage</h6>
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-chalkboard-teacher fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">Live Seminar & Training</h6>
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-dollar-sign fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">Advance Trading Platform</h6>
+                    </div>
+                    <div class="col-2">
+                        <i class="fas fa-registered fa-2x text-warning"></i>
+                        <h6 style="font-size: 10px;" class="fw-bold">500+ Trading Instruments</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="" style="background-color: #f0f0f0;">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-sm-5" style="font-size: 12px;">
+                    <div style="text-align: left;">
+                        <h6><em> Open your account and start trading today!</em></h6>
+                        <p>
+                        <div>Standard Account: $100 + bonus</div>
+                        <div>Competitive Spreads, all round offering</div>
+                        </p>
+                        <p>
+                        <div>Basic Account: $100 + bonus</div>
+                        <div>Same competitive spreads, smaller trade sizes</div>
+                        </p>
+                        <p>
+                        <div>Pro Account: $100 + bonus</div>
+                        <div>No commissions, no requotes, super tight spreads</div>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2 d-flex justify-content-center">
+                    <div class="bg-secondary my-3" style="width: 1px; padding: 0.5px; height: 23vh;"></div>
+                </div>
+
+
+
+                <div class="col-sm-5" style="font-size: 12px;">
+                    <div style="text-align: right;">
+                        <p>
+                        <div><em class="fw-bold"> Addreess</em></div>
+                        <div><em class="fw-bold"> FRING Lagos</em></div>
+                        <div>Standard Account: $100 + bonus</div>
+                        <div>Competitive Spreads, all round offering</div>
+                        </p>
+                        <p>
+                        <div>Basic Account: $100 + bonus</div>
+                        <div>Same competitive spreads, smaller trade sizes</div>
+                        </p>
+                        <p>
+                        <div>Pro Account: $100 + bonus</div>
+                        <div>No commissions, no requotes, super tight spreads</div>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center container-xt my-3">
+        <h5 class="fw-bold text-danger">Join over 3 million people who have already chosen RallyTrade</h5>
+        <p style="font-weight: 500;">Rally Trade is an international online Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, qui? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores, corporis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur vel aliquam soluta reprehenderit voluptatum, officiis consequatur commodi</p>
+
+        <p style="font-weight: 500;">Risk warning Our Product Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus sequi quod, similique qui cumque eum? Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, numquam.</p>
+
+        <p style="font-weight: 500;">RallyTrade &copy; 2020. Privacy Policy</p>
+    </div>
+
+    <!-- mobile drawer -->
+    <div class="bg-color p-5 fixed-top shadow d-sm-block d-lg-none" style="height: 100vh; max-width: 80%;"
+        id="side_bar">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/2393e775ee.js" crossorigin="anonymous"></script>
+    <script>
+
+        const side_bar = document.getElementById('side_bar');
+        side_bar.addEventListener('click', () => {
+            side_bar.style.visibility = "hidden"
+        })
+    </script>
+</body>
+
+</html>
