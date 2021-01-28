@@ -1,0 +1,156 @@
+<template>
+  <div class="signin-container">
+    <!-- app logo -->
+    <router-link to="/" class="d-flex dark--text app-logo">
+      N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
+    </router-link>
+    <h3>Login to Your Seller Account</h3>
+
+    <!-- Error message -->
+    <p v-show="error" class="error--text mt-3 mb-0">
+      <span v-html="errorMessage"></span>
+    </p>
+
+    <!-- login form -->
+    <v-form class="flex-wrap form-container" ref="form">
+      <!-- Email Adrress-->
+      <v-text-field
+        class="input mr-5 mt-5"
+        v-model="email"
+        :rules="emailRules"
+        type="email"
+        label="Email"
+        color="primary"
+        required
+        @keyup.enter="$refs.input2.focus"
+      ></v-text-field>
+
+      <!-- Password -->
+      <v-text-field
+        class="input mr-5 mt-5"
+        v-model="password"
+        :rules="passwordRules"
+        type="password"
+        label="Password"
+        color="primary"
+        required
+        ref="input2"
+        @keyup.enter="validateForm()"
+      ></v-text-field>
+
+      <!-- button container -->
+      <div class="pa-0 mt-5" style="width: 100%">
+        <v-btn
+          class="primary py-5 mb-5 mx-auto"
+          @click="validateForm"
+          :loading="loading"
+          :disabled="loading"
+          >Log In</v-btn
+        >
+
+        <!-- forgot password link-->
+        <p style="font-size: 14px">
+          or
+          <router-link
+            to="/forgotpassword"
+            class="error--text"
+            style="text-decoration: none"
+            >Forgot password?</router-link
+          >
+        </p>
+
+        <!-- create account link -->
+        <p>
+          Don't have an account?
+          <router-link to="/signup" style="text-decoration: none"
+            >Create Account</router-link
+          >
+        </p>
+      </div>
+    </v-form>
+  </div>
+</template>
+<script>
+export default {
+  name: "Signin",
+  data: function () {
+    return {
+      errorMessage: "",
+      error: false,
+      loading: false,
+      email: "",
+      password: "",
+      emailRules: [
+        // verifies email address satisfies the requirement
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
+      passwordRules: [
+        // verifies password satisfies the requirement
+        (v) => !!v || "Password is required",
+      ],
+    };
+  },
+  methods: {
+    //validates form
+    validateForm() {
+      this.$refs.form.validate();
+      if (this.$refs.form.validate()) {
+        this.signin();
+      }
+    },
+    //Sign in
+    signin() {
+      this.loading = true;
+      this.$store
+        .dispatch("onboarding/signIn", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          this.loading = false;
+          if (response.data.message === "Login successful.") {
+            this.$router.push({ name: "dashboard" });
+          }
+        })
+        .catch((error) => {
+          this.error = true;
+          this.loading = false;
+          if (error.response) {
+            this.errorMessage = `Incorrect email address or password`;
+          } else {
+            this.errorMessage = "No internet Connection!";
+          }
+        });
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.signin-container {
+  width: 100%;
+  text-align: center;
+  .app-logo {
+    font-size: 40px;
+    font-weight: bold;
+    color: #000000;
+    align-items: baseline;
+    text-decoration: none;
+    width: 120px;
+    margin: 20px auto;
+  }
+  .form-container {
+    width: 85%;
+    margin: auto;
+    padding: 15px 0px;
+  }
+}
+.input {
+  width: 100%;
+}
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 45px;
+  min-width: 80%;
+  padding: 0 16px;
+}
+</style>
