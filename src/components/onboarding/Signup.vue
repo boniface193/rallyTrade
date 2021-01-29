@@ -1,10 +1,31 @@
 <template>
   <div class="signup-container">
     <!-- app logo -->
-    <router-link to="/" class="d-flex dark--text app-logo">
+    <!-- <router-link to="/" class="d-flex dark--text app-logo">
       N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
-    </router-link>
-    <h3>Create Your Seller Account</h3>
+    </router-link> -->
+
+    <div class="description">
+      <router-link
+        :to="{ name: 'Index' }"
+        style="text-decoration: none"
+        v-show="presentForm === 'form1'"
+      >
+        <v-icon color="black">mdi-chevron-left</v-icon>
+      </router-link>
+
+      <v-icon
+        color="black"
+        v-show="presentForm === 'form2'"
+        @click="previousForm(1)"
+        >mdi-chevron-left</v-icon
+      >
+
+      <h3 v-show="presentForm === 'form1'">
+        Join the race to become sales champion!
+      </h3>
+      <h3 v-show="presentForm === 'form2'">Create Password</h3>
+    </div>
 
     <!-- Error message -->
     <p v-show="error" class="error--text mt-3 mb-0">
@@ -46,17 +67,20 @@
       ></v-text-field>
 
       <!-- Phone Number -->
-      <v-text-field
-        class="input mt-5"
-        v-model="phoneNumber"
-        :rules="phoneNumberRules"
-        label="Phone Number"
-        color="primary"
-        type="tel"
-        required
-        ref="input4"
-        @keyup.enter="validateForm(1)"
-      ></v-text-field>
+      <div class="d-flex align-center" style="width:100%">
+        <v-icon color="#64B161" class="mt-3 mr-3">mdi-whatsapp</v-icon>
+        <v-text-field
+          class=" mt-5"
+          v-model="phoneNumber"
+          :rules="phoneNumberRules"
+          label="Phone Number"
+          color="primary"
+          type="tel"
+          required
+          ref="input4"
+          @keyup.enter="validateForm(1)"
+        ></v-text-field>
+      </div>
 
       <!-- button container -->
       <div class="pa-0 mt-5 btn-container-form1" style="width: 100%">
@@ -92,7 +116,9 @@
         v-model="createPassword"
         :rules="createPasswordRules"
         label="Create Password"
-        type="password"
+        :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append="() => (showPassword = !showPassword)"
+        :type="showPassword ? 'password' : 'text'"
         color="primary"
         @keyup.enter="$refs.input10.focus"
         ref="input9"
@@ -105,7 +131,9 @@
         v-model="confirmPassword"
         :rules="confirmPasswordRules"
         label="Confirm Password"
-        type="password"
+        :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append="() => (showConfirmPassword = !showConfirmPassword)"
+        :type="showConfirmPassword ? 'password' : 'text'"
         color="primary"
         required
         ref="input10"
@@ -113,24 +141,21 @@
       ></v-text-field>
 
       <!-- button container -->
-      <div
-        class="pa-0 mt-5 d-flex justify-space-between align-center btn-container"
-        style="width: 100%"
-      >
-        <v-btn
+      <div class="pa-0 mt-5 btn-container-form1" style="width: 100%">
+        <!-- <v-btn
           class="primary--text mb-5 mb-0 px-1 py-2"
           style="background: #5064cc26"
           :disabled="loading2"
           @click="previousForm(1)"
         >
           Back</v-btn
-        >
+        > -->
         <v-btn
-          class="primary px-8 py-5 mb-5"
+          class="primary px-8 py-5 mb-5 mx-auto"
           @click="validateForm(2)"
           :loading="loading2"
           :disabled="loading2"
-          >Create Account</v-btn
+          >Next</v-btn
         >
       </div>
     </v-form>
@@ -151,6 +176,8 @@ export default {
       phoneNumber: "",
       createPassword: "",
       confirmPassword: "",
+      showPassword: true,
+      showConfirmPassword: true,
       fullNameRules: [
         (v) => !!v || "Name is required", // verifies name satisfies the requirement
       ],
@@ -198,6 +225,7 @@ export default {
               email: this.email,
             })
             .then(() => {
+              this.$refs.form2.reset();
               this.$store.commit(
                 "onboarding/setPresentSignupForm",
                 `form${formNum + 1}`
@@ -268,17 +296,18 @@ export default {
 .signup-container {
   width: 100%;
   text-align: center;
-  .app-logo {
-    font-size: 40px;
-    font-weight: bold;
-    color: #000000;
-    align-items: baseline;
-    text-decoration: none;
-    width: 120px;
-    margin: 20px auto;
+  padding-top: 30px;
+  .description {
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    .v-icon {
+      font-size: 25px;
+      margin-bottom: 30px;
+    }
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
@@ -290,5 +319,12 @@ export default {
   height: 45px;
   min-width: 80%;
   padding: 0 16px;
+}
+@media (max-width: 700px) {
+  .btn-container-form1 .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
+  }
 }
 </style>

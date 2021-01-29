@@ -8,6 +8,11 @@ import Forgotpassword from "@/components/onboarding/Forgotpassword.vue";
 import Emailverification from "@/components/onboarding/Emailverification.vue";
 import Forgotpasswordverification from "@/components/onboarding/Forgotpasswordverification.vue";
 import Onboarding from "@/views/onboarding/Onboarding.vue";
+import Settings from "@/views/Settings.vue";
+import ProfilePage from "@/components/settings/ProfilePage.vue";
+import Profile from "@/components/settings/Profile.vue";
+import Privacy from '@/components/settings/Privacy.vue';
+import BankAccount from '@/components/settings/BankAccount.vue';
 
 Vue.use(VueRouter);
 
@@ -16,6 +21,33 @@ const routes = [
     path: "/",
     name: "Index",
     component: Index
+  },
+  //
+  {
+    path: "/settings",
+    component: Settings,
+    children: [
+      {
+        path: "",
+        name: "ProfilePage",
+        component: ProfilePage
+      },
+      {
+        path: "profile",
+        name: "Profile",
+        component: Profile
+      },
+      {
+        path: "privacy",
+        name: "Privacy",
+        component: Privacy
+      },
+      {
+        path: "bank-account",
+        name: "BankAccount",
+        component: BankAccount
+      }
+    ]
   },
   // onboarding routes
   {
