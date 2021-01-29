@@ -5,21 +5,24 @@
       <v-alert type="success" v-show="resendOtpSuccess"
         >OPT has been sent successfully!</v-alert
       >
-      <!-- app logo -->
-      <router-link to="/" class="d-flex dark--text app-logo">
-        N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
-      </router-link>
 
-      <h3>Verify your Email Address</h3>
+      <div class="description">
+        <!-- app logo -->
+        <router-link to="/" class="d-flex dark--text app-logo">
+          N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
+        </router-link>
 
-      <p class="mt-3">
-        Please enter the code sent to {{ $route.params.email }}
-      </p>
+        <h3 class="my-5">Verify your Email Address</h3>
 
-      <!-- error message -->
-      <p class="error--text mt-3 mb-0" v-show="errorMessage == true">
-        {{ message }}
-      </p>
+        <p class="mt-3">
+          Please enter the code sent to {{ $route.params.email }}
+        </p>
+
+        <!-- error message -->
+        <p class="error--text mt-3 mb-0" v-show="errorMessage == true">
+          {{ message }}
+        </p>
+      </div>
 
       <v-form class="form-container">
         <div class="mb-2 mx-auto">
@@ -198,6 +201,14 @@ export default {
 .emailverification-container {
   width: 100%;
   text-align: center;
+  padding-top: 30px;
+  .v-icon {
+    font-size: 25px;
+  }
+  .description {
+    width: 90%;
+    margin: auto;
+  }
   .app-logo {
     font-size: 40px;
     font-weight: bold;
@@ -208,7 +219,7 @@ export default {
     margin: 20px auto;
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
@@ -222,6 +233,21 @@ export default {
   width: 140px;
   .v-image {
     width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .emailverification-container {
+    .description {
+      text-align: left;
+    }
+    .app-logo {
+      margin: 20px 0px;
+    }
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
   }
 }
 </style>
