@@ -8,6 +8,14 @@ import Forgotpassword from "@/components/onboarding/Forgotpassword.vue";
 import Emailverification from "@/components/onboarding/Emailverification.vue";
 import Forgotpasswordverification from "@/components/onboarding/Forgotpasswordverification.vue";
 import Onboarding from "@/views/onboarding/Onboarding.vue";
+// dashbord
+import dashboardView from "@/views/dashboard/dashboardView.vue";
+import Dashboard from "@/views/dashboard/Dashboard.vue"
+// order routes
+import orderView from "@/views/orders/orderView.vue";
+import Orders from "@/views/orders/Orders.vue";
+import orderDetails from "@/views/orders/orderDetails.vue";
+
 import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
@@ -22,33 +30,64 @@ const routes = [
     name: "Index",
     component: Index
   },
-  //
   {
-    path: "/settings",
-    component: Settings,
+    path: "/dashboard",
+    component: dashboardView,
     children: [
+      // dashboard
       {
         path: "",
-        name: "ProfilePage",
-        component: ProfilePage
+        name: "Dashboard",
+        component: Dashboard
       },
+      // orders routes
       {
-        path: "profile",
-        name: "Profile",
-        component: Profile
+        path: "/orders",
+        component: orderView,
+        children: [
+          {
+            path: "/",
+            name: "Orders",
+            component: Orders
+          },
+          {
+            path: ":id",
+            name: "orderDetails",
+            component: orderDetails
+          }
+        ]
       },
+      // settings
       {
-        path: "privacy",
-        name: "Privacy",
-        component: Privacy
+        path: "/settings",
+        component: Settings,
+        children: [
+          {
+            path: "",
+            name: "ProfilePage",
+            component: ProfilePage
+          },
+          {
+            path: "profile",
+            name: "Profile",
+            component: Profile
+          },
+          {
+            path: "privacy",
+            name: "Privacy",
+            component: Privacy
+          },
+          {
+            path: "bank-account",
+            name: "BankAccount",
+            component: BankAccount
+          }
+        ]
       },
-      {
-        path: "bank-account",
-        name: "BankAccount",
-        component: BankAccount
-      }
     ]
   },
+  
+
   // onboarding routes
   {
     path: '/signup', component: Onboarding,
