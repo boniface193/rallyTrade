@@ -1,9 +1,7 @@
 <template>
   <v-container>
     <div class="mx-3">
-      <div class="header">
-        N<img src="../../assets/images/fire.svg" width="15px" height="15px" />VA
-      </div>
+      
       <p class="sub-header">
         You have <span class="font-weight-bold">20</span> orders.
       </p>
@@ -13,13 +11,13 @@
           <v-icon class="position-abs ma-2 ml-3" color="#5064CC"
             >mdi-magnify</v-icon
           >
-          <input
+          <!-- <input
             type="text"
             v-model="searchValue"
             placeholder="placeholder"
-            class="form-control pl-10 form-control-bgColor"
-          />
-          <!-- <Search placeholder="Search orders" @search="filterItems" /> -->
+            class="form-controll pl-10 form-control-bgColor"
+          /> -->
+          <Search placeholder="Search orders" @search="filterItems" />
         </v-col>
         <v-col cols="2" class="px-0">
           <div class="primary text-center rounded-lg">
@@ -29,9 +27,22 @@
       </v-row>
 
       <!-- card item -->
+      <div v-if="isLoading" class="text-center my-8">
+        <!-- this image time loader is calculated by the loader to triger the load time -->
+        <v-progress-circular
+          color="primary"
+          class="text-center"
+          indeterminate
+          size="20"
+          width="2"
+        ></v-progress-circular>
+      </div>
+      <!-- loader ends here -->
 
+      <!-- if no order -->
+      <!-- <p v-if="orders.length == 0" class="text-center mt-8">No Item Found</p> -->
       <v-row>
-        <v-col sm="4" v-for="orders in filterItem" :key="orders.id">
+        <v-col sm="4" v-for="orders in ordersItems" :key="orders.id">
           <v-card outlined class="rounded-lg pa-5 mb-8">
             <step-progress
               :steps="['Processing', 'Shipped', 'Delivered']"
@@ -100,20 +111,22 @@
 </template>
 
 <script>
-// import Search from "@/components/general/Search.vue";
+import Search from "@/components/general/Search.vue";
 import StepProgress from "vue-step-progress";
+// import { mapGetters } from "vuex";
+
 // import the css (OPTIONAL - you can provide your own design)
 import "vue-step-progress/dist/main.css";
-// import Progress from "@/components/general/ProgressBar.vue"
+
 export default {
   components: {
-    // Search,
+    Search,
     "step-progress": StepProgress,
-    // Progress
   },
   data() {
     return {
-      searchValue: "",
+      isLoading: true,
+      // searchValue: "",
       filterItems: "",
       lineThickness: 1,
       activeThickness: 3,
@@ -166,21 +179,39 @@ export default {
     };
   },
 
+  // computed: {
+  //   // to populate items on the table
+  //   ...mapGetters({
+  //     ordersItems: "orders/orders",
+  //     // searchOrder: "orders/searchOrder",
+  //   }),
+  //   // ...mapState({
+  //   //   searchValue: (state) => state.orders.searchValue,
+  //   //   pageDetails: (state) => state.orders.pageDetails,
+  //   // }),
+  // },
+  // created() {
+  //   this.$store.dispatch("orders/getOrders").then(() => {
+  //     this.isLoading = false;
+  //   });
+  //   this.$store.dispatch("orders/filterGetOrders");
+  // },
+
   // methods: {
   //   filterItems(param){
   //     console.log(param)
   //   }
   // }
-  computed: {
-    filterItem: function () {
-      return this.ordersItems.filter((blog) => {
-        return blog.customers_name.match(this.searchValue);
-      });
-    },
-  },
+  // computed: {
+  //   filterItem: function () {
+  //     return this.ordersItems.filter((blog) => {
+  //       return blog.customers_name.match(this.searchValue);
+  //     });
+  //   },
+  // },
 };
 </script>
-<style lang="scss">
+<style lang="scss" >
 .header {
   color: #2b2b2b;
   font-size: 14px;
@@ -259,7 +290,7 @@ div.step-progress__step span {
 }
 
 // will remove later
-.form-control {
+.form-controll {
   display: block;
   width: 100%;
   padding: 0.55rem 1rem;
@@ -277,7 +308,7 @@ div.step-progress__step span {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-radius: 12px;
 }
-.form-control:focus {
+.form-controll:focus {
   color: #212529;
   background-color: #fff;
   border-color: #86b7fe;

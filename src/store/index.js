@@ -19,7 +19,7 @@ export default new Vuex.Store({
   modules: {
     onboarding: onboarding,
     inventory: inventory,
-    orders: orders.state,
+    orders: orders,
   },
   mutations: {
     reset(state) {
