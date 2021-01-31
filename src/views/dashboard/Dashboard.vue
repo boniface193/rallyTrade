@@ -9,7 +9,7 @@
           @updateDate="dateValue"
         />
         <div class="welcome-text">Hello,</div>
-        <div class="welcome-text-sm">Ayotunde Lanwo,</div>
+        <div class="welcome-text-sm">Ayotunde Lanwo</div>
       </div>
       <div class="mx-7 mt-8">
         <v-row style="position: absolute; width: 90%">
@@ -24,7 +24,7 @@
             <v-card
               class="shadow-sm elevation-0 px-2"
               style="
-                box-shadow: 0 0.3rem 2rem rgba(0, 0, 0, 0.15) !important;
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
                 border-radius: 15px;
                 height: 186px;
               "
@@ -46,9 +46,14 @@
                 </div>
                 <div class="card-header">{{ items.card_header }}</div>
                 <div class="card-sale">{{ items.card_sales }}</div>
-                <div class="card-success" :class="{'card-error': items.card_success.includes('-')}">
+                <div
+                  class="card-success"
+                  :class="{ 'card-error': items.card_success.includes('-') }"
+                >
                   {{ items.card_success }}
-                  <span class="awaiting" v-if="items.awaiting">({{ items.awaiting }})</span>
+                  <span class="awaiting" v-if="items.awaiting"
+                    >({{ items.awaiting }})</span
+                  >
                 </div>
                 <div class="card-history my-2">
                   <route-link :to="{ name: items.routes }">
@@ -133,7 +138,7 @@ export default {
 
 <style lang="scss" scoped>
 .welcome-text {
-  font-family: "Product Sans";
+  font-family: "Product Sans Medium";
   font-weight: normal;
   color: #ffffff;
   font-size: 24px;
@@ -170,7 +175,7 @@ export default {
 }
 .card-sale {
   color: #979797;
-  font-family: "Product Sans";
+  font-family: "Product Sans Light";
   font-size: 12px;
 }
 .card-success {
@@ -179,18 +184,18 @@ export default {
   font-family: "Product Sans Bold";
 }
 .card-error {
-  color: #FF3B3B;
+  color: #ff3b3b;
   font-size: 10px;
   font-family: "Product Sans Bold";
 }
 .card-history {
   color: #5063ca;
-  font-family: "Product Sans ";
+  font-family: "Product Sans Medium";
   font-size: 10px;
 }
 .awaiting {
   color: #979797;
-  font-family: "Product Sans";
+  font-family: "Product Sans Light";
   font-size: 8px;
 }
 </style>
