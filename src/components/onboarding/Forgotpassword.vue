@@ -1,11 +1,16 @@
 <template>
   <div class="forgotpassword-container">
-
     <!-- app logo -->
-    <router-link to="/" class="d-flex dark--text app-logo">
-      N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
-    </router-link>
-    <h3>Enter your email address</h3>
+    <div class="description">
+      <router-link to="/" class="d-flex dark--text app-logo">
+        N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
+      </router-link>
+      <h3 class="mb-4">Recover password</h3>
+      <p>
+        Give us your phone number or email address, we will send you
+        instructions to reset password
+      </p>
+    </div>
 
     <!-- error message -->
     <p v-show="error" class="error--text mt-3 mb-0">
@@ -20,7 +25,7 @@
         v-model="email"
         :rules="emailRules"
         type="email"
-        label="Email"
+        label="Email or Phone number"
         color="primary"
         required
         @keyup.enter="validateEmail()"
@@ -33,7 +38,7 @@
           @click="validateEmail()"
           :loading="loading"
           :disabled="loading"
-          >Reset Password</v-btn
+          >Send Reset Password Instructions</v-btn
         >
       </div>
     </v-form>
@@ -74,7 +79,10 @@ export default {
         .then((response) => {
           this.loading = false;
           if (response.data.message === "An OTP has been sent to your email.") {
-            this.$store.commit("onboarding/accessForgotPasswordVerificationPage", true);
+            this.$store.commit(
+              "onboarding/accessForgotPasswordVerificationPage",
+              true
+            );
             this.$router.push({
               name: "Forgotpasswordverification",
               params: { email: emailAddress },
@@ -83,10 +91,10 @@ export default {
         })
         .catch((error) => {
           this.error = true;
-          this.loading = false; 
-          if(error.response){
+          this.loading = false;
+          if (error.response) {
             this.errorMessage = `This Account does not Exist`;
-          }else {
+          } else {
             this.errorMessage = `No internet Connection!`;
           }
         });
@@ -108,7 +116,7 @@ export default {
     margin: 20px auto;
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
@@ -120,5 +128,24 @@ export default {
   height: 45px;
   min-width: 80%;
   padding: 0 16px;
+}
+@media (max-width: 700px) {
+  .forgotpassword-container {
+    width: 100%;
+    text-align: center;
+    .app-logo {
+      margin: 20px 0px;
+    }
+    .description {
+      text-align: left;
+      width: 90%;
+      margin: auto;
+    }
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
+  }
 }
 </style>

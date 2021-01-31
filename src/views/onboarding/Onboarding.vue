@@ -17,7 +17,7 @@ export default {
   display: flex;
   align-items: center;
   &-container {
-    width: 500px;
+    width: 450px;
     padding: 10px;
     margin: auto;
     background: #fff;
@@ -29,6 +29,7 @@ export default {
     &-container {
       width: 100%;
       height: 100%;
+      padding-top: 15%;
     }
   }
 }

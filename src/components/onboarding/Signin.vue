@@ -4,7 +4,7 @@
     <router-link to="/" class="d-flex dark--text app-logo">
       N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
     </router-link>
-    <h3>Login to Your Seller Account</h3>
+    <h3>Login into your Account</h3>
 
     <!-- Error message -->
     <p v-show="error" class="error--text mt-3 mb-0">
@@ -19,7 +19,7 @@
         v-model="email"
         :rules="emailRules"
         type="email"
-        label="Email"
+        label="Email or phoneNumber"
         color="primary"
         required
         @keyup.enter="$refs.input2.focus"
@@ -30,13 +30,25 @@
         class="input mr-5 mt-5"
         v-model="password"
         :rules="passwordRules"
-        type="password"
+        :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append="() => (showPassword = !showPassword)"
+        :type="showPassword ? 'password' : 'text'"
         label="Password"
         color="primary"
         required
         ref="input2"
         @keyup.enter="validateForm()"
       ></v-text-field>
+
+      <!-- forgot password link-->
+      <div class="d-flex justify-end">
+        <router-link
+          to="/forgotpassword"
+          class="primary--text"
+          style="text-decoration: none"
+          ><span style="font-size: 13px">Forgot password?</span></router-link
+        >
+      </div>
 
       <!-- button container -->
       <div class="pa-0 mt-5" style="width: 100%">
@@ -47,17 +59,6 @@
           :disabled="loading"
           >Log In</v-btn
         >
-
-        <!-- forgot password link-->
-        <p style="font-size: 14px">
-          or
-          <router-link
-            to="/forgotpassword"
-            class="error--text"
-            style="text-decoration: none"
-            >Forgot password?</router-link
-          >
-        </p>
 
         <!-- create account link -->
         <p>
@@ -80,6 +81,7 @@ export default {
       loading: false,
       email: "",
       password: "",
+      showPassword: true,
       emailRules: [
         // verifies email address satisfies the requirement
         (v) => !!v || "E-mail is required",
@@ -130,6 +132,7 @@ export default {
 .signin-container {
   width: 100%;
   text-align: center;
+  padding-top: 30px;
   .app-logo {
     font-size: 40px;
     font-weight: bold;
@@ -152,5 +155,12 @@ export default {
   height: 45px;
   min-width: 80%;
   padding: 0 16px;
+}
+@media (max-width: 700px) {
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
+  }
 }
 </style>

@@ -4,20 +4,27 @@
     <v-alert type="success" v-show="resendOtpSuccess"
       >OPT has been sent successfully!</v-alert
     >
+    <div style="width:90% margin: auto; text-align:left">
+      <router-link
+        :to="{ name: 'Forgotpassword' }"
+        style="text-decoration: none"
+      >
+        <v-icon color="black">mdi-chevron-left</v-icon>
+      </router-link>
+    </div>
 
-    <!-- app logo -->
-    <router-link to="/" class="d-flex dark--text app-logo">
-      N<v-img src="@/assets/images/fire.svg" max-width="35"></v-img>VA
-    </router-link>
+    <div class="description">
+      <h3 class="my-5">Verify your account</h3>
 
-    <h3>Verify your account</h3>
+      <p class="mt-3">
+        Please enter the code sent to {{ $route.params.email }}
+      </p>
 
-    <p class="mt-3">Please enter the code sent to {{ $route.params.email }}</p>
-
-    <!-- error message -->
-    <p class="error--text mt-3 mb-0" v-show="errorMessage == true">
-      {{ message }}
-    </p>
+      <!-- error message -->
+      <p class="error--text mt-3 mb-0" v-show="errorMessage == true">
+        {{ message }}
+      </p>
+    </div>
 
     <v-form class="form-container">
       <div class="mb-2 mx-auto">
@@ -151,17 +158,15 @@ export default {
 .forgotpasswordverification-container {
   width: 100%;
   text-align: center;
-  .app-logo {
-    font-size: 40px;
-    font-weight: bold;
-    color: #000000;
-    align-items: baseline;
-    text-decoration: none;
-    width: 120px;
-    margin: 20px auto;
+  .description {
+    width: 90%;
+    margin: auto;
+  }
+  .v-icon {
+    font-size: 25px;
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
@@ -175,6 +180,16 @@ export default {
   width: 140px;
   .v-image {
     width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .description {
+    text-align: left;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
   }
 }
 </style>
