@@ -112,7 +112,7 @@ export default {
         .then((response) => {
           this.loading = false;
           if (response.data.message === "Login successful.") {
-            this.$router.push({ name: "dashboard" });
+            this.$router.push({ name: "Dashboard" });
           }
         })
         .catch((error) => {
@@ -143,7 +143,7 @@ export default {
     margin: 20px auto;
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
