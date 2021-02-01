@@ -49,16 +49,45 @@
         >
       </div>
     </v-form>
+
+    <!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="400">
+      <div class="white pa-3 pb-10 text-center dialog">
+        <div class="d-flex justify-end">
+          <v-icon
+            class="error--text close-btn"
+            @click="
+              () => {
+                this.dialog = false;
+                this.$router.push({
+                  name: 'Signin',
+                });
+              }
+            "
+            >mdi-close</v-icon
+          >
+        </div>
+
+        <div class="mb-7 mt-5 mx-auto status-img">
+          <v-img :src="statusImage"></v-img>
+        </div>
+
+        <h4>{{ dialogMessage }}</h4>
+      </div>
+    </modal>
   </div>
 </template>
 <script>
-//import modal from "@/components/dashboard/modal.vue";
+import modal from "@/components/modal.vue";
+import successImage from "@/assets/images/success-img.svg";
+import failedImage from "@/assets/images/failed-img.svg";
 export default {
   name: "Recoverpassword",
-  //components: { modal },
+  components: { modal },
   data: function () {
     return {
       dialog: false,
+      statusImage: null,
       dialogMessage: "",
       error: false,
       errorMessage: "",
@@ -94,8 +123,8 @@ export default {
       this.$store
         .dispatch("onboarding/recoverPassword", {
           email: this.$route.params.email,
-          password: this.create_password,
-          password_confirmation: this.confirm_password,
+          password: this.createPassword,
+          password_confirmation: this.confirmPassword,
           otp: this.$route.params.otp,
         })
         .then((response) => {
@@ -103,6 +132,7 @@ export default {
           if (response.data.message === "Password reset successful.") {
             this.dialogMessage = "Your password has been successfully changed";
             this.dialog = true;
+            this.statusImage = successImage;
             this.otp = null;
             //this.$store.commit("onboarding/accessPasswordRecoveryPage", false);
             setTimeout(() => {
@@ -115,6 +145,7 @@ export default {
         .catch((error) => {
           this.loading = false;
           this.error = true;
+          this.statusImage = failedImage;
           if (error.response) {
             this.errorMessage = "something went wrong, pls try again";
           } else {

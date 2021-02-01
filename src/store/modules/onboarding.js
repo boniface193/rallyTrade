@@ -148,6 +148,18 @@ const actions = {
                 })
         })
     },
+    // recover password
+    recoverPassword: (context, data) => {
+        return new Promise((resolve, reject) => {
+            axios.post("passwords/new", data).then(response => {
+                resolve(response)
+            })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        });
+    },
 };
 
 //updates the different state properties
