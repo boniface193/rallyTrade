@@ -27,7 +27,7 @@
       </v-app-bar>
 
       <!-- drawer icon for other pages -->
-      <div v-else class="mt-3 ml-3">
+      <div v-if="this.$route.name === 'Orders' || this.$route.name === 'ProfilePage'" class="mt-3 ml-3">
         <v-container>
           <v-icon
             class="float-left mt-6 mr-5"
@@ -47,6 +47,8 @@
           </div>
         </v-container>
       </div>
+
+      <div v-else></div>
 
       <!-- drawer -->
       <v-navigation-drawer
