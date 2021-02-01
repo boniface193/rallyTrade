@@ -10,7 +10,7 @@
             <img src="@/assets/images/user-profile.svg" alt="" />
           </div>
           <div>
-            <h4>{{ userInfo.name}}</h4>
+            <h4>{{ userInfo.name }}</h4>
 
             <router-link
               :to="{ name: 'Profile' }"
@@ -20,7 +20,13 @@
             </router-link>
           </div>
         </div>
-        <v-icon color="#979797">mdi-chevron-right</v-icon>
+        <router-link
+          :to="{ name: 'Profile' }"
+          style="text-decoration: none"
+          class="d-flex align-center"
+        >
+          <v-icon color="#979797">mdi-chevron-right</v-icon>
+        </router-link>
       </div>
       <!-- privacy section -->
       <div class="privacy-body py-5">
@@ -32,7 +38,13 @@
             <p class="mb-0 ash-color">Privacy & Security</p>
           </router-link>
         </div>
-        <v-icon color="#979797">mdi-chevron-right</v-icon>
+        <router-link
+          :to="{ name: 'Privacy' }"
+          style="text-decoration: none"
+          class="d-flex align-center"
+        >
+          <v-icon color="#979797">mdi-chevron-right</v-icon>
+        </router-link>
       </div>
       <!-- bank section -->
       <div class="privacy-body py-5">
@@ -47,18 +59,27 @@
             <p class="mb-0 ash-color">Bank Accounts</p>
           </router-link>
         </div>
-
-        <v-icon color="#979797">mdi-chevron-right</v-icon>
+        <router-link
+          :to="{ name: 'BankAccount' }"
+          style="text-decoration: none"
+          class="d-flex align-center"
+        >
+          <v-icon color="#979797">mdi-chevron-right</v-icon>
+        </router-link>
       </div>
       <!-- logout section -->
-      <div class="d-flex align-center py-5" style="width:100px;cursor:pointer" @click="logout">
+      <div
+        class="d-flex align-center py-5"
+        style="width: 100px; cursor: pointer"
+        @click="logout"
+      >
         <div class="logout-logo">
           <img src="@/assets/images/log-out.svg" alt="" />
         </div>
         <p class="mb-0 error--text">Log Out</p>
       </div>
     </div>
-     <!-- modal for dialog messages -->
+    <!-- modal for dialog messages -->
     <modal :dialog="dialog" width="120">
       <div class="text-center dialog white">Loging Out...</div>
     </modal>
@@ -69,15 +90,15 @@ import modal from "@/components/modal.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "ProfilePage",
-  data: function() {
+  data: function () {
     return {
-      dialog: false
-    }
+      dialog: false,
+    };
   },
   components: { modal },
   computed: {
-     ...mapGetters({
-      userInfo: "settings/profile"
+    ...mapGetters({
+      userInfo: "settings/profile",
     }),
   },
   methods: {
@@ -92,11 +113,12 @@ export default {
         });
       }, 1000);
     },
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
 .profilePage-container {
+  //width: 50%;
   .profile-section {
     padding: 10px;
     .profile-body {
@@ -138,4 +160,9 @@ export default {
     color: #979797;
   }
 }
+// @media (max-width: 950px) {
+//   .profilePage-container {
+//     width: 100%;
+//   }
+// }
 </style>

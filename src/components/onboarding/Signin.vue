@@ -108,6 +108,7 @@ export default {
         .dispatch("onboarding/signIn", {
           email: this.email,
           password: this.password,
+          type: "seller"
         })
         .then((response) => {
           this.loading = false;
