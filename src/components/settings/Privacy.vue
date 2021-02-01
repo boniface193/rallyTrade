@@ -84,7 +84,7 @@
         </div>
 
         <div class="mb-7 mt-5 mx-auto status-img">
-          <v-img src="@/assets/images/success-img.svg"></v-img>
+          <v-img :src="statusImage"></v-img>
         </div>
 
         <h4>{{ dialogMessage }}</h4>
@@ -94,11 +94,14 @@
 </template>
 <script>
 import modal from "@/components/modal.vue";
+import successImage from "@/assets/images/success-img.svg";
+import failedImage from "@/assets/images/failed-img.svg";
 export default {
   name: "Privacy",
   components: { modal },
   data: function () {
     return {
+      statusImage: null,
       loading: false,
       oldPassword: "",
       newPassword: "",
@@ -128,6 +131,39 @@ export default {
         (v) => v === this.newPassword || "Passwords do not match",
       ],
     };
+  },
+  methods: {
+    update_password() {
+      this.$refs.form.validate();
+
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        this.$store
+          .dispatch("settings/resetPassword", {
+            old_password: this.oldPassword,
+            password: this.newPassword,
+            password_confirmation: this.confirmPassword,
+          })
+          .then(() => {
+            this.dialog = true;
+            this.loading = false;
+            this.statusImage = successImage;
+            this.dialogMessage = "Password changed successfully!";
+            this.$refs.form.reset();
+          })
+          .catch((error) => {
+            this.dialog = true;
+            this.loading = false;
+            this.statusImage = failedImage
+            if (error.response) {
+              console.log(error.response)
+              this.dialogMessage = error.response.data.errors.old_password[0];
+            } else {
+              this.dialogMessage = "No internet connection!";
+            }
+          });
+      }
+    },
   },
 };
 </script>

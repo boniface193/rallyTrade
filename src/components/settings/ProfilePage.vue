@@ -1,7 +1,5 @@
 <template>
   <div class="profilePage-container pa-3">
-    <h2>Settings</h2>
-
     <div class="profile-section pt-3">
       <div
         class="d-flex justify-space-between py-3"
@@ -12,7 +10,7 @@
             <img src="@/assets/images/user-profile.svg" alt="" />
           </div>
           <div>
-            <h4>Ayotunde Lanwo</h4>
+            <h4>{{ userInfo.name}}</h4>
 
             <router-link
               :to="{ name: 'Profile' }"
@@ -53,18 +51,48 @@
         <v-icon color="#979797">mdi-chevron-right</v-icon>
       </div>
       <!-- logout section -->
-      <div class="d-flex align-center py-5">
+      <div class="d-flex align-center py-5" style="width:100px;cursor:pointer" @click="logout">
         <div class="logout-logo">
           <img src="@/assets/images/log-out.svg" alt="" />
         </div>
         <p class="mb-0 error--text">Log Out</p>
       </div>
     </div>
+     <!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="120">
+      <div class="text-center dialog white">Loging Out...</div>
+    </modal>
   </div>
 </template>
 <script>
+import modal from "@/components/modal.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "ProfilePage",
+  data: function() {
+    return {
+      dialog: false
+    }
+  },
+  components: { modal },
+  computed: {
+     ...mapGetters({
+      userInfo: "settings/profile"
+    }),
+  },
+  methods: {
+    // logout
+    logout() {
+      this.$store.commit("reset");
+      this.$store.commit("onboarding/removeToken");
+      this.dialog = true;
+      setTimeout(() => {
+        this.$router.push({
+          name: "Signin",
+        });
+      }, 1000);
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>

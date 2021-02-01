@@ -11,9 +11,16 @@ import Forgotpassword from "@/components/onboarding/Forgotpassword.vue";
 import Emailverification from "@/components/onboarding/Emailverification.vue";
 import Forgotpasswordverification from "@/components/onboarding/Forgotpasswordverification.vue";
 import Onboarding from "@/views/onboarding/Onboarding.vue";
-import AuthPages from "@/views/authPages/AuthPages.vue";
-import Dashboard from "@/views/authPages/Dashboard.vue";
-import Settings from "@/views/authPages/Settings.vue";
+
+// dashbord
+import dashboardView from "@/views/dashboard/dashboardView.vue";
+import Dashboard from "@/views/dashboard/Dashboard.vue"
+// order routes
+import orderView from "@/views/orders/orderView.vue";
+import Orders from "@/views/orders/Orders.vue";
+import orderDetails from "@/views/orders/orderDetails.vue";
+// Settings
+import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
@@ -110,14 +117,33 @@ const routes = [
   // dashboard 
   {
     path: "/dashboard",
-    component: AuthPages,
+    component: dashboardView,
     beforeEnter: ifAuthenticated,
     children: [
+      // dashboard
       {
         path: "",
         name: "Dashboard",
         component: Dashboard
       },
+      // orders routes
+      {
+        path: "/orders",
+        component: orderView,
+        children: [
+          {
+            path: "/",
+            name: "Orders",
+            component: Orders
+          },
+          {
+            path: ":id",
+            name: "orderDetails",
+            component: orderDetails
+          }
+        ]
+      },
+      // settings
       {
         path: "/settings",
         component: Settings,
@@ -146,6 +172,8 @@ const routes = [
       },
     ]
   },
+  
+
   // onboarding routes
   {
     path: '/signup',
