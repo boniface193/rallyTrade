@@ -186,12 +186,11 @@ export default {
     },
     //allows user to access the dashboard
     grantAccess() {
-      this.$router.push({ name: "dashboard" });
+      this.$router.push({ name: "Dashboard" });
     },
     // destroy token
     denialAccess() {
-      this.$store.commit("onboarding/setToken", null);
-      localStorage.removeItem("accessToken");
+      this.$store.commit("onboarding/removeToken");
       this.$router.push({ name: "Signin" });
     },
   },

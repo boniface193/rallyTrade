@@ -3,8 +3,14 @@
     <!-- user profile -->
     <v-row class="px-4">
       <v-col class="col-12 col-md-5 pt-9 text-center">
-        <div class="d-flex align-center justify-center" style="position: relative">
-          <router-link :to="{ name: 'ProfilePage' }" style="text-decoration: none">
+        <div
+          class="d-flex align-center justify-center"
+          style="position: relative"
+        >
+          <router-link
+            :to="{ name: 'ProfilePage' }"
+            style="text-decoration: none"
+          >
             <span class="back-btn">
               <v-icon style="font-size: 25px">mdi-chevron-left</v-icon>
             </span>
@@ -14,8 +20,8 @@
         <div class="profile-img my-5">
           <v-img src="@/assets/images/user-profile.svg"></v-img>
         </div>
-        <h4>Ayotunde Lanwo</h4>
-        <a class="primary--text" style="font-size:14px"
+        <h4>{{ userInfo.name }}</h4>
+        <a class="primary--text" style="font-size: 14px"
           >Change profile picture</a
         >
       </v-col>
@@ -163,9 +169,9 @@
 </template>
 <script>
 import modal from "@/components/modal.vue";
-//import successImage from "@/assets/img/success-img.svg";
-//import failedImage from "@/assets/img/failed-img.svg";
-//import { mapGetters } from "vuex";
+import successImage from "@/assets/images/success-img.svg";
+import failedImage from "@/assets/images/failed-img.svg";
+import { mapGetters } from "vuex";
 export default {
   name: "userDetails",
   components: { modal },
@@ -185,25 +191,97 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters({
-    //   loader: "settings/loader",
-    // }),
+    ...mapGetters({
+      userInfo: "settings/profile"
+    }),
     computedInfo() {
       // gets the values of user information
       //let userInfo = this.$store.getters["settings/getUserProfile"];
-      let fullName = "Abdulazeez Abdulazeez"; //userInfo.name;
-      let phoneNum = "09013289338"; //userInfo.phone_number;
-      let currentFullName = "Abdulazeez Abdulazeez"; //userInfo.name;
-      let currentPhoneNum = "09013289338"; //userInfo.phone_number;
+      let fullName = this.userInfo.name;
+      let phoneNum = this.userInfo.phone_number;
+      let address = "22 Abubakar Way, Abuja";
+      let currentFullName = this.userInfo.name;
+      let currentPhoneNum = this.userInfo.phone_number;
       let currentAddress = "22 Abubakar Way, Abuja";
 
       return {
         fullName: fullName,
         phoneNum: phoneNum,
+        address: address,
         currentFullName: currentFullName,
         currentPhoneNum: currentPhoneNum,
         currentAddress: currentAddress,
       };
+    },
+  },
+  methods: {
+    // submits the edited information
+    editInfo(input_field) {
+      // check if the edit input field is the admin name
+      if (
+        input_field === "admin_name" &&
+        this.computedInfo.currentFullName !== ""
+      ) {
+        if (this.computedInfo.currentFullName !== this.computedInfo.fullName) {
+          this.nameLoader = true;
+          this.$store
+            .dispatch("settings/editUserProfile", {
+              name: this.computedInfo.currentFullName,
+            })
+            .then(() => {
+              this.dialogMessage = "Name changed successfully!";
+              this.editAdminName = false;
+              this.nameLoader = false;
+              this.statusImage = successImage;
+              this.dialog = true;
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.dialogMessage = "";
+              } else {
+                this.dialogMessage = "No internet connection!";
+              }
+              this.nameLoader = false;
+              this.statusImage = failedImage;
+              this.dialog = true;
+            });
+        } else {
+          this.editAdminName = false;
+        }
+      }
+
+      // check if the edited input field is the admin phone number
+      if (
+        input_field === "phonenum" &&
+        this.computedInfo.currentPhoneNum !== ""
+      ) {
+        if (this.computedInfo.currentPhoneNum !== this.computedInfo.phoneNum) {
+          this.phoneNumLoader = true;
+          this.$store
+            .dispatch("settings/editUserProfile", {
+              phone_number: this.computedInfo.currentPhoneNum,
+            })
+            .then(() => {
+              this.dialogMessage = "Phone number changed successfully!";
+              this.editPhoneNum = false;
+              this.phoneNumLoader = false;
+              this.statusImage = successImage;
+              this.dialog = true;
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.dialogMessage = error.response.data.errors.phone_number[0];
+              } else {
+                this.dialogMessage = "No internet connection!";
+              }
+              this.phoneNumLoader = false;
+              this.statusImage = failedImage;
+              this.dialog = true;
+            });
+        } else {
+          this.editPhoneNum = false;
+        }
+      }
     },
   },
 };
@@ -245,10 +323,10 @@ export default {
     padding: 5px 0px 0px 5px;
   }
 }
-.back-btn{
-    position: absolute;
-    left: 0px;
-    top:0
+.back-btn {
+  position: absolute;
+  left: 0px;
+  top: 0;
 }
 @media (max-width: 950px) {
   .store-width {

@@ -1,56 +1,66 @@
 import axios from "@/axios/onboarding.js";
 
-// decode token
-// const decodeToken = (token) => {
-//     var base64Payload = token.split('.')[1];
-//     var payload = Buffer.from(base64Payload, 'base64');
-//     return JSON.parse(payload.toString());
-// }
+//decode token
+const decodeToken = (token) => {
+    var base64Payload = token.split('.')[1];
+    var payload = Buffer.from(base64Payload, 'base64');
+    return JSON.parse(payload.toString());
+}
 
-// checkif user account is verified
-// const checkIfAccountVerified = () => {
-//     if (localStorage.getItem('accessToken')) {
-//         const accountStatus = decodeToken(state.token).meta.email_verified
-//         return accountStatus;
-//     } else {
-//         return false;
-//     }
-// }
 
 // check if user is authenticated
-// const checkIfAuthenticated = () => {
-//     if (state.token !== null) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
+const checkIfTokenIsPresent = () => {
+    if (state.token !== null) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-// // check if token is expired
-// const checkIftokenExpired = () => {
-//     if (localStorage.getItem('accessToken')) {
-//         const expiration = decodeToken(state.token).exp
-//         return expiration >= new Date() || false;
-//     } else {
-//         return false
-//     }
-// };
+// check if token is expired
+const checkIftokenExpired = () => {
+    if (localStorage.getItem('accessToken')) {
+        const expiration = decodeToken(state.token).exp
+        return expiration >= new Date() || false;
+    } else {
+        return false
+    }
+};
 
 //holds the state properties
 const state = {
     presentSignupForm: 'form1',
     token: localStorage.getItem('accessToken') || null,
+    tokenIsPresent: false,
     accessEmailVerifcationPage: false,
     accessForgotPasswordVerificationPage: false,
     accessPasswordRecoveryPage: false,
+    tokenExpired: true,
     doNothing: null,
 };
 
 //returns the state properties
-const getters = {};
+const getters = {
+    tokenIsPresent: state => state.tokenIsPresent,
+    tokenExpired: state => state.tokenExpired,
+};
 
 //fetch data 
 const actions = {
+    // get user profile details
+    getUserProfile() {
+        return new Promise((resolve, reject) => {
+            axios.get("profile", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(response => {
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+    },
     // check if an account exist
     checkAccount: (context, data) => {
         return new Promise((resolve, reject) => {
@@ -159,6 +169,14 @@ const mutations = {
     accessEmailVerifcationPage: (state, status) => (state.accessEmailVerifcationPage = status),
     accessForgotPasswordVerificationPage: (state, status) => (state.accessForgotPasswordVerificationPage = status),
     accessPasswordRecoveryPage: (state, status) => (state.accessPasswordRecoveryPage = status),
+    tokenIsPresent: (state) => {
+        const tokenIsPresent = checkIfTokenIsPresent();
+        state.tokenIsPresent = tokenIsPresent;
+    },
+    setTokenExpired: (state) => {
+        const tokenExpired = checkIftokenExpired();
+        state.tokenExpired = tokenExpired;
+    },
 };
 
 

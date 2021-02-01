@@ -9,7 +9,7 @@
           @updateDate="dateValue"
         />
         <div class="welcome-text">Hello,</div>
-        <div class="welcome-text-sm">Ayotunde Lanwo</div>
+        <div class="welcome-text-sm">{{ userInfo.name }}</div>
       </div>
       <div class="mx-7 mt-8">
         <v-row style="position: absolute; width: 90%">
@@ -75,6 +75,7 @@
 <script>
 import moment from "moment";
 import Calender from "@/components/general/calender.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     Calender,
@@ -124,6 +125,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "settings/profile",
+    }),
   },
   methods: {
     dateValue(value) {

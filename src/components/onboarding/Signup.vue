@@ -142,14 +142,6 @@
 
       <!-- button container -->
       <div class="pa-0 mt-5 btn-container-form1" style="width: 100%">
-        <!-- <v-btn
-          class="primary--text mb-5 mb-0 px-1 py-2"
-          style="background: #5064cc26"
-          :disabled="loading2"
-          @click="previousForm(1)"
-        >
-          Back</v-btn
-        > -->
         <v-btn
           class="primary px-8 py-5 mb-5 mx-auto"
           @click="validateForm(2)"
