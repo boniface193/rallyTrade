@@ -143,7 +143,11 @@ export default {
       },
     ],
   }),
-
+  created() {
+    if (this.$store.getters["settings/profile"].name === "") {
+      this.$store.dispatch("settings/getUserProfile");
+    }
+  },
   methods: {
     closeDrawer() {
       this.drawer = false;

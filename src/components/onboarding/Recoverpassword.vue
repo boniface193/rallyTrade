@@ -139,7 +139,7 @@ export default {
     margin: 20px auto;
   }
   .form-container {
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding: 15px 0px;
   }
