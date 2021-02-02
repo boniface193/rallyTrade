@@ -21,7 +21,7 @@
                   ></v-img>
                 </div>
               </v-col>
-              <v-col cols="7" class="pr-5 pl-1 my-lg-16 my-md-10">
+              <v-col cols="7" class="pr-5 pl-1 my-lg-3 my-md-3">
                 <div class="order-item-font mt-2">
                   Product Name:
                   <span class="order-no-grey"> Infinix Hot 2020 </span>
@@ -137,9 +137,9 @@ export default {
 <style lang="scss" scoped>
 .chOder {
   color: #2b2b2b;
-  font-size: 22px;
+  font-size: 20px;
   margin: 30px 0 20px 0px;
-  font-family: "Product Sans Normal";
+  font-family: "Product Sans Medium";
 }
 .w-25 {
   width: 25% !important;

@@ -127,33 +127,32 @@ const routes = [
       // dashboard
       {
         path: "",
+        name: "dashboard",
         component: Dashboard,
-        children: [
-          // sales history
-          {
-            path: "sales",
-            name: "sales_history",
-            component: Sales_history
-          },
-          // payment history
-          {
-            path: "payment",
-            name: "payment_history",
-            component: Payment_history
-          },
-          // reward
-          {
-            path: "reward",
-            name: "reward",
-            component: Reward
-          },
-          // leaderboard
-          {
-            path: "leader",
-            name: "leaderboard",
-            component: Leaderboard
-          },
-        ]
+      },
+      // sales history
+      {
+        path: "sales",
+        name: "sales_history",
+        component: Sales_history
+      },
+      // payment history
+      {
+        path: "payment",
+        name: "payment_history",
+        component: Payment_history
+      },
+      // reward
+      {
+        path: "reward",
+        name: "reward",
+        component: Reward
+      },
+      // leaderboard
+      {
+        path: "leader",
+        name: "leaderboard",
+        component: Leaderboard
       },
       // orders routes
       {

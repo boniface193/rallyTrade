@@ -3,7 +3,7 @@
     <v-icon class="position-abs ma-2 ml-3" color="#5064CC" >mdi-magnify</v-icon>
     <input type="text" v-model="searchValue"
       @change="updateSearchValue"
-      @keyup.enter="updateSearchValue" :placeholder="placeholder" class="form-control pl-10 form-control-bgColor" />
+      @keyup.enter="updateSearchValue" :placeholder="placeholder" class="form-controlly pl-10 form-control-bgColor" />
     
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-control {
+.form-controlly {
   display: block;
   width: 100%;
   padding: 0.55rem 1rem;
@@ -48,7 +48,7 @@ export default {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-radius: 12px;
 }
-.form-control:focus {
+.form-controlly:focus {
   color: #212529;
   background-color: #fff;
   border-color: #86b7fe;
