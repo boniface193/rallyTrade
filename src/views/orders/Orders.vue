@@ -43,7 +43,7 @@
       <!-- <p v-if="orders.length == 0" class="text-center mt-8">No Item Found</p> -->
       <v-row>
         <v-col sm="4" v-for="orders in ordersItems" :key="orders.id">
-          <v-card outlined class="rounded-lg pa-5 mb-8">
+          <v-card outlined class="rounded-lg pa-5 mb-3">
             <step-progress
               :steps="['Processing', 'Shipped', 'Delivered']"
               :current-step="
@@ -227,8 +227,6 @@ export default {
 .image-bgColor {
   background-color: #f3f5ff;
   border-radius: 10px;
-  // width: 85px;
-  // height: 87px;
 }
 .order-item-font {
   color: #2b2b2b;
@@ -287,33 +285,6 @@ div.step-progress__step span {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-}
-
-// will remove later
-.form-controll {
-  display: block;
-  width: 100%;
-  padding: 0.55rem 1rem;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #21252900;
-  background-color: #f3f5ff;
-  background-clip: padding-box;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  border-radius: 12px;
-}
-.form-controll:focus {
-  color: #212529;
-  background-color: #fff;
-  border-color: #86b7fe;
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .position-abs {

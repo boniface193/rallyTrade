@@ -56,11 +56,11 @@
                   >
                 </div>
                 <div class="card-history my-2">
-                  <route-link :to="{ name: items.routes }">
+                  <router-link :to="{ name: items.routes }" style="text-decoration: none">
                     {{ items.card_history
                     }}<v-icon size="12" class="primary--text"
                       >mdi-arrow-right</v-icon
-                    ></route-link
+                    ></router-link
                   >
                 </div>
               </div>
@@ -101,7 +101,7 @@ export default {
           card_success: "5,000",
           awaiting: "awaiting settlements",
           card_history: "View history",
-          routes: "sales_history",
+          routes: "payment_history",
         },
 
         {
@@ -111,7 +111,7 @@ export default {
           card_sales: "Sales Points",
           card_success: "+10",
           card_history: "Claim reward",
-          routes: "sales_history",
+          routes: "reward",
         },
 
         {
@@ -121,7 +121,7 @@ export default {
           card_sales: "on leaderboard",
           card_success: "-1",
           card_history: "View Leaderboard",
-          routes: "sales_history",
+          routes: "leaderboard",
         },
       ],
     };

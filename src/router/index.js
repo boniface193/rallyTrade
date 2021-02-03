@@ -14,7 +14,11 @@ import Forgotpasswordverification from "@/components/onboarding/Forgotpasswordve
 import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
-import Dashboard from "@/views/dashboard/Dashboard.vue"
+import Dashboard from "@/views/dashboard/Dashboard.vue";
+import Sales_history from "@/views/dashboard/salesHistory.vue";
+import Payment_history from "@/views/dashboard/paymentHistory.vue";
+import Reward from "@/views/dashboard/Reward.vue";
+import Leaderboard from "@/views/dashboard/Leaderboard.vue";
 // order routes
 import orderView from "@/views/orders/orderView.vue";
 import Orders from "@/views/orders/Orders.vue";
@@ -130,8 +134,32 @@ const routes = [
       // dashboard
       {
         path: "",
-        name: "Dashboard",
-        component: Dashboard
+        name: "dashboard",
+        component: Dashboard,
+      },
+      // sales history
+      {
+        path: "sales",
+        name: "sales_history",
+        component: Sales_history
+      },
+      // payment history
+      {
+        path: "payment",
+        name: "payment_history",
+        component: Payment_history
+      },
+      // reward
+      {
+        path: "reward",
+        name: "reward",
+        component: Reward
+      },
+      // leaderboard
+      {
+        path: "leader",
+        name: "leaderboard",
+        component: Leaderboard
       },
       // orders routes
       {

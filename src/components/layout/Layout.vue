@@ -1,11 +1,9 @@
 <template>
   <div style="margin: auto; max-width: 1800px">
-    <!-- <v-main> -->
     <v-card elevation="0">
       <!-- User dashboard layout -->
       <!-- navbar -->
       <v-app-bar
-      
         height="90"
         elevation="0"
         app
@@ -27,7 +25,12 @@
       </v-app-bar>
 
       <!-- drawer icon for other pages -->
-      <div v-else class="mt-3 ml-3">
+      <div
+        v-if="
+          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage'
+        "
+        class="mt-3 ml-3"
+      >
         <v-container>
           <v-icon
             class="float-left mt-6 mr-5"
@@ -39,14 +42,12 @@
           >
 
           <div class="header">
-            N<img
-              src="@/assets/images/fire.svg"
-              width="15px"
-              height="15px"
-            />VA
+            N<img src="@/assets/images/fire.svg" width="15px" height="15px" />VA
           </div>
         </v-container>
       </div>
+
+      <div v-else></div>
 
       <!-- drawer -->
       <v-navigation-drawer
@@ -106,9 +107,14 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
+        <div class="ml-3 mt-5">
+          <span class="grey--text text-size-md" @click="logout"
+            ><v-icon class="ml-4 mr-4 primary--text" size="33">mdi-logout</v-icon>Log
+            Out</span
+          >
+        </div>
       </v-navigation-drawer>
     </v-card>
-    <!-- </v-main> -->
   </div>
 </template>
 
@@ -152,6 +158,10 @@ export default {
     closeDrawer() {
       this.drawer = false;
     },
+
+    logout(){
+      console.log()
+    }
   },
 };
 </script>
