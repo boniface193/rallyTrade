@@ -14,7 +14,7 @@
     <v-form ref="form">
       <!-- Current password field-->
       <div class="mb-5 settings-input">
-        <p class="mb-1 secondary--text">Current Password</p>
+        <p class="mb-1">Current Password</p>
         <v-text-field
           class="input mt-0"
           v-model="oldPassword"
@@ -31,7 +31,7 @@
 
       <!-- new password field-->
       <div class="mb-5 settings-input">
-        <p class="mb-1 secondary--text">New Password</p>
+        <p class="mb-1">New Password</p>
         <v-text-field
           class="input mt-0"
           v-model="newPassword"

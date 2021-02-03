@@ -118,7 +118,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .profilePage-container {
-  //width: 50%;
+  width: 70%;
   .profile-section {
     padding: 10px;
     .profile-body {
@@ -160,9 +160,9 @@ export default {
     color: #979797;
   }
 }
-// @media (max-width: 950px) {
-//   .profilePage-container {
-//     width: 100%;
-//   }
-// }
+@media (max-width: 950px) {
+  .profilePage-container {
+    width: 100%;
+  }
+}
 </style>
