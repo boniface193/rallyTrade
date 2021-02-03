@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import store from "@/store";
 
 import Index from "../views/Index.vue";
+// onboarding routes
 import SuspensionPage from "../views/SuspensionPage.vue";
 import Signup from "@/components/onboarding/Signup.vue";
 import Signin from "@/components/onboarding/Signin.vue";
@@ -11,7 +12,6 @@ import Forgotpassword from "@/components/onboarding/Forgotpassword.vue";
 import Emailverification from "@/components/onboarding/Emailverification.vue";
 import Forgotpasswordverification from "@/components/onboarding/Forgotpasswordverification.vue";
 import Onboarding from "@/views/onboarding/Onboarding.vue";
-
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue"
@@ -25,6 +25,12 @@ import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
 import BankAccount from '@/components/settings/BankAccount.vue';
+// Inventory
+import Inventory from "@/views/Inventory.vue";
+import InventoryHome from "@/components/inventory/InventoryHome.vue";
+import ProductPage from "@/components/inventory/ProductPage.vue";
+import CustomerDetailsForm from "@/components/inventory/CustomerDetailsForm.vue";
+import ProductDetails from "@/components/inventory/ProductDetails";
 
 Vue.use(VueRouter);
 
@@ -114,6 +120,7 @@ const routes = [
     name: "SuspensionPage",
     component: SuspensionPage
   },
+
   // dashboard 
   {
     path: "/dashboard",
@@ -143,7 +150,7 @@ const routes = [
           }
         ]
       },
-      // settings
+      // settings routes
       {
         path: "/settings",
         component: Settings,
@@ -170,9 +177,36 @@ const routes = [
           }
         ]
       },
+      // inventory routes
+      {
+        path: "/inventory",
+        component: Inventory,
+        children: [
+          {
+            path: "",
+            name: "InventoryHome",
+            component: InventoryHome
+          },
+          {
+            path: ":id",
+            name: "ProductPage",
+            component: ProductPage
+          },
+          {
+            path: ":id/customer-form",
+            name: "CustomerDetailsForm",
+            component: CustomerDetailsForm
+          },
+          {
+            path: ":id/details",
+            name: "ProductDetails",
+            component: ProductDetails
+          }
+        ]
+      }
     ]
   },
-  
+
 
   // onboarding routes
   {
