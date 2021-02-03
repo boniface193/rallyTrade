@@ -4,7 +4,7 @@
       class="d-flex align-center justify-center mb-8"
       style="position: relative"
     >
-     <!-- previous page -->
+     <!-- go to previous page -->
       <router-link
         :to="{
           name: 'ProductPage',
