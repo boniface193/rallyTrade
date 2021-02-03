@@ -44,11 +44,7 @@
                   <span class="order-no-grey">{{items.customers_name}}</span>
                 </div>
                 <div class="order-item-font mt-1">
-                  Payment Status:
-                  <span class="order-no-grey">{{items.payment}}</span>
-                </div>
-                <div class="order-item-font mt-1">
-                  Price (NGN):
+                  Amount (NGN):
                   <span class="order-no-grey">{{items.price}}</span>
                 </div>
               </v-col>
@@ -71,10 +67,10 @@ export default {
     return {
       Search: false,
       salesHistory: [
-        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", payment: "Paid", price: "5000.00"},
-        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", payment: "Paid", price: "5000.00"},
-        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", payment: "Paid", price: "5000.00"},
-        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", payment: "Paid", price: "5000.00"},
+        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu",  price: "5000.00"},
+        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu",  price: "5000.00"},
+        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", price: "5000.00"},
+        {image: require("../../assets/images/laptop.png"), itemName: "Infinix Hot 10", date: "5 Jul 2020", time: "8:58AM", customers_name: "Tony Nwachukwu", price: "5000.00"},
       ]
     }
   },

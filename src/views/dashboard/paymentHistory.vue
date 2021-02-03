@@ -26,11 +26,11 @@
           <v-card outlined class="rounded-lg py-3 px-8">
             
             <div class="order-item-font mt-1">
-              Status:
-              <span class="order-no-grey mx-1"> {{ items.payment }}</span>
+              Settlement Status:
+              <span class="order-no-grey mx-1"> {{ items.payment ? "Paid" : "Pending" }}</span>
             </div>
             <div class="order-item-font mt-1">
-              Amount:
+              Price Of Item:
               <span class="order-no-grey mx-1">N{{ items.price }}</span>
             </div>
             <div class="order-item-font mt-2">
@@ -38,10 +38,16 @@
               <span class="order-no-grey mx-1"> {{ items.itemName }} </span>
             </div>
             <div class="order-item-font mt-1">
-              Date:
+              {{items.payment ? 'Payment Date' : 'Due Date'}}:
               <span class="order-no-grey mx-1"
                 >{{ items.date }} {{
                   items.time}}</span
+              >
+            </div>
+            <div class="order-item-font mt-1">
+              Profit:
+              <span class="order-no-grey mx-1"
+                >{{ items.profit }}</span
               >
             </div>            
           </v-card>
@@ -67,30 +73,34 @@ export default {
           date: "5 Jul 2020",
           time: "8:58AM",
           customers_name: "Tony Nwachukwu",
-          payment: "Paid",
+          payment: true,
           price: "5000.00",
+          profit: "10%"
         },
         {
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
           customers_name: "Tony Nwachukwu",
-          payment: "Paid",
+          payment: false,
           price: "5000.00",
+          profit: "10%"
         },
         {
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
-          payment: "Paid",
+          payment: true,
           price: "5000.00",
+          profit: "10%"
         },
         {
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
-          payment: "Paid",
+          payment: false,
           price: "5000.00",
+          profit: "10%"
         },
       ],
     };
