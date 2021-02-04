@@ -12,10 +12,10 @@
               >mdi-magnify</v-icon
             >
           </div>
-          <div class="mx-10" @mouseout="toggleOnLeave">
+          <div class="mx-10 d-flex justify-center" @mouseout="toggleOnLeave">
             <Search
-              placeholder="Search orders"
-              @search="filterItems"
+              placeholder="Search history"
+              class="mx-lg-md-17"
               v-if="Search"
             />
           </div>
@@ -27,43 +27,39 @@
 
         <!-- <div class="leaderTitle text-center my-3">Leaderboard</div> -->
         <!-- <v-layout justify-center> -->
-          <v-row class="d-flex justify-center">
-            <v-col lg="10">
-              <v-row class="leader-label mt-5">
-                <v-col cols="2" lg="3">Rank</v-col>
-                <v-col cols="8" lg="6">Name</v-col>
-                <v-col cols="2" lg="3">Points</v-col>
-              </v-row>
+        <v-row class="d-flex justify-center">
+          <v-col lg="10">
+            <v-row class="leader-label mt-5">
+              <v-col cols="2" lg="3">Rank</v-col>
+              <v-col cols="8" lg="6">Name</v-col>
+              <v-col cols="2" lg="3">Points</v-col>
+            </v-row>
 
-              <v-row
-                class="leader-text my-2"
-                v-for="items in leaderboard"
-                :key="items.id"
-                :class="{ active: items.active }"
-              >
-                <v-col cols="2" lg="3">{{ items.rank }}</v-col>
-                <v-col cols="8" lg="6">
-                  <div
-                    class="d-flex"
-                    style="cursor: pointer"
-                    @click="openModal"
-                  >
-                    <span class="mr-3"
-                      ><v-img
-                        :src="items.image"
-                        height="28px"
-                        width="29px"
-                        class="rounded-pill"
-                      >
-                      </v-img
-                    ></span>
-                    <span>{{ items.name }}</span>
-                  </div>
-                </v-col>
-                <v-col cols="2" lg="3">{{ items.points }}</v-col>
-              </v-row>
-            </v-col>
-          </v-row>
+            <v-row
+              class="leader-text my-2"
+              v-for="items in leaderboard"
+              :key="items.id"
+              :class="{ active: items.active }"
+            >
+              <v-col cols="2" lg="3">{{ items.rank }}</v-col>
+              <v-col cols="8" lg="6">
+                <div class="d-flex" style="cursor: pointer" @click="openModal">
+                  <span class="mr-3"
+                    ><v-img
+                      :src="items.image"
+                      height="28px"
+                      width="29px"
+                      class="rounded-pill"
+                    >
+                    </v-img
+                  ></span>
+                  <span>{{ items.name }}</span>
+                </div>
+              </v-col>
+              <v-col cols="2" lg="3">{{ items.points }}</v-col>
+            </v-row>
+          </v-col>
+        </v-row>
         <!-- </v-layout> -->
       </div>
     </v-container>
@@ -143,7 +139,7 @@
 </template>
 
 <script>
-import Search from "@/components/general/Search.vue";
+import Search from "@/components/general/SearchBar.vue";
 import Modal from "@/components/modal.vue";
 export default {
   name: "orderDetails",
@@ -305,5 +301,10 @@ export default {
 .overlay {
   filter: blur(8px);
   -webkit-filter: blur(8px);
+}
+.mx-lg-md-17 {
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 }
 </style>

@@ -1,25 +1,15 @@
 <template>
   <v-container>
     <div class="mx-3">
-      
       <p class="sub-header">
         You have <span class="font-weight-bold">20</span> orders.
       </p>
       <!-- search filter -->
-      <v-row>
-        <v-col cols="10">
-          <v-icon class="position-abs ma-2 ml-3" color="#5064CC"
-            >mdi-magnify</v-icon
-          >
-          <!-- <input
-            type="text"
-            v-model="searchValue"
-            placeholder="placeholder"
-            class="form-controll pl-10 form-control-bgColor"
-          /> -->
+      <v-row class="d-flex justify-end">
+        <v-col cols="10" lg="5" md="5">
           <Search placeholder="Search orders" @search="filterItems" />
         </v-col>
-        <v-col cols="2" class="px-0">
+        <v-col cols="2" lg="1" md="1" class="px-0">
           <div class="primary text-center rounded-lg">
             <v-icon color="white" style="padding: 5.3px">mdi-menu</v-icon>
           </div>
@@ -111,7 +101,7 @@
 </template>
 
 <script>
-import Search from "@/components/general/Search.vue";
+import Search from "@/components/general/SearchBar.vue";
 import StepProgress from "vue-step-progress";
 // import { mapGetters } from "vuex";
 

@@ -11,10 +11,10 @@
             >mdi-magnify</v-icon
           >
         </div>
-        <div class="mx-10" @mouseout="toggleOnLeave">
+        <div class="mx-10 d-flex justify-center" @mouseout="toggleOnLeave">
           <Search
-            placeholder="Search orders"
-            @search="filterItems"
+            placeholder="Search history"
+            class="mx-lg-md-17"
             v-if="Search"
           />
         </div>
@@ -22,12 +22,12 @@
 
       <v-row>
         <v-col cols="12" lg="4" v-for="items in salesHistory" :key="items.id">
-
           <v-card outlined class="rounded-lg py-3 px-8">
-            
             <div class="order-item-font mt-1">
               Settlement Status:
-              <span class="order-no-grey mx-1"> {{ items.payment ? "Paid" : "Pending" }}</span>
+              <span class="order-no-grey mx-1">
+                {{ items.payment ? "Paid" : "Pending" }}</span
+              >
             </div>
             <div class="order-item-font mt-1">
               Price Of Item:
@@ -38,18 +38,15 @@
               <span class="order-no-grey mx-1"> {{ items.itemName }} </span>
             </div>
             <div class="order-item-font mt-1">
-              {{items.payment ? 'Payment Date' : 'Due Date'}}:
+              {{ items.payment ? "Payment Date" : "Due Date" }}:
               <span class="order-no-grey mx-1"
-                >{{ items.date }} {{
-                  items.time}}</span
+                >{{ items.date }} {{ items.time }}</span
               >
             </div>
             <div class="order-item-font mt-1">
               Profit:
-              <span class="order-no-grey mx-1"
-                >{{ items.profit }}</span
-              >
-            </div>            
+              <span class="order-no-grey mx-1">{{ items.profit }}</span>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -58,7 +55,7 @@
 </template>
 
 <script>
-import Search from "@/components/general/Search.vue";
+import Search from "@/components/general/SearchBar.vue";
 export default {
   name: "orderDetails",
   components: {
@@ -75,7 +72,7 @@ export default {
           customers_name: "Tony Nwachukwu",
           payment: true,
           price: "5000.00",
-          profit: "10%"
+          profit: "10%",
         },
         {
           itemName: "Infinix Hot 10",
@@ -84,7 +81,7 @@ export default {
           customers_name: "Tony Nwachukwu",
           payment: false,
           price: "5000.00",
-          profit: "10%"
+          profit: "10%",
         },
         {
           itemName: "Infinix Hot 10",
@@ -92,7 +89,7 @@ export default {
           time: "8:58AM",
           payment: true,
           price: "5000.00",
-          profit: "10%"
+          profit: "10%",
         },
         {
           itemName: "Infinix Hot 10",
@@ -100,7 +97,7 @@ export default {
           time: "8:58AM",
           payment: false,
           price: "5000.00",
-          profit: "10%"
+          profit: "10%",
         },
       ],
     };
@@ -125,5 +122,11 @@ export default {
 }
 .w-25 {
   width: 25% !important;
+}
+
+.mx-lg-md-17 {
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 }
 </style>
