@@ -56,7 +56,10 @@
                   >
                 </div>
                 <div class="card-history my-2">
-                  <router-link :to="{ name: items.routes }" style="text-decoration: none">
+                  <router-link
+                    :to="{ name: items.routes }"
+                    style="text-decoration: none"
+                  >
                     {{ items.card_history
                     }}<v-icon size="12" class="primary--text"
                       >mdi-arrow-right</v-icon

@@ -9,8 +9,8 @@
           <h5 class="text-center mx-auto">Sales History</h5>
           <v-icon style="cursor: pointer" @click="toggleSearch">mdi-magnify</v-icon>
         </div>
-        <div class="mx-10" @mouseout="toggleOnLeave">
-          <Search placeholder="Search orders" @search="filterItems" v-if="Search"/>
+        <div class="mx-10 d-flex justify-center" @mouseout="toggleOnLeave">
+          <Search placeholder="Search history" class="mx-lg-md-17"  v-if="Search"/>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import Search from "@/components/general/Search.vue";
+import Search from "@/components/general/SearchBar.vue";
 export default {
   name: "orderDetails",
   components: {
@@ -94,5 +94,10 @@ export default {
 }
 .w-25 {
   width: 25% !important;
+}
+.mx-lg-md-17{
+  @media (min-width: 1024px ) {
+    width: 50%;
+  }
 }
 </style>
