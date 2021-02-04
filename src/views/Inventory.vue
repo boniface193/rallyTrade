@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%">
+  <div style="height:100%" class="pt-8">
     <router-view v-show="!loader" />
     <div class="d-flex py-5 text-center" v-if="loader">
       <v-progress-circular
