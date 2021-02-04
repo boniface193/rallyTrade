@@ -125,7 +125,7 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       // searchValue: "",
       filterItems: "",
       lineThickness: 1,

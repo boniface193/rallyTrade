@@ -25,9 +25,9 @@
       </v-app-bar>
 
       <!-- drawer icon for other pages -->
-      <div
+      <div :class="{'d-none': this.drawer}"
         v-if="
-          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage'
+          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage' || this.$route.name === 'InventoryHome'
         "
         class="mt-3 ml-3"
       >
@@ -48,6 +48,10 @@
       </div>
 
       <div v-else></div>
+      <!-- this to add space between layout and nav when drawer is true -->
+      <div :class="{'my-12': this.drawer}"  v-if="
+          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage' || this.$route.name === 'InventoryHome'
+        "></div>
 
       <!-- drawer -->
       <v-navigation-drawer
