@@ -134,7 +134,7 @@ const routes = [
       // dashboard
       {
         path: "",
-        name: "dashboard",
+        name: "Dashboard",
         component: Dashboard,
       },
       // sales history
