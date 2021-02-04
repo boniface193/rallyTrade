@@ -13,16 +13,12 @@
     <CategoryList class="mt-6" />
 
     <div class="products-container pt-12 pb-5">
-      <ProductCard productId="j2020ss" class="mb-7"/>
-      <ProductCard productId="83993js" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
-      <ProductCard productId="3930909" class="mb-7"/>
+      <ProductCard
+        class="mb-7"
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+      />
     </div>
   </div>
 </template>
@@ -31,15 +27,20 @@ import SearchBar from "@/components/general/SearchBar.vue";
 import FilterIcon from "@/components/general/FilterIcon.vue";
 import CategoryList from "@/components/inventory/CategoryList.vue";
 import ProductCard from "@/components/inventory/ProductCard.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "InventoryHome",
   components: { SearchBar, FilterIcon, CategoryList, ProductCard },
+  computed: {
+    ...mapGetters({
+      products: "inventory/products",
+    }),
+  },
 };
 </script>
 <style lang="scss" scoped>
 .products-container {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 .search-container {

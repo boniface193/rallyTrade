@@ -1,26 +1,34 @@
 <template>
   <div class="card-container">
-    <div class="card-top">
-      <div class="image-container">
-        <img src="@/assets/images/fire.svg" />
+    <router-link
+      :to="{ name: 'ProductPage', params: { id: product.id, createLink: false } }"
+      style="text-decoration: none"
+    >
+      <div class="card-top">
+        <div class="image-container">
+          <img :src="product.image" alt=""/>
+        </div>
       </div>
-    </div>
-    <div class="card-bottom">
-      <h5 class="mb-1">MacBook Pro 2013</h5>
-      <p class="secondary--text mb-2" style="font-size: 11px">N200,000.00</p>
-      <p class="mb-0" style="color: #5064cc">N5k-10k</p>
-      <p class="secondary--text" style="font-size: 10px">Recommended profit</p>
-      <router-link :to="{ name: 'ProductPage', params: { id: productId}}" style="text-decoration: none">
+      <div class="card-bottom">
+        <h5 class="mb-1" style="color: black">{{ product.name }}</h5>
+        <p class="secondary--text mb-2" style="font-size: 11px">
+          &#8358;{{ product.price_label }}
+        </p>
+        <p class="mb-0" style="color: #5064cc">&#8358;5k - &#8358;10k</p>
+        <p class="secondary--text" style="font-size: 10px">
+          Recommended profit
+        </p>
+
         <div class="add-btn">+</div>
-      </router-link>
-    </div>
-    <p class="points">50pts</p>
+      </div>
+      <p class="points">50pts</p>
+    </router-link>
   </div>
 </template>
 <script>
 export default {
   name: "ProductCard",
-  props: ["productId"]
+  props: ["product"],
 };
 </script>
 <style lang="scss" scoped>
@@ -28,6 +36,7 @@ export default {
   min-width: 18%;
   height: 255px;
   position: relative;
+  margin: auto 1%;
   cursor: pointer;
   &:hover {
     transform: scale(1.05);
@@ -49,8 +58,9 @@ export default {
       width: 100%;
       height: 110px;
       margin: auto;
+      text-align: center;
       img {
-        width: 100%;
+        width: 80%;
         height: 100%;
       }
     }
@@ -99,17 +109,20 @@ export default {
 }
 @media (max-width: 1150px) {
   .card-container {
-    min-width: 23%;
+    min-width: 22.5%;
+    margin: auto 1%;
   }
 }
 @media (max-width: 750px) {
   .card-container {
     min-width: 30%;
+    margin: auto 1.5%;
   }
 }
 @media (max-width: 550px) {
   .card-container {
-    min-width: 47%;
+    min-width: 45%;
+     margin: auto 2%;
   }
 }
 </style>

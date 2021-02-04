@@ -1,7 +1,7 @@
 <template>
   <div class="category-container">
     <div
-      class="mr-3 px-4 category"
+      class="mr-3 px-4 category secondary--text"
       v-for="(category, index) in categories"
       :key="index"
     >
@@ -43,18 +43,22 @@ export default {
   overflow-x: auto;
   flex-wrap: nowrap;
   overflow-y: hidden;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none; 
-   display:flex;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  display: flex;
   .category {
     border: 1px solid #bebebe;
-    color: #bebebe;
     border-radius: 12px;
     font-size: 12px;
     height: 40px;
     display: flex;
     align-items: center;
     min-width: fit-content;
+    cursor: pointer;
+    &:hover {
+      background: #f3f5ff;
+      color: #758bfc !important;
+    }
   }
   &::-webkit-scrollbar {
     display: none;
