@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <v-row style="background: #fafafa">
-      <v-col class="col-12 col-md-6 py-5 py-md-15 px-5">
+  <div style="background: #fafafa">
+    <v-row>
+      <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
         <div class="image-container pa-10">
           <img src="@/assets/images/fire.svg" alt="" />
           <span class="points">50pt</span>
         </div>
       </v-col>
-      <v-col class="col-12 col-md-6 py-5 py-md-15 px-8">
+      <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
         <h5 class="mb-4">MacBook Pro 2013- 8GB- 2TB- 5K Retina Display</h5>
         <p class="secondary--text mb-4" style="font-size: 14px">
           <span class="mr-5">N200,000.00</span><span> SKU: 1234567 </span
@@ -43,53 +43,66 @@
                 id: this.$route.params.id,
               },
             }"
-            style="text-decoration: none;"
+            style="text-decoration: none"
             class="primary--text"
           >
             View more
           </router-link>
-
-        </div>
-        <!-- checkout container -->
-        <div class="resell-container px-5 pt-6 pb-5 mb-12">
-          <div v-show="!checkout">
-            <p>
-              <span class="mr-2 mb-4" style="font-weight: 500"
-                >Unit price: </span
-              ><span class="secondary--text">N200,000.00</span>
-            </p>
-            <p>
-              <span class="mr-2 mb-4" style="font-weight: 500"
-                >Recommended profit: </span
-              ><span class="primary--text">N5,000 - N10,000</span>
-            </p>
-            <v-btn class="primary" @click="() => (checkout = true)"
-              >Resell</v-btn
-            >
-          </div>
-
-          <div v-show="checkout">
-            <div class="d-flex mb-3" style="align-items: baseline">
-              <p class="mr-5 mb-0">Enter profit(N) by unit:</p>
-              <div style="width: 200px">
-                <v-text-field type="number" required></v-text-field>
-              </div>
-            </div>
-            <div class="d-flex align-center mb-5">
-              <p class="mr-5 mb-0">How many units do you want:</p>
-              <div class="d-flex align-center">
-                <span class="minus-btn" @click="decreaseNum">-</span>
-                <span class="mx-4">{{ quantity }}</span>
-                <span class="add-btn" @click="increaseNum">+</span>
-              </div>
-            </div>
-            <p class="mb-5">Total profit(N):</p>
-            <p class="mb-5">Total(N):</p>
-            <v-btn class="primary" @click="submitCheckoutDetails">Next</v-btn>
-          </div>
         </div>
       </v-col>
     </v-row>
+    <!-- checkout container -->
+    <div class="checkout-container">
+      <div class="resell-container px-5 pt-6 pb-5" v-show="!createLink">
+        <div v-show="!checkout">
+          <p>
+            <span class="mr-2 mb-4" style="font-weight: 600">Unit price: </span
+            ><span class="secondary--text">N200,000.00</span>
+          </p>
+          <p>
+            <span class="mr-2 mb-4" style="font-weight: 600"
+              >Recommended profit: </span
+            ><span class="primary--text">N5,000 - N10,000</span>
+          </p>
+          <v-btn class="primary" @click="() => (checkout = true)">Resell</v-btn>
+        </div>
+
+        <div v-show="checkout">
+          <div class="d-flex mb-3" style="align-items: baseline">
+            <p class="mr-5 mb-0" style="font-weight: 600">
+              Enter profit(N) by unit:
+            </p>
+            <div style="width: 200px">
+              <v-text-field type="number" required></v-text-field>
+            </div>
+          </div>
+          <div class="d-flex align-center mb-5">
+            <p class="mr-5 mb-0" style="font-weight: 600">Quantity:</p>
+            <div class="d-flex align-center">
+              <span class="minus-btn" @click="decreaseNum">-</span>
+              <span class="mx-4">{{ quantity }}</span>
+              <span class="add-btn" @click="increaseNum">+</span>
+            </div>
+          </div>
+          <p class="mb-5" style="font-weight: 600">Your profit(N):</p>
+          <p class="mb-5" style="font-weight: 600">Total(N):</p>
+          <v-btn class="primary" @click="submitCheckoutDetails">Next</v-btn>
+        </div>
+      </div>
+      <!-- link container -->
+      <div class="sellerLink-container px-5 pt-6 pb-5" v-show="createLink">
+        <p class="mb-4" style="font-weight: 600">
+          Congratulations! Your customer has been notified to make payment!
+        </p>
+        <p class="mb-4 secondary--text" style="font-size: 14px">
+          You can also share the link below with your customer:
+        </p>
+        <div class="link py-3">
+          <img src="@/assets/images/link.svg" alt="" />
+          https://nova.search.macbook13/ayotundelanwo23
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -99,6 +112,7 @@ export default {
     return {
       quantity: 0,
       checkout: false,
+      createLink: false,
     };
   },
   methods: {
@@ -143,18 +157,40 @@ export default {
   z-index: 3;
   border-radius: 8px;
 }
+.checkout-container {
+  right: 0px;
+  bottom: 0px;
+  position: sticky;
+  float: right;
+  width: 50%;
+}
 .resell-container {
-  width: 100%;
   background: #fff;
   border-top-right-radius: 24px;
   border-top-left-radius: 24px;
-  right: 0px;
-  bottom: 0px;
   z-index: 2;
   .v-btn:not(.v-btn--round).v-size--default {
     height: 45px;
     min-width: 100%;
     padding: 0 16px;
+  }
+}
+.sellerLink-container {
+  background: #fff;
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
+  z-index: 3;
+  .link {
+    background: #f3f5ff;
+    color: #758bfc;
+    text-align: center;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      margin-right: 10px;
+    }
   }
 }
 .add-btn {
@@ -178,5 +214,14 @@ export default {
   color: #758bfc;
   justify-content: center;
   cursor: pointer;
+}
+@media (max-width: 950px) {
+  .checkout-container {
+    width: 100%;
+  }
+  .sellerLink-container,
+  .resell-container {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
 }
 </style>
