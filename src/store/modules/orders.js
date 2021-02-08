@@ -66,7 +66,6 @@ const actions = {
                 }
             })
                 .then(response => {
-
                     context.commit("setOrders", response.data.data)
                     context.commit("setPageDetails", response.data.meta);
                     resolve(response.data.data)
@@ -111,7 +110,7 @@ const actions = {
                 }
             }).then(response => {
                 resolve(response);
-                console.log(resolve)
+                //console.log(resolve)
             })
                 .catch(error => {
                     context.commit("doNothing");
@@ -158,6 +157,23 @@ const actions = {
                     reject(error);
                 })
         })
+    },
+    // create order
+    createOrder(context, data) {
+        return new Promise((resolve, reject) => {
+            axios.post("/orders", data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                }).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
     }
 
 };
@@ -190,6 +206,8 @@ const mutations = {
     setPage(state, page) {
         state.page = page
     },
+    // commit nothing
+    doNothing: (state) => (state.doNothing = null),
 };
 
 export default {

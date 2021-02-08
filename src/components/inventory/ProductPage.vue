@@ -5,7 +5,7 @@
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
           <div class="image-container pa-10">
             <img :src="productDetails.image" alt="" />
-            <span class="points">{{productDetails.points}}pts</span>
+            <span class="points">{{ productDetails.points }}pts</span>
           </div>
         </v-col>
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
@@ -13,10 +13,14 @@
           <p class="secondary--text mb-4" style="font-size: 14px">
             <span class="mr-5">&#8358;{{ productDetails.price_label }}</span
             ><span> SKU: {{ productDetails.sku }} </span
-            ><span class="mx-2">|</span><span>29 Available</span>
+            ><span class="mx-2">|</span
+            ><span style="font-weight: 600; color: black"
+              >{{ productDetails.quantity }} Available</span
+            >
           </p>
           <p class="mb-4">
-            <span class="primary--text mr-2">&#8358;{{productDetails.min_profit_label}}</span
+            <span class="primary--text mr-2"
+              >&#8358;{{ productDetails.min_profit_label }}</span
             ><span class="secondary--text" style="font-size: 14px"
               >Suggested profit</span
             >
@@ -51,7 +55,7 @@
       <div class="checkout-container">
         <div
           class="resell-container px-5 pt-6 pb-5"
-          v-show="!this.$route.params.createLink"
+          v-show="!createLink.status"
         >
           <div v-show="!checkout">
             <p>
@@ -64,7 +68,11 @@
             <p>
               <span class="mr-2 mb-4" style="font-weight: 600"
                 >Recommended profit: </span
-              ><span class="primary--text">&#8358;{{productDetails.min_profit_label}} - &#8358;{{productDetails.max_profit_label}}</span>
+              ><span class="primary--text"
+                >&#8358;{{ productDetails.min_profit_label }} - &#8358;{{
+                  productDetails.max_profit_label
+                }}</span
+              >
             </p>
             <v-btn class="primary" @click="() => (checkout = true)"
               >Resell</v-btn
@@ -114,7 +122,7 @@
         <!-- link container -->
         <div
           class="sellerLink-container px-5 pt-6 pb-5"
-          v-show="this.$route.params.createLink"
+          v-show="createLink.status"
         >
           <p class="mb-4" style="font-weight: 600">
             Congratulations! Your customer has been notified to make payment!
@@ -124,7 +132,7 @@
           </p>
           <div class="link py-3 px-2">
             <img src="@/assets/images/link.svg" alt="" />
-            https://nova.search.macbook13/ayotundelanwo23
+            <span ref="customerUrl">{{ createLink.url }}</span>
           </div>
           <div
             class="d-flex align-center justify-space-between link-btn-container pt-5"
@@ -133,6 +141,7 @@
               color="#f3f5ff"
               class="primary--text mb-5"
               style="background: #f3f5ff"
+              v-clipboard:copy="createLink.url"
               >Copy Link</v-btn
             >
             <v-btn class="primary mb-5">Share Link</v-btn>
@@ -184,6 +193,9 @@ export default {
       inputRules: [
         (v) => !!v || "Profit is required", // verifies name satisfies the requirement
         (v) => Math.sign(v) !== -1 || "Negative profit is not allowed",
+        (v) =>
+          v <= this.productDetails.max_profit ||
+          "Profit must be less than maximum recommended profit",
       ],
       yourProfit: 0,
       total: 0,
@@ -202,6 +214,24 @@ export default {
         total: total,
         yourProfit: yourProfit,
       };
+    },
+    createLink() {
+      const params = new URLSearchParams(window.location.search);
+      const link = new URLSearchParams(
+        decodeURIComponent(window.location.search)
+      );
+      if (params.get("createLink")) {
+        const linkStatus = params.get("createLink");
+        const url = link.get("link");
+        return {
+          status: linkStatus,
+          url: url,
+        };
+      } else {
+        return {
+          status: false,
+        };
+      }
     },
   },
   created() {
@@ -227,12 +257,20 @@ export default {
   },
   methods: {
     increaseNum() {
-      this.quantity = parseInt(this.quantity, 10) + 1;
+      if (this.quantity < this.productDetails.quantity) {
+        this.quantity = parseInt(this.quantity, 10) + 1;
+      }
     },
     decreaseNum() {
       if (this.quantity > 1) {
         this.quantity = parseInt(this.quantity, 10) - 1;
       }
+    },
+    copyProductUrl() {
+      let copyTextarea = this.$refs.customerUrl;
+      copyTextarea.focus();
+      copyTextarea.select();
+      document.execCommand("copy");
     },
     submitCheckoutDetails() {
       this.$refs.form.validate();
@@ -242,6 +280,8 @@ export default {
           name: "CustomerDetailsForm",
           params: {
             id: this.$route.params.id,
+            quantity: this.quantity,
+            profit: this.profit,
             createLink: this.$route.params.createLink,
           },
         });
@@ -335,7 +375,7 @@ export default {
   justify-content: center;
   cursor: pointer;
 }
-.link-btn-container{
+.link-btn-container {
   .v-btn:not(.v-btn--round).v-size--default {
     height: 40px;
     min-width: 48%;

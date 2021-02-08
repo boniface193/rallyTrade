@@ -230,22 +230,22 @@ const routes = [
             path: ":id/details",
             name: "ProductDetails",
             component: ProductDetails
-          },
-          {
-            path: "/checkout/:id",
-            name: "CheckoutPage",
-            component: CheckoutPage
-          },
-          {
-            path: "/delivery/:id",
-            name: "DeliveryPage",
-            component: DeliveryPage
           }
         ]
       }
     ]
   },
-
+  // checkout pages
+  {
+    path: "/checkout",
+    name: "CheckoutPage",
+    component: CheckoutPage
+  },
+  {
+    path: "/delivery/:id",
+    name: "DeliveryPage",
+    component: DeliveryPage
+  },
 
   // onboarding routes
   {

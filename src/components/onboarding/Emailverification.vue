@@ -127,6 +127,7 @@ export default {
           .dispatch("onboarding/verifyEmail", {
             otp: this.code,
             email: this.$route.params.email,
+            type: "seller"
           })
           .then((response) => {
             this.loading = false;
@@ -161,6 +162,7 @@ export default {
       this.$store
         .dispatch("onboarding/resendEmailOTP", {
           email: this.$route.params.email,
+          type: "seller"
         })
         .then((response) => {
           if (response.data.message === "An OTP has been sent to your email.") {

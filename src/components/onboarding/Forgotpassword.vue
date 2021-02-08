@@ -75,6 +75,7 @@ export default {
       this.$store
         .dispatch("onboarding/forgotPassword", {
           email: this.email,
+          type: "seller"
         })
         .then((response) => {
           this.loading = false;
