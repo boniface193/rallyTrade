@@ -270,10 +270,9 @@ export default {
   font-size: 14px;
 }
 .leader-label {
-  font-family: "Product Sans Light";
+  font-family: "Product Sans Bold";
   color: #979797;
   font-size: 14px;
-  opacity: 0.5;
 }
 .active {
   border-left: 4px solid #5064cc;
