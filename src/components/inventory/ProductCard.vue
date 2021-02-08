@@ -1,12 +1,15 @@
 <template>
   <div class="card-container">
     <router-link
-      :to="{ name: 'ProductPage', params: { id: product.id, createLink: false } }"
+      :to="{
+        name: 'ProductPage',
+        params: { id: product.id, createLink: false },
+      }"
       style="text-decoration: none"
     >
       <div class="card-top">
         <div class="image-container">
-          <img :src="product.image" alt=""/>
+          <img :src="product.image" alt="" />
         </div>
       </div>
       <div class="card-bottom">
@@ -14,14 +17,18 @@
         <p class="secondary--text mb-2" style="font-size: 11px">
           &#8358;{{ product.price_label }}
         </p>
-        <p class="mb-0" style="color: #5064cc">&#8358;5k - &#8358;10k</p>
+        <p class="mb-0" style="color: #5064cc">
+          &#8358;{{ product.min_profit_label }} - &#8358;{{
+            product.max_profit_label
+          }}
+        </p>
         <p class="secondary--text" style="font-size: 10px">
           Recommended profit
         </p>
 
         <div class="add-btn">+</div>
       </div>
-      <p class="points">50pts</p>
+      <p class="points">{{ product.points }}pts</p>
     </router-link>
   </div>
 </template>
@@ -122,7 +129,7 @@ export default {
 @media (max-width: 550px) {
   .card-container {
     min-width: 45%;
-     margin: auto 2%;
+    margin: auto 2%;
   }
 }
 </style>
