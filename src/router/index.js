@@ -34,8 +34,9 @@ import Inventory from "@/views/Inventory.vue";
 import InventoryHome from "@/components/inventory/InventoryHome.vue";
 import ProductPage from "@/components/inventory/ProductPage.vue";
 import CustomerDetailsForm from "@/components/inventory/CustomerDetailsForm.vue";
-import ProductDetails from "@/components/inventory/ProductDetails";
-
+import ProductDetails from "@/components/inventory/ProductDetails.vue";
+import CheckoutPage from "@/components/inventory/CheckoutPage.vue";
+import DeliveryPage from "@/components/inventory/DeliveryPage.vue";
 Vue.use(VueRouter);
 
 // requirement for user to log on to the dashboard
@@ -229,6 +230,16 @@ const routes = [
             path: ":id/details",
             name: "ProductDetails",
             component: ProductDetails
+          },
+          {
+            path: "/checkout/:id",
+            name: "CheckoutPage",
+            component: CheckoutPage
+          },
+          {
+            path: "/delivery/:id",
+            name: "DeliveryPage",
+            component: DeliveryPage
           }
         ]
       }

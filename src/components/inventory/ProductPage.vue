@@ -5,7 +5,7 @@
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
           <div class="image-container pa-10">
             <img :src="productDetails.image" alt="" />
-            <span class="points">50pt</span>
+            <span class="points">{{productDetails.points}}pts</span>
           </div>
         </v-col>
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
@@ -16,7 +16,7 @@
             ><span class="mx-2">|</span><span>29 Available</span>
           </p>
           <p class="mb-4">
-            <span class="primary--text mr-2">&#8358;5,000</span
+            <span class="primary--text mr-2">&#8358;{{productDetails.min_profit_label}}</span
             ><span class="secondary--text" style="font-size: 14px"
               >Suggested profit</span
             >
@@ -64,7 +64,7 @@
             <p>
               <span class="mr-2 mb-4" style="font-weight: 600"
                 >Recommended profit: </span
-              ><span class="primary--text">&#8358;5,000 - &#8358;10,000</span>
+              ><span class="primary--text">&#8358;{{productDetails.min_profit_label}} - &#8358;{{productDetails.max_profit_label}}</span>
             </p>
             <v-btn class="primary" @click="() => (checkout = true)"
               >Resell</v-btn
@@ -135,7 +135,7 @@
               style="background: #f3f5ff"
               >Copy Link</v-btn
             >
-            <v-btn class="primary mb-5">Share</v-btn>
+            <v-btn class="primary mb-5">Share Link</v-btn>
           </div>
         </div>
       </div>
@@ -340,6 +340,12 @@ export default {
     height: 40px;
     min-width: 48%;
     padding: 0 16px;
+  }
+}
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
   }
 }
 @media (max-width: 950px) {

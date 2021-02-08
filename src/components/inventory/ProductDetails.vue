@@ -106,4 +106,10 @@ export default {
   left: 0px;
   top: 0;
 }
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
 </style>
