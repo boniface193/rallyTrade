@@ -21,32 +21,46 @@
       </div>
 
       <v-row>
-        <v-col cols="12" lg="4" v-for="items in salesHistory" :key="items.id">
-          <v-card outlined class="rounded-lg py-3 px-8">
-            <div class="order-item-font mt-1">
-              Settlement Status:
-              <span class="order-no-grey mx-1">
-                {{ items.payment ? "Paid" : "Pending" }}</span
-              >
-            </div>
-            <div class="order-item-font mt-1">
-              Price Of Item:
-              <span class="order-no-grey mx-1">N{{ items.price }}</span>
-            </div>
-            <div class="order-item-font mt-2">
-              Description:
-              <span class="order-no-grey mx-1"> {{ items.itemName }} </span>
-            </div>
-            <div class="order-item-font mt-1">
-              {{ items.payment ? "Payment Date" : "Due Date" }}:
-              <span class="order-no-grey mx-1"
-                >{{ items.date }} {{ items.time }}</span
-              >
-            </div>
-            <div class="order-item-font mt-1">
-              Profit:
-              <span class="order-no-grey mx-1">{{ items.profit }}</span>
-            </div>
+        <v-col sm="4" md="6" v-for="items in salesHistory" :key="items.id">
+          <v-card outlined class="rounded-lg py-3">
+            <v-row>
+              <v-col cols="5">
+                <div class="text-center">
+                  <v-img
+                    :src="items.image"
+                    class="mx-3 my-5 image-bgColor"
+                    width="90%"
+                  ></v-img>
+                </div>
+              </v-col>
+
+              <v-col cols="7" class="pr-5 pl-1 my-lg-3 my-md-3">
+                <div class="order-item-font mt-1">
+                  Settlement Status:
+                  <span class="order-no-grey mx-1">
+                    {{ items.payment ? "Paid" : "Pending" }}</span
+                  >
+                </div>
+                <div class="order-item-font mt-1">
+                  Price Of Item:
+                  <span class="order-no-grey mx-1">N{{ items.price }}</span>
+                </div>
+                <div class="order-item-font mt-2">
+                  Description:
+                  <span class="order-no-grey mx-1"> {{ items.itemName }} </span>
+                </div>
+                <div class="order-item-font mt-1">
+                  {{ items.payment ? "Payment Date" : "Due Date" }}:
+                  <span class="order-no-grey mx-1"
+                    >{{ items.date }} {{ items.time }}</span
+                  >
+                </div>
+                <div class="order-item-font mt-1">
+                  Profit(NGN):
+                  <span class="order-no-grey mx-1">{{ items.profit }}</span>
+                </div>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -66,38 +80,42 @@ export default {
       Search: false,
       salesHistory: [
         {
+          image: require("../../assets/images/laptop.png"),
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
           customers_name: "Tony Nwachukwu",
           payment: true,
           price: "5000.00",
-          profit: "10%",
+          profit: "10",
         },
         {
+          image: require("../../assets/images/laptop.png"),
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
           customers_name: "Tony Nwachukwu",
           payment: false,
           price: "5000.00",
-          profit: "10%",
+          profit: "10",
         },
         {
+          image: require("../../assets/images/laptop.png"),
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
           payment: true,
           price: "5000.00",
-          profit: "10%",
+          profit: "10",
         },
         {
+          image: require("../../assets/images/laptop.png"),
           itemName: "Infinix Hot 10",
           date: "5 Jul 2020",
           time: "8:58AM",
           payment: false,
           price: "5000.00",
-          profit: "10%",
+          profit: "10",
         },
       ],
     };
