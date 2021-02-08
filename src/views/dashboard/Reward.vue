@@ -9,45 +9,34 @@
       </div>
 
       <!-- card -->
-      <div style="width: 319px; height: 174px">
-        <div class="overlay"></div>
-        <div class="curve primary-1 rounded-t-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 319">
-            <path
-              fill="#52f1ec"
-              fill-opacity="1"
-              d="M0,192L48,208C96,224,192,256,288,250.7C384,245,480,203,576,154.7C672,107,768,53,864,42.7C960,32,1056,64,1152,85.3C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-            ></path>
-          </svg>
+      <div class="">
+        <div class="overlay pa-8">
+          <div class="card-title">Reward Debit Balance</div>
+          <div class="card-point mt-10">2095 Points</div>
+          <div class="card-name mt-3">Ayotunde Lanwo</div>
         </div>
-        <div class="curve novaji mb-5 rounded-b-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path
-              fill="#09229F"
-              fill-opacity="1"
-              d="M0,192L48,208C96,224,192,256,288,250.7C384,245,480,203,576,154.7C672,107,768,53,864,42.7C960,32,1056,64,1152,85.3C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-            ></path>
-          </svg>
+        <div style="width: 319px; " class="mb-8 pr-4">
+          <v-img src="@/assets/images/reward.png"></v-img>
         </div>
       </div>
+
       <v-row>
-        <v-col lg="4">
-        <v-tabs
-        height="40"
-        class="rounded-lg"
-        style="border: 1px solid #bebebe"
-        v-model="tab"
-        centered
-      >
-        <v-tabs-slider></v-tabs-slider>
+        <v-col lg="4" xl="4" md="4" sm="6">
+          <v-tabs
+            height="40"
+            class="rounded-lg"
+            style="border: 1px solid #bebebe"
+            v-model="tab"
+            centered
+          >
+            <v-tabs-slider></v-tabs-slider>
 
-        <v-tab href="#tab-1" class="text-format"> Redeem </v-tab>
+            <v-tab href="#tab-1" class="text-format"> Redeem </v-tab>
 
-        <v-tab href="#tab-2" class="text-format"> History </v-tab>
-      </v-tabs>
+            <v-tab href="#tab-2" class="text-format"> History </v-tab>
+          </v-tabs>
         </v-col>
       </v-row>
-      
 
       <v-tabs-items v-model="tab" class="my-3">
         <v-tab-item id="tab-1" value="tab-1">
@@ -89,6 +78,7 @@
             <v-col
               cols="12"
               lg="4"
+              md="4"
               v-for="items in rewardHistory"
               :key="items.id"
             >
@@ -183,14 +173,26 @@ export default {
   font-size: 10px;
   color: #979797;
 }
-.novaji {
-  background-color: #52f1ec;
+
+.overlay {
+  position: absolute;
+  z-index: 1;
+  color: #fff;
 }
-.curve svg {
-  display: block;
+
+.card-title {
+  font-family: "Product Sans Light";
+  font-size: 12px;
 }
-.primary-1 {
-  background-color: #09229f;
+
+.card-point {
+  font-family: "Product Sans Medium";
+  font-size: 18px;
+}
+
+.card-name {
+  font-family: "Product Sans Light";
+  font-size: 14px;
 }
 
 .v-tab--active {
@@ -234,7 +236,7 @@ export default {
 }
 a.text-format.v-tab.v-tab--active {
   margin: 0 0 0 0px !important;
-  padding: 0px 15%;
+  padding: 0px 17%;
   border-radius: 6px !important;
 }
 div.v-tabs-slider {
