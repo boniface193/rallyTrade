@@ -1,0 +1,131 @@
+<template>
+  <div class="px-4 py-5" style="height: 100%">
+    <v-row>
+      <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
+        <div class="image-container pa-10">
+          <img src="@/assets/images/fire.svg" alt="" />
+        </div>
+      </v-col>
+      <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
+        <h5 class="mb-4">MacBook Pro 2013- 8GB- 2TB- 5K Retina Display</h5>
+        <p class="primary--text mb-2">&#8358;150,000</p>
+        <p class="secondary--text" style="font-size: 14px">
+          Inventory: TDAfrica
+        </p>
+        <div class="d-flex align-center">
+          <p class="secondary--text mr-1 mb-0" style="font-size: 14px">
+            Seller:
+          </p>
+          <div class="seller-image">
+            <img src="@/assets/images/user-profile.svg" alt="" />
+          </div>
+          <h5>Ayotunde Lanwo</h5>
+          <v-icon color="#64B161" class="ml-6">mdi-whatsapp</v-icon>
+        </div>
+        <div class="mt-5 d-flex align-center">
+          <div class="d-flex align-center">
+            <span class="minus-btn" @click="decreaseNum">-</span>
+            <span class="mx-4">{{ quantity }}</span>
+            <span class="add-btn" @click="increaseNum">+</span>
+          </div>
+          <p class="ml-5 mb-0">
+            <span class="primary--text" style="font-size: 20px"
+              >&#8358;150,000</span
+            ><br /><span class="secondary--text" style="font-size: 14px"
+              >Delivery fee not included yet</span
+            >
+          </p>
+        </div>
+        <div class="btn-container">
+          <v-btn class="primary mt-7 mb-3">Continue</v-btn>
+          <p class="secondary--text" style="font-size: 14px">
+            By clicking continue, you are agreeing to our terms of service and
+            our disclaimer
+          </p>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+<script>
+export default {
+  name: "CheckoutPage",
+  data: function () {
+    return {
+      quantity: 1,
+    };
+  },
+  methods: {
+    increaseNum() {
+      this.quantity = parseInt(this.quantity, 10) + 1;
+    },
+    decreaseNum() {
+      if (this.quantity > 1) {
+        this.quantity = parseInt(this.quantity, 10) - 1;
+      }
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.image-container {
+  width: 80%;
+  background: #fff;
+  margin: auto;
+  border-radius: 12px;
+  position: relative;
+  img {
+    width: 100%;
+  }
+}
+.seller-image {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.add-btn {
+  border-radius: 50%;
+  background: #758bfc;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  justify-content: center;
+  cursor: pointer;
+}
+.minus-btn {
+  border-radius: 50%;
+  background: #f3f5ff;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  color: #758bfc;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 40px;
+  min-width: 200px;
+  padding: 0 16px;
+}
+@media (max-width: 500px) {
+  .btn-container {
+    text-align: center;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    min-width: 100%;
+  }
+}
+</style>
