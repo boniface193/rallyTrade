@@ -188,11 +188,20 @@ export default {
   created() {
     if (this.$store.getters["settings/profile"].name === "") {
       this.$store.dispatch("settings/getUserProfile");
-    }
+    };
+
+    this.largerScreen();
+
   },
   methods: {
     closeDrawer() {
       this.drawer = false;
+    },
+
+    largerScreen(){
+      if (window.screen.width >= 1024) {
+        this.drawer = true;
+      }
     },
 
     logout() {
