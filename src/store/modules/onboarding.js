@@ -93,6 +93,7 @@ const actions = {
             axios.post("auth/login", data).then(response => {
                 context.commit("setToken", response.data.token)
                 resolve(response)
+                console.log(response)
             })
                 .catch(error => {
                     context.commit("removeToken")

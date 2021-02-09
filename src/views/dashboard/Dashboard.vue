@@ -1,6 +1,19 @@
 <template>
   <div>
-    <div class="primary pb-12">
+    <div class="primary pb-12 py-3">
+      <!-- <Layout>
+        <template v-slot="slotProps">
+          <div class="d-flex">
+            <div @click.stop="drawer = !drawer">
+              <v-icon size="19" color="#000"> mdi-segment</v-icon>
+            </div>
+            <v-spacer></v-spacer>
+            <div class="">
+              <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
+            </div>
+          </div>
+        </template>
+      </Layout> -->
       <div class="mx-7">
         <Calender
           class="float-right"
@@ -78,10 +91,12 @@
 <script>
 import moment from "moment";
 import Calender from "@/components/general/calender.vue";
+// import Layout from "@/components/layout/Layout.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {
     Calender,
+    // Layout,
   },
   data() {
     return {
