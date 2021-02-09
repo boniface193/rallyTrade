@@ -15,7 +15,7 @@
       <div class="card-bottom">
         <h5 class="mb-1" style="color: black">{{ product.name }}</h5>
         <p class="secondary--text mb-2" style="font-size: 11px">
-          &#8358;{{ product.price_label }}
+          &#8358;{{ product.total_price_label }}
         </p>
         <p class="mb-0" style="color: #5064cc">
           &#8358;{{ product.min_profit_label }} - &#8358;{{
