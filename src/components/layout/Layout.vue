@@ -109,19 +109,27 @@
         </v-list>
         <div class="ml-3 mt-5">
           <span class="grey--text text-size-md" @click="logout"
-            ><v-icon class="ml-4 mr-4 primary--text" size="33">mdi-logout</v-icon>Log
-            Out</span
+            ><v-icon class="ml-4 mr-4 primary--text" size="33"
+              >mdi-logout</v-icon
+            >Log Out</span
           >
         </div>
       </v-navigation-drawer>
     </v-card>
+<!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="120">
+      <div class="text-center dialog white">Loging Out...</div>
+    </modal>
   </div>
 </template>
 
 <script>
+import modal from "@/components/modal.vue";
 export default {
+  components: { modal },
   data: () => ({
     drawer: true,
+    dialog: false,
     items: [
       {
         title: "Inventory",
@@ -159,9 +167,16 @@ export default {
       this.drawer = false;
     },
 
-    logout(){
-      console.log()
-    }
+    logout() {
+      this.$store.commit("reset");
+      this.$store.commit("onboarding/removeToken");
+      this.dialog = true;
+      setTimeout(() => {
+        this.$router.push({
+          name: "Signin",
+        });
+      }, 1000);
+    },
   },
 };
 </script>
