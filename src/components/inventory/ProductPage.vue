@@ -157,7 +157,7 @@
           >
         </div>
 
-        <div class="d-flex align-center justify-space-between">
+        <div class="d-flex align-center justify-space-between px-4">
           <v-icon color="#64B161" large class="mt-3 mr-3">mdi-whatsapp</v-icon>
           <v-icon color="#00ACEE" large class="mt-3 mr-3">mdi-twitter</v-icon>
           <v-icon color="#3B5998" large class="mt-3 mr-3">mdi-facebook</v-icon>
