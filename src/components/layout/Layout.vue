@@ -1,16 +1,16 @@
 <template>
   <div style="margin: auto; max-width: 1800px">
     <v-card elevation="0">
-    <!-- User dashboard layout -->
-    <!-- navbar -->
-    <!-- <v-card elevation="0"> -->
-    <v-app-bar
+      <!-- User dashboard layout -->
+      <!-- navbar -->
+      <!-- <v-card elevation="0"> -->
+      <v-app-bar
         elevation="0"
         app
         dark
         color="primary"
         v-if="this.$route.path == '/dashboard'"
-        class="elevation-1 rounded-0 border-0 px-2 py-3"
+        class="elevation-1 rounded-0 border-0 px-2 pt-3"
         width="100%"
       >
         <v-app-bar-nav-icon v-if="!drawer" @click.stop="drawer = !drawer">
@@ -23,7 +23,7 @@
           <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
         </div>
       </v-app-bar>
-    <!-- <div
+      <!-- <div
       class="d-flex rounded-0"
       style="background-color: #5064cc; border-color: #5064cc"
     >
@@ -35,95 +35,95 @@
         <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
       </div>
     </div> -->
-    <!-- <slot :toggle="drawer"></slot> -->
+      <!-- <slot :toggle="drawer"></slot> -->
 
-    <!-- drawer icon for other pages -->
-    <div
-      :class="{ 'd-none': this.drawer }"
-      v-if="
-        this.$route.name === 'Orders' ||
-        this.$route.name === 'ProfilePage' ||
-        this.$route.name === 'InventoryHome'
-      "
-      class="mt-3 ml-3"
-    >
-      <v-container>
-        <v-icon
-          class="float-left mt-6 mr-5"
-          size="20"
-          v-if="!drawer"
-          @click.stop="drawer = !drawer"
-        >
-          mdi-segment</v-icon
-        >
-
-        <div class="header">
-          N<img src="@/assets/images/fire.svg" width="15px" height="15px" />VA
-        </div>
-      </v-container>
-    </div>
-
-    <div v-else></div>
-    <!-- this to add space between layout and nav when drawer is true -->
-    <div
-      :class="{ 'my-12': this.drawer }"
-      v-if="
-        this.$route.name === 'Orders' ||
-        this.$route.name === 'ProfilePage' ||
-        this.$route.name === 'InventoryHome'
-      "
-    ></div>
-
-    <!-- drawer -->
-    <v-navigation-drawer
-      class="border-0"
-      app
-      color="white"
-      width="250"
-      v-model="drawer"
-    >
-      <v-container class="mx-5 my-10 d-flex">
-        <div class="d-flex nova-logo">
-          N<span
-            ><v-img
-              src="@/assets/images/fire.svg"
-              width="20px"
-              class="mx-1"
-            ></v-img></span
-          >VA
-        </div>
-        <v-spacer></v-spacer>
-        <v-icon color="primary" size="32" class="mr-6" @click="closeDrawer"
-          >mdi-close</v-icon
-        >
-      </v-container>
-      <v-list class="pa-0" nav tile>
-        <v-list-item-group mandatory>
-          <v-list-item
-            class="rounded-0"
-            v-for="item in items"
-            :key="item.key"
-            link
-            router
-            :to="item.routes"
+      <!-- drawer icon for other pages -->
+      <div
+        :class="{ 'd-none': this.drawer }"
+        v-if="
+          this.$route.name === 'Orders' ||
+          this.$route.name === 'ProfilePage' ||
+          this.$route.name === 'InventoryHome'
+        "
+        class="mt-3 ml-3"
+      >
+        <v-container>
+          <v-icon
+            class="float-left mt-6 mr-5"
+            size="20"
+            v-if="!drawer"
+            @click.stop="drawer = !drawer"
           >
-            <v-list-item-content class="mx-5">
-              <v-list-item-title
-                class="text-size-md"
-                :class="{ activeColor: item.routes }"
-              >
-                <v-img
-                  v-if="!item.icons"
-                  :src="item.icon"
-                  width="30px"
-                  class="float-left"
-                ></v-img>
-                <v-icon
-                  v-if="item.icons"
-                  class="float-left primary--text"
-                  size="33"
-                  >{{ item.icon }}</v-icon
+            mdi-segment</v-icon
+          >
+
+          <div class="header">
+            N<img src="@/assets/images/fire.svg" width="15px" height="15px" />VA
+          </div>
+        </v-container>
+      </div>
+
+      <div v-else></div>
+      <!-- this to add space between layout and nav when drawer is true -->
+      <div
+        :class="{ 'my-12': this.drawer }"
+        v-if="
+          this.$route.name === 'Orders' ||
+          this.$route.name === 'ProfilePage' ||
+          this.$route.name === 'InventoryHome'
+        "
+      ></div>
+
+      <!-- drawer -->
+      <v-navigation-drawer
+        class="border-0"
+        app
+        color="white"
+        width="250"
+        v-model="drawer"
+      >
+        <v-container class="mx-5 my-10 d-flex">
+          <div class="d-flex nova-logo">
+            N<span
+              ><v-img
+                src="@/assets/images/fire.svg"
+                width="20px"
+                class="mx-1"
+              ></v-img></span
+            >VA
+          </div>
+          <v-spacer></v-spacer>
+          <v-icon color="primary" size="32" class="mr-6" @click="closeDrawer"
+            >mdi-close</v-icon
+          >
+        </v-container>
+        <v-list class="pa-0" nav tile>
+          <v-list-item-group mandatory>
+            <v-list-item
+              class="rounded-0"
+              v-for="item in items"
+              :key="item.key"
+              link
+              router
+              :to="item.routes"
+            >
+              <v-list-item-content class="mx-5">
+                <v-list-item-title
+                  class="text-size-md"
+                  :class="{ activeColor: item.routes }"
                 >
+                  <v-img
+                    v-if="!item.icons"
+                    :src="item.icon"
+                    width="30px"
+                    class="float-left"
+                  ></v-img>
+                  <v-icon
+                    v-if="item.icons"
+                    class="float-left primary--text"
+                    size="33"
+                    >{{ item.icon }}</v-icon
+                  >
                   <v-img
                     v-if="!item.icons"
                     :src="item.icon"
@@ -153,7 +153,7 @@
         </div>
       </v-navigation-drawer>
     </v-card>
-<!-- modal for dialog messages -->
+    <!-- modal for dialog messages -->
     <modal :dialog="dialog" width="120">
       <div class="text-center dialog white">Loging Out...</div>
     </modal>
@@ -164,8 +164,12 @@
 import modal from "@/components/modal.vue";
 export default {
   // props: ['drawer'],
+  components: {
+    modal,
+  },
   data: () => ({
     drawer: false,
+    dialog: false,
     items: [
       {
         title: "Inventory",

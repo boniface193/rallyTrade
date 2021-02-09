@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="primary pb-12 py-3">
+    <div class="primary pb-12 py-12">
       <!-- <Layout>
         <template v-slot="slotProps">
           <div class="d-flex">
@@ -192,7 +192,7 @@ export default {
 }
 .card-header {
   color: #2b2b2b;
-  font-size: 18px;
+  font-size: 17px;
   font-family: "Product Sans Bold";
   margin: 10px 0px 0px 0px;
   font-weight: bold;
