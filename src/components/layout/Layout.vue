@@ -3,14 +3,14 @@
     <v-card elevation="0">
       <!-- User dashboard layout -->
       <!-- navbar -->
+      <!-- <v-card elevation="0"> -->
       <v-app-bar
-        height="90"
         elevation="0"
         app
         dark
         color="primary"
         v-if="this.$route.path == '/dashboard'"
-        class="elevation-1 rounded-0 border-0 px-2"
+        class="elevation-1 rounded-0 border-0 px-2 pt-3"
         width="100%"
       >
         <v-app-bar-nav-icon v-if="!drawer" @click.stop="drawer = !drawer">
@@ -23,11 +23,27 @@
           <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
         </div>
       </v-app-bar>
+      <!-- <div
+      class="d-flex rounded-0"
+      style="background-color: #5064cc; border-color: #5064cc"
+    >
+      <div v-if="!drawer" @click.stop="drawer = !drawer">
+        <v-icon size="19" color="#000"> mdi-segment</v-icon>
+      </div>
+      <v-spacer></v-spacer>
+      <div class="">
+        <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
+      </div>
+    </div> -->
+      <!-- <slot :toggle="drawer"></slot> -->
 
       <!-- drawer icon for other pages -->
-      <div :class="{'d-none': this.drawer}"
+      <div
+        :class="{ 'd-none': this.drawer }"
         v-if="
-          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage' || this.$route.name === 'InventoryHome'
+          this.$route.name === 'Orders' ||
+          this.$route.name === 'ProfilePage' ||
+          this.$route.name === 'InventoryHome'
         "
         class="mt-3 ml-3"
       >
@@ -49,9 +65,14 @@
 
       <div v-else></div>
       <!-- this to add space between layout and nav when drawer is true -->
-      <div :class="{'my-12': this.drawer}"  v-if="
-          this.$route.name === 'Orders' || this.$route.name === 'ProfilePage' || this.$route.name === 'InventoryHome'
-        "></div>
+      <div
+        :class="{ 'my-12': this.drawer }"
+        v-if="
+          this.$route.name === 'Orders' ||
+          this.$route.name === 'ProfilePage' ||
+          this.$route.name === 'InventoryHome'
+        "
+      ></div>
 
       <!-- drawer -->
       <v-navigation-drawer
@@ -120,7 +141,7 @@
         </div>
       </v-navigation-drawer>
     </v-card>
-<!-- modal for dialog messages -->
+    <!-- modal for dialog messages -->
     <modal :dialog="dialog" width="120">
       <div class="text-center dialog white">Loging Out...</div>
     </modal>
@@ -130,9 +151,12 @@
 <script>
 import modal from "@/components/modal.vue";
 export default {
-  components: { modal },
+  // props: ['drawer'],
+  components: {
+    modal,
+  },
   data: () => ({
-    drawer: true,
+    drawer: false,
     dialog: false,
     items: [
       {

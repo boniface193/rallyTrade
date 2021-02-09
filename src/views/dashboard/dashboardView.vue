@@ -1,21 +1,20 @@
 <template>
-<div>
+  <div>
     <Layout />
-  <v-main>
+    <v-main>
       <router-view />
     </v-main>
-</div>
+  </div>
 </template>
 
 <script>
-import Layout from "@/components/layout/Layout.vue"
+import Layout from "@/components/layout/Layout.vue";
 export default {
-components: {
-    Layout
-}
-}
+  components: {
+    Layout,
+  },
+};
 </script>
 
 <style>
-
 </style>

@@ -13,26 +13,31 @@ export default {
 @font-face {
   font-family: "Product Sans Bold";
   src: local("Product Sans Bold"),
-    url('~@/assets/fonts/Product Sans Bold.ttf') format("truetype");
+    url("~@/assets/fonts/Product Sans Bold.ttf") format("truetype");
 }
 @font-face {
   font-family: "Product Sans Regular";
   src: local("Product Sans Regular"),
-    url('~@/assets/fonts/Product Sans Regular.ttf') format("truetype");
+    url("~@/assets/fonts/Product Sans Regular.ttf") format("truetype");
 }
 * {
   box-sizing: border-box;
-  font-family: "Product Sans Regular"
+  font-family: "Product Sans Regular";
 }
-h1,h2,h3,h4,h5,h6{
-   font-family: "Product Sans Bold"
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Product Sans Bold";
 }
 body {
   padding: 0;
   margin: auto;
 }
 #app {
-  max-width: 1500px;
+  // max-width: 1800px;
   margin: auto;
   .v-btn {
     text-transform: capitalize;
