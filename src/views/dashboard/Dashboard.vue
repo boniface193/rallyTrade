@@ -24,8 +24,8 @@
         <div class="welcome-text">Hello,</div>
         <div class="welcome-text-sm">{{ userInfo.name }}</div>
       </div>
-      <div class="mx-7 mt-8">
-        <v-row style="position: absolute; width: 90%">
+      <div class="mx-7 mt-8 d-flex justify-center">
+        <v-row style="position: absolute; width: 90%" class="">
           <v-col
             sm="4"
             md=""
@@ -189,6 +189,10 @@ export default {
 }
 .position-abs {
   position: absolute;
+  z-index: 1;
+}
+.ml-percent{
+  z-index: 1 !important;
 }
 .card-header {
   color: #2b2b2b;
