@@ -124,18 +124,6 @@
                     size="33"
                     >{{ item.icon }}</v-icon
                   >
-                  <v-img
-                    v-if="!item.icons"
-                    :src="item.icon"
-                    width="30px"
-                    class="float-left"
-                  ></v-img>
-                  <v-icon
-                    v-if="item.icons"
-                    class="float-left primary--text"
-                    size="33"
-                    >{{ item.icon }}</v-icon
-                  >
                   <div class="ml-12 pt-1 grey--text">
                     {{ item.title }}
                   </div>
