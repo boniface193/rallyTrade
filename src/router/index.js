@@ -242,7 +242,7 @@ const routes = [
     component: CheckoutPage
   },
   {
-    path: "/delivery/:id",
+    path: "/delivery",
     name: "DeliveryPage",
     component: DeliveryPage
   },

@@ -110,7 +110,6 @@ const actions = {
                 }
             }).then(response => {
                 resolve(response);
-                //console.log(resolve)
             })
                 .catch(error => {
                     context.commit("doNothing");

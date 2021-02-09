@@ -11,7 +11,7 @@
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
           <h5 class="mb-4">{{ productDetails.name }}</h5>
           <p class="secondary--text mb-4" style="font-size: 14px">
-            <span class="mr-5">&#8358;{{ productDetails.price_label }}</span
+            <span class="mr-5">&#8358;{{ productDetails.total_price_label }}</span
             ><span> SKU: {{ productDetails.sku }} </span
             ><span class="mx-2">|</span
             ><span style="font-weight: 600; color: black"
@@ -62,7 +62,7 @@
               <span class="mr-2 mb-4" style="font-weight: 600"
                 >Unit price: </span
               ><span class="secondary--text"
-                >&#8358;{{ productDetails.price_label }}</span
+                >&#8358;{{ productDetails.total_price_label }}</span
               >
             </p>
             <p>
@@ -144,10 +144,27 @@
               v-clipboard:copy="createLink.url"
               >Copy Link</v-btn
             >
-            <v-btn class="primary mb-5">Share Link</v-btn>
+            <v-btn class="primary mb-5" @click="shareDialog = true">Share Link</v-btn>
           </div>
         </div>
       </div>
+      <!-- modal for dialog messages -->
+    <modal :dialog="shareDialog" width="250">
+      <div class="white pa-3 pb-5 text-center dialog">
+        <div class="d-flex justify-end">
+          <v-icon class="error--text close-btn" @click="shareDialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+
+        <div class="d-flex align-center justify-space-between">
+          <v-icon color="#64B161" large class="mt-3 mr-3">mdi-whatsapp</v-icon>
+          <v-icon color="#00ACEE" large class="mt-3 mr-3">mdi-twitter</v-icon>
+          <v-icon color="#3B5998" large class="mt-3 mr-3">mdi-facebook</v-icon>
+        </div>
+        <p class="mt-4 mb-0 secondary--text">Share products with customers on social media</p>
+      </div>
+    </modal>
     </div>
     <div class="d-flex py-5 text-center" v-if="loader">
       <v-progress-circular
@@ -184,7 +201,7 @@ export default {
     return {
       quantity: 1,
       checkout: false,
-      //createLink: false,
+      shareDialog: false,
       productDetails: {},
       loader: false,
       statusImage: null,
@@ -207,7 +224,7 @@ export default {
       let yourProfit, total;
       if (Math.sign(this.profit) !== -1) {
         yourProfit = this.quantity * this.profit;
-        total = this.quantity * this.productDetails.price + yourProfit;
+        total = this.quantity * this.productDetails.total_price + yourProfit;
       }
 
       return {
