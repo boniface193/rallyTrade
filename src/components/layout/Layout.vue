@@ -124,26 +124,44 @@
                   size="33"
                   >{{ item.icon }}</v-icon
                 >
-                <div class="ml-12 pt-1 grey--text">
-                  {{ item.title }}
-                </div>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-      <div class="ml-3 mt-5">
-        <span class="grey--text text-size-md" @click="logout"
-          ><v-icon class="ml-4 mr-4 primary--text" size="33">mdi-logout</v-icon
-          >Log Out</span
-        >
-      </div>
-    </v-navigation-drawer>
+                  <v-img
+                    v-if="!item.icons"
+                    :src="item.icon"
+                    width="30px"
+                    class="float-left"
+                  ></v-img>
+                  <v-icon
+                    v-if="item.icons"
+                    class="float-left primary--text"
+                    size="33"
+                    >{{ item.icon }}</v-icon
+                  >
+                  <div class="ml-12 pt-1 grey--text">
+                    {{ item.title }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+        <div class="ml-3 mt-5">
+          <span class="grey--text text-size-md" @click="logout"
+            ><v-icon class="ml-4 mr-4 primary--text" size="33"
+              >mdi-logout</v-icon
+            >Log Out</span
+          >
+        </div>
+      </v-navigation-drawer>
     </v-card>
+<!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="120">
+      <div class="text-center dialog white">Loging Out...</div>
+    </modal>
   </div>
 </template>
 
 <script>
+import modal from "@/components/modal.vue";
 export default {
   // props: ['drawer'],
   data: () => ({
@@ -186,7 +204,14 @@ export default {
     },
 
     logout() {
-      console.log();
+      this.$store.commit("reset");
+      this.$store.commit("onboarding/removeToken");
+      this.dialog = true;
+      setTimeout(() => {
+        this.$router.push({
+          name: "Signin",
+        });
+      }, 1000);
     },
   },
 };
