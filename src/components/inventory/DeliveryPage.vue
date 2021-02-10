@@ -82,7 +82,6 @@
               :payment_options="paymentDetails.payment_options"
               redirect_url=""
               class="flutterwave-btn"
-              :meta="{ counsumer_id: '7898', consumer_mac: 'kjs9s8ss7dd' }"
               :customer="{
                 name: paymentDetails.url.customer.name,
                 email: paymentDetails.url.customer.email,
@@ -194,6 +193,8 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
+          console.log(this.paymentDetails.url.customer.email)
+          console.log(this.paymentDetails)
           this.$refs.paymentTriggerBtn.$el.click()
         })
         .catch((error) => {

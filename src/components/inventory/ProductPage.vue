@@ -9,7 +9,7 @@
           </div>
         </v-col>
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
-          <h5 class="mb-4">{{ productDetails.name }}</h5>
+          <h2 class="mb-4">{{ productDetails.name }}</h2>
           <p class="secondary--text mb-4" style="font-size: 14px">
             <span class="mr-5"
               >&#8358;{{ productDetails.total_price_label }}</span
