@@ -7,46 +7,7 @@
         </div>
       </v-col>
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
-        <h3 class="mb-4">{{ orderDetails.product_name }}</h3>
-        <p class="primary--text mb-2">
-          &#8358;{{ orderDetails.subtotal_label }}
-        </p>
-        <p class="secondary--text" style="font-size: 14px">
-          Inventory: TDAfrica
-        </p>
-        <div class="d-flex align-center">
-          <p class="secondary--text mr-1 mb-0" style="font-size: 14px">
-            Seller:
-          </p>
-          <div class="seller-image">
-            <img src="@/assets/images/user-profile.svg" alt="" />
-          </div>
-          <h5>{{ orderDetails.seller_name }}</h5>
-          <v-icon color="#64B161" class="ml-6">mdi-whatsapp</v-icon>
-        </div>
-        <div class="mt-5 d-flex align-center">
-          <div class="d-flex align-center">
-            <span class="minus-btn" @click="decreaseNum">-</span>
-            <span class="mx-4">{{ quantity }}</span>
-            <span class="add-btn" @click="increaseNum">+</span>
-          </div>
-          <p class="ml-5 mb-0">
-            <span class="primary--text" style="font-size: 20px"
-              >&#8358;{{ orderDetails.subtotal_label }}</span
-            ><br /><span class="secondary--text" style="font-size: 14px"
-              >Delivery fee not included yet</span
-            >
-          </p>
-        </div>
-        <div class="btn-container">
-          <v-btn class="primary mt-7 mb-3" @click="gotoDeliveryPage"
-            >Continue</v-btn
-          >
-          <p class="secondary--text" style="font-size: 14px">
-            By clicking continue, you are agreeing to our terms of service and
-            our disclaimer
-          </p>
-        </div>
+        <router-view :orderDetails="orderDetails" :productDetails="productDetails"/>
       </v-col>
     </v-row>
     <!-- page loader -->
@@ -87,7 +48,10 @@ export default {
       dialog: false,
       statusImage: null,
       dialogMessage: "",
-      orderDetails: "",
+      orderDetails: {
+        delivery_location: {},
+      },
+      productDetails: {},
       pageLoader: false,
     };
   },
@@ -101,7 +65,7 @@ export default {
       })
       .then((response) => {
         this.orderDetails = response.data.data;
-        this.pageLoader = false;
+        this.getProductDetails(this.orderDetails.product_id);
       })
       .catch((error) => {
         this.pageLoader = false;
@@ -115,18 +79,25 @@ export default {
       });
   },
   methods: {
-    increaseNum() {
-      this.quantity = parseInt(this.quantity, 10) + 1;
-    },
-    decreaseNum() {
-      if (this.quantity > 1) {
-        this.quantity = parseInt(this.quantity, 10) - 1;
-      }
-    },
-    gotoDeliveryPage() {
-      this.$router.push({
-        path: `/delivery?order_id=${this.orderDetails.id}`,
-      });
+    getProductDetails(product_id) {
+      this.$store
+        .dispatch("inventory/getProductDetail", {
+          id: product_id,
+        })
+        .then((response) => {
+          this.productDetails = response.data.data;
+          this.pageLoader = false;
+        })
+        .catch((error) => {
+          this.pageLoader = false;
+          this.dialog = true;
+          this.statusImage = failedImage;
+          if (error.response) {
+            this.dialogMessage = "Sorry, this data does not Exist";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
     },
   },
 };

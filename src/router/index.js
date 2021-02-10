@@ -36,7 +36,8 @@ import ProductPage from "@/components/inventory/ProductPage.vue";
 import CustomerDetailsForm from "@/components/inventory/CustomerDetailsForm.vue";
 import ProductDetails from "@/components/inventory/ProductDetails.vue";
 import CheckoutPage from "@/components/inventory/CheckoutPage.vue";
-import DeliveryPage from "@/components/inventory/DeliveryPage.vue";
+import PaymentDetails from "@/components/inventory/PaymentDetails.vue";
+import CheckoutDetails from "@/components/inventory/CheckoutDetails.vue";
 Vue.use(VueRouter);
 
 // requirement for user to log on to the dashboard
@@ -238,14 +239,21 @@ const routes = [
   // checkout pages
   {
     path: "/checkout",
-    name: "CheckoutPage",
-    component: CheckoutPage
+    component: CheckoutPage,
+    children: [
+      {
+        path: "/payment-details",
+        name: "PaymentDetails",
+        component: PaymentDetails
+      },
+      {
+        path: "/checkout-details",
+        name: "CheckoutDetails",
+        component: CheckoutDetails
+      }
+    ]
   },
-  {
-    path: "/delivery",
-    name: "DeliveryPage",
-    component: DeliveryPage
-  },
+ 
 
   // onboarding routes
   {
