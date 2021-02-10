@@ -7,7 +7,7 @@
       <!-- search filter -->
       <v-row class="d-flex justify-end">
         <v-col cols="10" lg="5" md="5">
-          <Search placeholder="Search orders" @search="filterItems" />
+          <Search placeholder="Search orders" @search="getSearchValue" />
         </v-col>
         <v-col cols="2" lg="1" md="1" class="px-0">
           <div class="primary text-center rounded-lg">
@@ -29,10 +29,12 @@
       </div>
       <!-- loader ends here -->
 
-      <!-- if no order -->
-      <!-- <p v-if="orders.length == 0" class="text-center mt-8">No Item Found</p> -->
       <v-row>
         <v-col sm="4" v-for="orders in ordersItems" :key="orders.id">
+          <!-- if no order -->
+          <p v-if="orders.length == 0" class="text-center mt-8">
+            No Item Found
+          </p>
           <v-card outlined class="rounded-lg pa-5 mb-3">
             <step-progress
               :steps="['Processing', 'Shipped', 'Delivered']"
@@ -52,7 +54,7 @@
               <v-col cols="5" class="py-0">
                 <div class="text-center">
                   <v-img
-                    :src="orders.img"
+                    :src="orders.product_image_url"
                     class="image-bgColor"
                     width="100%"
                   ></v-img>
@@ -66,30 +68,34 @@
                       :to="{ name: 'orderDetails', params: { id: orders.id } }"
                       style="text-decoration: none"
                     >
-                      {{ orders.order_no }}
+                      {{ orders.id }}
                     </router-link>
                   </span>
                 </div>
                 <div class="order-item-font">
                   Time:
                   <span class="order-no-grey"
-                    >{{ orders.date }}
+                    >{{ orders.created_at.slice(0, -6) }}
                     <span class="order-no-lighter-grey">{{
-                      orders.time
+                      orders.created_at.slice(10)
                     }}</span></span
                   >
                 </div>
                 <div class="order-item-font">
                   Customer:
-                  <span class="order-no-grey">{{ orders.customers_name }}</span>
+                  <span class="order-no-grey">{{ orders.customer_name }}</span>
                 </div>
                 <div class="order-item-font">
                   Payment Status:
-                  <span class="order-no-grey">{{ orders.payment_status }}</span>
+                  <span class="order-no-grey">{{
+                    orders.payment_status_label
+                  }}</span>
                 </div>
                 <div class="order-item-font">
                   Price (NGN):
-                  <span class="order-no-grey">{{ orders.price }}</span>
+                  <span class="order-no-grey">{{
+                    orders.product_price_label
+                  }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -103,7 +109,7 @@
 <script>
 import Search from "@/components/general/SearchBar.vue";
 import StepProgress from "vue-step-progress";
-// import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 // import the css (OPTIONAL - you can provide your own design)
 import "vue-step-progress/dist/main.css";
@@ -115,83 +121,51 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       // searchValue: "",
       filterItems: "",
       lineThickness: 1,
       activeThickness: 3,
       passiveThickness: 3,
       mySteps: ["Step 1", "Step 2", "Step 3"],
-
-      ordersItems: [
-        {
-          id: "order1",
-          img: require("../../assets/images/laptop.png"),
-          order_no: "000-00000-00000",
-          date: "5 Jul 2020",
-          time: "8:58AM",
-          customers_name: "Tony",
-          payment_status: "Paid",
-          price: "5000.00",
-          isProcessing: true,
-          isShipped: true,
-          isDelivered: false,
-        },
-
-        {
-          id: "order2",
-          img: require("../../assets/images/laptop.png"),
-          order_no: "000-00000-00000",
-          date: "5 Jul 2020",
-          time: "8:58AM",
-          customers_name: "Ayo",
-          payment_status: "Not Paid",
-          price: "5000.00",
-          isProcessing: false,
-          isShipped: false,
-          isDelivered: false,
-        },
-
-        {
-          id: "order3",
-          img: require("../../assets/images/laptop.png"),
-          order_no: "000-00000-00000",
-          date: "5 Jul 2020",
-          time: "8:58AM",
-          customers_name: "Lanwo",
-          payment_status: "Paid",
-          price: "5000.00",
-          isProcessing: true,
-          isShipped: true,
-          isDelivered: true,
-        },
-      ],
     };
   },
 
-  // computed: {
-  //   // to populate items on the table
-  //   ...mapGetters({
-  //     ordersItems: "orders/orders",
-  //     // searchOrder: "orders/searchOrder",
-  //   }),
-  //   // ...mapState({
-  //   //   searchValue: (state) => state.orders.searchValue,
-  //   //   pageDetails: (state) => state.orders.pageDetails,
-  //   // }),
-  // },
-  // created() {
-  //   this.$store.dispatch("orders/getOrders").then(() => {
-  //     this.isLoading = false;
-  //   });
-  //   this.$store.dispatch("orders/filterGetOrders");
-  // },
+  computed: {
+    // to populate items on the table
+    ...mapGetters({
+      ordersItems: "orders/orders",
+      searchOrder: "orders/searchOrder",
+    }),
+    ...mapState({
+      searchValue: (state) => state.orders.searchValue,
+      pageDetails: (state) => state.orders.pageDetails,
+    }),
+  },
+  created() {
+    this.$store.dispatch("orders/getOrders").then(() => {
+      this.isLoading = false;
+    });
+    this.$store.dispatch("orders/filterGetOrders");
+  },
 
-  // methods: {
-  //   filterItems(param){
-  //     console.log(param)
-  //   }
-  // }
+  methods: {
+    // search the datatable items
+    getSearchValue(params) {
+      this.$store.commit("orders/getSearchValue", params);
+      this.$store.commit("orders/setSearchOrder", true);
+      this.$store.dispatch("orders/searchOrders").then((response) => {
+        this.isLoading = true;
+        if (response) {
+          this.isLoading = false;
+          if (!response) {
+            alert('hello')
+          }
+        }
+        
+      });
+    },
+  }
   // computed: {
   //   filterItem: function () {
   //     return this.ordersItems.filter((blog) => {

@@ -77,9 +77,9 @@
     <div class="mx-3">
       <Modal
         class="overlay"
-        :id="leaderboard.id"
         :dialog="this.dialog"
         width="250"
+        
       >
         <v-card class="rounded-lg">
           <v-icon
@@ -93,7 +93,7 @@
             <div class="d-flex justify-center">
               <span>
                 <v-img
-                  src="@/assets/images/emike-larger.png"
+                  src="@/assets/images/emike.png"
                   height="54px"
                   width="55px"
                   class="rounded-pill"
@@ -101,7 +101,7 @@
               </span>
             </div>
             <span class="d-flex justify-center mt-2 body-text">
-              Emike Lucy
+              Emike lucy
             </span>
             <span class="d-flex justify-center title-text">
               Sales Representative
@@ -119,7 +119,7 @@
               <v-divider vertical> </v-divider>
               <v-list-item-content class="pt-1" align="center">
                 <v-list-item-title
-                  ><span class="primary--text larger-text">1000</span> <br />
+                  ><span class="primary--text larger-text">2587</span> <br />
                   <span class="title-text">Total Points</span>
                 </v-list-item-title>
               </v-list-item-content>
@@ -141,6 +141,7 @@
 <script>
 import Search from "@/components/general/SearchBar.vue";
 import Modal from "@/components/modal.vue";
+// import { mapGetters } from "vuex"
 export default {
   name: "orderDetails",
   components: {
@@ -227,6 +228,15 @@ export default {
       ],
     };
   },
+
+  // computed: {
+  //   ...mapGetters({leaderboard: 'leaderboard/leaderboard'})
+  // },
+
+  created() {
+    this.$store.dispatch("leaderboard/getLeaderboard");
+  },
+
   methods: {
     toggleSearch() {
       this.Search = true;
@@ -240,6 +250,7 @@ export default {
     openModal() {
       this.dialog = true;
     },
+    
   },
 };
 </script>
