@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-5" style="height: 100%">
+  <div class="px-4 py-5" style="background: #fafafa; height: 100%">
     <v-row v-show="!pageLoader">
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
         <div class="image-container pa-10">
@@ -7,9 +7,9 @@
         </div>
       </v-col>
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
-        <h5 class="mb-4">{{ orderDetails.product_name }}</h5>
+        <h3 class="mb-4">{{ orderDetails.product_name }}</h3>
         <p class="primary--text mb-2">
-          &#8358;{{ orderDetails.total_price_label }}
+          &#8358;{{ orderDetails.subtotal_label }}
         </p>
         <p class="secondary--text" style="font-size: 14px">
           Inventory: TDAfrica
@@ -32,7 +32,7 @@
           </div>
           <p class="ml-5 mb-0">
             <span class="primary--text" style="font-size: 20px"
-              >&#8358;{{ orderDetails.total_price_label }}</span
+              >&#8358;{{ orderDetails.subtotal_label }}</span
             ><br /><span class="secondary--text" style="font-size: 14px"
               >Delivery fee not included yet</span
             >

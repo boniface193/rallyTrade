@@ -9,9 +9,10 @@
           </div>
         </v-col>
         <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
-          <h5 class="mb-4">{{ productDetails.name }}</h5>
+          <h2 class="mb-4">{{ productDetails.name }}</h2>
           <p class="secondary--text mb-4" style="font-size: 14px">
-            <span class="mr-5">&#8358;{{ productDetails.total_price_label }}</span
+            <span class="mr-5"
+              >&#8358;{{ productDetails.total_price_label }}</span
             ><span> SKU: {{ productDetails.sku }} </span
             ><span class="mx-2">|</span
             ><span style="font-weight: 600; color: black"
@@ -20,7 +21,9 @@
           </p>
           <p class="mb-4">
             <span class="primary--text mr-2"
-              >&#8358;{{ productDetails.min_profit_label }}</span
+              >&#8358;{{ productDetails.min_profit_label }} - &#8358;{{
+                productDetails.max_profit_label
+              }}</span
             ><span class="secondary--text" style="font-size: 14px"
               >Suggested profit</span
             >
@@ -132,7 +135,25 @@
           </p>
           <div class="link py-3 px-2">
             <img src="@/assets/images/link.svg" alt="" />
-            <span ref="customerUrl">{{ createLink.url }}</span>
+            <span
+              style="cursor: pointer"
+              v-clipboard:copy="createLink.url"
+              @click="showCopyStatus"
+              >{{ createLink.url }}</span
+            >
+            <span style="position: relative">
+              <v-icon
+                class="ml-5 copy-btn"
+                v-clipboard:copy="createLink.url"
+                @click="showCopyStatus"
+                >mdi-content-copy</v-icon
+              >
+              <span
+                v-show="copyStatus"
+                class="copy-status primary--text py-1 px-2"
+                >Copied</span
+              >
+            </span>
           </div>
           <div
             class="d-flex align-center justify-space-between link-btn-container pt-5"
@@ -141,30 +162,54 @@
               color="#f3f5ff"
               class="primary--text mb-5"
               style="background: #f3f5ff"
-              v-clipboard:copy="createLink.url"
-              >Copy Link</v-btn
+              @click="
+                () => {
+                  this.$router.push({
+                    name: 'InventoryHome',
+                  });
+                }
+              "
+              >Continue selling
+            </v-btn>
+            <v-btn class="primary mb-5" @click="shareDialog = true"
+              >Share Link</v-btn
             >
-            <v-btn class="primary mb-5" @click="shareDialog = true">Share Link</v-btn>
           </div>
         </div>
       </div>
       <!-- modal for dialog messages -->
-    <modal :dialog="shareDialog" width="250">
-      <div class="white pa-3 pb-5 text-center dialog">
-        <div class="d-flex justify-end">
-          <v-icon class="error--text close-btn" @click="shareDialog = false"
-            >mdi-close</v-icon
-          >
-        </div>
+      <modal :dialog="shareDialog" width="250">
+        <div class="white pa-3 pb-5 text-center dialog">
+          <div class="d-flex justify-end">
+            <v-icon class="error--text close-btn" @click="shareDialog = false"
+              >mdi-close</v-icon
+            >
+          </div>
 
-        <div class="d-flex align-center justify-space-between px-4">
-          <v-icon color="#64B161" large class="mt-3 mr-3">mdi-whatsapp</v-icon>
-          <v-icon color="#00ACEE" large class="mt-3 mr-3">mdi-twitter</v-icon>
-          <v-icon color="#3B5998" large class="mt-3 mr-3">mdi-facebook</v-icon>
+          <div class="d-flex align-center justify-space-between px-8">
+            <whats-app
+              class="mt-3 mr-3"
+              :url="createLink.url"
+              title="Buy on NOVA"
+              scale="2"
+            ></whats-app>
+            <twitter
+              class="mt-3 mr-3"
+              :url="createLink.url"
+              title="Buy on NOVA"
+              scale="2"
+            ></twitter>
+            <facebook
+              class="mt-3 mr-3"
+              :url="createLink.url"
+              scale="2"
+            ></facebook>
+          </div>
+          <p class="mt-4 mb-0 secondary--text">
+            Share products with customers on social media
+          </p>
         </div>
-        <p class="mt-4 mb-0 secondary--text">Share products with customers on social media</p>
-      </div>
-    </modal>
+      </modal>
     </div>
     <div class="d-flex py-5 text-center" v-if="loader">
       <v-progress-circular
@@ -194,9 +239,12 @@
 <script>
 import failedImage from "@/assets/images/failed-img.svg";
 import modal from "@/components/modal.vue";
+import { Facebook } from "vue-socialmedia-share";
+import { Twitter } from "vue-socialmedia-share";
+import { WhatsApp } from "vue-socialmedia-share";
 export default {
   name: "Product",
-  components: { modal },
+  components: { modal, Facebook, Twitter, WhatsApp },
   data: function () {
     return {
       quantity: 1,
@@ -207,6 +255,7 @@ export default {
       statusImage: null,
       dialog: false,
       dialogMessage: "",
+      copyStatus: false,
       inputRules: [
         (v) => !!v || "Profit is required", // verifies name satisfies the requirement
         (v) => Math.sign(v) !== -1 || "Negative profit is not allowed",
@@ -283,23 +332,19 @@ export default {
         this.quantity = parseInt(this.quantity, 10) - 1;
       }
     },
-    copyProductUrl() {
-      let copyTextarea = this.$refs.customerUrl;
-      copyTextarea.focus();
-      copyTextarea.select();
-      document.execCommand("copy");
-    },
     submitCheckoutDetails() {
       this.$refs.form.validate();
-      console.log(this.$route.params.createLink);
+      const quantity = `${this.quantity}`;
+      const profit = `${this.profit}`;
       if (this.$refs.form.validate()) {
         this.$router.push({
-          name: "CustomerDetailsForm",
+          path: `/inventory/${
+            this.$route.params.id
+          }/customer-form?quantity=${encodeURIComponent(toString(
+            quantity)
+          )}&profit=${encodeURIComponent(toString(profit))}`,
           params: {
             id: this.$route.params.id,
-            quantity: this.quantity,
-            profit: this.profit,
-            createLink: this.$route.params.createLink,
           },
         });
       }
@@ -307,6 +352,12 @@ export default {
     // separate money with comma
     numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    showCopyStatus() {
+      this.copyStatus = true;
+      setTimeout(() => {
+        this.copyStatus = false;
+      }, 1000);
     },
   },
 };
@@ -367,6 +418,21 @@ export default {
     word-break: break-all;
     img {
       margin-right: 10px;
+    }
+    .copy-btn {
+      cursor: pointer;
+      &:hover {
+        color: #758bfc;
+      }
+    }
+    .copy-status {
+      position: absolute;
+      bottom: 100%;
+      background: #e0e7ff;
+      word-break: none;
+      width: 90px;
+      right: 0;
+      border-radius: 8px;
     }
   }
 }
