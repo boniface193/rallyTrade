@@ -81,13 +81,6 @@
         </v-text-field>
       </div>
 
-      <!-- Select state -->
-      <!-- <div class="mb-5 input-field">
-        <p class="mb-1">State/Region*</p>
-        <div style="height: 52px">
-          <selectBtn :items="['Kano', 'Abuja']" :item="'Select state/region'" />
-        </div>
-      </div> -->
       <div class="d-flex justify-end" style="width: 100%">
         <v-btn
           class="primary"
@@ -137,6 +130,10 @@ export default {
         this.loading = true;
         let getUrl = window.location;
         let baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+        const routeParameter = new URLSearchParams(
+          decodeURIComponent(window.location.search)
+        );
+        console.log(routeParameter.get("quantity"))
         this.$store
           .dispatch("orders/createOrder", {
             product_id: this.$route.params.id,
@@ -150,15 +147,17 @@ export default {
                 lng: 3.3593,
               },
             },
-            total_items: this.$route.params.quantity,
+            total_items: parseInt(routeParameter.get("quantity"), 10),
             payment_link: `${baseUrl}checkout`,
-            seller_profit: parseInt(this.$route.params.profit, 10)
+            seller_profit: parseInt(routeParameter.get("profit"), 10)
           })
           .then((response) => {
             this.loading = false;
             const url = response.data.meta.payment_link;
             this.$router.push({
-              path: `/inventory/${this.$route.params.id}?createLink=true&link=${encodeURIComponent(url)}`,
+              path: `/inventory/${
+                this.$route.params.id
+              }?createLink=true&link=${encodeURIComponent(url)}`,
               params: {
                 id: this.$route.params.id,
               },

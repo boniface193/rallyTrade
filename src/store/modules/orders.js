@@ -101,7 +101,7 @@ const actions = {
                 })
         })
     },
-
+    // get order details
     getOrdersDetail(context, data) {
         return new Promise((resolve, reject) => {
             axios.get(`/orders/${data.id}`, {
@@ -161,6 +161,23 @@ const actions = {
     createOrder(context, data) {
         return new Promise((resolve, reject) => {
             axios.post("/orders", data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                }).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
+    },
+    // pay for order
+    payForOrder(context, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(`/orders/${data.id}/pay`, data,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`

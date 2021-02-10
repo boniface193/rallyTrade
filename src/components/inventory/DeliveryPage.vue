@@ -1,10 +1,9 @@
 <template>
-  <div class="px-4 py-5" style="height: 100%">
+  <div class="px-4 py-5 delivery-container">
     <div v-show="!pageLoader">
       <router-link
         :to="{ path: `/checkout?order_id=${this.orderDetails.id}` }"
         style="text-decoration: none"
-        
       >
         <v-icon color="black" class="mt-3 mb-5">mdi-chevron-left</v-icon>
       </router-link>
@@ -26,12 +25,12 @@
           <v-radio-group v-model="radioGroup">
             <v-radio
               class="primary--text"
-              label="Express Delivery"
+              :label="`Express Delivery (₦${orderDetails.delivery_fee_label})`"
               value="express"
             ></v-radio>
             <v-radio
               class="primary--text"
-              :label="`Standard Delivery (₦${orderDetails.delivery_fee_label})`"
+              label="Standard Delivery "
               value="standard"
             ></v-radio>
           </v-radio-group>
@@ -65,7 +64,41 @@
               &#8358;{{ orderDetails.total_price_label }}
             </h3>
           </div>
-          <v-btn class="primary mt-7 mb-3">Pay now</v-btn>
+          <!-- payment btn -->
+          <v-btn
+            class="primary py-3"
+            :loading="processingLoader"
+            :disabled="processingLoader"
+            @click="payForItem"
+            >Pay now</v-btn
+          >
+          <div>
+            <flutterwave-pay-button
+             ref="paymentTriggerBtn"
+              :public_key="paymentDetails.url.public_key"
+              :tx_ref="paymentDetails.url.tx_ref"
+              :amount="paymentDetails.url.amount"
+              :currency="paymentDetails.url.currency"
+              :payment_options="paymentDetails.payment_options"
+              redirect_url=""
+              class="flutterwave-btn"
+              :meta="{ counsumer_id: '7898', consumer_mac: 'kjs9s8ss7dd' }"
+              :customer="{
+                name: paymentDetails.url.customer.name,
+                email: paymentDetails.url.customer.email,
+                phone_number: paymentDetails.url.customer.phone,
+              }"
+              :customizations="{
+                title: 'NOVA',
+                description: 'Nova payment page',
+                logo: 'https://flutterwave.com/images/logo-colored.svg',
+              }"
+              :callback="makePaymentCallback"
+              :onclose="closedPaymentModal"
+            >
+              Pay now
+            </flutterwave-pay-button>
+          </div>
         </div>
       </div>
     </div>
@@ -100,15 +133,30 @@ import failedImage from "@/assets/images/failed-img.svg";
 import modal from "@/components/modal.vue";
 export default {
   name: "DeliveryPage",
-  components: { modal },
+  components: {
+    modal,
+  },
   data: function () {
     return {
-      radioGroup: "standard",
+      radioGroup: "express",
       dialog: false,
       statusImage: null,
       dialogMessage: "",
-      orderDetails: "",
+      orderDetails: {
+        delivery_location: {},
+      },
       pageLoader: false,
+      processingLoader: false,
+      paymentDetails: {
+        url: {
+          amount: "",
+          customer: {
+            name: "",
+            email: "",
+            phone: null,
+          },
+        },
+      },
     };
   },
   created() {
@@ -128,15 +176,55 @@ export default {
         this.dialog = true;
         this.statusImage = failedImage;
         if (error.response) {
-          this.dialogMessage = "Sorry, this data does not Exist";
+          this.dialogMessage = "Sorry, this order does not Exist";
         } else {
           this.dialogMessage = "No internet Connection!";
         }
       });
   },
+  methods: {
+    payForItem() {
+      this.processingLoader = true;
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get("order_id");
+      this.$store
+        .dispatch("orders/payForOrder", {
+          id: orderId,
+        })
+        .then((response) => {
+          this.processingLoader = false;
+          this.paymentDetails = response.data.data;
+          this.$refs.paymentTriggerBtn.$el.click()
+        })
+        .catch((error) => {
+          this.dialog = true;
+          this.processingLoader = false;
+          this.statusImage = failedImage;
+          if (error.response) {
+            this.dialogMessage = "Sorry, this order does not Exist";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
+    },
+    makePaymentCallback(response) {
+      console.log("Payment callback", response);
+    },
+    closedPaymentModal() {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get("order_id");
+      this.$router.push({
+        path: `/delivery?order_id=${orderId}`,
+      });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
+.delivery-container {
+  width: 800px;
+  margin: auto;
+}
 .summary-container {
   width: 400px;
 }
@@ -145,7 +233,27 @@ export default {
   min-width: 200px;
   padding: 0 16px;
 }
+.flutterwave-btn {
+  width: 150px;
+  padding: 8px 0px;
+  cursor: pointer;
+  color: white;
+  background: #5064cc;
+  border-radius: 5px;
+  margin-top: 20px;
+  display: none;
+}
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
 @media (max-width: 400px) {
+  .delivery-container {
+    width: 100%;
+    margin: auto;
+  }
   .summary-container {
     width: 100%;
   }
