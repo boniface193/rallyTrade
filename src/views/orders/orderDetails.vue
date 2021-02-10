@@ -15,7 +15,7 @@
               <v-col cols="5">
                 <div class="text-center">
                   <v-img
-                    src="../../assets/images/laptop.png"
+                    :src="orderDetails.product_image_url"
                     class="mx-3 my-3 image-bgColor"
                     width="70%"
                   ></v-img>
@@ -24,18 +24,24 @@
               <v-col cols="7" class="pr-5 pl-1 my-lg-3 my-md-3">
                 <div class="order-item-font mt-2">
                   Product Name:
-                  <span class="order-no-grey"> Infinix Hot 2020 </span>
+                  <span class="order-no-grey">
+                    {{ orderDetails.product_name }}
+                  </span>
                 </div>
                 <div class="order-item-font mt-1">
                   Time:
                   <span class="order-no-grey"
-                    >5 Jul 2020
-                    <span class="order-no-lighter-grey">8:58AM</span></span
+                    >{{ orderDetails.created_at.slice(0, -6) }}
+                    <span class="order-no-lighter-grey">{{
+                      orderDetails.created_at.slice(10)
+                    }}</span></span
                   >
                 </div>
                 <div class="order-item-font mt-1">
                   Customer:
-                  <span class="order-no-grey">Tony</span>
+                  <span class="order-no-grey">{{
+                    orderDetails.customer_name
+                  }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -54,12 +60,12 @@
                 <span
                   ><v-icon size="10" color="primary" class="mr-2"
                     >mdi-phone-outline</v-icon
-                  >+234816056000</span
+                  >{{ orderDetails.phone }}</span
                 ><br />
                 <span
                   ><v-icon size="10" color="primary" class="mr-2"
                     >mdi-email-outline</v-icon
-                  >tnkwo@gmail.com</span
+                  >{{ orderDetails.email }}</span
                 >
               </div>
             </div>
@@ -69,14 +75,19 @@
         <v-col sm="4" md="12">
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
-              Payment Status: <span class="order-no-blue ml-2"> Paid</span>
+              Payment Status:
+              <span class="order-no-blue ml-2">
+                {{ orderDetails.payment_status_label }}</span
+              >
             </div>
 
             <div class="order-no-grey my-2">
               Subtotal
               <div class="d-flex justify-space-between">
-                <span class="order-no-lighter-grey"> 1 Infinix Hot 2020 </span>
-                <div class="">NGN150,000.00</div>
+                <span class="order-no-lighter-grey">
+                  {{ orderDetails.total_items }} {{ orderDetails.product_name }}
+                </span>
+                <div class="">NGN{{ orderDetails.subtotal_label }}</div>
               </div>
             </div>
 
@@ -99,12 +110,14 @@
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
               Delivery Status:
-              <span class="order-no-blue ml-2 mr-10"> Delivered</span>
+              <span class="order-no-blue ml-2 mr-10">{{
+                orderDetails.delivery_status_label
+              }}</span>
             </div>
 
             <div class="d-flex mt-3 mb-8">
               <div class="order-no-grey">
-                32 Oran Street, Wuse zone 1, Abuja
+                {{ orderDetails.delivery_location.address }}
               </div>
             </div>
           </v-card>
@@ -114,12 +127,16 @@
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
               Point Earned:
-              <span class="order-no-blue ml-2 mr-10"> 100</span>
+              <span class="order-no-blue ml-2 mr-10">
+                {{ orderDetails.total_points }}</span
+              >
             </div>
 
             <div class="order-item-font my-2 mb-8">
               Commission:
-              <span class="order-no-blue ml-2 mr-10"> NGN1,000.00</span>
+              <span class="order-no-blue ml-2 mr-10">
+                NGN{{ orderDetails.seller_profit }}</span
+              >
             </div>
           </v-card>
         </v-col>
@@ -131,6 +148,21 @@
 <script>
 export default {
   name: "orderDetails",
+  data() {
+    return {
+      orderDetails: {},
+    };
+  },
+  created() {
+    this.$store
+      .dispatch("orders/getOrdersDetail", { id: this.$route.params.id })
+      .then((response) => {
+        this.orderDetails = response.data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  },
 };
 </script>
 
