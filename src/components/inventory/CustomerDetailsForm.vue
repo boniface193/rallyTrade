@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pt-5 customer-details">
     <div
       class="d-flex align-center justify-center mb-8"
       style="position: relative"
@@ -81,7 +81,7 @@
         </v-text-field>
       </div>
 
-      <div class="d-flex justify-end" style="width: 100%">
+      <div>
         <v-btn
           class="primary"
           :loading="loading"
@@ -133,7 +133,6 @@ export default {
         const routeParameter = new URLSearchParams(
           decodeURIComponent(window.location.search)
         );
-        console.log(routeParameter.get("quantity"))
         this.$store
           .dispatch("orders/createOrder", {
             product_id: this.$route.params.id,
@@ -169,8 +168,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.customer-details{
+  width: 50%;
+}
 .input-field {
-  width: 48%;
+  width: 100%;
 }
 .back-btn {
   position: absolute;
@@ -181,6 +183,11 @@ export default {
   height: 45px;
   min-width: 150px;
   padding: 0 16px;
+}
+@media (max-width: 950px){
+  .customer-details{
+    width: 100%;
+  }
 }
 @media (max-width: 750px) {
   .input-field {

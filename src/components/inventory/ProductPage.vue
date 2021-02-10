@@ -1,14 +1,27 @@
 <template>
-  <div style="background: #fafafa; height: 100%">
+  <div style="background: #fafafa; height: 100%" class="pt-6">
     <div v-show="!loader">
+      <!-- go to previous page -->
+      <router-link
+        :to="{
+          name: 'InventoryHome',
+        }"
+        style="text-decoration: none"
+        class="mx-5"
+      >
+        <span class="back-btn">
+          <v-icon color="black" style="font-size: 25px">mdi-chevron-left</v-icon>
+        </span>
+      </router-link>
+
       <v-row>
-        <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
+        <v-col class="col-12 col-md-6 pt-md-15 px-5">
           <div class="image-container pa-10">
             <img :src="productDetails.image" alt="" />
             <span class="points">{{ productDetails.points }}pts</span>
           </div>
         </v-col>
-        <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
+        <v-col class="col-12 col-md-6 pt-md-15 px-8">
           <h2 class="mb-4">{{ productDetails.name }}</h2>
           <p class="secondary--text mb-4" style="font-size: 14px">
             <span class="mr-5"
@@ -334,15 +347,12 @@ export default {
     },
     submitCheckoutDetails() {
       this.$refs.form.validate();
-      const quantity = `${this.quantity}`;
-      const profit = `${this.profit}`;
       if (this.$refs.form.validate()) {
         this.$router.push({
-          path: `/inventory/${
-            this.$route.params.id
-          }/customer-form?quantity=${encodeURIComponent(toString(
-            quantity)
-          )}&profit=${encodeURIComponent(toString(profit))}`,
+          path:
+            `/inventory/${this.$route.params.id}/customer-form?` +
+            `${encodeURIComponent("quantity=" + this.quantity)}` +
+            `${encodeURIComponent("&profit=" + this.profit)}`,
           params: {
             id: this.$route.params.id,
           },
