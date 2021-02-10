@@ -1,6 +1,19 @@
 <template>
   <div>
-    <div class="primary pb-12">
+    <div class="primary pb-12 py-12">
+      <!-- <Layout>
+        <template v-slot="slotProps">
+          <div class="d-flex">
+            <div @click.stop="drawer = !drawer">
+              <v-icon size="19" color="#000"> mdi-segment</v-icon>
+            </div>
+            <v-spacer></v-spacer>
+            <div class="">
+              <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
+            </div>
+          </div>
+        </template>
+      </Layout> -->
       <div class="mx-7">
         <Calender
           class="float-right"
@@ -11,8 +24,8 @@
         <div class="welcome-text">Hello,</div>
         <div class="welcome-text-sm">{{ userInfo.name }}</div>
       </div>
-      <div class="mx-7 mt-8">
-        <v-row style="position: absolute; width: 90%">
+      <div class="mx-7 mt-8 d-flex justify-center">
+        <v-row style="position: absolute; width: 90%" class="">
           <v-col
             sm="4"
             md=""
@@ -78,10 +91,12 @@
 <script>
 import moment from "moment";
 import Calender from "@/components/general/calender.vue";
+// import Layout from "@/components/layout/Layout.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {
     Calender,
+    // Layout,
   },
   data() {
     return {
@@ -174,10 +189,14 @@ export default {
 }
 .position-abs {
   position: absolute;
+  z-index: 1;
+}
+.ml-percent{
+  z-index: 1 !important;
 }
 .card-header {
   color: #2b2b2b;
-  font-size: 18px;
+  font-size: 17px;
   font-family: "Product Sans Bold";
   margin: 10px 0px 0px 0px;
   font-weight: bold;

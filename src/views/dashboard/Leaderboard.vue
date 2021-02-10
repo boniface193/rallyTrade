@@ -271,7 +271,7 @@ export default {
 }
 .leader-label {
   font-family: "Product Sans Bold";
-  color: #979797;
+  color: #2b2b2b;
   font-size: 14px;
 }
 .active {

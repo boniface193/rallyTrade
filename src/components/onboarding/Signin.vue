@@ -113,7 +113,7 @@ export default {
         .then((response) => {
           this.loading = false;
           if (response.data.message === "Login successful.") {
-            this.$router.push({ name: "Dashboard" });
+            this.$router.push({ path: "/inventory" });
           }
         })
         .catch((error) => {
