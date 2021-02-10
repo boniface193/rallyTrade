@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pt-5 customer-details">
     <div
       class="d-flex align-center justify-center mb-8"
       style="position: relative"
@@ -81,14 +81,7 @@
         </v-text-field>
       </div>
 
-      <!-- Select state -->
-      <!-- <div class="mb-5 input-field">
-        <p class="mb-1">State/Region*</p>
-        <div style="height: 52px">
-          <selectBtn :items="['Kano', 'Abuja']" :item="'Select state/region'" />
-        </div>
-      </div> -->
-      <div class="d-flex justify-end" style="width: 100%">
+      <div>
         <v-btn
           class="primary"
           :loading="loading"
@@ -98,16 +91,36 @@
         >
       </div>
     </v-form>
+    <!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="400">
+      <div class="white pa-3 pb-10 text-center dialog">
+        <div class="d-flex justify-end">
+          <v-icon class="error--text close-btn" @click="dialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+        <div class="mb-7 mt-5 mx-auto status-img">
+          <v-img :src="statusImage"></v-img>
+        </div>
+
+        <h4>{{ dialogMessage }}</h4>
+      </div>
+    </modal>
   </div>
 </template>
 <script>
 //import selectBtn from "@/components/general/selectBtn.vue";
+import failedImage from "@/assets/images/failed-img.svg";
+import modal from "@/components/modal.vue";
 export default {
   name: "CustomerDetailsForm",
-  //components: { selectBtn },
+  components: { modal },
   data: function () {
     return {
       loading: false,
+       statusImage: null,
+      dialog: false,
+      dialogMessage: "",
       name: "",
       phoneNumber: "",
       email: "",
@@ -137,6 +150,9 @@ export default {
         this.loading = true;
         let getUrl = window.location;
         let baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+        const routeParameter = new URLSearchParams(
+          decodeURIComponent(window.location.search)
+        );
         this.$store
           .dispatch("orders/createOrder", {
             product_id: this.$route.params.id,
@@ -150,19 +166,32 @@ export default {
                 lng: 3.3593,
               },
             },
-            total_items: this.$route.params.quantity,
-            payment_link: `${baseUrl}checkout`,
-            seller_profit: parseInt(this.$route.params.profit, 10)
+            total_items: parseInt(routeParameter.get("quantity"), 10),
+            payment_link: `${baseUrl}checkout-details`,
+            seller_profit: parseInt(routeParameter.get("profit"), 10),
           })
           .then((response) => {
             this.loading = false;
             const url = response.data.meta.payment_link;
             this.$router.push({
-              path: `/inventory/${this.$route.params.id}?createLink=true&link=${encodeURIComponent(url)}`,
+              path: `/inventory/${
+                this.$route.params.id
+              }?createLink=true&link=${encodeURIComponent(url)}`,
               params: {
                 id: this.$route.params.id,
               },
             });
+          })
+          .catch((error) => {
+            this.dialog = true;
+            this.loading = false;
+            this.statusImage = failedImage;
+            if (error.response) {
+              console.log(error.response)
+              this.dialogMessage = error.message;
+            } else {
+              this.dialogMessage = "No internet Connection!";
+            }
           });
       }
     },
@@ -170,8 +199,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.customer-details {
+  width: 50%;
+}
 .input-field {
-  width: 48%;
+  width: 100%;
 }
 .back-btn {
   position: absolute;
@@ -182,6 +214,17 @@ export default {
   height: 45px;
   min-width: 150px;
   padding: 0 16px;
+}
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
+@media (max-width: 950px) {
+  .customer-details {
+    width: 100%;
+  }
 }
 @media (max-width: 750px) {
   .input-field {

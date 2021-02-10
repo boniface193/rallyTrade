@@ -17,9 +17,9 @@
         <p class="secondary--text mb-2" style="font-size: 11px">
           &#8358;{{ product.total_price_label }}
         </p>
-        <p class="mb-0" style="color: #5064cc">
-          &#8358;{{ product.min_profit_label }} - &#8358;{{
-            product.max_profit_label
+        <p class="mb-0 minMaxProfit" style="color: #5064cc">
+          &#8358;{{ product.min_profit_short }} - &#8358;{{
+            product.max_profit_short
           }}
         </p>
         <p class="secondary--text" style="font-size: 10px">
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 .card-container {
   min-width: 18%;
-  height: 255px;
+  min-height: 255px;
   position: relative;
   margin: auto 1%;
   cursor: pointer;
@@ -128,8 +128,19 @@ export default {
 }
 @media (max-width: 550px) {
   .card-container {
-    min-width: 45%;
-    margin: auto 2%;
+    min-width: 45.5%;
+    margin: auto 1%;
+    .card-bottom {
+      .add-btn {
+        right: 5px;
+        bottom: 30px;
+        width: 30px;
+        height: 30px;
+      }
+      .minMaxProfit{
+        font-size: 14px;
+      }
+    }
   }
 }
 </style>

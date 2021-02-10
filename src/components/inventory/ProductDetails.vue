@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pt-5">
     <div v-show="!loader">
       <div
         class="d-flex align-center justify-center mb-8"
@@ -37,14 +37,14 @@
           Product Warranty: 1 year
         </p>
       </div>
-      <div class="d-flex py-5 text-center" v-if="loader">
+    </div>
+     <div class="d-flex py-5 text-center" v-if="loader">
         <v-progress-circular
           indeterminate
           color="primary"
           class="mx-auto"
         ></v-progress-circular>
       </div>
-    </div>
     <!-- modal for dialog messages -->
     <modal :dialog="dialog" width="400">
       <div class="white pa-3 pb-10 text-center dialog">
