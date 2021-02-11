@@ -188,7 +188,7 @@ export default {
     },
     //allows user to access the dashboard
     grantAccess() {
-      this.$router.push({ name: "Dashboard" });
+      this.$router.push({ name: "InventoryHome" });
     },
     // destroy token
     denialAccess() {

@@ -104,11 +104,7 @@ const actions = {
     // get order details
     getOrdersDetail(context, data) {
         return new Promise((resolve, reject) => {
-            axios.get(`/orders/${data.id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).then(response => {
+            axios.get(`/orders/${data.id}`).then(response => {
                 resolve(response);
             })
                 .catch(error => {
@@ -177,7 +173,7 @@ const actions = {
     // pay for order
     payForOrder(context, data) {
         return new Promise((resolve, reject) => {
-            axios.post(`/orders/${data.id}/pay`, data,
+            axios.post(`/orders/${data.id}/pay`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`

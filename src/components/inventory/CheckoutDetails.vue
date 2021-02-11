@@ -2,7 +2,7 @@
   <div>
     <h2 class="mb-4">{{ orderDetails.product_name }}</h2>
     <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p>
-    <p class="secondary--text" style="font-size: 14px">Inventory: TDAfrica</p>
+    <p class="secondary--text" style="font-size: 14px">Inventory: {{storeDetails.name}}</p>
     <div class="d-flex align-center">
       <p class="secondary--text mr-1 mb-0" style="font-size: 14px">Seller:</p>
       <div class="seller-image">
@@ -47,7 +47,7 @@
 <script>
 export default {
   name: "CheckoutDetails",
-  props: ["productDetails", "orderDetails"],
+  props: ["productDetails", "orderDetails", "storeDetails"],
   data: function(){
     return {
       quantity: 0

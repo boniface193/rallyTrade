@@ -64,11 +64,7 @@ const actions = {
     // get a product detail
     getProductDetail(context, data) {
         return new Promise((resolve, reject) => {
-            axios.get(`/products/${data.id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).then(response => {
+            axios.get(`/products/${data.id}`).then(response => {
                 resolve(response);
             })
                 .catch(error => {

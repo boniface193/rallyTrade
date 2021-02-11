@@ -1,18 +1,18 @@
 <template>
   <div>
     <div>
-      <router-link
+      <!-- <router-link
         :to="{ path: `/checkout-details?order_id=${this.orderDetails.id}` }"
         style="text-decoration: none"
       >
         <v-icon color="black" class="mb-5">mdi-chevron-left</v-icon>
-      </router-link>
+      </router-link> -->
 
-      <div class="d-flex align-center justify-space-between">
-        <h3>Your Address</h3>
-        <h5 class="primary--text">Change Address</h5>
+      <div class="d-flex align-baseline justify-space-between">
+        <h2>Address Details</h2>
+        <p class="primary--text" style="font-size:14px">Change Address</p>
       </div>
-      <div class="mt-6">
+      <div class="mt-2">
         <div class="mb-4">
           <h4>Emike lucy</h4>
           <p class="secondary--text mb-0">
@@ -22,7 +22,7 @@
         <!-- delivery method  -->
         <div class="mb-4">
           <h4>Select a delivery method:</h4>
-          <v-radio-group v-model="radioGroup">
+          <v-radio-group v-model="radioGroup" class="mt-1">
             <v-radio
               class="primary--text"
               :label="`Express Delivery (₦${orderDetails.delivery_fee_label})`"
@@ -37,7 +37,7 @@
         </div>
         <!-- shipping details -->
         <div class="mb-4">
-          <h4>Shipping Details</h4>
+          <h4>Order Details</h4>
           <p class="secondary--text mb-0">
             <span style="font-weight: 600; color: black">1</span>
             <span class="ml-5">{{ orderDetails.product_name }}</span>
@@ -74,7 +74,7 @@
           >
           <div>
             <flutterwave-pay-button
-             ref="paymentTriggerBtn"
+              ref="paymentTriggerBtn"
               :public_key="paymentDetails.url.public_key"
               :tx_ref="paymentDetails.url.tx_ref"
               :amount="paymentDetails.url.amount"
@@ -82,6 +82,7 @@
               :payment_options="paymentDetails.payment_options"
               redirect_url=""
               class="flutterwave-btn"
+              :customer_email="paymentDetails.url.customer.email"
               :customer="{
                 name: paymentDetails.url.customer.name,
                 email: paymentDetails.url.customer.email,
@@ -183,9 +184,9 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
-          // console.log(this.paymentDetails.url.customer.email)
-          // console.log(this.paymentDetails)
-          this.$refs.paymentTriggerBtn.$el.click()
+          console.log(this.paymentDetails.url.customer.email)
+          console.log(this.paymentDetails)
+          this.$refs.paymentTriggerBtn.$el.click();
         })
         .catch((error) => {
           this.dialog = true;
