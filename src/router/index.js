@@ -82,7 +82,7 @@ const ifAuthenticated = (to, from, next) => {
 // redirect when a user is already logged in
 const AlreadyLogin = (to, from, next) => {
   if (localStorage.getItem("accessToken")) {
-    next({ name: 'Dashboard' })
+    next({ name: 'InventoryHome' })
   } else {
     next();
     return
