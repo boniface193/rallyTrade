@@ -91,16 +91,36 @@
         >
       </div>
     </v-form>
+    <!-- modal for dialog messages -->
+    <modal :dialog="dialog" width="400">
+      <div class="white pa-3 pb-10 text-center dialog">
+        <div class="d-flex justify-end">
+          <v-icon class="error--text close-btn" @click="dialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+        <div class="mb-7 mt-5 mx-auto status-img">
+          <v-img :src="statusImage"></v-img>
+        </div>
+
+        <h4>{{ dialogMessage }}</h4>
+      </div>
+    </modal>
   </div>
 </template>
 <script>
 //import selectBtn from "@/components/general/selectBtn.vue";
+import failedImage from "@/assets/images/failed-img.svg";
+import modal from "@/components/modal.vue";
 export default {
   name: "CustomerDetailsForm",
-  //components: { selectBtn },
+  components: { modal },
   data: function () {
     return {
       loading: false,
+       statusImage: null,
+      dialog: false,
+      dialogMessage: "",
       name: "",
       phoneNumber: "",
       email: "",
@@ -147,8 +167,8 @@ export default {
               },
             },
             total_items: parseInt(routeParameter.get("quantity"), 10),
-            payment_link: `${baseUrl}checkout`,
-            seller_profit: parseInt(routeParameter.get("profit"), 10)
+            payment_link: `${baseUrl}checkout-details`,
+            seller_profit: parseInt(routeParameter.get("profit"), 10),
           })
           .then((response) => {
             this.loading = false;
@@ -161,6 +181,17 @@ export default {
                 id: this.$route.params.id,
               },
             });
+          })
+          .catch((error) => {
+            this.dialog = true;
+            this.loading = false;
+            this.statusImage = failedImage;
+            if (error.response) {
+              console.log(error.response)
+              this.dialogMessage = error.message;
+            } else {
+              this.dialogMessage = "No internet Connection!";
+            }
           });
       }
     },
@@ -168,7 +199,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.customer-details{
+.customer-details {
   width: 50%;
 }
 .input-field {
@@ -184,8 +215,14 @@ export default {
   min-width: 150px;
   padding: 0 16px;
 }
-@media (max-width: 950px){
-  .customer-details{
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
+@media (max-width: 950px) {
+  .customer-details {
     width: 100%;
   }
 }

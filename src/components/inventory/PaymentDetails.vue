@@ -1,11 +1,11 @@
 <template>
-  <div class="px-4 py-5 delivery-container">
-    <div v-show="!pageLoader">
+  <div>
+    <div>
       <router-link
-        :to="{ path: `/checkout?order_id=${this.orderDetails.id}` }"
+        :to="{ path: `/checkout-details?order_id=${this.orderDetails.id}` }"
         style="text-decoration: none"
       >
-        <v-icon color="black" class="mt-3 mb-5">mdi-chevron-left</v-icon>
+        <v-icon color="black" class="mb-5">mdi-chevron-left</v-icon>
       </router-link>
 
       <div class="d-flex align-center justify-space-between">
@@ -101,14 +101,7 @@
         </div>
       </div>
     </div>
-    <!-- page loader -->
-    <div class="d-flex py-5 text-center" v-if="pageLoader">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        class="mx-auto"
-      ></v-progress-circular>
-    </div>
+
     <!-- modal for dialog messages -->
     <modal :dialog="dialog" width="400">
       <div class="white pa-3 pb-10 text-center dialog">
@@ -135,16 +128,13 @@ export default {
   components: {
     modal,
   },
+  props: ["productDetails", "orderDetails"],
   data: function () {
     return {
       radioGroup: "express",
       dialog: false,
       statusImage: null,
       dialogMessage: "",
-      orderDetails: {
-        delivery_location: {},
-      },
-      pageLoader: false,
       processingLoader: false,
       paymentDetails: {
         url: {
@@ -193,8 +183,8 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
-          console.log(this.paymentDetails.url.customer.email)
-          console.log(this.paymentDetails)
+          // console.log(this.paymentDetails.url.customer.email)
+          // console.log(this.paymentDetails)
           this.$refs.paymentTriggerBtn.$el.click()
         })
         .catch((error) => {
@@ -215,17 +205,13 @@ export default {
       const params = new URLSearchParams(window.location.search);
       const orderId = params.get("order_id");
       this.$router.push({
-        path: `/delivery?order_id=${orderId}`,
+        path: `/payment-details?order_id=${orderId}`,
       });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-.delivery-container {
-  width: 800px;
-  margin: auto;
-}
 .summary-container {
   width: 400px;
 }
@@ -251,10 +237,6 @@ export default {
   }
 }
 @media (max-width: 400px) {
-  .delivery-container {
-    width: 100%;
-    margin: auto;
-  }
   .summary-container {
     width: 100%;
   }
