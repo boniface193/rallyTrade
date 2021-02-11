@@ -78,7 +78,7 @@ const actions = {
         let page = ((state.page) ? `page=${state.page}` : "");
         let perPage = ((state.itemPerPage) ? `per_page=${state.itemPerPage}` : "");
         let route = (state.searchValue !== "") ? `/search?q=${state.searchValue}&${page}&${perPage}` : ""
-        return new Promise((resolve, reject) => {   
+        return new Promise((resolve, reject) => {
             axios.get(`/products${route}`,
                 {
                     headers: {
@@ -94,8 +94,8 @@ const actions = {
                 })
         })
     },
-     // filter products 
-     getfilteredProducts(context) {
+    // filter products 
+    getfilteredProducts(context) {
         let page = ((state.page) ? `page=${state.page}` : "");
         let perPage = ((state.itemPerPage) ? `per_page=${state.itemPerPage}` : "");
         let priceRange = ((state.filter.maxPrice) ? `price_between=${state.filter.minPrice},${state.filter.maxPrice}` : "");
@@ -116,6 +116,7 @@ const actions = {
                 })
         })
     },
+
 };
 
 //updates the different state properties

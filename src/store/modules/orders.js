@@ -113,7 +113,6 @@ const actions = {
                 })
         })
     },
-
     searchOrders(context) {
         let page = ((state.page) ? `page=${state.page}` : "");
         let perPage = ((state.itemPerPage) ? `per_page=${state.itemPerPage}` : "");
@@ -134,7 +133,6 @@ const actions = {
                 })
         })
     },
-
     exportOrder() {
         return new Promise((resolve, reject) => {
             axios.post(`/orders/export`, {
@@ -179,6 +177,18 @@ const actions = {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
                     }
                 }).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
+    },
+    //verify Payment
+    verifyPayment(context, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(`/orders/${data.orderId}/verify?trx_ref=${data.trx_ref}&trx_id=${data.trx_id}`, data,).then(response => {
                     resolve(response);
                 })
                 .catch(error => {

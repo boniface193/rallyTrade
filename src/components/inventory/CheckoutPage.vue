@@ -3,7 +3,7 @@
     <!-- go to previous page -->
     <router-link
       :to="{
-        path: `/checkout-details?order_id=${this.orderDetails.id}`
+        path: `/checkout-details?order_id=${this.orderDetails.id}`,
       }"
       style="text-decoration: none"
       class="mx-5"
@@ -16,7 +16,10 @@
 
     <v-row v-show="!pageLoader">
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
-        <div class="image-container pa-10">
+        <div
+          class="image-container pa-10"
+          :class="this.$route.name === 'PaymentDetails' ? 'hide-image' : ''"
+        >
           <img :src="orderDetails.product_image_url" alt="" />
         </div>
       </v-col>
@@ -152,10 +155,16 @@ export default {
     width: 100%;
   }
 }
+
 .status-img {
   width: 140px;
   .v-image {
     width: 100%;
+  }
+}
+@media (max-width: 950px) {
+  .hide-image {
+    display: none !important;
   }
 }
 </style>
