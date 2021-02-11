@@ -45,7 +45,7 @@
               <v-row
                 class="leader-text my-2"
                 v-for="items in redeemed"
-                :key="items.name"
+                :key="items.id"
                 :class="{ active: items.active }"
               >
                 <v-col cols="8" lg="6">
@@ -67,9 +67,9 @@
                 </v-col>
                 <v-col
                   cols="2"
-                   @click="openModal"
+                  @click="openModal"
                   lg="3"
-                  style="cursor: pointer;"
+                  style="cursor: pointer"
                   class="redeem mt-1"
                   :class="{ 'primary--text': items.redeemed }"
                   >{{ items.redeem }}</v-col
@@ -109,6 +109,7 @@
         </v-col>
       </v-row>
       <Modal :dialog="this.dialog" width="300">
+        
         <v-card class="rounded-lg">
           <v-icon
             style="cursor: pointer"
@@ -143,7 +144,7 @@
 </template>
 
 <script>
-import Modal from "@/components/modal.vue"
+import Modal from "@/components/modal.vue";
 export default {
   name: "orderDetails",
   components: {
@@ -153,6 +154,7 @@ export default {
     return {
       tab: null,
       dialog: false,
+      filteredArray: {},
       redeemed: [
         {
           id: "01",
@@ -191,14 +193,26 @@ export default {
     };
   },
 
+  created() {
+    this.$store.dispatch("reward/getReward");
+  },
+
   methods: {
-     closeModal() {
+    closeModal() {
       this.dialog = false;
     },
     openModal() {
       this.dialog = true;
     },
-  }
+
+    filterById(id) {
+      this.filteredArray = this.redeemed.filter(function (item) {
+        return id == item.id;
+      });
+      this.openModal();
+      console.log(this.filteredArray)
+    },
+  },
 };
 </script>
 
@@ -305,18 +319,18 @@ div.v-tabs-slider {
 
   .card-title {
     font-family: "Product Sans Light";
-    font-size: 18px;
+    font-size: 12px;
   }
 
   .card-point {
     font-family: "Product Sans Medium";
-    font-size: 28px;
+    font-size: 18px;
     margin-bottom: 25px;
   }
 
   .card-name {
     font-family: "Product Sans Light";
-    font-size: 20px;
+    font-size: 14px;
   }
 }
 
@@ -327,18 +341,19 @@ div.v-tabs-slider {
 
   .card-title {
     font-family: "Product Sans Light";
-    font-size: 18px;
+    font-size: 12px;
+    margin-bottom: 48px;
   }
 
   .card-point {
     font-family: "Product Sans Medium";
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 22px;
+    margin: 45px 25px 0px 0px;
   }
 
   .card-name {
     font-family: "Product Sans Light";
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 
@@ -347,39 +362,39 @@ div.v-tabs-slider {
     width: 317px;
   }
 
-.card-title {
-  font-family: "Product Sans Light";
-  font-size: 12px;
-}
+  .card-title {
+    font-family: "Product Sans Light";
+    font-size: 12px;
+  }
 
-.card-point {
-  font-family: "Product Sans Medium";
-  font-size: 18px;
-}
+  .card-point {
+    font-family: "Product Sans Medium";
+    font-size: 18px;
+  }
 
-.card-name {
-  font-family: "Product Sans Light";
-  font-size: 14px;
-}
+  .card-name {
+    font-family: "Product Sans Light";
+    font-size: 14px;
+  }
 }
 @media (max-width: 425px) {
   .w-100 {
     width: 317px;
   }
 
-.card-title {
-  font-family: "Product Sans Light";
-  font-size: 12px;
-}
+  .card-title {
+    font-family: "Product Sans Light";
+    font-size: 12px;
+  }
 
-.card-point {
-  font-family: "Product Sans Medium";
-  font-size: 18px;
-}
+  .card-point {
+    font-family: "Product Sans Medium";
+    font-size: 18px;
+  }
 
-.card-name {
-  font-family: "Product Sans Light";
-  font-size: 14px;
-}
+  .card-name {
+    font-family: "Product Sans Light";
+    font-size: 14px;
+  }
 }
 </style>
