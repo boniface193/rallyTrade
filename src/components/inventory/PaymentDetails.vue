@@ -1,16 +1,9 @@
 <template>
   <div>
-    <div>
-      <!-- <router-link
-        :to="{ path: `/checkout-details?order_id=${this.orderDetails.id}` }"
-        style="text-decoration: none"
-      >
-        <v-icon color="black" class="mb-5">mdi-chevron-left</v-icon>
-      </router-link> -->
-
+    <div class="payment-page">
       <div class="d-flex align-baseline justify-space-between">
         <h2>Address Details</h2>
-        <p class="primary--text" style="font-size:14px">Change Address</p>
+        <p class="primary--text" style="font-size: 14px">Change Address</p>
       </div>
       <div class="mt-2">
         <div class="mb-4">
@@ -45,7 +38,7 @@
         </div>
         <!-- payment summary -->
         <div class="mb-3 summary-container">
-          <h4 class="mb-4">Summary</h4>
+          <h4 class="mb-1">Summary</h4>
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Item</p>
             <h4>&#8358;{{ orderDetails.subtotal_label }}</h4>
@@ -66,39 +59,12 @@
           </div>
           <!-- payment btn -->
           <v-btn
-            class="primary py-3"
+            class="primary py-3 mt-5"
             :loading="processingLoader"
             :disabled="processingLoader"
             @click="payForItem"
             >Pay now</v-btn
           >
-          <div>
-            <flutterwave-pay-button
-              ref="paymentTriggerBtn"
-              :public_key="paymentDetails.url.public_key"
-              :tx_ref="paymentDetails.url.tx_ref"
-              :amount="paymentDetails.url.amount"
-              :currency="paymentDetails.url.currency"
-              :payment_options="paymentDetails.payment_options"
-              redirect_url=""
-              class="flutterwave-btn"
-              :customer_email="paymentDetails.url.customer.email"
-              :customer="{
-                name: paymentDetails.url.customer.name,
-                email: paymentDetails.url.customer.email,
-                phone_number: paymentDetails.url.customer.phone,
-              }"
-              :customizations="{
-                title: 'NOVA',
-                description: 'Nova payment page',
-                logo: 'https://flutterwave.com/images/logo-colored.svg',
-              }"
-              :callback="makePaymentCallback"
-              :onclose="closedPaymentModal"
-            >
-              Pay now
-            </flutterwave-pay-button>
-          </div>
         </div>
       </div>
     </div>
@@ -172,6 +138,25 @@ export default {
         }
       });
   },
+  computed: {
+    paymentOption() {
+      return {
+        public_key: this.paymentDetails.url.public_key,
+        tx_ref: this.paymentDetails.url.tx_ref,
+        amount: this.paymentDetails.url.amount,
+        currency: this.paymentDetails.url.currency,
+        payment_options: this.paymentDetails.url.payment_options,
+        redirect_url: '',
+        customer: {
+          name: this.paymentDetails.url.customer.name,
+          email: this.paymentDetails.url.customer.email,
+          phone_number: this.paymentDetails.url.customer.phone
+        } ,
+        callback: this.makePaymentCallback,
+        onclose: this.closedPaymentModal
+      }
+    },
+  },
   methods: {
     payForItem() {
       this.processingLoader = true;
@@ -184,9 +169,10 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
-          console.log(this.paymentDetails.url.customer.email)
-          console.log(this.paymentDetails)
-          this.$refs.paymentTriggerBtn.$el.click();
+          console.log(this.paymentDetails.url.customer.email);
+          console.log(this.paymentDetails);
+          // this.$refs.paymentTriggerBtn.$el.click();
+          this.payViaService();
         })
         .catch((error) => {
           this.dialog = true;
@@ -199,9 +185,23 @@ export default {
           }
         });
     },
-    makePaymentCallback(response) {
-      console.log("Payment callback", response);
+    payViaService() {
+      this.payWithFlutterwave(this.paymentOption);
     },
+    makePaymentCallback(response) {
+      this.verifyPayment(response)
+    },
+    verifyPayment(value){
+      this.$store.dispatch("",{
+        trx_ref: value.trx_ref,
+        trx_id: value.trx_id,
+        orderId: this.orderDetails.id
+      }).then((response)=>{
+        console.log(response.data)
+      }).catch((error)=> {
+        console.log(error.data)
+      })
+    }, 
     closedPaymentModal() {
       const params = new URLSearchParams(window.location.search);
       const orderId = params.get("order_id");
@@ -213,8 +213,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.summary-container {
-  width: 400px;
+.payment-page {
+  width: 500px;
+  margin: auto;
 }
 .v-btn:not(.v-btn--round).v-size--default {
   height: 40px;
@@ -237,10 +238,12 @@ export default {
     width: 100%;
   }
 }
-@media (max-width: 400px) {
-  .summary-container {
-    width: 100%;
+@media (max-width: 950px) {
+  .payment-page {
+    width: 700px;
   }
+}
+@media (max-width: 600px) {
   .v-btn:not(.v-btn--round).v-size--default {
     min-width: 100%;
   }
