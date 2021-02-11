@@ -15,13 +15,13 @@
       </router-link>
 
       <v-row>
-        <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
+        <v-col class="col-12 col-md-6 pt-md-15 px-5">
           <div class="image-container pa-10">
             <img :src="productDetails.image" alt="" />
             <span class="points">{{ productDetails.points }}pts</span>
           </div>
         </v-col>
-        <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
+        <v-col class="col-12 col-md-6 pt-md-15 px-8">
           <h2 class="mb-4">{{ productDetails.name }}</h2>
           <p class="secondary--text mb-4" style="font-size: 14px">
             <span class="mr-5"
