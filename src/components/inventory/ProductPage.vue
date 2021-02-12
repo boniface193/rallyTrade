@@ -151,7 +151,7 @@
           <div class="link py-3 px-2">
             <img src="@/assets/images/link.svg" alt="" />
             <span
-              style="cursor: pointer"
+              style="cursor: pointer;height:25px; overflow:hidden"
               v-clipboard:copy="createLink.url"
               @click="showCopyStatus"
               >{{ createLink.url }}</span

@@ -7,9 +7,11 @@
       </div>
       <div class="mt-2">
         <div class="mb-4">
-          <h4>Emike lucy</h4>
+          <h4>{{ orderDetails.customer.name }}</h4>
           <p class="secondary--text mb-0">
-            {{ orderDetails.delivery_location.address }}<br />234901328999
+            {{ orderDetails.delivery_location.address }}<br />{{
+              orderDetails.customer.phone
+            }}
           </p>
         </div>
         <!-- delivery method  -->
@@ -43,10 +45,10 @@
             <p class="secondary--text mb-0">Item</p>
             <h4>&#8358;{{ orderDetails.subtotal_label }}</h4>
           </div>
-          <div class="d-flex align-center justify-space-between mb-2">
+          <!-- <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">VAT (7.5%)</p>
             <h4>&#8358;{{ orderDetails.vat_label }}</h4>
-          </div>
+          </div> -->
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Shipping fee</p>
             <h4>&#8358;{{ orderDetails.delivery_fee_label }}</h4>
@@ -146,15 +148,15 @@ export default {
         amount: this.paymentDetails.url.amount,
         currency: this.paymentDetails.url.currency,
         payment_options: this.paymentDetails.url.payment_options,
-        redirect_url: '',
+        redirect_url: "",
         customer: {
           name: this.paymentDetails.url.customer.name,
           email: this.paymentDetails.url.customer.email,
-          phone_number: this.paymentDetails.url.customer.phone
-        } ,
+          phone_number: this.paymentDetails.url.customer.phone,
+        },
         callback: this.makePaymentCallback,
-        onclose: this.closedPaymentModal
-      }
+        onclose: this.closedPaymentModal,
+      };
     },
   },
   methods: {
@@ -169,9 +171,6 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
-          console.log(this.paymentDetails.url.customer.email);
-          console.log(this.paymentDetails);
-          // this.$refs.paymentTriggerBtn.$el.click();
           this.payViaService();
         })
         .catch((error) => {
@@ -189,19 +188,22 @@ export default {
       this.payWithFlutterwave(this.paymentOption);
     },
     makePaymentCallback(response) {
-      this.verifyPayment(response)
+      this.verifyPayment(response);
     },
-    verifyPayment(value){
-      this.$store.dispatch("",{
-        trx_ref: value.trx_ref,
-        trx_id: value.trx_id,
-        orderId: this.orderDetails.id
-      }).then((response)=>{
-        console.log(response.data)
-      }).catch((error)=> {
-        console.log(error.data)
-      })
-    }, 
+    verifyPayment(value) {
+      this.$store
+        .dispatch("", {
+          trx_ref: value.trx_ref,
+          trx_id: value.trx_id,
+          orderId: this.orderDetails.id,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.data);
+        });
+    },
     closedPaymentModal() {
       const params = new URLSearchParams(window.location.search);
       const orderId = params.get("order_id");
@@ -238,12 +240,20 @@ export default {
     width: 100%;
   }
 }
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
   .payment-page {
-    width: 700px;
+    width: 400px;
+  }
+}
+@media (max-width: 960px) {
+  .payment-page {
+    width: 550px;
   }
 }
 @media (max-width: 600px) {
+  .payment-page {
+    width: 100%;
+  }
   .v-btn:not(.v-btn--round).v-size--default {
     min-width: 100%;
   }

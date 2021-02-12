@@ -61,20 +61,22 @@
           v-model="email"
           :rules="emailRules"
           ref="input3"
-          @keyup.enter="$refs.input4.focus"
+          @keyup.enter="$refs.autocomplete.focus"
           required
         >
         </v-text-field>
       </div>
-      <!-- phone number field -->
+      <!-- Address field -->
       <div class="mb-5 input-field">
         <p class="mb-1">Address*</p>
         <v-text-field
           color="primary"
           placeholder="Street address"
-          v-model="address"
+          v-model="getAddress.address"
           :rules="addressRules"
-          ref="input4"
+          ref="autocomplete"
+          id="autocomplete"
+         
           @keyup.enter="submitCustomerDetails"
           required
         >
@@ -118,13 +120,16 @@ export default {
   data: function () {
     return {
       loading: false,
-       statusImage: null,
+      statusImage: null,
       dialog: false,
       dialogMessage: "",
       name: "",
       phoneNumber: "",
       email: "",
-      address: "",
+      lat: "",
+      lng: "",
+      validAddress: false,
+      autocomplete: "",
       nameRules: [
         (v) => !!v || "Name is required", // verifies name satisfies the requirement
       ],
@@ -140,19 +145,57 @@ export default {
       addressRules: [
         //verifies phone number satisfies the requirement
         (v) => !!v || "Address is required",
+        () => this.validAddress || "Select a valid Address"
       ],
     };
   },
+  mounted() {
+    //let autocomplete = 
+    this.autocomplete = new window.google.maps.places.Autocomplete(
+      document.getElementById("autocomplete"),
+      {
+        bounds: new window.google.maps.LatLngBounds(
+          new window.google.maps.LatLng(6.5244, 3.3792)
+        ),
+        types: ['establishment'],
+        componentRestrictions: {'country': ['NG']},
+        fields: ['place_id', 'geometry', 'name']
+      }
+    );
+
+    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
+  },
+  computed: {
+    getAddress(){
+      return {
+        address: ""
+      }
+    }
+  },
   methods: {
+    onPlaceChanged(){
+      let place = this.autocomplete.getPlace();
+      if(!place.geometry){
+        // User did not select a prediction; reset the input field
+        this.validAddress = false;
+      }else {
+        //Display details about the valid place
+        this.validAddress = true;
+        this.getAddress.address = place.name;
+        this.lat = place.geometry.location.lat();
+        this.lng = place.geometry.location.lng();
+      }
+    },
     submitCustomerDetails() {
       this.$refs.form.validate();
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.validAddress) {
         this.loading = true;
         let getUrl = window.location;
         let baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
         const routeParameter = new URLSearchParams(
           decodeURIComponent(window.location.search)
         );
+        console.log(this.getAddress.address)
         this.$store
           .dispatch("orders/createOrder", {
             product_id: this.$route.params.id,
@@ -161,9 +204,9 @@ export default {
               email: this.email,
               phone: this.phoneNumber,
               location: {
-                address: "No. 10, Ago Palace, Lagos",
-                lat: 6.5802,
-                lng: 3.3593,
+                address: this.getAddress.address,
+                lat: this.lat,
+                lng: this.lng,
               },
             },
             total_items: parseInt(routeParameter.get("quantity"), 10),
@@ -187,7 +230,7 @@ export default {
             this.loading = false;
             this.statusImage = failedImage;
             if (error.response) {
-              console.log(error.response)
+              console.log(error.response);
               this.dialogMessage = error.message;
             } else {
               this.dialogMessage = "No internet Connection!";
