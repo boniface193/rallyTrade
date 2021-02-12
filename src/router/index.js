@@ -117,7 +117,7 @@ const AlreadyLogin = (to, from, next) => {
 //   }
 //   next({ name: 'Forgotpassword' })
 // }
-const Whatapp = { template: '<div>Whatapp</div>'}
+
 const routes = [
   {
     path: "/",
@@ -254,24 +254,19 @@ const routes = [
         name: "CheckoutDetails",
         component: CheckoutDetails
       },
-      {
-        path: "/payment-success",
-        name: "PaymentSuccess",
-        component: PaymentSuccess,
-      },
-      {
-        path: "/payment-failed",
-        name: "PaymentFailed",
-        component: PaymentFailed,
-      }
     ]
   },
   {
-    path: '/whatapp',
-    beforeEnter() {location.href = 'https://api.whatsapp.com/send'},
-    component: Whatapp
+    path: "/payment-success",
+    name: "PaymentSuccess",
+    component: PaymentSuccess,
   },
- 
+  {
+    path: "/payment-failed",
+    name: "PaymentFailed",
+    component: PaymentFailed,
+  },
+
 
   // onboarding routes
   {

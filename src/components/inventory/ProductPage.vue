@@ -104,11 +104,12 @@
               </p>
               <v-form style="width: 200px" ref="form">
                 <v-text-field
-                  type="number"
                   required
                   :rules="inputRules"
                   v-model="profit"
+                  @keyup.enter="submitCheckoutDetails"
                 ></v-text-field>
+                <v-text-field style="display:none"></v-text-field>
               </v-form>
             </div>
             <div class="d-flex align-center mb-5">
