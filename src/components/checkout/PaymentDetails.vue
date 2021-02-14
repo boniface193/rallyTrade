@@ -15,19 +15,25 @@
           </p>
         </div>
         <!-- delivery method  -->
-        <div class="mb-4">
+        <div class="mb-0">
           <h4>Select a delivery method:</h4>
           <v-radio-group v-model="radioGroup" class="mt-1">
             <v-radio
-              class="primary--text"
+              class="primary--text mb-0"
               :label="`Express Delivery (₦${orderDetails.delivery_fee_label})`"
               value="express"
             ></v-radio>
+            <span class="ml-8 mb-4 primary--text"
+              >Item would be delivered within 24hrs</span
+            >
             <v-radio
-              class="primary--text"
-              label="Standard Delivery "
+              class="primary--text mb-0"
+              label="Standard Delivery (₦1200)"
               value="standard"
             ></v-radio>
+            <span class="ml-8 mb-0 primary--text"
+              >Item would be delivered within 3 working days</span
+            >
           </v-radio-group>
         </div>
         <!-- shipping details -->
@@ -197,11 +203,21 @@ export default {
           trx_id: value.trx_id,
           orderId: this.orderDetails.id,
         })
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          this.$router.push({
+            path: `/payment-success?order_id=${this.orderDetails.id}`,
+          });
         })
         .catch((error) => {
-          console.log(error.data);
+          if (error.response) {
+            this.$router.push({
+              path: `/payment-failed?order_id=${this.orderDetails.id}`,
+            });
+          } else {
+            this.dialog = true;
+            this.dialogMessage = "No internet Connection!";
+            this.statusImage = failedImage;
+          }
         });
     },
     closedPaymentModal() {

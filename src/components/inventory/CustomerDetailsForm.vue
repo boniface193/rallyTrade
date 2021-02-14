@@ -150,7 +150,7 @@ export default {
     };
   },
   mounted() {
-    //let autocomplete = 
+    
     this.autocomplete = new window.google.maps.places.Autocomplete(
       document.getElementById("autocomplete"),
       {
@@ -195,7 +195,7 @@ export default {
         const routeParameter = new URLSearchParams(
           decodeURIComponent(window.location.search)
         );
-        console.log(this.getAddress.address)
+
         this.$store
           .dispatch("orders/createOrder", {
             product_id: this.$route.params.id,
