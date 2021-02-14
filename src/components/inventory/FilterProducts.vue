@@ -1,13 +1,16 @@
 <template>
   <div>
+    
     <BasicFilter
-      :price="filterParameters.price" 
+      :price="filterParameters.price"
       toolTipText="Filter products"
       headerName="Filter Products"
       @filterOption="filterTable"
       @resetFilter="resetFilter"
     />
-
+    <!-- do not remove -->
+    <div style="visibility:hidden">.</div>
+  
     <!--------------------------- modal for dialog messages ------------------------------>
     <modal :dialog="dialog" width="400">
       <div class="white pa-3 pb-10 text-center dialog">
@@ -33,7 +36,10 @@ import failedImage from "@/assets/images/failed-img.svg";
 import { mapState } from "vuex";
 export default {
   name: "FilterProducts",
-  components: { BasicFilter, modal },
+  components: {
+    BasicFilter,
+    modal,
+  },
   data: function () {
     return {
       searchValue: "",

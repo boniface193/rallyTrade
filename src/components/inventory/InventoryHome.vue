@@ -19,7 +19,7 @@
         />
       </div>
       <!-- pagination -->
-      <div class="d-flex justify-space-between px-4 align-center flex-wrap">
+      <!-- <div class="d-flex justify-space-between px-4 align-center flex-wrap">
         <div class="d-flex justify-space-between align-center flex-wrap">
           <p class="mb-2 mr-5">
             Page {{ pageDetails.current_page }} of {{ pageDetails.last_page }}
@@ -33,6 +33,9 @@
             circle
           ></v-pagination>
         </div>
+      </div> -->
+      <div class="d-flex justify-center px-4 text-center">
+        <p style="cursor:pointer" class="primary--text">See more</p>
       </div>
     </div>
     <!-- no data -->

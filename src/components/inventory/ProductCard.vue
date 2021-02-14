@@ -124,12 +124,15 @@ export default {
   .card-container {
     min-width: 30%;
     margin: auto 1.5%;
+    &:hover {
+      transform: scale(1);
+    }
   }
 }
 @media (max-width: 550px) {
   .card-container {
-    min-width: 45.5%;
-    margin: auto 1%;
+    min-width: 45%;
+    margin: auto 2.5%;
     .card-bottom {
       .add-btn {
         right: 5px;
@@ -137,7 +140,7 @@ export default {
         width: 30px;
         height: 30px;
       }
-      .minMaxProfit{
+      .minMaxProfit {
         font-size: 14px;
       }
     }

@@ -71,6 +71,7 @@ export default {
       dialogMessage: "",
       orderDetails: {
         delivery_location: {},
+        customer:{}
       },
       productDetails: {},
       storeDetails: {},
