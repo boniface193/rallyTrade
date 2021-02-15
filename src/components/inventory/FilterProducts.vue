@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicFilter
-      :price="filterParameters.price" 
+      :price="filterParameters.price"
       toolTipText="Filter products"
       headerName="Filter Products"
       @filterOption="filterTable"
