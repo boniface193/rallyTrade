@@ -1,57 +1,63 @@
 <template>
   <div>
-    <h2 class="mb-4">{{ orderDetails.product_name }}</h2>
+    <h2 class="mb-4">{{ pageDetails.orderDetails.product_name }}</h2>
     <!-- <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p> -->
     <p class="secondary--text" style="font-size: 14px">
-      Inventory: {{ storeDetails.name }}
+      Inventory: {{ pageDetails.storeDetails.name }}
     </p>
     <div class="d-flex align-center">
-      <p class="secondary--text mr-1 mb-0" style="font-size: 14px">Chat Seller:</p>
-      
+      <p class="secondary--text mr-1 mb-0" style="font-size: 14px">
+        Chat Seller:
+      </p>
+
       <a
         :href="
           '//' +
-          `api.whatsapp.com/send?text=''&phone=${orderDetails.customer.phone}`
+          `api.whatsapp.com/send?text=''&phone=${pageDetails.orderDetails.customer.phone}`
         "
         target="_blank"
-        style="text-decoration:none"
+        style="text-decoration: none"
       >
         <v-icon color="#64B161" class="ml-2 mr-2" style="cursor: pointer"
           >mdi-whatsapp</v-icon
         >
       </a>
-      <h5>{{ orderDetails.seller_name }}</h5>
+      <h5>{{ pageDetails.orderDetails.seller_name }}</h5>
     </div>
     <!-- product description -->
     <div class="mt-5">
       <h5 class="mb-2">Description</h5>
       <p class="mb-5 secondary--text" style="font-size: 14px">
-        {{ productDetails.description }}
+        {{ pageDetails.productDetails.description }}
       </p>
     </div>
     <!-- select quantity container -->
     <div class="mt-5 d-flex align-center">
-      <div class="d-flex align-center">
+      <!-- <div class="d-flex align-center mr-5">
         <span class="minus-btn" @click="decreaseNum">-</span>
         <span class="mx-4">{{ quantity }}</span>
         <span class="add-btn" @click="increaseNum">+</span>
-      </div>
-      <p class="ml-5 mb-0">
+      </div> -->
+      <p class="mb-0">
         <span class="primary--text" style="font-size: 20px"
-          >&#8358;{{ orderDetails.subtotal_label }}</span
+          >&#8358;{{ pageDetails.orderDetails.subtotal_label }}</span
         ><br /><span class="secondary--text" style="font-size: 14px"
           >Delivery fee not included yet</span
         >
       </p>
     </div>
     <div class="btn-container">
-      <v-btn class="primary mt-7 mb-3" @click="gotoDeliveryPage"
+      <v-btn
+        class="primary mt-7 mb-3"
+        @click="gotoDeliveryPage"
+        :disabled="!acceptTerms"
         >Continue</v-btn
       >
-      <p class="secondary--text" style="font-size: 14px">
-        By clicking continue, you are agreeing to our terms of service and our
-        disclaimer
-      </p>
+      <v-checkbox
+        v-model="acceptTerms"
+        label="By clicking continue, you are agreeing to our terms of service and our
+        disclaimer"
+      ></v-checkbox>
     </div>
   </div>
 </template>
@@ -62,7 +68,17 @@ export default {
   data: function () {
     return {
       quantity: 0,
+      acceptTerms: false,
     };
+  },
+  computed: {
+    pageDetails() {
+      return {
+        productDetails: this.productDetails,
+        orderDetails: this.orderDetails,
+        storeDetails: this.storeDetails,
+      };
+    },
   },
   methods: {
     increaseNum() {
