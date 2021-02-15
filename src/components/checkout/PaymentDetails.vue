@@ -1,43 +1,44 @@
 <template>
   <div>
-    <div>
-      <router-link
-        :to="{ path: `/checkout-details?order_id=${this.orderDetails.id}` }"
-        style="text-decoration: none"
-      >
-        <v-icon color="black" class="mb-5">mdi-chevron-left</v-icon>
-      </router-link>
-
-      <div class="d-flex align-center justify-space-between">
-        <h3>Your Address</h3>
-        <h5 class="primary--text">Change Address</h5>
+    <div class="payment-page">
+      <div class="d-flex align-baseline justify-space-between">
+        <h2>Address Details</h2>
+        <p class="primary--text" style="font-size: 14px">Change Address</p>
       </div>
-      <div class="mt-6">
+      <div class="mt-2">
         <div class="mb-4">
-          <h4>Emike lucy</h4>
+          <h4>{{ orderDetails.customer.name }}</h4>
           <p class="secondary--text mb-0">
-            {{ orderDetails.delivery_location.address }}<br />234901328999
+            {{ orderDetails.delivery_location.address }}<br />{{
+              orderDetails.customer.phone
+            }}
           </p>
         </div>
         <!-- delivery method  -->
-        <div class="mb-4">
+        <div class="mb-0">
           <h4>Select a delivery method:</h4>
-          <v-radio-group v-model="radioGroup">
+          <v-radio-group v-model="radioGroup" class="mt-1">
             <v-radio
-              class="primary--text"
+              class="primary--text mb-0"
               :label="`Express Delivery (₦${orderDetails.delivery_fee_label})`"
               value="express"
             ></v-radio>
+            <span class="ml-8 mb-4 primary--text"
+              >Item would be delivered within 24hrs</span
+            >
             <v-radio
-              class="primary--text"
-              label="Standard Delivery "
+              class="primary--text mb-0"
+              label="Standard Delivery (₦1200)"
               value="standard"
             ></v-radio>
+            <span class="ml-8 mb-0 primary--text"
+              >Item would be delivered within 3 working days</span
+            >
           </v-radio-group>
         </div>
         <!-- shipping details -->
         <div class="mb-4">
-          <h4>Shipping Details</h4>
+          <h4>Order Details</h4>
           <p class="secondary--text mb-0">
             <span style="font-weight: 600; color: black">1</span>
             <span class="ml-5">{{ orderDetails.product_name }}</span>
@@ -45,15 +46,15 @@
         </div>
         <!-- payment summary -->
         <div class="mb-3 summary-container">
-          <h4 class="mb-4">Summary</h4>
+          <h4 class="mb-1">Summary</h4>
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Item</p>
             <h4>&#8358;{{ orderDetails.subtotal_label }}</h4>
           </div>
-          <div class="d-flex align-center justify-space-between mb-2">
+          <!-- <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">VAT (7.5%)</p>
             <h4>&#8358;{{ orderDetails.vat_label }}</h4>
-          </div>
+          </div> -->
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Shipping fee</p>
             <h4>&#8358;{{ orderDetails.delivery_fee_label }}</h4>
@@ -66,38 +67,12 @@
           </div>
           <!-- payment btn -->
           <v-btn
-            class="primary py-3"
+            class="primary py-3 mt-5"
             :loading="processingLoader"
             :disabled="processingLoader"
             @click="payForItem"
             >Pay now</v-btn
           >
-          <div>
-            <flutterwave-pay-button
-             ref="paymentTriggerBtn"
-              :public_key="paymentDetails.url.public_key"
-              :tx_ref="paymentDetails.url.tx_ref"
-              :amount="paymentDetails.url.amount"
-              :currency="paymentDetails.url.currency"
-              :payment_options="paymentDetails.payment_options"
-              redirect_url=""
-              class="flutterwave-btn"
-              :customer="{
-                name: paymentDetails.url.customer.name,
-                email: paymentDetails.url.customer.email,
-                phone_number: paymentDetails.url.customer.phone,
-              }"
-              :customizations="{
-                title: 'NOVA',
-                description: 'Nova payment page',
-                logo: 'https://flutterwave.com/images/logo-colored.svg',
-              }"
-              :callback="makePaymentCallback"
-              :onclose="closedPaymentModal"
-            >
-              Pay now
-            </flutterwave-pay-button>
-          </div>
         </div>
       </div>
     </div>
@@ -171,6 +146,25 @@ export default {
         }
       });
   },
+  computed: {
+    paymentOption() {
+      return {
+        public_key: this.paymentDetails.url.public_key,
+        tx_ref: this.paymentDetails.url.tx_ref,
+        amount: this.paymentDetails.url.amount,
+        currency: this.paymentDetails.url.currency,
+        payment_options: this.paymentDetails.url.payment_options,
+        redirect_url: "",
+        customer: {
+          name: this.paymentDetails.url.customer.name,
+          email: this.paymentDetails.url.customer.email,
+          phone_number: this.paymentDetails.url.customer.phone,
+        },
+        callback: this.makePaymentCallback,
+        onclose: this.closedPaymentModal,
+      };
+    },
+  },
   methods: {
     payForItem() {
       this.processingLoader = true;
@@ -183,9 +177,7 @@ export default {
         .then((response) => {
           this.processingLoader = false;
           this.paymentDetails = response.data.data;
-          // console.log(this.paymentDetails.url.customer.email)
-          // console.log(this.paymentDetails)
-          this.$refs.paymentTriggerBtn.$el.click()
+          this.payViaService();
         })
         .catch((error) => {
           this.dialog = true;
@@ -198,8 +190,35 @@ export default {
           }
         });
     },
+    payViaService() {
+      this.payWithFlutterwave(this.paymentOption);
+    },
     makePaymentCallback(response) {
-      console.log("Payment callback", response);
+      this.verifyPayment(response);
+    },
+    verifyPayment(value) {
+      this.$store
+        .dispatch("", {
+          trx_ref: value.trx_ref,
+          trx_id: value.trx_id,
+          orderId: this.orderDetails.id,
+        })
+        .then(() => {
+          this.$router.push({
+            path: `/payment-success?order_id=${this.orderDetails.id}`,
+          });
+        })
+        .catch((error) => {
+          if (error.response) {
+            this.$router.push({
+              path: `/payment-failed?order_id=${this.orderDetails.id}`,
+            });
+          } else {
+            this.dialog = true;
+            this.dialogMessage = "No internet Connection!";
+            this.statusImage = failedImage;
+          }
+        });
     },
     closedPaymentModal() {
       const params = new URLSearchParams(window.location.search);
@@ -212,8 +231,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.summary-container {
-  width: 400px;
+.payment-page {
+  width: 500px;
+  margin: auto;
 }
 .v-btn:not(.v-btn--round).v-size--default {
   height: 40px;
@@ -236,8 +256,18 @@ export default {
     width: 100%;
   }
 }
-@media (max-width: 400px) {
-  .summary-container {
+@media (max-width: 1100px) {
+  .payment-page {
+    width: 400px;
+  }
+}
+@media (max-width: 960px) {
+  .payment-page {
+    width: 550px;
+  }
+}
+@media (max-width: 600px) {
+  .payment-page {
     width: 100%;
   }
   .v-btn:not(.v-btn--round).v-size--default {

@@ -91,11 +91,7 @@ const actions = {
     // get order details
     getOrdersDetail(context, data) {
         return new Promise((resolve, reject) => {
-            axios.get(`/orders/${data.id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).then(response => {
+            axios.get(`/orders/${data.id}`).then(response => {
                 resolve(response);
             })
                 .catch(error => {
@@ -104,7 +100,6 @@ const actions = {
                 })
         })
     },
-
     searchOrders(context) {
         let page = ((state.page) ? `page=${state.page}` : "");
         let perPage = ((state.itemPerPage) ? `per_page=${state.itemPerPage}` : "");
@@ -125,7 +120,24 @@ const actions = {
                 })
         })
     },
-
+    exportOrder() {
+        return new Promise((resolve, reject) => {
+            axios.post(`/orders/export`, {
+                start_date: state.dateRange.startDate,
+                end_date: state.dateRange.endDate
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                }).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+        })
+    },
     // create order
     createOrder(context, data) {
         return new Promise((resolve, reject) => {
@@ -146,12 +158,24 @@ const actions = {
     // pay for order
     payForOrder(context, data) {
         return new Promise((resolve, reject) => {
-            axios.post(`/orders/${data.id}/pay`, data,
+            axios.post(`/orders/${data.id}/pay`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
                     }
                 }).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
+    },
+    //verify Payment
+    verifyPayment(context, data) {
+        return new Promise((resolve, reject) => {
+            axios.post(`/orders/${data.orderId}/verify?trx_ref=${data.trx_ref}&trx_id=${data.trx_id}`, data,).then(response => {
                     resolve(response);
                 })
                 .catch(error => {

@@ -35,9 +35,12 @@ import InventoryHome from "@/components/inventory/InventoryHome.vue";
 import ProductPage from "@/components/inventory/ProductPage.vue";
 import CustomerDetailsForm from "@/components/inventory/CustomerDetailsForm.vue";
 import ProductDetails from "@/components/inventory/ProductDetails.vue";
-import CheckoutPage from "@/components/inventory/CheckoutPage.vue";
-import PaymentDetails from "@/components/inventory/PaymentDetails.vue";
-import CheckoutDetails from "@/components/inventory/CheckoutDetails.vue";
+// checkout pages
+import CheckoutPage from "@/components/checkout/CheckoutPage.vue";
+import PaymentDetails from "@/components/checkout/PaymentDetails.vue";
+import CheckoutDetails from "@/components/checkout/CheckoutDetails.vue";
+import PaymentSuccess from "@/components/checkout/PaymentSuccess";
+import PaymentFailed from "@/components/checkout/PaymentFailed"
 Vue.use(VueRouter);
 
 // requirement for user to log on to the dashboard
@@ -82,7 +85,7 @@ const ifAuthenticated = (to, from, next) => {
 // redirect when a user is already logged in
 const AlreadyLogin = (to, from, next) => {
   if (localStorage.getItem("accessToken")) {
-    next({ name: 'Dashboard' })
+    next({ name: 'InventoryHome' })
   } else {
     next();
     return
@@ -250,10 +253,20 @@ const routes = [
         path: "/checkout-details",
         name: "CheckoutDetails",
         component: CheckoutDetails
-      }
+      },
     ]
   },
- 
+  {
+    path: "/payment-success",
+    name: "PaymentSuccess",
+    component: PaymentSuccess,
+  },
+  {
+    path: "/payment-failed",
+    name: "PaymentFailed",
+    component: PaymentFailed,
+  },
+
 
   // onboarding routes
   {

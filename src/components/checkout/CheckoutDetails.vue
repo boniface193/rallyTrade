@@ -1,15 +1,26 @@
 <template>
   <div>
     <h2 class="mb-4">{{ orderDetails.product_name }}</h2>
-    <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p>
-    <p class="secondary--text" style="font-size: 14px">Inventory: TDAfrica</p>
+    <!-- <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p> -->
+    <p class="secondary--text" style="font-size: 14px">
+      Inventory: {{ storeDetails.name }}
+    </p>
     <div class="d-flex align-center">
-      <p class="secondary--text mr-1 mb-0" style="font-size: 14px">Seller:</p>
-      <div class="seller-image">
-        <img src="@/assets/images/user-profile.svg" alt="" />
-      </div>
+      <p class="secondary--text mr-1 mb-0" style="font-size: 14px">Chat Seller:</p>
+      
+      <a
+        :href="
+          '//' +
+          `api.whatsapp.com/send?text=''&phone=${orderDetails.customer.phone}`
+        "
+        target="_blank"
+        style="text-decoration:none"
+      >
+        <v-icon color="#64B161" class="ml-2 mr-2" style="cursor: pointer"
+          >mdi-whatsapp</v-icon
+        >
+      </a>
       <h5>{{ orderDetails.seller_name }}</h5>
-      <v-icon color="#64B161" class="ml-6">mdi-whatsapp</v-icon>
     </div>
     <!-- product description -->
     <div class="mt-5">
@@ -47,11 +58,11 @@
 <script>
 export default {
   name: "CheckoutDetails",
-  props: ["productDetails", "orderDetails"],
-  data: function(){
+  props: ["productDetails", "orderDetails", "storeDetails"],
+  data: function () {
     return {
-      quantity: 0
-    }
+      quantity: 0,
+    };
   },
   methods: {
     increaseNum() {

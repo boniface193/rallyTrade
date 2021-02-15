@@ -1,13 +1,34 @@
 <template>
   <div class="px-4 py-5" style="background: #fafafa; height: 100%">
+    <!-- go to previous page -->
+    <router-link
+      :to="{
+        path: `/checkout-details?order_id=${this.orderDetails.id}`,
+      }"
+      style="text-decoration: none"
+      class="mx-5"
+      v-if="this.$route.name === 'PaymentDetails'"
+    >
+      <span class="back-btn">
+        <v-icon color="black" style="font-size: 25px">mdi-chevron-left</v-icon>
+      </span>
+    </router-link>
+
     <v-row v-show="!pageLoader">
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-5">
-        <div class="image-container pa-10">
+        <div
+          class="image-container pa-10"
+          :class="this.$route.name === 'PaymentDetails' ? 'hide-image' : ''"
+        >
           <img :src="orderDetails.product_image_url" alt="" />
         </div>
       </v-col>
       <v-col class="col-12 col-md-6 pt-5 pt-md-15 px-8">
-        <router-view :orderDetails="orderDetails" :productDetails="productDetails"/>
+        <router-view
+          :orderDetails="orderDetails"
+          :productDetails="productDetails"
+          :storeDetails="storeDetails"
+        />
       </v-col>
     </v-row>
     <!-- page loader -->
@@ -50,8 +71,10 @@ export default {
       dialogMessage: "",
       orderDetails: {
         delivery_location: {},
+        customer:{}
       },
       productDetails: {},
+      storeDetails: {},
       pageLoader: false,
     };
   },
@@ -86,6 +109,26 @@ export default {
         })
         .then((response) => {
           this.productDetails = response.data.data;
+          this.getStoreDetails(this.orderDetails.store_id);
+        })
+        .catch((error) => {
+          this.pageLoader = false;
+          this.dialog = true;
+          this.statusImage = failedImage;
+          if (error.response) {
+            this.dialogMessage = "Sorry, this data does not Exist";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
+    },
+    getStoreDetails(store_id) {
+      this.$store
+        .dispatch("onboarding/getStoreDetails", {
+          id: store_id,
+        })
+        .then((response) => {
+          this.storeDetails = response.data.data;
           this.pageLoader = false;
         })
         .catch((error) => {
@@ -113,60 +156,16 @@ export default {
     width: 100%;
   }
 }
-.seller-image {
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 15px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-.add-btn {
-  border-radius: 50%;
-  background: #758bfc;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  justify-content: center;
-  cursor: pointer;
-}
-.minus-btn {
-  border-radius: 50%;
-  background: #f3f5ff;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  color: #758bfc;
-  justify-content: center;
-  cursor: pointer;
-}
 
-.v-btn:not(.v-btn--round).v-size--default {
-  height: 40px;
-  min-width: 200px;
-  padding: 0 16px;
-}
 .status-img {
   width: 140px;
   .v-image {
     width: 100%;
   }
 }
-@media (max-width: 500px) {
-  .btn-container {
-    text-align: center;
-  }
-  .v-btn:not(.v-btn--round).v-size--default {
-    min-width: 100%;
+@media (max-width: 960px) {
+  .hide-image {
+    display: none !important;
   }
 }
 </style>

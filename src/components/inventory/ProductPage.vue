@@ -16,11 +16,13 @@
 
       <v-row>
         <v-col class="col-12 col-md-6 pt-md-15 px-5">
+          <!-- image section -->
           <div class="image-container pa-10">
             <img :src="productDetails.image" alt="" />
             <span class="points">{{ productDetails.points }}pts</span>
           </div>
         </v-col>
+        <!-- prduct details -->
         <v-col class="col-12 col-md-6 pt-md-15 px-8">
           <h2 class="mb-4">{{ productDetails.name }}</h2>
           <p class="secondary--text mb-4" style="font-size: 14px">
@@ -102,11 +104,12 @@
               </p>
               <v-form style="width: 200px" ref="form">
                 <v-text-field
-                  type="number"
                   required
                   :rules="inputRules"
                   v-model="profit"
+                  @keyup.enter="submitCheckoutDetails"
                 ></v-text-field>
+                <v-text-field style="display:none"></v-text-field>
               </v-form>
             </div>
             <div class="d-flex align-center mb-5">
@@ -149,7 +152,7 @@
           <div class="link py-3 px-2">
             <img src="@/assets/images/link.svg" alt="" />
             <span
-              style="cursor: pointer"
+              style="cursor: pointer;height:25px; overflow:hidden"
               v-clipboard:copy="createLink.url"
               @click="showCopyStatus"
               >{{ createLink.url }}</span
