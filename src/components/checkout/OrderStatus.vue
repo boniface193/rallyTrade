@@ -27,7 +27,7 @@
                 <img :src="orderDetails.product_image_url" alt="" />
               </div>
             </v-col>
-            <v-col class=" col-12 col-sm-7">
+            <v-col class="col-12 col-sm-7">
               <div>
                 <p class="mb-0" style="font-size: 14px">
                   <span style="font-weight: 600">Order No: </span
@@ -58,6 +58,13 @@
                   }}</span>
                   <span class="secondary--text mr-2">{{
                     orderDetails.created_at.slice(10)
+                  }}</span>
+                </p>
+
+                <p class="mb-0" style="font-size: 14px">
+                  <span style="font-weight: 600">Deliver location: </span
+                  ><span class="secondary--text mr-2">{{
+                    orderDetails.location.address
                   }}</span>
                 </p>
               </div>
