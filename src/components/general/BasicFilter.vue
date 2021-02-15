@@ -161,7 +161,6 @@ export default {
   .basic-filter {
     .basic-filter-content {
       width: 300px;
-      left: 0;
       right: 0;
       margin: 10px auto;
     }
