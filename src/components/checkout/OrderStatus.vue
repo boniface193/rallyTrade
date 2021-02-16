@@ -64,7 +64,7 @@
                 <p class="mb-0" style="font-size: 14px">
                   <span style="font-weight: 600">Deliver location: </span
                   ><span class="secondary--text mr-2">{{
-                    orderDetails.location.address
+                    orderDetails.delivery_location.address
                   }}</span>
                 </p>
               </div>
