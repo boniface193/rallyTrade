@@ -39,8 +39,10 @@ import ProductDetails from "@/components/inventory/ProductDetails.vue";
 import CheckoutPage from "@/components/checkout/CheckoutPage.vue";
 import PaymentDetails from "@/components/checkout/PaymentDetails.vue";
 import CheckoutDetails from "@/components/checkout/CheckoutDetails.vue";
-import PaymentSuccess from "@/components/checkout/PaymentSuccess";
-import PaymentFailed from "@/components/checkout/PaymentFailed"
+import PaymentSuccess from "@/components/checkout/PaymentSuccess.vue";
+import PaymentFailed from "@/components/checkout/PaymentFailed.vue";
+import OrderStatus from "@/components/checkout/OrderStatus.vue";
+
 Vue.use(VueRouter);
 
 // requirement for user to log on to the dashboard
@@ -89,6 +91,17 @@ const AlreadyLogin = (to, from, next) => {
   } else {
     next();
     return
+  }
+}
+
+const allowPayment = (to, from, next) => {
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("order_id");
+  if(from.name === "CheckoutDetails") {
+    next();
+    return
+  }else {
+    next({ path: `/checkout-details?order_id=${orderId}` })
   }
 }
 
@@ -247,12 +260,13 @@ const routes = [
       {
         path: "/payment-details",
         name: "PaymentDetails",
-        component: PaymentDetails
+        component: PaymentDetails,
+        beforeEnter: allowPayment
       },
       {
         path: "/checkout-details",
         name: "CheckoutDetails",
-        component: CheckoutDetails
+        component: CheckoutDetails,
       },
     ]
   },
@@ -265,6 +279,11 @@ const routes = [
     path: "/payment-failed",
     name: "PaymentFailed",
     component: PaymentFailed,
+  },
+  {
+    path: "/order-status",
+    name: "OrderStatus",
+    component: OrderStatus
   },
 
 
