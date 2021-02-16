@@ -41,7 +41,9 @@
           <h4>Order Details</h4>
           <p class="secondary--text mb-0">
             <span style="font-weight: 600; color: black">1</span>
-            <span class="ml-5">{{ pageDetails.orderDetails.product_name }}</span>
+            <span class="ml-5">{{
+              pageDetails.orderDetails.product_name
+            }}</span>
           </p>
         </div>
         <!-- payment summary -->
@@ -112,13 +114,11 @@ export default {
       dialogMessage: "",
       processingLoader: false,
       paymentDetails: {
-        url: {
-          amount: "",
-          customer: {
-            name: "",
-            email: "",
-            phone: null,
-          },
+        amount: "",
+        customer: {
+          name: "",
+          email: "",
+          phone: null,
         },
       },
     };
@@ -127,16 +127,16 @@ export default {
   computed: {
     paymentOption() {
       return {
-        public_key: this.paymentDetails.url.public_key,
-        tx_ref: this.paymentDetails.url.tx_ref,
-        amount: this.paymentDetails.url.amount,
-        currency: this.paymentDetails.url.currency,
-        payment_options: this.paymentDetails.url.payment_options,
+        public_key: this.paymentDetails.public_key,
+        tx_ref: this.paymentDetails.tx_ref,
+        amount: this.paymentDetails.amount,
+        currency: this.paymentDetails.currency,
+        payment_options: this.paymentDetails.payment_options,
         redirect_url: "",
         customer: {
-          name: this.paymentDetails.url.customer.name,
-          email: this.paymentDetails.url.customer.email,
-          phone_number: this.paymentDetails.url.customer.phone,
+          name: this.paymentDetails.customer.name,
+          email: this.paymentDetails.customer.email,
+          phone_number: this.paymentDetails.customer.phone,
         },
         callback: this.makePaymentCallback,
         onclose: this.closedPaymentModal,
@@ -145,7 +145,7 @@ export default {
     pageDetails() {
       return {
         productDetails: this.productDetails,
-        orderDetails: this.orderDetails
+        orderDetails: this.orderDetails,
       };
     },
   },
@@ -183,8 +183,8 @@ export default {
     verifyPayment(value) {
       this.$store
         .dispatch("orders/verifyPayment", {
-          trx_ref: value.tx_ref,
-          trx_id: value.transaction_id,
+          ref: value.tx_ref,
+          id: value.transaction_id,
           orderId: this.pageDetails.orderDetails.id,
         })
         .then(() => {
