@@ -119,7 +119,7 @@ export default {
           card_success: "5,000",
           awaiting: "awaiting settlements",
           card_history: "Withdraw funds",
-          routes: "WithdrawFund",
+          routes: "AddBankDetails",
         },
 
         {

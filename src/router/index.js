@@ -16,6 +16,7 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
 import WithdrawFund from "@/views/dashboard/WithdrawFund.vue";
+import AddBankDetails from "@/views/dashboard/AddBankDetails.vue";
 import Payment_history from "@/views/dashboard/paymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
@@ -156,6 +157,11 @@ const routes = [
         component: Dashboard,
       },
       // sales history
+      {
+        path: "bank-account",
+        name: "AddBankDetails",
+        component: AddBankDetails
+      },
       {
         path: "withdraw-fund",
         name: "WithdrawFund",
