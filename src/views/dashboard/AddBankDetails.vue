@@ -298,7 +298,7 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.passwordDialog = true;
-        this.$refs.passwordForm.reset();
+        this.$refs.passwordForm.reset()
       }
     },
   },

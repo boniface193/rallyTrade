@@ -32,16 +32,17 @@
       </p>
     </div>
     <!-- select quantity container -->
-    <div class="mt-5 d-flex align-center">
+    <div class="mt-5">
       <!-- <div class="d-flex align-center mr-5">
         <span class="minus-btn" @click="decreaseNum">-</span>
         <span class="mx-4">{{ quantity }}</span>
         <span class="add-btn" @click="increaseNum">+</span>
       </div> -->
+      <h5 class="mb-3">No. of items: <span>{{ pageDetails.orderDetails.total_items }}</span></h5 >
       <p class="mb-0">
-        <span class="primary--text" style="font-size: 20px"
-          >&#8358;{{ pageDetails.orderDetails.subtotal_label }}</span
-        ><br /><span class="secondary--text" style="font-size: 14px"
+        <span class="primary--text mr-4" style="font-size: 20px"
+          >&#8358;{{ pageDetails.orderDetails.subtotal_label }}</span>
+        <br/><span class="secondary--text" style="font-size: 14px"
           >Delivery fee not included yet</span
         >
       </p>
