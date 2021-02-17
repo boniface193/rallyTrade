@@ -106,8 +106,8 @@ export default {
           card_header: "₦900,000.00",
           card_sales: "In sales",
           card_success: "+45,000",
-          card_history: "Sales history",
-          routes: "sales_history",
+          card_history: "Payment history",
+          routes: "payment_history",
         },
 
         {
@@ -117,8 +117,8 @@ export default {
           card_sales: "In profits",
           card_success: "5,000",
           awaiting: "awaiting settlements",
-          card_history: "Settlement history",
-          routes: "payment_history",
+          card_history: "Withdraw funds",
+          routes: "AddBankDetails",
         },
 
         {

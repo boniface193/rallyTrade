@@ -15,7 +15,8 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
-import Sales_history from "@/views/dashboard/salesHistory.vue";
+import WithdrawFund from "@/views/dashboard/WithdrawFund.vue";
+import AddBankDetails from "@/views/dashboard/AddBankDetails.vue";
 import Payment_history from "@/views/dashboard/paymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
@@ -157,9 +158,14 @@ const routes = [
       },
       // sales history
       {
-        path: "sales",
-        name: "sales_history",
-        component: Sales_history
+        path: "bank-account",
+        name: "AddBankDetails",
+        component: AddBankDetails
+      },
+      {
+        path: "withdraw-fund",
+        name: "WithdrawFund",
+        component: WithdrawFund
       },
       // payment history
       {

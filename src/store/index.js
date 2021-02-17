@@ -6,6 +6,7 @@ import orders from "./modules/orders"
 import settings from "./modules/settings";
 import reward from "./modules/reward";
 import leaderboard from "./modules/leaderboard";
+import bankService from "./modules/bankService";
 
 // initial state
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   settings: settings.state,
   reward: reward.state,
   leaderboard: leaderboard.state,
+  bankService: bankService.state
 }
 
 //Convert object in string 
@@ -30,6 +32,7 @@ export default new Vuex.Store({
     settings: settings,
     reward: reward, 
     leaderboard: leaderboard,
+    bankService: bankService
   },
   mutations: {
     reset(state) {

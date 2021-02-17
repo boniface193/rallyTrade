@@ -13,7 +13,7 @@
       </h3>
 
       <v-btn class="primary mx-auto my-3" @click="viewOrderStatus"
-        >View your shipping details</v-btn
+        >Track your order here</v-btn
       >
     </div>
   </div>
