@@ -108,7 +108,7 @@ export default {
           card_sales: "In sales",
           card_success: "+45,000",
           card_history: "Payment history",
-          routes: "payment_history",
+          routes: "PaymentHistory",
         },
 
         {

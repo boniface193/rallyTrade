@@ -1,30 +1,26 @@
 <template>
   <div>
-    <div class="pt-10 px-3 bank-container" v-show="!pageLoader">
-      <div>
-        <!-- go to previous page -->
+    <div class="px-3 bank-container" v-show="!pageLoader">
+      <div
+        class="d-flex align-center justify-center mb-8"
+        style="position: relative"
+      >
         <router-link
-          :to="{
-            name: 'Dashboard',
-          }"
+          :to="{ name: 'ProfilePage' }"
           style="text-decoration: none"
-          class="mt-5"
         >
           <span class="back-btn">
-            <v-icon color="black" style="font-size: 25px"
-              >mdi-chevron-left</v-icon
-            >
+            <v-icon style="font-size: 25px">mdi-chevron-left</v-icon>
           </span>
         </router-link>
+        <h3 class="align-self-center">Bank Accounts</h3>
       </div>
 
       <div class="mt-5 px-2">
         <h3 class="mb-4">Hello {{ userInfo.name }},</h3>
 
         <!-- description -->
-        <p class="secondary--text mb-4">
-          Please provide your bank details to proceed
-        </p>
+        <p class="secondary--text mb-4">Please provide your bank details</p>
 
         <!-- error message -->
         <p class="error--text mb-1" v-show="error">{{ errorMsg }}</p>
@@ -88,7 +84,7 @@
       </div>
     </div>
     <!-- page loader -->
-    <div class="d-flex py-8 text-center" v-if="pageLoader">
+    <div class="d-flex text-center" v-if="pageLoader">
       <v-progress-circular
         indeterminate
         color="primary"
@@ -165,6 +161,7 @@ import modal from "@/components/modal.vue";
 export default {
   name: "WithdrawFund",
   components: { customSelect, modal },
+  props: ["accountDetails"],
   data: function () {
     return {
       password: "",
@@ -180,7 +177,6 @@ export default {
       statusImage: null,
       pageLoader: false,
       bankError: false,
-      accountDetails: {},
       fetchingAccountDetails: false,
       accountVerified: false,
       passwordDialog: false,
@@ -196,7 +192,19 @@ export default {
     };
   },
   created() {
-    if (this.$store.getters["bankService/bankList"].length == 0) {
+    if (this.bankList.length === 0) {
+      this.getBankList();
+    }
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "settings/profile",
+      bankList: "bankService/bankList",
+    }),
+  },
+  methods: {
+    // get the list of banks
+    getBankList() {
       this.pageLoader = true;
       this.$store
         .dispatch("bankService/getBankList")
@@ -214,15 +222,7 @@ export default {
             this.dialogMessage = "No internet Connection!";
           }
         });
-    }
-  },
-  computed: {
-    ...mapGetters({
-      userInfo: "settings/profile",
-      bankList: "bankService/bankList",
-    }),
-  },
-  methods: {
+    },
     // verfiy that category is selected
     verifyBankSelect() {
       if (this.bank.name === "") {
@@ -277,11 +277,14 @@ export default {
             password: this.password,
           })
           .then(() => {
-              this.loading = false;
-              this.passwordError= false;
-             this.$router.push({
-            name: "WithdrawFund",
-          });
+            this.loading = false;
+            this.passwordError = false;
+            // get lastest profile information
+            this.$store.dispatch("settings/getUserProfile").then(() => {
+              this.$router.push({
+                name: "WithdrawFund",
+              });
+            });
           })
           .catch((error) => {
             this.passwordError = true;
@@ -298,7 +301,7 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.passwordDialog = true;
-        this.$refs.passwordForm.reset()
+        this.$refs.passwordForm.reset();
       }
     },
   },
@@ -326,6 +329,11 @@ export default {
   font-size: 12px;
   margin-top: 8px;
   padding-left: 12px;
+}
+.back-btn {
+  position: absolute;
+  left: 0px;
+  top: 0;
 }
 @media (max-width: 750px) {
   .bank-container {
