@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="mx-5">
+    <div class="mx-4 max-width">
       <div class="chOder my-9">
         <router-link :to="{ path: '/dashboard' }">
           <v-icon class="float-left">mdi-chevron-left</v-icon>
@@ -9,9 +9,9 @@
       </div>
 
       <v-row>
-        <v-col lg="" offset-lg="3" offset-md="3">
+        <v-col offset-lg="3" offset-md="3" offset-sm="3">
           <!-- card -->
-          <div class="" v-for="items in rewards.data" :key="items.id">
+          <div class="center" v-for="items in rewards.data" :key="items.id">
             <div class="overlay pa-8">
               <div class="card-title text-left">Reward Debit Balance</div>
               <div class="card-point mt-7 text-left">
@@ -27,7 +27,7 @@
           </div>
 
           <v-row>
-            <v-col lg="7" xl="7" md="7" sm="7">
+            <v-col lg="7" xl="7" md="8" sm="7">
               <v-tabs
                 height="40"
                 class="rounded-lg"
@@ -45,17 +45,23 @@
           </v-row>
 
           <v-tabs-items v-model="tab" class="my-3">
-            <v-tab-item id="tab-1" value="tab-1">
-              <div v-if="isLoading" class="text-center my-8">
-                <!-- this image time loader is calculated by the loader to triger the load time -->
-                <v-progress-circular
-                  color="primary"
-                  class="text-center"
-                  indeterminate
-                  size="20"
-                  width="2"
-                ></v-progress-circular>
-              </div>
+            <v-tab-item transition="false" id="tab-1" value="tab-1">
+              <v-row class="my-8" v-if="isLoading">
+                <v-col
+                  offset-lg="3"
+                  offset-md="3"
+                  offset-sm="3"
+                  class="offset-xs"
+                >
+                  <!-- this image time loader is calculated by the loader to triger the load time -->
+                  <v-progress-circular
+                    color="primary"
+                    indeterminate
+                    size="20"
+                    width="2"
+                  ></v-progress-circular>
+                </v-col>
+              </v-row>
               <!-- loader ends here -->
               <v-row
                 class="leader-text my-2"
@@ -63,7 +69,7 @@
                 :key="items.id"
                 :class="{ active: items.isRedeemable }"
               >
-                <v-col cols="8" lg="6">
+                <v-col cols="9" xl="6" lg="6" md="7" sm="6">
                   <div class="d-flex" style="cursor: pointer">
                     <span class="mr-3"
                       ><v-img
@@ -81,34 +87,28 @@
                   </div>
                 </v-col>
                 <v-col
-                  cols="2"
                   @click="filterById(items.isRedeemable)"
                   lg="3"
+                  md="3"
+                  sm="2"
+                  xl="3"
+                  cols="2"
                   style="cursor: pointer"
-                  class="redeem mt-1"
+                  class="redeem mt-1 offset-425"
                   :class="{ 'primary--text': items.isRedeemable }"
                   >Redeem</v-col
                 >
               </v-row>
             </v-tab-item>
             <!-- history -->
-            <v-tab-item id="tab-2" value="tab-2">
-              <div v-if="isLoading" class="text-center my-8">
-                <!-- this image time loader is calculated by the loader to triger the load time -->
-                <v-progress-circular
-                  color="primary"
-                  class="text-center"
-                  indeterminate
-                  size="20"
-                  width="2"
-                ></v-progress-circular>
-              </div>
+            <v-tab-item transition="false" id="tab-2" value="tab-2">
               <!-- loader ends here -->
               <v-row>
                 <v-col
                   cols="12"
                   lg="7"
-                  md="7"
+                  md="8"
+                  sm="7"
                   v-for="items in rewardHistory"
                   :key="items.id"
                 >
@@ -147,7 +147,7 @@
             color="primary"
             >mdi-close</v-icon
           >
-          <div class="pt-9" v-if="filteredArray.isRedeemable == true">
+          <div class="pt-9" v-if="filteredArray.isRedeemable">
             <div class="d-flex justify-center">
               <span>
                 <v-img
@@ -167,7 +167,7 @@
                 class="mx-3"
                 dark
                 color="primary"
-                @click="redeemOffer(filteredArray)"
+                @click="redeemOffer(filteredArray.key)"
                 >Yes</v-btn
               >
               <v-btn depressed dark color="#52F1EC" @click.native="closeModal">
@@ -182,7 +182,26 @@
             v-show="filteredArray.isRedeemable == false"
           >
             <span class="mt-8 body-text">
-              You need extra more points to redeem your offer
+              You need <span class="primary--text">{{filteredArray.point_left}}</span> more points to claim this reward, <router-link :to="{name: 'InventoryHome'}"><i> sell to earn more</i> </router-link>  
+            </span>
+            <div class="d-flex justify-center mt-3 pb-5">
+              <v-btn
+                depressed
+                class="mx-3"
+                dark
+                color="primary"
+                @click.native="closeModal"
+                >Ok</v-btn
+              >
+            </div>
+          </div>
+
+          <div
+          v-if="alert"
+            class="pt-9 px-8 text-center"
+          >
+            <span class="mt-8 body-text">
+              {{alert}} 
             </span>
             <div class="d-flex justify-center mt-3 pb-5">
               <v-btn
@@ -216,7 +235,7 @@ export default {
       filteredArray: {},
       rewardHistory: {},
       isLoading: true,
-      reward: {},
+      alert: "",
     };
   },
   computed: {
@@ -230,8 +249,6 @@ export default {
       this.rewardHistory = e;
       this.isLoading = false;
     });
-    // this.$store.dispatch("reward/redeemReward");
-    // this.findById();
   },
 
   methods: {
@@ -246,14 +263,21 @@ export default {
         (item) => item.isRedeemable == id
       );
       this.openModal();
-      // console.log(this.filteredArray);
+      console.log(this.filteredArray )
     },
-    // findById() {
-    //   const check = Object.values(this.rewards.rewards).find((item) => item);
-    //   console.log(check);
-    // },
     redeemOffer(params) {
       this.$store.commit("reward/setRedeemAirtime", params);
+      this.$store
+        .dispatch("reward/redeemReward")
+        .then((res) => {
+          this.alert = res.message
+          // redirect to dashboard
+          location.href = "/dashboard"
+        })
+        .catch((err) => {
+          this.alert = err.message
+          location.href = "/dashboard"
+        });
       this.closeModal();
     },
   },
@@ -359,22 +383,25 @@ div.v-tabs-slider {
 
 @media (min-width: 1024px) {
   .w-100 {
-    width: 350px;
+    width: 427px;
   }
 
   .card-title {
     font-family: "Product Sans Light";
-    font-size: 12px;
+    font-size: 25px;
+    margin-bottom: 48px;
   }
 
   .card-point {
     font-family: "Product Sans Medium";
     font-size: 18px;
-    margin-bottom: 25px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
   }
 
   .card-name {
     font-family: "Product Sans Light";
+    letter-spacing: 1.5px;
     font-size: 14px;
   }
   a.text-format.v-tab {
@@ -382,21 +409,22 @@ div.v-tabs-slider {
   }
 }
 
-@media (min-width: 1440px) {
+@media (max-width: 1439px) and (min-width: 1365px) {
   .w-100 {
-    width: 350px;
+    width: 460px;
   }
 
   .card-title {
     font-family: "Product Sans Light";
-    font-size: 12px;
-    margin-bottom: 48px;
+    font-size: 25px;
+    margin-bottom: 60px;
   }
 
   .card-point {
     font-family: "Product Sans Medium";
     font-size: 22px;
-    margin: 45px 25px 0px 0px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
   }
 
   .card-name {
@@ -405,6 +433,28 @@ div.v-tabs-slider {
   }
   a.text-format.v-tab {
     margin: 0 15%;
+  }
+}
+
+@media (max-width: 1449px) and (min-width: 1440px) {
+  .w-100 {
+    width: 500px;
+  }
+}
+@media (max-width: 1800px) and (min-width: 1450px) {
+  .center {
+    margin-left: 5%;
+    // width: 500px;
+  }
+}
+@media (max-width: 1900px) and (min-width: 1801px) {
+  .center {
+    margin-left: 5%;
+  }
+}
+@media (max-width: 2560px) and (min-width: 1901px) {
+  .center {
+    margin-left: 15%;
   }
 }
 
@@ -429,13 +479,20 @@ div.v-tabs-slider {
   }
 }
 @media (max-width: 425px) {
+  .offset-xs {
+    margin-left: 50%;
+  }
   .w-100 {
-    width: 320px;
+    width: 385px;
+  }
+  .offset-425 {
+    margin-left: 7%;
   }
 
   .card-title {
     font-family: "Product Sans Light";
     font-size: 12px;
+    margin: 10px 0 40px 0;
   }
 
   .card-point {
@@ -448,4 +505,31 @@ div.v-tabs-slider {
     font-size: 14px;
   }
 }
+
+@media (max-width: 375px){
+  .w-100 {
+    width: 340px;
+  }
+  .card-title {
+    font-family: "Product Sans Light";
+    font-size: 12px;
+    margin: 5px 0 20px 0;
+  }
+}
+
+@media (max-width: 320px){
+  .w-100 {
+    width: 280px;
+  }
+    .card-title {
+    font-family: "Product Sans Light";
+    font-size: 12px;
+    margin: -5px 0 -10px 0;
+  }
+    .offset-425 {
+    margin-left: 0%;
+  }
+}
+
+
 </style>

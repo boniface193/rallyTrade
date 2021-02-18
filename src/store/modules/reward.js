@@ -22,6 +22,7 @@ const actions = {
                     context.commit("setRewards", response.data)
                     // context.commit("setPageDetails", response.data.meta);
                     resolve(response.data)
+                    
                 })
                 .catch(error => {
                     reject(error)
@@ -40,7 +41,7 @@ const actions = {
                 .then(response => {
                     context.commit("setRewards", response.data.data)
                     resolve(response.data.data)
-                    console.log(response.data.data)
+                    
                 })
                 .catch(error => {
                     reject(error)

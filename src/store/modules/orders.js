@@ -44,9 +44,6 @@ const state = {
 const getters = {
     orders(state) {
         return state.orders
-    },
-    searchOrder(state) {
-        return state.searchOrder
     }
 };
 
@@ -80,6 +77,7 @@ const actions = {
                     }
                 }).then(response => {
                     context.commit("setOrders", response.data.data);
+                    context.commit("setPageDetails", response.data.meta);
                     resolve(response);
                 })
                 .catch(error => {
@@ -92,6 +90,7 @@ const actions = {
     getOrdersDetail(context, data) {
         return new Promise((resolve, reject) => {
             axios.get(`/orders/${data.id}`).then(response => {
+                context.commit("setOrders", response.data.data);
                 resolve(response);
             })
                 .catch(error => {
@@ -120,24 +119,24 @@ const actions = {
                 })
         })
     },
-    exportOrder() {
-        return new Promise((resolve, reject) => {
-            axios.post(`/orders/export`, {
-                start_date: state.dateRange.startDate,
-                end_date: state.dateRange.endDate
-            },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                    }
-                }).then(response => {
-                    resolve(response);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-        })
-    },
+    // exportOrder() {
+    //     return new Promise((resolve, reject) => {
+    //         axios.post(`/orders/export`, {
+    //             start_date: state.dateRange.startDate,
+    //             end_date: state.dateRange.endDate
+    //         },
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    //                 }
+    //             }).then(response => {
+    //                 resolve(response);
+    //             })
+    //             .catch(error => {
+    //                 reject(error);
+    //             })
+    //     })
+    // },
     // create order
     createOrder(context, data) {
         return new Promise((resolve, reject) => {
@@ -208,7 +207,7 @@ const mutations = {
         state.pageDetails = data
     },
     setItemPerPage(state, itemPerPage) {
-        state.itemPerPage = itemPerPage;
+        state.itemPerPage = itemPerPage ;
         let page = setItemPerPage(itemPerPage, state.pageDetails.per_page, state.pageDetails.from);
         state.page = page;
     },
