@@ -36,14 +36,11 @@
           </div>
         </div>
         <!-- no data -->
-        <!-- <div
-          class="text-center pt-10 pb-5"
-          v-if="leaderboard.data.length < 1"
-        >
+        <div class="text-center pt-10 pb-5" v-if="leaderboard.data.length < 1">
           <p class="mb-0 secondary--text" style="font-size: 20px">
             Opps! No leaders found.
           </p>
-        </div> -->
+        </div>
 
         <div v-if="isLoading" class="text-center my-8">
           <!-- this image time loader is calculated by the loader to triger the load time -->
@@ -57,11 +54,11 @@
         </div>
         <!-- loader ends here -->
         <v-row class="d-flex justify-center">
-          <v-col lg="10">
-            <v-row class="leader-label mt-5">
-              <v-col cols="2" lg="3">Rank</v-col>
-              <v-col cols="8" lg="6">Name</v-col>
-              <v-col cols="2" lg="3">Points</v-col>
+          <v-col lg="6">
+            <v-row class=" mt-5">
+              <v-col cols="2" lg="3"><h5>Rank</h5></v-col>
+              <v-col cols="8" lg="6"><h5>Name</h5></v-col>
+              <v-col cols="2" lg="3"><h5>Points</h5></v-col>
             </v-row>
 
             <v-row
@@ -79,7 +76,11 @@
                   style="cursor: pointer"
                   @click="filterById(items.seller_id)"
                 >
-                  <span>{{ items.seller_name }}</span>
+                  <span
+                    class="primary--text"
+                    style="text-decoration: underline"
+                    >{{ items.seller_name }}</span
+                  >
                 </div>
               </v-col>
               <v-col cols="2" lg="3">{{ items.total_points }}</v-col>
@@ -213,7 +214,7 @@ export default {
 
   created() {
     this.$store.dispatch("leaderboard/getLeaderboard").then(() => {
-      this.isLoading = false
+      this.isLoading = false;
     });
   },
 
@@ -282,21 +283,16 @@ export default {
   font-family: "Product Sans";
   font-size: 16px;
 }
-// .leaderTitle {
-//   color: #5064cc;
-//   font-family: "Product Sans";
-//   font-size: 24px;
-// }
 .leader-text {
   font-family: "Product Sans Light";
   color: #2b2b2b;
   font-size: 14px;
 }
-.leader-label {
-  font-family: "Product Sans Bold";
-  color: #2b2b2b;
-  font-size: 14px;
-}
+// .leader-label {
+//   font-family: "Product Sans Bold";
+//   color: #2b2b2b;
+//   font-size: 14px;
+// }
 .active {
   border-left: 4px solid #5064cc;
   color: #5064cc;

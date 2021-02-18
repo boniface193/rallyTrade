@@ -132,12 +132,11 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
-        <div class="ml-3 mt-5">
-          <span class="grey--text text-size-md" @click="logout"
-            ><v-icon class="ml-4 mr-4 primary--text" size="25"
-              >mdi-logout</v-icon
-            >Log Out</span
-          >
+        <div class="ml-3 my-5">
+          <div class="grey--text text-size-md" @click="logout">
+            <v-icon class="mx-4 primary--text mb-2" size="25">mdi-logout</v-icon> Log
+            Out
+          </div>
         </div>
       </v-navigation-drawer>
     </v-card>
@@ -188,17 +187,16 @@ export default {
   created() {
     if (this.$store.getters["settings/profile"].name === "") {
       this.$store.dispatch("settings/getUserProfile");
-    };
+    }
 
     this.largerScreen();
-
   },
   methods: {
     closeDrawer() {
       this.drawer = false;
     },
 
-    largerScreen(){
+    largerScreen() {
       if (window.screen.width >= 1024) {
         this.drawer = true;
       }
