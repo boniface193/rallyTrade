@@ -6,7 +6,7 @@
           <v-icon class="float-left">mdi-chevron-left</v-icon>
         </router-link>
         <div v-if="!Search" class="d-flex">
-          <h5 class="text-center mx-auto">Payment History</h5>
+          <h5 class="text-center mx-auto">Settlement History</h5>
           <v-icon style="cursor: pointer" @click="toggleSearch"
             >mdi-magnify</v-icon
           >
@@ -71,7 +71,7 @@
 <script>
 import Search from "@/components/general/SearchBar.vue";
 export default {
-  name: "orderDetails",
+  name: "PaymentHistory",
   components: {
     Search,
   },

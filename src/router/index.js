@@ -15,8 +15,10 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
-import Sales_history from "@/views/dashboard/salesHistory.vue";
-import Payment_history from "@/views/dashboard/paymentHistory.vue";
+import WithdrawalPage from "@/views/dashboard/WithdrawalPage.vue";
+import WithdrawFund from "@/components/withdrawalPages/WithdrawFund.vue";
+import AddBankDetails from "@/components/withdrawalPages/AddBankDetails.vue";
+import PaymentHistory from "@/views/dashboard/PaymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
 // order routes
@@ -28,7 +30,7 @@ import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
-import BankAccount from '@/components/settings/BankAccount.vue';
+//import BankAccount from '@/components/settings/BankAccount.vue';
 // Inventory
 import Inventory from "@/views/Inventory.vue";
 import InventoryHome from "@/components/inventory/InventoryHome.vue";
@@ -39,8 +41,10 @@ import ProductDetails from "@/components/inventory/ProductDetails.vue";
 import CheckoutPage from "@/components/checkout/CheckoutPage.vue";
 import PaymentDetails from "@/components/checkout/PaymentDetails.vue";
 import CheckoutDetails from "@/components/checkout/CheckoutDetails.vue";
-import PaymentSuccess from "@/components/checkout/PaymentSuccess";
-import PaymentFailed from "@/components/checkout/PaymentFailed"
+import PaymentSuccess from "@/components/checkout/PaymentSuccess.vue";
+import PaymentFailed from "@/components/checkout/PaymentFailed.vue";
+import OrderStatus from "@/components/checkout/OrderStatus.vue";
+
 Vue.use(VueRouter);
 
 // requirement for user to log on to the dashboard
@@ -91,6 +95,21 @@ const AlreadyLogin = (to, from, next) => {
     return
   }
 }
+// check conditon before allowing user to route to payment page 
+const allowPayment = (to, from, next) => {
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("order_id");
+  if (from.name === "CheckoutDetails") {
+    next();
+    return
+  } else {
+    next({ path: `/checkout-details?order_id=${orderId}` })
+  }
+}
+// check if user has a bank account before allowing them to resell products
+// const has_bank_account = (to, from, next) => {
+
+// }
 
 // // verify if access has been given to a user to view email verification page
 // const ifAccessEmailVerifcationPage = (to, from, next) => {
@@ -143,16 +162,12 @@ const routes = [
         component: Dashboard,
       },
       // sales history
-      {
-        path: "sales",
-        name: "sales_history",
-        component: Sales_history
-      },
+
       // payment history
       {
         path: "payment",
-        name: "payment_history",
-        component: Payment_history
+        name: "PaymentHistory",
+        component: PaymentHistory
       },
       // reward
       {
@@ -204,10 +219,21 @@ const routes = [
             component: Privacy
           },
           {
-            path: "bank-account",
-            name: "BankAccount",
-            component: BankAccount
-          }
+            path: "",
+            component: WithdrawalPage,
+            children: [
+              {
+                path: "add-account",
+                name: "AddBankDetails",
+                component: AddBankDetails
+              },
+              {
+                path: "withdraw-fund",
+                name: "WithdrawFund",
+                component: WithdrawFund
+              },
+            ]
+          },
         ]
       },
       // inventory routes
@@ -228,7 +254,8 @@ const routes = [
           {
             path: ":id/customer-form",
             name: "CustomerDetailsForm",
-            component: CustomerDetailsForm
+            component: CustomerDetailsForm,
+            //beforeEnter: has_bank_account
           },
           {
             path: ":id/details",
@@ -247,12 +274,13 @@ const routes = [
       {
         path: "/payment-details",
         name: "PaymentDetails",
-        component: PaymentDetails
+        component: PaymentDetails,
+        beforeEnter: allowPayment
       },
       {
         path: "/checkout-details",
         name: "CheckoutDetails",
-        component: CheckoutDetails
+        component: CheckoutDetails,
       },
     ]
   },
@@ -265,6 +293,11 @@ const routes = [
     path: "/payment-failed",
     name: "PaymentFailed",
     component: PaymentFailed,
+  },
+  {
+    path: "/order-status",
+    name: "OrderStatus",
+    component: OrderStatus
   },
 
 

@@ -230,8 +230,7 @@ export default {
             this.loading = false;
             this.statusImage = failedImage;
             if (error.response) {
-              console.log(error.response);
-              this.dialogMessage = error.message;
+              this.dialogMessage = error.response.data.message;
             } else {
               this.dialogMessage = "No internet Connection!";
             }

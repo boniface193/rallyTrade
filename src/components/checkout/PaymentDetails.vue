@@ -7,10 +7,10 @@
       </div>
       <div class="mt-2">
         <div class="mb-4">
-          <h4>{{ orderDetails.customer.name }}</h4>
+          <h4>{{ pageDetails.orderDetails.customer.name }}</h4>
           <p class="secondary--text mb-0">
-            {{ orderDetails.delivery_location.address }}<br />{{
-              orderDetails.customer.phone
+            {{ pageDetails.orderDetails.delivery_location.address }}<br />{{
+              pageDetails.orderDetails.customer.phone
             }}
           </p>
         </div>
@@ -20,7 +20,7 @@
           <v-radio-group v-model="radioGroup" class="mt-1">
             <v-radio
               class="primary--text mb-0"
-              :label="`Express Delivery (₦${orderDetails.delivery_fee_label})`"
+              :label="`Express Delivery (₦${pageDetails.orderDetails.delivery_fee_label})`"
               value="express"
             ></v-radio>
             <span class="ml-8 mb-4 primary--text"
@@ -41,7 +41,9 @@
           <h4>Order Details</h4>
           <p class="secondary--text mb-0">
             <span style="font-weight: 600; color: black">1</span>
-            <span class="ml-5">{{ orderDetails.product_name }}</span>
+            <span class="ml-5">{{
+              pageDetails.orderDetails.product_name
+            }}</span>
           </p>
         </div>
         <!-- payment summary -->
@@ -49,7 +51,7 @@
           <h4 class="mb-1">Summary</h4>
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Item</p>
-            <h4>&#8358;{{ orderDetails.subtotal_label }}</h4>
+            <h4>&#8358;{{ pageDetails.orderDetails.subtotal_label }}</h4>
           </div>
           <!-- <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">VAT (7.5%)</p>
@@ -57,12 +59,12 @@
           </div> -->
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Shipping fee</p>
-            <h4>&#8358;{{ orderDetails.delivery_fee_label }}</h4>
+            <h4>&#8358;{{ pageDetails.orderDetails.delivery_fee_label }}</h4>
           </div>
           <div class="d-flex align-center justify-space-between mb-2 mt-2">
             <h3 class="mb-0">Total</h3>
             <h3 class="primary--text">
-              &#8358;{{ orderDetails.total_price_label }}
+              &#8358;{{ pageDetails.orderDetails.total_price_label }}
             </h3>
           </div>
           <!-- payment btn -->
@@ -112,56 +114,38 @@ export default {
       dialogMessage: "",
       processingLoader: false,
       paymentDetails: {
-        url: {
-          amount: "",
-          customer: {
-            name: "",
-            email: "",
-            phone: null,
-          },
+        amount: "",
+        customer: {
+          name: "",
+          email: "",
+          phone: null,
         },
       },
     };
   },
-  created() {
-    this.pageLoader = true;
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get("order_id");
-    this.$store
-      .dispatch("orders/getOrdersDetail", {
-        id: orderId,
-      })
-      .then((response) => {
-        this.orderDetails = response.data.data;
-        this.pageLoader = false;
-      })
-      .catch((error) => {
-        this.pageLoader = false;
-        this.dialog = true;
-        this.statusImage = failedImage;
-        if (error.response) {
-          this.dialogMessage = "Sorry, this order does not Exist";
-        } else {
-          this.dialogMessage = "No internet Connection!";
-        }
-      });
-  },
+
   computed: {
     paymentOption() {
       return {
-        public_key: this.paymentDetails.url.public_key,
-        tx_ref: this.paymentDetails.url.tx_ref,
-        amount: this.paymentDetails.url.amount,
-        currency: this.paymentDetails.url.currency,
-        payment_options: this.paymentDetails.url.payment_options,
+        public_key: this.paymentDetails.public_key,
+        tx_ref: this.paymentDetails.tx_ref,
+        amount: this.paymentDetails.amount,
+        currency: this.paymentDetails.currency,
+        payment_options: this.paymentDetails.payment_options,
         redirect_url: "",
         customer: {
-          name: this.paymentDetails.url.customer.name,
-          email: this.paymentDetails.url.customer.email,
-          phone_number: this.paymentDetails.url.customer.phone,
+          name: this.paymentDetails.customer.name,
+          email: this.paymentDetails.customer.email,
+          phone_number: this.paymentDetails.customer.phone,
         },
         callback: this.makePaymentCallback,
         onclose: this.closedPaymentModal,
+      };
+    },
+    pageDetails() {
+      return {
+        productDetails: this.productDetails,
+        orderDetails: this.orderDetails,
       };
     },
   },
@@ -198,20 +182,21 @@ export default {
     },
     verifyPayment(value) {
       this.$store
-        .dispatch("", {
-          trx_ref: value.trx_ref,
-          trx_id: value.trx_id,
-          orderId: this.orderDetails.id,
+        .dispatch("orders/verifyPayment", {
+          ref: value.tx_ref,
+          id: value.transaction_id,
+          orderId: this.pageDetails.orderDetails.id,
         })
         .then(() => {
           this.$router.push({
-            path: `/payment-success?order_id=${this.orderDetails.id}`,
+            path: `/payment-success?order_id=${this.pageDetails.orderDetails.id}`,
           });
+          location.reload();
         })
         .catch((error) => {
           if (error.response) {
             this.$router.push({
-              path: `/payment-failed?order_id=${this.orderDetails.id}`,
+              path: `/payment-failed?order_id=${this.paymentDetails.orderDetails.id}`,
             });
           } else {
             this.dialog = true;

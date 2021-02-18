@@ -71,7 +71,7 @@ export default {
       dialogMessage: "",
       orderDetails: {
         delivery_location: {},
-        customer:{}
+        customer: {},
       },
       productDetails: {},
       storeDetails: {},
@@ -87,8 +87,14 @@ export default {
         id: orderId,
       })
       .then((response) => {
-        this.orderDetails = response.data.data;
-        this.getProductDetails(this.orderDetails.product_id);
+        if (response.data.data.payment_status === "PAID") {
+          this.$router.push({
+            path: `/order-status?order_id=${orderId}`,
+          });
+        } else {
+          this.orderDetails = response.data.data;
+          this.getProductDetails(this.orderDetails.product_id);
+        }
       })
       .catch((error) => {
         this.pageLoader = false;
@@ -156,7 +162,6 @@ export default {
     width: 100%;
   }
 }
-
 .status-img {
   width: 140px;
   .v-image {
