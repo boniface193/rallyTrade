@@ -15,9 +15,10 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
-import WithdrawFund from "@/views/dashboard/WithdrawFund.vue";
-import AddBankDetails from "@/views/dashboard/AddBankDetails.vue";
-import Payment_history from "@/views/dashboard/paymentHistory.vue";
+import WithdrawalPage from "@/views/dashboard/WithdrawalPage.vue";
+import WithdrawFund from "@/components/withdrawalPages/WithdrawFund.vue";
+import AddBankDetails from "@/components/withdrawalPages/AddBankDetails.vue";
+import PaymentHistory from "@/views/dashboard/PaymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
 // order routes
@@ -29,7 +30,7 @@ import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
-import BankAccount from '@/components/settings/BankAccount.vue';
+//import BankAccount from '@/components/settings/BankAccount.vue';
 // Inventory
 import Inventory from "@/views/Inventory.vue";
 import InventoryHome from "@/components/inventory/InventoryHome.vue";
@@ -94,17 +95,21 @@ const AlreadyLogin = (to, from, next) => {
     return
   }
 }
-
+// check conditon before allowing user to route to payment page 
 const allowPayment = (to, from, next) => {
   const params = new URLSearchParams(window.location.search);
   const orderId = params.get("order_id");
-  if(from.name === "CheckoutDetails") {
+  if (from.name === "CheckoutDetails") {
     next();
     return
-  }else {
+  } else {
     next({ path: `/checkout-details?order_id=${orderId}` })
   }
 }
+// check if user has a bank account before allowing them to resell products
+// const has_bank_account = (to, from, next) => {
+
+// }
 
 // // verify if access has been given to a user to view email verification page
 // const ifAccessEmailVerifcationPage = (to, from, next) => {
@@ -157,21 +162,12 @@ const routes = [
         component: Dashboard,
       },
       // sales history
-      {
-        path: "bank-account",
-        name: "AddBankDetails",
-        component: AddBankDetails
-      },
-      {
-        path: "withdraw-fund",
-        name: "WithdrawFund",
-        component: WithdrawFund
-      },
+
       // payment history
       {
         path: "payment",
-        name: "payment_history",
-        component: Payment_history
+        name: "PaymentHistory",
+        component: PaymentHistory
       },
       // reward
       {
@@ -223,10 +219,21 @@ const routes = [
             component: Privacy
           },
           {
-            path: "bank-account",
-            name: "BankAccount",
-            component: BankAccount
-          }
+            path: "",
+            component: WithdrawalPage,
+            children: [
+              {
+                path: "add-account",
+                name: "AddBankDetails",
+                component: AddBankDetails
+              },
+              {
+                path: "withdraw-fund",
+                name: "WithdrawFund",
+                component: WithdrawFund
+              },
+            ]
+          },
         ]
       },
       // inventory routes
@@ -247,7 +254,8 @@ const routes = [
           {
             path: ":id/customer-form",
             name: "CustomerDetailsForm",
-            component: CustomerDetailsForm
+            component: CustomerDetailsForm,
+            //beforeEnter: has_bank_account
           },
           {
             path: ":id/details",

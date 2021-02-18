@@ -71,7 +71,7 @@
 <script>
 import Search from "@/components/general/SearchBar.vue";
 export default {
-  name: "orderDetails",
+  name: "PaymentHistory",
   components: {
     Search,
   },

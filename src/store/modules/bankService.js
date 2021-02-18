@@ -3,11 +3,13 @@ import axios from "@/axios/bankServices.js";
 //holds the state properties
 const state = {
     bankList: [],
+    //accountDetails: {},
     doNothing: null,
 };
 //returns the state properties
 const getters = {
     bankList: state => state.bankList,
+    //accountDetails: state => state.accountDetails,
 };
 
 //take actions 
@@ -57,6 +59,21 @@ const actions = {
                     reject(error);
                 })
         })
+    },
+    getUserBankDetails(context, data) {
+        return new Promise((resolve, reject) => {
+            axios.get(`/bank-accounts/${data.user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(response => {
+                resolve(response);
+            })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
     }
 };
 
@@ -64,7 +81,8 @@ const actions = {
 const mutations = {
     // commit nothing
     doNothing: (state) => (state.doNothing = null),
-    setBankList: (state, bankList) => (state.bankList = bankList)
+    setBankList: (state, bankList) => (state.bankList = bankList),
+    //setAccountDetails: (state, accountDetails) => (state.accountDetails = accountDetails),
 };
 
 export default {
