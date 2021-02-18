@@ -17,16 +17,45 @@
               placeholder="Search history"
               class="mx-lg-md-17"
               v-if="Search"
+              @search="getSearchValue"
             />
           </div>
         </div>
 
-        <div class="lenghtOfUser text-center mt-8">
-          You’re {{ leaderboard.length }}th on the Leaderboard!
+        <div
+          class="lenghtOfUser text-center mt-8"
+          v-for="items in leaderboard.data"
+          :key="items.id"
+        >
+          <div v-if="userInfo.id == items.seller_id">
+            You’re {{ leaderboard.ranks[items.seller_id]
+            }}<span v-if="leaderboard.ranks[items.seller_id] == 1">st</span
+            ><span v-else-if="leaderboard.ranks[items.seller_id] == 2">nd</span>
+            <span v-else-if="leaderboard.ranks[items.seller_id] == 3">rd</span>
+            <span v-else>th</span> on the Leaderboard!
+          </div>
         </div>
+        <!-- no data -->
+        <!-- <div
+          class="text-center pt-10 pb-5"
+          v-if="leaderboard.data.length < 1"
+        >
+          <p class="mb-0 secondary--text" style="font-size: 20px">
+            Opps! No leaders found.
+          </p>
+        </div> -->
 
-        <!-- <div class="leaderTitle text-center my-3">Leaderboard</div> -->
-        <!-- <v-layout justify-center> -->
+        <div v-if="isLoading" class="text-center my-8">
+          <!-- this image time loader is calculated by the loader to triger the load time -->
+          <v-progress-circular
+            color="primary"
+            class="text-center"
+            indeterminate
+            size="20"
+            width="2"
+          ></v-progress-circular>
+        </div>
+        <!-- loader ends here -->
         <v-row class="d-flex justify-center">
           <v-col lg="10">
             <v-row class="leader-label mt-5">
@@ -37,102 +66,110 @@
 
             <v-row
               class="leader-text my-2"
-              v-for="items in leaderboard"
+              v-for="items in leaderboard.data"
               :key="items.id"
-              :class="{ active: items.active }"
+              :class="{ active: userInfo.id == items.seller_id }"
             >
-              <v-col cols="2" lg="3">{{ items.rank }}</v-col>
+              <v-col cols="2" lg="3"
+                >{{ leaderboard.ranks[items.seller_id] }}
+              </v-col>
               <v-col cols="8" lg="6">
-                <div class="d-flex" style="cursor: pointer" @click="openModal">
-                  <span class="mr-3"
-                    ><v-img
-                      :src="items.image"
-                      height="28px"
-                      width="29px"
-                      class="rounded-pill"
-                    >
-                    </v-img
-                  ></span>
-                  <span>{{ items.name }}</span>
+                <div
+                  class="d-flex"
+                  style="cursor: pointer"
+                  @click="filterById(items.seller_id)"
+                >
+                  <span>{{ items.seller_name }}</span>
                 </div>
               </v-col>
-              <v-col cols="2" lg="3">{{ items.points }}</v-col>
+              <v-col cols="2" lg="3">{{ items.total_points }}</v-col>
             </v-row>
           </v-col>
         </v-row>
-        <!-- </v-layout> -->
       </div>
     </v-container>
+
     <!-- pagination -->
-    <div class="text-center elevation-8 pa-3">
+    <div class="text-center elevation-8 pa-3" v-if="leaderboard.length >= 10">
       <v-pagination
-        v-model="page"
-        :length="5"
+        v-model="getCurrentPage.currentPage"
+        :length="pageDetails.last_page"
+        @input="setCurentPage"
         circle
         small
         style="font-size: 8px"
       ></v-pagination>
     </div>
+
     <!-- modal -->
     <div class="mx-3">
-      <Modal
-        class="overlay"
-        :dialog="this.dialog"
-        width="250"
-        
-      >
-        <v-card class="rounded-lg">
-          <v-icon
-            style="cursor: pointer"
-            @click.native="closeModal"
-            class="float-right mr-3 mt-3"
-            color="primary"
-            >mdi-close</v-icon
-          >
-          <div class="pt-9">
-            <div class="d-flex justify-center">
-              <span>
-                <v-img
-                  src="@/assets/images/emike.png"
-                  height="54px"
-                  width="55px"
-                  class="rounded-pill"
-                ></v-img>
+      <Modal class="overlay" :dialog="this.dialog" width="250">
+        <div>
+          <v-card class="rounded-lg">
+            <v-icon
+              style="cursor: pointer"
+              @click.native="closeModal"
+              class="float-right mr-3 mt-3"
+              color="primary"
+              >mdi-close</v-icon
+            >
+            <div class="pt-9">
+              <span class="d-flex justify-center mt-2 body-text">
+                {{ filteredArray.seller_name }}
               </span>
+              <span class="d-flex justify-center title-text">
+                Sales Representative
+              </span>
+              <div class="pt-3">
+                <v-divider light></v-divider>
+              </div>
+              <v-list-item>
+                <v-list-item-content class="pt-1" align="center">
+                  <v-list-item-title
+                    ><span class="primary--text larger-text"
+                      >{{ leaderboard.ranks[filteredArray.seller_id]
+                      }}<span
+                        v-if="leaderboard.ranks[filteredArray.seller_id] == 1"
+                        >st</span
+                      ><span
+                        v-else-if="
+                          leaderboard.ranks[filteredArray.seller_id] == 2
+                        "
+                        >nd</span
+                      ><span
+                        v-else-if="
+                          leaderboard.ranks[filteredArray.seller_id] == 3
+                        "
+                        >rd</span
+                      ><span v-else>th</span>
+                    </span>
+                    <br />
+                    <span class="title-text">In-store</span>
+                  </v-list-item-title>
+                </v-list-item-content>
+                <v-divider vertical> </v-divider>
+                <v-list-item-content class="pt-1" align="center">
+                  <v-list-item-title
+                    ><span class="primary--text larger-text">
+                      {{ filteredArray.total_points }}
+                    </span>
+                    <br />
+                    <span class="title-text">Total Points</span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <div>
+                <v-divider light></v-divider>
+              </div>
+              <div class="d-flex justify-center mt-3 pb-5">
+                <span class="primary--text larger-text"
+                  >N{{ filteredArray.total_order_value }}
+                </span>
+                <span class="title-text mx-2">in sales</span>
+              </div>
             </div>
-            <span class="d-flex justify-center mt-2 body-text">
-              Emike lucy
-            </span>
-            <span class="d-flex justify-center title-text">
-              Sales Representative
-            </span>
-            <div class="pt-3">
-              <v-divider light></v-divider>
-            </div>
-            <v-list-item>
-              <v-list-item-content class="pt-1" align="center">
-                <v-list-item-title
-                  ><span class="primary--text larger-text">1st</span> <br />
-                  <span class="title-text">In-store</span>
-                </v-list-item-title>
-              </v-list-item-content>
-              <v-divider vertical> </v-divider>
-              <v-list-item-content class="pt-1" align="center">
-                <v-list-item-title
-                  ><span class="primary--text larger-text">2587</span> <br />
-                  <span class="title-text">Total Points</span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <div>
-              <v-divider light></v-divider>
-            </div>
-            <div class="d-flex justify-center mt-3 pb-5">
-              <span class="primary--text larger-text">N268,000,000</span>
-              <span class="title-text mx-2">in sales</span>
-            </div>
-          </div>
-        </v-card>
+          </v-card>
+        </div>
       </Modal>
     </div>
   </div>
@@ -141,7 +178,7 @@
 <script>
 import Search from "@/components/general/SearchBar.vue";
 import Modal from "@/components/modal.vue";
-// import { mapGetters } from "vuex"
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "orderDetails",
   components: {
@@ -152,89 +189,32 @@ export default {
     return {
       dialog: false,
       Search: false,
-      page: 1,
-      leaderboard: [
-        {
-          id: "01",
-          rank: "1",
-          image: require("@/assets/images/emike.png"),
-          name: "Emike Lucy",
-          points: "1010",
-        },
-        {
-          id: "02",
-          rank: "2",
-          image: require("@/assets/images/emike.png"),
-          name: "Ayodeji Lanwo",
-          points: "1010",
-        },
-        {
-          id: "03",
-          rank: "3",
-          image: require("@/assets/images/emike.png"),
-          name: "Emike Lucy 1",
-          points: "1010",
-        },
-        {
-          id: "04",
-          rank: "4",
-          image: require("@/assets/images/emike.png"),
-          name: "Emike Lucy 2",
-          points: "1010",
-          active: true,
-        },
-        {
-          id: "05",
-          rank: "5",
-          image: require("@/assets/images/emike.png"),
-          name: "Emike Lucy 3",
-          points: "13",
-        },
-        {
-          id: "06",
-          rank: "6",
-          image: require("@/assets/images/emike.png"),
-          name: "Emike Lucy",
-          points: "101",
-        },
-        {
-          id: "07",
-          rank: "7",
-          image: require("@/assets/images/laptop.png"),
-          name: "Emike Lucy",
-          points: "102",
-        },
-        {
-          id: "08",
-          rank: "8",
-          image: require("@/assets/images/laptop.png"),
-          name: "Emike Lucy",
-          points: "101",
-        },
-        {
-          id: "09",
-          rank: "9",
-          image: require("@/assets/images/laptop.png"),
-          name: "Emike Lucy",
-          points: "1010",
-        },
-        {
-          id: "10",
-          rank: "10",
-          image: require("@/assets/images/laptop.png"),
-          name: "Emike Lucy 10",
-          points: "1010",
-        },
-      ],
+      isLoading: true,
+      userProfile: {},
+      filteredArray: {},
     };
   },
 
-  // computed: {
-  //   ...mapGetters({leaderboard: 'leaderboard/leaderboard'})
-  // },
+  computed: {
+    ...mapGetters({
+      leaderboard: "leaderboard/leaderboard",
+      userInfo: "settings/profile",
+    }),
+    ...mapState({
+      page: (state) => state.leaderboard.page,
+      pageDetails: (state) => state.leaderboard.pageDetails,
+      getCurrentPage() {
+        return {
+          currentPage: this.pageDetails.current_page,
+        };
+      },
+    }),
+  },
 
   created() {
-    this.$store.dispatch("leaderboard/getLeaderboard");
+    this.$store.dispatch("leaderboard/getLeaderboard").then(() => {
+      this.isLoading = false
+    });
   },
 
   methods: {
@@ -250,7 +230,39 @@ export default {
     openModal() {
       this.dialog = true;
     },
-    
+
+    filterById(id) {
+      this.filteredArray = this.leaderboard.data.find(
+        (item) => item.seller_id == id
+      );
+      this.openModal();
+    },
+
+    // search the datatable items
+    getSearchValue(params) {
+      this.$store.commit("leaderboard/setSearchValue", params);
+      this.$store.commit("leaderboard/setSearchLeaderBoard", true);
+      this.$store.dispatch("leaderboard/searchLeaderBoard").then(() => {
+        this.isLoading = true;
+      });
+      this.getOrders();
+    },
+
+    // returns searched values to the table
+    getOrders() {
+      this.$store.dispatch("leaderboard/searchLeaderBoard").then(() => {
+        this.isLoading = false;
+      });
+    },
+
+    // set current page
+    setCurentPage() {
+      this.$store.commit(
+        "leaderboard/setPage",
+        this.getCurrentPage.currentPage
+      );
+      this.getOrders === true ? this.getSearchValue() : "";
+    },
   },
 };
 </script>
@@ -270,11 +282,11 @@ export default {
   font-family: "Product Sans";
   font-size: 16px;
 }
-.leaderTitle {
-  color: #5064cc;
-  font-family: "Product Sans";
-  font-size: 24px;
-}
+// .leaderTitle {
+//   color: #5064cc;
+//   font-family: "Product Sans";
+//   font-size: 24px;
+// }
 .leader-text {
   font-family: "Product Sans Light";
   color: #2b2b2b;

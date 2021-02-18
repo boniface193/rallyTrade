@@ -17,7 +17,6 @@
       <div class="mx-7">
         <Calender
           class="float-right"
-          singleDatePicker
           autoApply
           @updateDate="dateValue"
         />

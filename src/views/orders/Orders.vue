@@ -2,7 +2,7 @@
   <v-container>
     <div class="mx-3">
       <p class="sub-header">
-        You have <span class="font-weight-bold">20</span> orders.
+        You have <span class="font-weight-bold">{{ordersItems.length}}</span> orders.
       </p>
       <!-- search filter -->
       <v-row class="d-flex justify-end">
@@ -10,9 +10,13 @@
           <Search placeholder="Search orders" @search="getSearchValue" />
         </v-col>
         <v-col cols="2" lg="1" md="1" class="px-0">
-          <div class="primary text-center rounded-lg">
-            <v-icon color="white" style="padding: 5.3px">mdi-menu</v-icon>
-          </div>
+          <BasicFilter
+              :price="filterParameters.price"
+              toolTipText="Filter products"
+              headerName="Filter Orders"
+              @filterOption="filterTable"
+              @resetFilter="resetFilter"
+            />
         </v-col>
       </v-row>
 
@@ -39,9 +43,10 @@
             <step-progress
               :steps="['Processing', 'Shipped', 'Delivered']"
               :current-step="
-                orders.isProcessing || orders.isShipped || orders.isDelivered
+                orders.delivery_status_label == 'Processing' ||
+                orders.delivery_status_label == 'Shipped'
                   ? 1
-                  : 0
+                  : 3
               "
               icon-class="fa fa-check"
               :line-thickness="lineThickness"
@@ -83,7 +88,7 @@
                 </div>
                 <div class="order-item-font">
                   Customer:
-                  <span class="order-no-grey">{{ orders.customer_name }}</span>
+                  <span class="order-no-grey">{{ orders.customer.name }}</span>
                 </div>
                 <div class="order-item-font">
                   Payment Status:
@@ -107,6 +112,7 @@
 </template>
 
 <script>
+import BasicFilter from "@/components/general/BasicFilter.vue";
 import Search from "@/components/general/SearchBar.vue";
 import StepProgress from "vue-step-progress";
 import { mapGetters, mapState } from "vuex";
@@ -117,17 +123,22 @@ import "vue-step-progress/dist/main.css";
 export default {
   components: {
     Search,
+    BasicFilter,
     "step-progress": StepProgress,
   },
   data() {
     return {
       isLoading: true,
       // searchValue: "",
+      deliveryStatus: "",
       filterItems: "",
       lineThickness: 1,
       activeThickness: 3,
       passiveThickness: 3,
       mySteps: ["Step 1", "Step 2", "Step 3"],
+      filterParameters: {
+        price: true,
+      },
     };
   },
 
@@ -159,20 +170,38 @@ export default {
         if (response) {
           this.isLoading = false;
           if (!response) {
-            alert('hello')
+            alert("hello");
           }
         }
-        
       });
     },
-  }
-  // computed: {
-  //   filterItem: function () {
-  //     return this.ordersItems.filter((blog) => {
-  //       return blog.customers_name.match(this.searchValue);
-  //     });
-  //   },
-  // },
+
+    filterGetOrders(){
+      this.$store.dispatch("orders/filterGetOrders").then(() => {
+        
+      }).catch((e) => {
+        console.log(e)
+      })
+    },
+        // filter function
+    filterTable(params) {
+      this.$store.commit("orders/filterOrders", {
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+      });
+      this.filterGetOrders();
+    },
+
+    // reset the filter and it will affect the table
+    resetFilter() {
+      this.$store.commit("orders/filterOrders", {
+        minPrice: 0,
+        maxPrice: 0,
+        selectedOptions: [],
+      });
+      this.filterGetOrders();
+    },
+  },
 };
 </script>
 <style lang="scss" >
