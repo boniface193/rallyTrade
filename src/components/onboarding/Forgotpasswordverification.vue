@@ -110,7 +110,6 @@ export default {
                 params: {
                   otp: response.data.otp,
                   email: this.$route.params.email,
-                  type: "seller"
                 },
               });
             }
