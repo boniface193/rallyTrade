@@ -28,17 +28,17 @@
           <div class="d-flex justify-space-between align-baseline my-5">
             <p class="secondary--text mb-0">To:</p>
             <div class="text-right">
-              <h3 class="secondary--text">{{this.accountDetails.data.name}}</h3>
-              <h5 class="secondary--text">{{this.accountDetails.data.number}}</h5>
-              <h5 class="secondary--text">Access bank</h5>
+              <h3>{{this.accountDetails.data.name}}</h3>
+              <h5>{{this.accountDetails.data.number}}</h5>
+              <h5>Access bank</h5>
             </div>
           </div>
           <div class="d-flex justify-space-between align-baseline my-5 mb-10">
             <p class="secondary--text mb-0">Charges:</p>
-            <h5 class="secondary--text">&#8358;100</h5>
+            <h5>&#8358;100</h5>
           </div>
           <v-btn class="primary mt-5">Withdraw</v-btn>
-          <v-btn class="mt-5 primary--text" style="background:#F3F5FF">Edit</v-btn>
+          <v-btn class="mt-5 primary--text" style="background:#F3F5FF">Change account number </v-btn>
         </div>
       </div>
     </div>
