@@ -15,9 +15,6 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
-import WithdrawalPage from "@/views/dashboard/WithdrawalPage.vue";
-import WithdrawFund from "@/components/withdrawalPages/WithdrawFund.vue";
-import AddBankDetails from "@/components/withdrawalPages/AddBankDetails.vue";
 import PaymentHistory from "@/views/dashboard/PaymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
@@ -30,7 +27,11 @@ import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
-//import BankAccount from '@/components/settings/BankAccount.vue';
+// withdrawal 
+import WithdrawalPage from "@/views/dashboard/WithdrawalPage.vue";
+import WithdrawFund from "@/components/withdrawalPages/WithdrawFund.vue";
+import AddBankDetails from "@/components/withdrawalPages/AddBankDetails.vue";
+import EditBankDetails from '@/components/withdrawalPages/EditBankDetails.vue';
 // Inventory
 import Inventory from "@/views/Inventory.vue";
 import InventoryHome from "@/components/inventory/InventoryHome.vue";
@@ -106,10 +107,17 @@ const allowPayment = (to, from, next) => {
     next({ path: `/checkout-details?order_id=${orderId}` })
   }
 }
-// check if user has a bank account before allowing them to resell products
-// const has_bank_account = (to, from, next) => {
 
-// }
+// allow a user to edit account only when comming from the withdrawal page
+const allowEditBankAccount = (to, from, next) => {
+  if (from.name === "WithdrawFund") {
+    next();
+    return
+  } else {
+    next({ name: "WithdrawFund" });
+  }
+}
+
 
 // // verify if access has been given to a user to view email verification page
 // const ifAccessEmailVerifcationPage = (to, from, next) => {
@@ -232,6 +240,12 @@ const routes = [
                 name: "WithdrawFund",
                 component: WithdrawFund
               },
+              {
+                path: "change-account",
+                name: "EditBankDetails",
+                component: EditBankDetails ,
+                beforeEnter: allowEditBankAccount
+              }
             ]
           },
         ]

@@ -1,15 +1,22 @@
 <template>
   <div>
-    <div class="payment-page">
+    <div class="payment-page pb-8 px-8">
       <div class="d-flex align-baseline justify-space-between">
         <h2>Address Details</h2>
-        <p class="primary--text" style="font-size: 14px">Change Address</p>
+        <!-- change address -->
+        <p
+          class="primary--text"
+          style="font-size: 14px; cursor: Pointer"
+          @click="openEditAddressModal"
+        >
+          Change Address
+        </p>
       </div>
       <div class="mt-2">
         <div class="mb-4">
           <h4>{{ pageDetails.orderDetails.customer.name }}</h4>
           <p class="secondary--text mb-0">
-            {{ pageDetails.orderDetails.delivery_location.address }}<br />{{
+            {{ deliveryLocation }}<br />{{
               pageDetails.orderDetails.customer.phone
             }}
           </p>
@@ -40,7 +47,9 @@
         <div class="mb-4">
           <h4>Order Details</h4>
           <p class="secondary--text mb-0">
-            <span style="font-weight: 600; color: black">1</span>
+            <span style="font-weight: 600; color: black">{{
+              pageDetails.orderDetails.total_items
+            }}</span>
             <span class="ml-5">{{
               pageDetails.orderDetails.product_name
             }}</span>
@@ -95,6 +104,47 @@
         <h4>{{ dialogMessage }}</h4>
       </div>
     </modal>
+
+    <!-- edit address modal -->
+    <div class="white pa-3 px-5 edit-address-dialog" v-show="editAddressDialog">
+      <div>
+        <div class="d-flex justify-end">
+          <v-icon
+            class="error--text close-btn"
+            @click="editAddressDialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+
+        <!-- description -->
+        <h3 class="mt-5">Change your delivery location</h3>
+        <v-form ref="addressForm">
+          <!-- Address field -->
+          <div class="my-5">
+            <p class="mb-1">Enter your delivery address *</p>
+            <v-text-field
+              color="primary"
+              placeholder="Street address"
+              v-model="getAddress.address"
+              :rules="addressRules"
+              ref="autocomplete"
+              id="autocomplete"
+              @keyup.enter="submitCustomerDetails"
+              required
+            >
+            </v-text-field>
+          </div>
+        </v-form>
+        <!-- edit address btn -->
+        <v-btn
+          class="primary"
+          :loading="editLoader"
+          :disabled="editLoader"
+          @click="editOrderAddress()"
+          >Update</v-btn
+        >
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -110,9 +160,12 @@ export default {
     return {
       radioGroup: "express",
       dialog: false,
+      editAddressDialog: false,
       statusImage: null,
       dialogMessage: "",
       processingLoader: false,
+      editLoader: false,
+      deliveryLocation: this.orderDetails.delivery_location.address,
       paymentDetails: {
         amount: "",
         customer: {
@@ -121,9 +174,32 @@ export default {
           phone: null,
         },
       },
+      lat: "",
+      lng: "",
+      validAddress: false,
+      autocomplete: "",
+      addressRules: [
+        //verifies phone number satisfies the requirement
+        (v) => !!v || "Address is required",
+        () => this.validAddress || "Select a valid Address",
+      ],
     };
   },
+  mounted() {
+    this.autocomplete = new window.google.maps.places.Autocomplete(
+      document.getElementById("autocomplete"),
+      {
+        bounds: new window.google.maps.LatLngBounds(
+          new window.google.maps.LatLng(6.5244, 3.3792)
+        ),
+        types: ["establishment"],
+        componentRestrictions: { country: ["NG"] },
+        fields: ["place_id", "geometry", "name"],
+      }
+    );
 
+    this.autocomplete.addListener("place_changed", this.onPlaceChanged);
+  },
   computed: {
     paymentOption() {
       return {
@@ -146,6 +222,11 @@ export default {
       return {
         productDetails: this.productDetails,
         orderDetails: this.orderDetails,
+      };
+    },
+    getAddress() {
+      return {
+        address: "",
       };
     },
   },
@@ -212,6 +293,56 @@ export default {
         path: `/payment-details?order_id=${orderId}`,
       });
     },
+    openEditAddressModal() {
+      this.editAddressDialog = true;
+    },
+    editOrderAddress() {
+      this.$refs.addressForm.validate();
+      if (this.$refs.addressForm.validate() && this.validAddress) {
+        this.editLoader = true;
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get("order_id");
+        this.$store
+          .dispatch("orders/editOrderAddress", {
+            customer: {
+              location: {
+                address: this.getAddress.address,
+                lat: this.lat,
+                lng: this.lng,
+              },
+            },
+            order_id: orderId,
+          })
+          .then((response) => {
+            this.editLoader = false;
+            this.editAddressDialog = false;
+            this.deliveryLocation = response.data.data.delivery_location.address
+          })
+          .catch((error) => {
+            this.dialog = true;
+            this.editLoader = false;
+            this.statusImage = failedImage;
+            if (error.response) {
+              this.dialogMessage = error.response.data.message;
+            } else {
+              this.dialogMessage = "No internet Connection!";
+            }
+          });
+      }
+    },
+    onPlaceChanged() {
+      let place = this.autocomplete.getPlace();
+      if (!place.geometry) {
+        // User did not select a prediction; reset the input field
+        this.validAddress = false;
+      } else {
+        //Display details about the valid place
+        this.validAddress = true;
+        this.getAddress.address = place.name;
+        this.lat = place.geometry.location.lat();
+        this.lng = place.geometry.location.lng();
+      }
+    },
   },
 };
 </script>
@@ -239,6 +370,18 @@ export default {
   width: 140px;
   .v-image {
     width: 100%;
+  }
+}
+.edit-address-dialog {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
   }
 }
 @media (max-width: 1100px) {
