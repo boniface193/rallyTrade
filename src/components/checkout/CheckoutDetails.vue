@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-8">
     <h2 class="mb-4">{{ pageDetails.orderDetails.product_name }}</h2>
     <!-- <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p> -->
     <p class="secondary--text" style="font-size: 14px">

@@ -183,6 +183,18 @@ const actions = {
                     reject(error);
                 })
         })
+    },
+    // edit order address
+    editOrderAddress(context, data){
+        return new Promise((resolve, reject) => {
+            axios.post(`/orders/${data.order_id}/location`, data,).then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    context.commit("doNothing");
+                    reject(error);
+                })
+        })
     }
 
 };
