@@ -25,6 +25,7 @@ const actions = {
     // get profile informations
     getUserProfile(context) {
         return new Promise((resolve, reject) => {
+            
             axios.get("profile", {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
