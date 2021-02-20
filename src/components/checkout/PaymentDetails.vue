@@ -49,8 +49,8 @@
           <p class="secondary--text mb-0">
             <span style="font-weight: 600; color: black">{{
               pageDetails.orderDetails.total_items
-            }}</span>
-            <span class="ml-5">{{
+            }} </span> <span class="mx-2">X</span>
+            <span> {{
               pageDetails.orderDetails.product_name
             }}</span>
           </p>
