@@ -12,7 +12,7 @@
         <v-col offset-lg="3" offset-md="3" offset-sm="3">
           <!-- card -->
           <div class="center" v-for="items in rewards.data" :key="items.id">
-            <div class="overlay pa-8">
+            <div class="overlay pa-8" v-show="isLoading == false">
               <div class="card-title text-left">Reward Debit Balance</div>
               <div class="card-point mt-7 text-left">
                 {{ items.total_points }} Points
@@ -21,10 +21,23 @@
                 {{ items.seller_name }}
               </div>
             </div>
-            <div class="mb-8 pr-4 w-100">
+            <div class="mb-8 pr-4 w-100" v-show="isLoading == false">
               <v-img src="@/assets/images/reward.png"></v-img>
             </div>
           </div>
+
+          <v-row class="my-8" v-if="isLoading">
+            <v-col offset-lg="3" offset-md="3" offset-sm="3" class="offset-xs">
+              <!-- this image time loader is calculated by the loader to triger the load time -->
+              <v-progress-circular
+                color="primary"
+                indeterminate
+                size="20"
+                width="2"
+              ></v-progress-circular>
+            </v-col>
+          </v-row>
+          <!-- loader ends here -->
 
           <v-row>
             <v-col lg="7" xl="7" md="8" sm="7">
@@ -46,23 +59,6 @@
 
           <v-tabs-items v-model="tab" class="my-3">
             <v-tab-item transition="false" id="tab-1" value="tab-1">
-              <v-row class="my-8" v-if="isLoading">
-                <v-col
-                  offset-lg="3"
-                  offset-md="3"
-                  offset-sm="3"
-                  class="offset-xs"
-                >
-                  <!-- this image time loader is calculated by the loader to triger the load time -->
-                  <v-progress-circular
-                    color="primary"
-                    indeterminate
-                    size="20"
-                    width="2"
-                  ></v-progress-circular>
-                </v-col>
-              </v-row>
-              <!-- loader ends here -->
               <v-row
                 class="leader-text my-2"
                 v-for="items in rewards.rewards"
@@ -182,7 +178,9 @@
             v-show="filteredArray.isRedeemable == false"
           >
             <span class="mt-8 body-text">
-              You need <span class="primary--text">{{filteredArray.point_left}}</span> more points to claim this reward, <router-link :to="{name: 'InventoryHome'}"><i> sell to earn more</i> </router-link>  
+              You need
+              <span class="primary--text">{{ filteredArray.point_left }}</span>
+              more points to claim this reward, sell more to earn more
             </span>
             <div class="d-flex justify-center mt-3 pb-5">
               <v-btn
@@ -190,18 +188,15 @@
                 class="mx-3"
                 dark
                 color="primary"
-                @click.native="closeModal"
-                >Ok</v-btn
+                :to="{ name: 'InventoryHome' }"
+                >Sell</v-btn
               >
             </div>
           </div>
 
-          <div
-          v-if="alert"
-            class="pt-9 px-8 text-center"
-          >
+          <div v-if="alert" class="pt-9 px-8 text-center">
             <span class="mt-8 body-text">
-              {{alert}} 
+              {{ alert }}
             </span>
             <div class="d-flex justify-center mt-3 pb-5">
               <v-btn
@@ -236,6 +231,7 @@ export default {
       rewardHistory: {},
       isLoading: true,
       alert: "",
+      image: true,
     };
   },
   computed: {
@@ -249,6 +245,7 @@ export default {
       this.rewardHistory = e;
       this.isLoading = false;
     });
+    console.log("hell", this.rewards);
   },
 
   methods: {
@@ -263,23 +260,29 @@ export default {
         (item) => item.isRedeemable == id
       );
       this.openModal();
-      console.log(this.filteredArray )
+      console.log(this.filteredArray);
     },
     redeemOffer(params) {
       this.$store.commit("reward/setRedeemAirtime", params);
       this.$store
         .dispatch("reward/redeemReward")
         .then((res) => {
-          this.alert = res.message
+          this.alert = res.message;
           // redirect to dashboard
-          location.href = "/dashboard"
+          location.href = "/dashboard";
         })
         .catch((err) => {
-          this.alert = err.message
-          location.href = "/dashboard"
+          this.alert = err.message;
+          location.href = "/dashboard";
         });
       this.closeModal();
     },
+    // onLoad() {
+    //   if (this.isloading === true) {
+    //     this.image == false
+    //   }
+    //   // console.log('loading')
+    // },
   },
 };
 </script>
@@ -506,7 +509,7 @@ div.v-tabs-slider {
   }
 }
 
-@media (max-width: 375px){
+@media (max-width: 375px) {
   .w-100 {
     width: 340px;
   }
@@ -517,19 +520,17 @@ div.v-tabs-slider {
   }
 }
 
-@media (max-width: 320px){
+@media (max-width: 320px) {
   .w-100 {
     width: 280px;
   }
-    .card-title {
+  .card-title {
     font-family: "Product Sans Light";
     font-size: 12px;
     margin: -5px 0 -10px 0;
   }
-    .offset-425 {
+  .offset-425 {
     margin-left: 0%;
   }
 }
-
-
 </style>
