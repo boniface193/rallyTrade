@@ -5,7 +5,7 @@
         class="d-flex align-center justify-center mb-8"
         style="position: relative"
       >
-        <router-link :to="{ name: 'Dashboard' }" style="text-decoration: none">
+        <router-link :to="{ path: '/dashboard' }" style="text-decoration: none">
           <span class="back-btn">
             <v-icon style="font-size: 25px">mdi-chevron-left</v-icon>
           </span>
@@ -28,17 +28,26 @@
           <div class="d-flex justify-space-between align-baseline my-5">
             <p class="secondary--text mb-0">To:</p>
             <div class="text-right">
-              <h3>{{this.accountDetails.data.name}}</h3>
-              <h5>{{this.accountDetails.data.number}}</h5>
-              <h5>Access bank</h5>
+              <h3>{{ this.accountDetails.data.name }}</h3>
+              <h5>{{ this.accountDetails.data.number }}</h5>
+              <h5>{{ this.accountDetails.data.bank_name }}</h5>
             </div>
           </div>
           <div class="d-flex justify-space-between align-baseline my-5 mb-10">
             <p class="secondary--text mb-0">Charges:</p>
             <h5>&#8358;100</h5>
           </div>
+          <!-- withdrwa btn -->
           <v-btn class="primary mt-5">Withdraw</v-btn>
-          <v-btn class="mt-5 primary--text" style="background:#F3F5FF">Change account number </v-btn>
+          <!-- change account btn -->
+          <router-link
+            :to="{ name: 'EditBankDetails' }"
+            style="text-decoration: none"
+          >
+            <v-btn class="mt-5 primary--text" style="background: #f3f5ff"
+              >Change account number
+            </v-btn>
+          </router-link>
         </div>
       </div>
     </div>

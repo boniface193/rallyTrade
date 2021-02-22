@@ -5,19 +5,19 @@
         class="d-flex align-center justify-center mb-8"
         style="position: relative"
       >
-        <router-link :to="{ path: '/settings' }" style="text-decoration: none">
+        <router-link
+          :to="{ name: 'WithdrawFund' }"
+          style="text-decoration: none"
+        >
           <span class="back-btn">
             <v-icon style="font-size: 25px">mdi-chevron-left</v-icon>
           </span>
         </router-link>
-        <h3 class="align-self-center">Bank Accounts</h3>
+        <h3 class="align-self-center">Change account details</h3>
       </div>
 
       <div class="mt-5 px-2">
         <h3 class="mb-4">Hello {{ userInfo.name }},</h3>
-
-        <!-- description -->
-        <p class="secondary--text mb-4">Please provide your bank details</p>
 
         <!-- error message -->
         <p class="error--text mb-1" v-show="error">{{ errorMsg }}</p>
@@ -31,10 +31,10 @@
               width="100%"
               height="57px"
               caretColor="#5064cc"
-              placeholder="Select bank"
+              :placeholder="getAccountDetails.bank_name"
               :searchBar="true"
               :items="bankList"
-              :item="bank.name"
+              :item="getAccountDetails.bank_name"
               :inputStatus="bankError"
               @selectedItem="setBank"
             />
@@ -48,7 +48,7 @@
             <p class="mb-1">Account Number *</p>
             <v-text-field
               class="input mt-0"
-              v-model="accNumber"
+              v-model="getAccountDetails.accNumber"
               :rules="accountNumRules"
               type="number"
               color="primary"
@@ -59,7 +59,7 @@
             </v-text-field>
             <div class="primary--text">
               <span v-show="!fetchingAccountDetails">{{
-                accountDetails.account_name
+                newAccountDetails.account_name
               }}</span>
               <span v-show="fetchingAccountDetails">
                 <v-progress-circular
@@ -73,9 +73,9 @@
 
           <v-btn
             class="primary py-6 px-4"
-            :disabled="!accountVerified || this.accNumber.length !== 10"
+            :disabled="!accountVerified || this.getAccountDetails.accNumber.length !== 10"
             @click="openPasswordModal"
-            >Save and continue</v-btn
+            >Update</v-btn
           >
         </v-form>
       </div>
@@ -141,7 +141,7 @@
                 :loading="loading"
                 :disabled="loading"
                 @click="setAccountDetails()"
-                >Submit</v-btn
+                >Update</v-btn
               >
             </div>
           </v-form>
@@ -156,7 +156,7 @@ import { mapGetters } from "vuex";
 import failedImage from "@/assets/images/failed-img.svg";
 import modal from "@/components/modal.vue";
 export default {
-  name: "WithdrawFund",
+  name: "EditBankDetails",
   components: { customSelect, modal },
   props: ["accountDetails"],
   data: function () {
@@ -165,7 +165,6 @@ export default {
       loading: false,
       passwordError: false,
       passwordErrorMsg: "",
-      accNumber: "",
       bank: {},
       dialog: false,
       dialogMessage: "",
@@ -177,6 +176,7 @@ export default {
       fetchingAccountDetails: false,
       accountVerified: false,
       passwordDialog: false,
+      newAccountDetails: this.accountDetails,
       accountNumRules: [
         // verifies email address satisfies the requirement
         (v) => !!v || "Account Number is required",
@@ -198,6 +198,12 @@ export default {
       userInfo: "settings/profile",
       bankList: "bankService/bankList",
     }),
+    getAccountDetails() {
+      return {
+        accNumber: this.accountDetails.data.number,
+        bank_name: this.accountDetails.data.bank_name
+      };
+    },
   },
   methods: {
     // get the list of banks
@@ -235,17 +241,17 @@ export default {
       this.verifyBankSelect();
     },
     validateAccount() {
-      if (this.bank.name !== undefined && this.accNumber.length == 10) {
-        this.fetchingAccountDetails = true;
+      if (this.bank.name !== undefined && this.getAccountDetails.accNumber.length == 10) {
+        this.fetchingAccountDetails = true; 
         this.accountVerified = false;
         this.$store
           .dispatch("bankService/validateBankAccount", {
-            account_number: this.accNumber,
+            account_number: this.getAccountDetails.accNumber,
             bank_code: this.bank.code,
-            bank_name: this.bank.name,
+            bank_name: this.bank.name
           })
           .then((response) => {
-            this.accountDetails = response.data.data;
+            this.newAccountDetails = response.data.data;
             this.accountVerified = true;
             this.error = false;
             this.errorMsg = "";
@@ -254,7 +260,7 @@ export default {
           .catch((error) => {
             this.error = true;
             this.accountVerified = false;
-            this.accountDetails = {};
+            this.newAccountDetails = {};
             this.fetchingAccountDetails = false;
             if (error.response) {
               this.errorMsg = error.response.data.message;
@@ -266,11 +272,11 @@ export default {
     },
     setAccountDetails() {
       this.$refs.passwordForm.validate();
-      this.loading = true;
       if (this.$refs.passwordForm.validate()) {
+        this.loading = true;
         this.$store
           .dispatch("bankService/setAccountDetails", {
-            account_number: this.accNumber,
+            account_number: this.getAccountDetails.accNumber,
             bank_code: this.bank.code,
             bank_name: this.bank.name,
             password: this.password,
@@ -279,9 +285,10 @@ export default {
             this.loading = false;
             this.passwordError = false;
             // get lastest profile information
-
-            this.$router.push({
-              name: "WithdrawFund",
+            this.$store.dispatch("settings/getUserProfile").then(() => {
+              this.$router.push({
+                name: "WithdrawFund",
+              });
             });
           })
           .catch((error) => {
