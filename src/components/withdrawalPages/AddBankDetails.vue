@@ -6,7 +6,7 @@
         style="position: relative"
       >
         <router-link
-          :to="{ name: 'ProfilePage' }"
+          :to="{ path: '/settings' }"
           style="text-decoration: none"
         >
           <span class="back-btn">
