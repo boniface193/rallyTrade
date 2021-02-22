@@ -111,7 +111,6 @@ export default {
           type: "seller"
         })
         .then((response) => {
-          this.loading = false;
           if (response.data.message === "Login successful.") {
             this.$router.push({ name: "InventoryHome" });
           }
