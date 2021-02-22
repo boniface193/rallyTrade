@@ -1,30 +1,13 @@
 <template>
   <div>
     <div class="primary pb-12 py-12">
-      <!-- <Layout>
-        <template v-slot="slotProps">
-          <div class="d-flex">
-            <div @click.stop="drawer = !drawer">
-              <v-icon size="19" color="#000"> mdi-segment</v-icon>
-            </div>
-            <v-spacer></v-spacer>
-            <div class="">
-              <v-img src="@/assets/images/bell.svg" width="11px"></v-img>
-            </div>
-          </div>
-        </template>
-      </Layout> -->
       <div class="mx-7">
-        <Calender
-          class="float-right"
-          autoApply
-          @updateDate="dateValue"
-        />
+        <Calender class="float-right" autoApply @updateDate="dateValue" />
         <div class="welcome-text">Hello,</div>
         <div class="welcome-text-sm">{{ userInfo.name }}</div>
       </div>
       <div class="mx-7 mt-8 d-flex justify-center">
-        <v-row style="position: absolute; width: 90%" class="">
+        <v-row style="position: absolute; width: 90%">
           <v-col
             sm="4"
             md=""
@@ -81,6 +64,98 @@
               </div>
             </v-card>
           </v-col>
+          <!-- sale point -->
+          <v-col sm="4" md="" lg="" class="pr-0">
+            <v-card
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <div class="text-center">
+                <div class="d-flex justify-center pt-5">
+                  <div class="mx-4 position-abs">
+                    <img
+                      src="@/assets/images/group.svg"
+                      width="21.5"
+                      height="21.27"
+                      class="ml-percent mt-4"
+                    />
+                  </div>
+                  <div
+                    class="rounded-pill pa-7 text-center round-img-bg-primary"
+                  ></div>
+                </div>
+                <div class="card-header">{{ cSales }}</div>
+                <div class="card-sale">Sales Points</div>
+                <div
+                  class="card-success"
+                  :class="{
+                    'card-error': diffSales == 0 || diffSales.includes('-'),
+                  }"
+                >
+                  {{ diffSales }}
+                </div>
+                <div class="card-history my-2">
+                  <router-link
+                    :to="{ name: 'reward' }"
+                    style="text-decoration: none"
+                  >
+                    Claim reward<v-icon size="12" class="primary--text"
+                      >mdi-arrow-right</v-icon
+                    ></router-link
+                  >
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <!-- end of sale point -->
+
+          <!-- sallers rank-->
+          <v-col sm="4" md="" lg="" class="pr-0">
+            <v-card
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <div class="text-center">
+                <div class="d-flex justify-center pt-5">
+                  <div class="mx-4 position-abs">
+                    <img
+                      src="@/assets/images/cup.svg"
+                      width="21.5"
+                      height="21.27"
+                      class="ml-percent mt-4"
+                    />
+                  </div>
+                  <div
+                    class="rounded-pill pa-7 text-center round-img-bg-warning"
+                  ></div>
+                </div>
+                <div class="card-header">{{ pRank }}</div>
+                <div class="card-sale">on leaderboard</div>
+                <div class="card-success" :class="{
+                    'card-error': diffSales == 0 || diffSales.includes('-'),
+                  }">{{ diffRank }}</div>
+                <div class="card-history my-2">
+                  <router-link
+                    :to="{ name: 'leaderboard' }"
+                    style="text-decoration: none"
+                  >
+                    View Leaderboard<v-icon size="12" class="primary--text"
+                      >mdi-arrow-right</v-icon
+                    ></router-link
+                  >
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <!-- end of sallers rank -->
         </v-row>
       </div>
     </div>
@@ -88,9 +163,8 @@
 </template>
 
 <script>
-import moment from "moment";
+// import moment from "moment";
 import Calender from "@/components/general/calender.vue";
-// import Layout from "@/components/layout/Layout.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {
@@ -99,6 +173,10 @@ export default {
   },
   data() {
     return {
+      cSales: "",
+      diffSales: "",
+      pRank: "",
+      diffRank: "",
       dashboardItems: [
         {
           image_color: "round-img-bg-danger",
@@ -109,7 +187,6 @@ export default {
           card_history: "Payment history",
           routes: "PaymentHistory",
         },
-
         {
           image_color: "round-img-bg-success",
           image: require("@/assets/images/money.svg"),
@@ -120,40 +197,43 @@ export default {
           card_history: "Withdraw funds",
           routes: "AddBankDetails",
         },
-
-        {
-          image_color: "round-img-bg-primary",
-          image: require("@/assets/images/group.svg"),
-          card_header: "1001",
-          card_sales: "Sales Points",
-          card_success: "+10",
-          card_history: "Claim reward",
-          routes: "reward",
-        },
-
-        {
-          image_color: "round-img-bg-warning",
-          image: require("@/assets/images/cup.svg"),
-          card_header: "24th",
-          card_sales: "on leaderboard",
-          card_success: "-1",
-          card_history: "View Leaderboard",
-          routes: "leaderboard",
-        },
       ],
     };
   },
   computed: {
     ...mapGetters({
+      // dashboard: "dashboard/dashboard",
       userInfo: "settings/profile",
     }),
   },
+  created() {
+    this.$store.dispatch("dashboard/getSellerPoint").then((res) => {
+      let resObj = {
+        difference: res.diff.toString(),
+        curentSale: res.current_sales.toString(),
+      };
+      this.cSales = resObj.curentSale;
+      this.diffSales = resObj.difference;
+    });
+
+    this.$store.dispatch("dashboard/getSellerRank").then((res) => {
+      let resObj = {
+        difference: res.diff.toString(),
+        curentSale: res.present_rank.toString(),
+      };
+      this.pRank = resObj.curentSale;
+      this.diffRank = resObj.difference;
+    });
+  },
   methods: {
     dateValue(value) {
-      const startDate = moment(value.startDate).format();
-      const endDate = moment(value.endDate).format();
-      console.log(startDate);
-      console.log(endDate);
+      this.$store.commit("dashboard/filterRange", {
+        startDate: value.startDate.toISOString().split("T")[0],
+      });
+      // const startDate = moment(value.startDate).format();
+      // const endDate = moment(value.endDate).format();
+      // console.log(startDate);
+      // console.log(endDate);
     },
   },
 };
@@ -190,7 +270,7 @@ export default {
   position: absolute;
   z-index: 1;
 }
-.ml-percent{
+.ml-percent {
   z-index: 1 !important;
 }
 .card-header {
