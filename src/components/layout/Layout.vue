@@ -124,7 +124,7 @@
                     size="25"
                     >{{ item.icon }}</v-icon
                   >
-                  <div class="ml-12 pt-1 grey--text">
+                  <div class="ml-11 pt-1 grey--text">
                     {{ item.title }}
                   </div>
                 </v-list-item-title>
