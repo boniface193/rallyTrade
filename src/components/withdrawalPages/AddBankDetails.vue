@@ -5,10 +5,7 @@
         class="d-flex align-center justify-center mb-8"
         style="position: relative"
       >
-        <router-link
-          :to="{ path: '/settings' }"
-          style="text-decoration: none"
-        >
+        <router-link :to="{ path: '/settings' }" style="text-decoration: none">
           <span class="back-btn">
             <v-icon style="font-size: 25px">mdi-chevron-left</v-icon>
           </span>
@@ -245,6 +242,7 @@ export default {
           .dispatch("bankService/validateBankAccount", {
             account_number: this.accNumber,
             bank_code: this.bank.code,
+            bank_name: this.bank.name,
           })
           .then((response) => {
             this.accountDetails = response.data.data;
@@ -274,16 +272,16 @@ export default {
           .dispatch("bankService/setAccountDetails", {
             account_number: this.accNumber,
             bank_code: this.bank.code,
+            bank_name: this.bank.name,
             password: this.password,
           })
           .then(() => {
             this.loading = false;
             this.passwordError = false;
             // get lastest profile information
-            this.$store.dispatch("settings/getUserProfile").then(() => {
-              this.$router.push({
-                name: "WithdrawFund",
-              });
+
+            this.$router.push({
+              name: "WithdrawFund",
             });
           })
           .catch((error) => {

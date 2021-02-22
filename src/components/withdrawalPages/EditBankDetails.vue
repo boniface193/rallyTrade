@@ -31,10 +31,10 @@
               width="100%"
               height="57px"
               caretColor="#5064cc"
-              :placeholder="'zenith bank'"
+              :placeholder="getAccountDetails.bank_name"
               :searchBar="true"
               :items="bankList"
-              :item="'zenith bank'"
+              :item="getAccountDetails.bank_name"
               :inputStatus="bankError"
               @selectedItem="setBank"
             />
@@ -201,6 +201,7 @@ export default {
     getAccountDetails() {
       return {
         accNumber: this.accountDetails.data.number,
+        bank_name: this.accountDetails.data.bank_name
       };
     },
   },
@@ -247,6 +248,7 @@ export default {
           .dispatch("bankService/validateBankAccount", {
             account_number: this.getAccountDetails.accNumber,
             bank_code: this.bank.code,
+            bank_name: this.bank.name
           })
           .then((response) => {
             this.newAccountDetails = response.data.data;
@@ -270,12 +272,13 @@ export default {
     },
     setAccountDetails() {
       this.$refs.passwordForm.validate();
-      this.loading = true;
       if (this.$refs.passwordForm.validate()) {
+        this.loading = true;
         this.$store
           .dispatch("bankService/setAccountDetails", {
             account_number: this.getAccountDetails.accNumber,
             bank_code: this.bank.code,
+            bank_name: this.bank.name,
             password: this.password,
           })
           .then(() => {
