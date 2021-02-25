@@ -184,8 +184,8 @@ export default {
           card_header: "₦900,000.00",
           card_sales: "In sales",
           card_success: "+45,000",
-          card_history: "Payment history",
-          routes: "PaymentHistory",
+          card_history: "Settlement history",
+          routes: "SettlementHistory",
         },
         {
           image_color: "round-img-bg-success",

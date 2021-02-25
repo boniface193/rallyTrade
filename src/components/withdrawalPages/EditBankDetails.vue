@@ -73,7 +73,9 @@
 
           <v-btn
             class="primary py-6 px-4"
-            :disabled="!accountVerified || this.getAccountDetails.accNumber.length !== 10"
+            :disabled="
+              !accountVerified || this.getAccountDetails.accNumber.length !== 10
+            "
             @click="openPasswordModal"
             >Update</v-btn
           >
@@ -201,7 +203,7 @@ export default {
     getAccountDetails() {
       return {
         accNumber: this.accountDetails.data.number,
-        bank_name: this.accountDetails.data.bank_name
+        bank_name: this.accountDetails.data.bank_name,
       };
     },
   },
@@ -241,14 +243,17 @@ export default {
       this.verifyBankSelect();
     },
     validateAccount() {
-      if (this.bank.name !== undefined && this.getAccountDetails.accNumber.length == 10) {
-        this.fetchingAccountDetails = true; 
+      if (
+        this.bank.name !== undefined &&
+        this.getAccountDetails.accNumber.length == 10
+      ) {
+        this.fetchingAccountDetails = true;
         this.accountVerified = false;
         this.$store
           .dispatch("bankService/validateBankAccount", {
             account_number: this.getAccountDetails.accNumber,
             bank_code: this.bank.code,
-            bank_name: this.bank.name
+            bank_name: this.bank.name,
           })
           .then((response) => {
             this.newAccountDetails = response.data.data;
@@ -284,12 +289,8 @@ export default {
           .then(() => {
             this.loading = false;
             this.passwordError = false;
-            // get lastest profile information
-            this.$store.dispatch("settings/getUserProfile").then(() => {
-              this.$router.push({
-                name: "WithdrawFund",
-              });
-            });
+            this.passwordDialog = false;
+            location.reload();
           })
           .catch((error) => {
             this.passwordError = true;

@@ -278,11 +278,9 @@ export default {
           .then(() => {
             this.loading = false;
             this.passwordError = false;
+            this.passwordDialog = false;
             // get lastest profile information
-
-            this.$router.push({
-              name: "WithdrawFund",
-            });
+            location.reload();
           })
           .catch((error) => {
             this.passwordError = true;

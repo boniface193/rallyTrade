@@ -152,6 +152,12 @@ export default {
 .search-container {
   width: 400px;
 }
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
 @media (max-width: 500px) {
   .search-container {
     width: -webkit-fill-available;
