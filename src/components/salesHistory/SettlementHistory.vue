@@ -143,7 +143,6 @@ export default {
         .then((response) => {
           this.fetchingData = false;
           this.settlementList = response.data.data;
-          console.log(this.settlementList);
         })
         .catch((error) => {
           this.fetchingData = false;
