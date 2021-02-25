@@ -67,6 +67,18 @@
           <!-- sale point -->
           <v-col sm="4" md="" lg="" class="pr-0">
             <v-card
+              v-if="sellLoading"
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <v-skeleton-loader type="article"> </v-skeleton-loader>
+            </v-card>
+            <v-card
+              v-if="!sellLoading"
               class="shadow-sm elevation-0 px-2"
               style="
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -116,6 +128,18 @@
           <!-- sallers rank-->
           <v-col sm="4" md="" lg="" class="pr-0">
             <v-card
+              v-if="rankLoading"
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <v-skeleton-loader type="article"> </v-skeleton-loader>
+            </v-card>
+            <v-card
+              v-if="!rankLoading"
               class="shadow-sm elevation-0 px-2"
               style="
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -139,9 +163,14 @@
                 </div>
                 <div class="card-header">{{ pRank }}</div>
                 <div class="card-sale">on leaderboard</div>
-                <div class="card-success" :class="{
+                <div
+                  class="card-success"
+                  :class="{
                     'card-error': diffSales == 0 || diffSales.includes('-'),
-                  }">{{ diffRank }}</div>
+                  }"
+                >
+                  {{ diffRank }}
+                </div>
                 <div class="card-history my-2">
                   <router-link
                     :to="{ name: 'leaderboard' }"
@@ -163,7 +192,7 @@
 </template>
 
 <script>
-// import moment from "moment";
+import moment from "moment";
 import Calender from "@/components/general/calender.vue";
 import { mapGetters } from "vuex";
 export default {
@@ -173,6 +202,8 @@ export default {
   },
   data() {
     return {
+      rankLoading: true,
+      sellLoading: true,
       cSales: "",
       diffSales: "",
       pRank: "",
@@ -202,7 +233,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // dashboard: "dashboard/dashboard",
+      dashboard: "dashboard/dashboard",
       userInfo: "settings/profile",
     }),
   },
@@ -214,6 +245,7 @@ export default {
       };
       this.cSales = resObj.curentSale;
       this.diffSales = resObj.difference;
+      this.sellLoading = false
     });
 
     this.$store.dispatch("dashboard/getSellerRank").then((res) => {
@@ -223,15 +255,20 @@ export default {
       };
       this.pRank = resObj.curentSale;
       this.diffRank = resObj.difference;
+      this.rankLoading = false;
     });
+    console.log("check", this.dashboard);
   },
   methods: {
     dateValue(value) {
       this.$store.commit("dashboard/filterRange", {
-        startDate: value.startDate.toISOString().split("T")[0],
+        startDate: moment(value.startDate).format("L"),
+        endDate: moment(value.endDate).format("L"),
       });
-      // const startDate = moment(value.startDate).format();
-      // const endDate = moment(value.endDate).format();
+      this.$store.dispatch("dashboard/searchSellerPoint");
+      this.$store.dispatch("dashboard/searchSellerRank");
+      // const startDate = moment(value.startDate).format("L");
+      // const endDate = moment(value.endDate).format("L");
       // console.log(startDate);
       // console.log(endDate);
     },
