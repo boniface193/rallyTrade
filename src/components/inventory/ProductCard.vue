@@ -131,8 +131,15 @@ export default {
 }
 @media (max-width: 550px) {
   .card-container {
-    min-width: 45%;
-    margin: auto 2.5%;
+    min-width: 48%;
+    margin: auto 1%;
+    .card-top {
+      .image-container {
+        img {
+          width: 85%;
+        }
+      }
+    }
     .card-bottom {
       .add-btn {
         right: 5px;
