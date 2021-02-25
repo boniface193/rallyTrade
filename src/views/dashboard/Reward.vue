@@ -11,8 +11,8 @@
       <v-row>
         <v-col offset-lg="3" offset-md="3" offset-sm="3">
           <!-- card -->
-          <div class="center" v-for="items in rewards.data" :key="items.id">
-            <div class="overlay pa-8" v-show="isLoading == false">
+          <div class="center" v-for="items in rewards.data" :key="items.id" v-show="showing">
+            <div class="overlay pa-8">
               <div class="card-title text-left">Reward Debit Balance</div>
               <div class="card-point mt-7 text-left">
                 {{ items.total_points }} Points
@@ -21,7 +21,7 @@
                 {{ items.seller_name }}
               </div>
             </div>
-            <div class="mb-8 pr-4 w-100" v-show="isLoading == false">
+            <div class="mb-8 pr-4 w-100">
               <v-img src="@/assets/images/reward.png"></v-img>
             </div>
           </div>
@@ -29,12 +29,17 @@
           <v-row class="my-8" v-if="isLoading">
             <v-col offset-lg="3" offset-md="3" offset-sm="3" class="offset-xs">
               <!-- this image time loader is calculated by the loader to triger the load time -->
+              <v-img
+                src="@/assets/images/reward.png"
+                width="5px"
+                height="5px"
+                @load="onLoad"
+              ></v-img>
               <v-progress-circular
                 color="primary"
                 indeterminate
-                size="20"
-                width="2"
               ></v-progress-circular>
+              <!-- loader ends here -->
             </v-col>
           </v-row>
           <!-- loader ends here -->
@@ -83,7 +88,7 @@
                   </div>
                 </v-col>
                 <v-col
-                  @click="filterById(items.isRedeemable)"
+                  @click="filterById(items.key)"
                   lg="3"
                   md="3"
                   sm="2"
@@ -147,7 +152,7 @@
             <div class="d-flex justify-center">
               <span>
                 <v-img
-                  src="@/assets/images/airtime.svg"
+                  src="@/assets/images/airtime.jpeg"
                   height="54px"
                   width="55px"
                   class="rounded-pill"
@@ -189,7 +194,7 @@
                 dark
                 color="primary"
                 :to="{ name: 'InventoryHome' }"
-                >Sell</v-btn
+                >Continue Selling</v-btn
               >
             </div>
           </div>
@@ -232,6 +237,7 @@ export default {
       isLoading: true,
       alert: "",
       image: true,
+      showing: false,
     };
   },
   computed: {
@@ -245,7 +251,7 @@ export default {
       this.rewardHistory = e;
       this.isLoading = false;
     });
-    console.log("hell", this.rewards);
+    this.setimeout()
   },
 
   methods: {
@@ -257,10 +263,9 @@ export default {
     },
     filterById(id) {
       this.filteredArray = Object.values(this.rewards.rewards).find(
-        (item) => item.isRedeemable == id
+        (item) => item.key == id
       );
       this.openModal();
-      console.log(this.filteredArray);
     },
     redeemOffer(params) {
       this.$store.commit("reward/setRedeemAirtime", params);
@@ -277,12 +282,16 @@ export default {
         });
       this.closeModal();
     },
-    // onLoad() {
-    //   if (this.isloading === true) {
-    //     this.image == false
-    //   }
-    //   // console.log('loading')
-    // },
+    onLoad() {
+      this.isLoading ? (this.isLoading = false) : (this.isLoading = true);
+    },
+
+    setimeout(){
+      setTimeout(() => {
+        this.showing = true
+      }, 2000)
+    }
+
   },
 };
 </script>

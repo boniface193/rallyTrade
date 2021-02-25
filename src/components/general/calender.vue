@@ -7,15 +7,15 @@
       :minDate="minDate"
       :maxDate="maxDate"
       :autoApply="autoApply"
-      :ranges="false"
+      :ranges="ranges"
       :linkedCalendars="linkedCalendars"
       :showWeekNumbers="showWeekNumbers"
-      :singleDatePicker="true"
+      :singleDatePicker="singleDatePicker"
       :alwaysShowCalender="alwaysShowCalender"
       @update="updateValues"
     >
       <template v-slot:input="picker">
-        {{ picker.startDate | moment("dddd") }}
+        {{ picker.startDate | moment("dddd") }} - {{ picker.endDate | moment("dddd") }}
         <v-icon>mdi-chevron-down</v-icon>
       </template>
     </date-range-picker>
@@ -69,6 +69,9 @@ export default {
         "This year": [
           new Date(today.getFullYear(), 0, 1),
           new Date(today.getFullYear(), 11, 31),
+        ],
+        "All time": [
+
         ],
       },
       dateRange: {
