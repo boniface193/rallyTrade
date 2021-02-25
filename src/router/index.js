@@ -15,9 +15,11 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
-import PaymentHistory from "@/views/dashboard/PaymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
+// sales history pages
+import PaymentHistory from "@/components/salesHistory/PaymentHistory.vue";
+import SettlementHistory from "@/components/salesHistory/SettlementHistory.vue";
 // order routes
 import orderView from "@/views/orders/orderView.vue";
 import Orders from "@/views/orders/Orders.vue";
@@ -169,11 +171,16 @@ const routes = [
         name: "Dashboard",
         component: Dashboard,
       },
-      // sales history
 
-      // payment history
+      // Settlement history
       {
-        path: "payment",
+        path: "settlement-history",
+        name: "SettlementHistory",
+        component: SettlementHistory
+      },
+      // Payment history
+      {
+        path: "payment-history",
         name: "PaymentHistory",
         component: PaymentHistory
       },
