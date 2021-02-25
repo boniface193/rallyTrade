@@ -216,7 +216,7 @@ export default {
           card_sales: "In sales",
           card_success: "+45,000",
           card_history: "Settlement history",
-          routes: "PaymentHistory",
+          routes: "SettlementHistory",
         },
         {
           image_color: "round-img-bg-success",
