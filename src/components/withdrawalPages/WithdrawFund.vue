@@ -48,6 +48,15 @@
               >Change account number
             </v-btn>
           </router-link>
+          <!-- payment history btn -->
+          <router-link
+            :to="{ name: 'PaymentHistory' }"
+            style="text-decoration: none"
+          >
+            <v-btn class="mt-5 primary--text" style="background: #f3f5ff"
+              >Payment History
+            </v-btn>
+          </router-link>
         </div>
       </div>
     </div>
