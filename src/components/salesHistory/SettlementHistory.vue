@@ -162,7 +162,7 @@ export default {
 .back-btn {
   position: absolute;
   left: 0px;
-  top: 0;
+  top: 0px;
 }
 .status-img {
   width: 140px;
