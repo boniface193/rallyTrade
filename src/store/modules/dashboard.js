@@ -5,11 +5,8 @@ import moment from "moment"
 
 const state = {
     dashboardItems: [],
-    profile: {
-        id: ""
-    },
     dateRange: {
-        startDate: moment(new Date()).format("L") ,
+        startDate: moment(new Date()).format("L"),
         endDate: moment(new Date()).format("L"),
     },
 };
@@ -129,8 +126,6 @@ const actions = {
     getTotalRevenue(context, data) {
         let dateRange = ((state.dateRange.startDate || state.dateRange.endDate !== null) ? `created_between=${state.dateRange.startDate},${state.dateRange.endDate}` : "");
 
-        // let userRef = state.profile.id
-
         return new Promise((resolve, reject) => {
             payment.get(`/metrics/${data.id}/total-revenue?${dateRange}`, {
                 headers: {
@@ -138,6 +133,7 @@ const actions = {
                 }
             }).then((response) => {
                 context.commit('setDashboard', response.data.data)
+                console.log(response.data.data)
                 resolve(response.data.data)
             })
                 .catch((error) => {
@@ -154,7 +150,7 @@ const mutations = {
     filterRange(state, dateRange) {
         state.dateRange = dateRange
     },
-    setUserRef: (state, data) => state.profile = data
+    // setUserRef: (state, data) => state.profile = data
 
 
 };
