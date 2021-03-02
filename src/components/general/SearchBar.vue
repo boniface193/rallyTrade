@@ -4,7 +4,7 @@
     <v-icon class="position-abs ma-2 ml-3" color="#5064CC" >mdi-magnify</v-icon>
     <input type="text" v-model="searchValue"
       @change="updateSearchValue"
-      @keypress="updateSearchValue" :placeholder="placeholder" class="form-controlly pl-10 form-control-bgColor" />
+      :placeholder="placeholder" class="form-controlly pl-10 form-control-bgColor" />
     
   </div>
 </template>

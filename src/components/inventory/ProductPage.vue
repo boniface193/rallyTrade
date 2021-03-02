@@ -100,7 +100,7 @@
           <div v-show="checkout">
             <div class="d-flex mb-3" style="align-items: baseline">
               <p class="mr-5 mb-0" style="font-weight: 600">
-                Enter profit(N) by unit:
+                Enter profit(N) per unit:
               </p>
               <v-form style="width: 200px" ref="form">
                 <v-text-field
