@@ -213,7 +213,8 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("leaderboard/getLeaderboard").then(() => {
+    this.$store.dispatch("leaderboard/getLeaderboard").then((res) => {
+      console.log("leaderboard", res)
       this.isLoading = false;
     });
   },

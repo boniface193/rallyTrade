@@ -8,15 +8,21 @@
       </div>
       <div class="mx-7 mt-8 d-flex justify-center">
         <v-row style="position: absolute; width: 90%">
-          <v-col
-            sm="4"
-            md=""
-            lg=""
-            class="pr-0"
-            v-for="items in dashboardItems"
-            :key="items.id"
-          >
+          <!-- current sales -->
+          <v-col sm="4" md="" lg="" class="pr-0">
             <v-card
+              v-if="currentLoading"
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <v-skeleton-loader type="article"> </v-skeleton-loader>
+            </v-card>
+            <v-card
+              v-if="!currentLoading"
               class="shadow-sm elevation-0 px-2"
               style="
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -28,35 +34,33 @@
                 <div class="d-flex justify-center pt-5">
                   <div class="mx-4 position-abs">
                     <img
-                      :src="items.image"
+                      src="@/assets/images/shopping.png"
                       width="21.5"
                       height="21.27"
                       class="ml-percent mt-4"
                     />
                   </div>
                   <div
-                    :class="items.image_color"
-                    class="rounded-pill pa-7 text-center"
+                    class="rounded-pill pa-7 text-center round-img-bg-danger"
                   ></div>
                 </div>
-                <div class="card-header">{{ items.card_header }}</div>
-                <div class="card-sale">{{ items.card_sales }}</div>
+                <div class="card-header">₦{{ curentSale }}</div>
+                <div class="card-sale">In sales</div>
                 <div
                   class="card-success"
-                  :class="{ 'card-error': items.card_success.includes('-') }"
+                  :class="{
+                    'card-error':
+                      diffCurrentSales == 0 || diffCurrentSales.includes('-'),
+                  }"
                 >
-                  {{ items.card_success }}
-                  <span class="awaiting" v-if="items.awaiting"
-                    >({{ items.awaiting }})</span
-                  >
+                  {{ diffCurrentSales }}
                 </div>
                 <div class="card-history my-2">
                   <router-link
-                    :to="{ name: items.routes }"
+                    :to="{ name: 'reward' }"
                     style="text-decoration: none"
                   >
-                    {{ items.card_history
-                    }}<v-icon size="12" class="primary--text"
+                    Settlement history<v-icon size="12" class="primary--text"
                       >mdi-arrow-right</v-icon
                     ></router-link
                   >
@@ -64,6 +68,72 @@
               </div>
             </v-card>
           </v-col>
+          <!-- current sale -->
+
+          <!-- payment total revenue -->
+          <v-col sm="4" md="" lg="" class="pr-0">
+            <v-card
+              v-if="payment"
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <v-skeleton-loader type="article"> </v-skeleton-loader>
+            </v-card>
+            <v-card
+              v-if="!payment"
+              class="shadow-sm elevation-0 px-2"
+              style="
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                border-radius: 15px;
+                height: 186px;
+              "
+            >
+              <div class="text-center">
+                <div class="d-flex justify-center pt-5">
+                  <div class="mx-4 position-abs">
+                    <img
+                      src="@/assets/images/money.svg"
+                      width="21.5"
+                      height="21.27"
+                      class="ml-percent mt-4"
+                    />
+                  </div>
+                  <div
+                    class="rounded-pill pa-7 text-center round-img-bg-success"
+                  ></div>
+                </div>
+                <div class="card-header">₦{{ totalRevenue }}</div>
+                <div class="card-sale">In profits</div>
+                <div
+                  class="card-success"
+                  :class="{
+                    'card-error':
+                      awaitingSettlement == 0 ||
+                      awaitingSettlement.includes('-'),
+                  }"
+                >
+                  {{ awaitingSettlement }}
+                  <span class="awaiting">(awaiting settlements)</span>
+                </div>
+                <div class="card-history my-2">
+                  <router-link
+                    :to="{ name: 'AddBankDetails' }"
+                    style="text-decoration: none"
+                  >
+                    Withdraw funds<v-icon size="12" class="primary--text"
+                      >mdi-arrow-right</v-icon
+                    ></router-link
+                  >
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <!-- payment total Revenue -->
+
           <!-- sale point -->
           <v-col sm="4" md="" lg="" class="pr-0">
             <v-card
@@ -100,7 +170,7 @@
                     class="rounded-pill pa-7 text-center round-img-bg-primary"
                   ></div>
                 </div>
-                <div class="card-header">{{ cSales }}</div>
+                <div class="card-header">₦{{ cSales }}</div>
                 <div class="card-sale">Sales Points</div>
                 <div
                   class="card-success"
@@ -112,7 +182,7 @@
                 </div>
                 <div class="card-history my-2">
                   <router-link
-                    :to="{ name: 'reward' }"
+                    :to="{ name: 'SettlementHistory' }"
                     style="text-decoration: none"
                   >
                     Claim reward<v-icon size="12" class="primary--text"
@@ -161,7 +231,7 @@
                     class="rounded-pill pa-7 text-center round-img-bg-warning"
                   ></div>
                 </div>
-                <div class="card-header">{{ pRank }}</div>
+                <div class="card-header">₦{{ pRank }}</div>
                 <div class="card-sale">on leaderboard</div>
                 <div
                   class="card-success"
@@ -202,33 +272,24 @@ export default {
   },
   data() {
     return {
-      rankLoading: true,
+      // seller
       sellLoading: true,
       cSales: "",
       diffSales: "",
+      // rank
+      rankLoading: true,
       pRank: "",
       diffRank: "",
-      dashboardItems: [
-        {
-          image_color: "round-img-bg-danger",
-          image: require("@/assets/images/shopping.png"),
-          card_header: "₦900,000.00",
-          card_sales: "In sales",
-          card_success: "+45,000",
-          card_history: "Settlement history",
-          routes: "SettlementHistory",
-        },
-        {
-          image_color: "round-img-bg-success",
-          image: require("@/assets/images/money.svg"),
-          card_header: "₦70,000.00",
-          card_sales: "In profits",
-          card_success: "5,000",
-          awaiting: "awaiting settlements",
-          card_history: "Withdraw funds",
-          routes: "AddBankDetails",
-        },
-      ],
+      // getSellerTotalSale
+      currentSales: "",
+      diffCurrentSales: "",
+      currentLoading: true,
+      // total payment
+      totalRevenue: "",
+      settled: "",
+      awaitingSettlement: "",
+      availableBalance: "",
+      payment: true,
     };
   },
   computed: {
@@ -245,7 +306,7 @@ export default {
       };
       this.cSales = resObj.curentSale;
       this.diffSales = resObj.difference;
-      this.sellLoading = false
+      this.sellLoading = false;
     });
 
     this.$store.dispatch("dashboard/getSellerRank").then((res) => {
@@ -257,7 +318,41 @@ export default {
       this.diffRank = resObj.difference;
       this.rankLoading = false;
     });
-    console.log("check", this.dashboard);
+
+    this.$store.dispatch("dashboard/getSellerTotalSale").then((res) => {
+      let resObj = {
+        difference: res.current_sales.toString(),
+        curentSale: res.diff.toString(),
+      };
+      this.curentSale = resObj.difference;
+      this.diffCurrentSales = resObj.curentSale;
+      this.currentLoading = false;
+    });
+    if (this.userInfo.id === "") {
+      this.$store.dispatch("settings/getUserProfile").then(() => {
+        this.$store
+          .dispatch("dashboard/getTotalRevenue", { id: this.userInfo.id })
+          .then((res) => {
+            console.log("payment if", res);
+            this.totalRevenue = res.total_revenue;
+            this.settled = res.settled;
+            this.awaitingSettlement = res.awaiting_settlement;
+            this.availableBalance = res.available_balance;
+            this.payment = false
+          });
+      });
+    } else {
+      this.$store
+        .dispatch("dashboard/getTotalRevenue", { id: this.userInfo.id })
+        .then((res) => {
+          console.log("payment else", res);
+          this.totalRevenue = res.total_revenue;
+          this.settled = res.settled;
+          this.awaitingSettlement = res.awaiting_settlement;
+          this.availableBalance = res.available_balance;
+          this.payment = false
+        });
+    }
   },
   methods: {
     dateValue(value) {
@@ -267,10 +362,8 @@ export default {
       });
       this.$store.dispatch("dashboard/searchSellerPoint");
       this.$store.dispatch("dashboard/searchSellerRank");
-      // const startDate = moment(value.startDate).format("L");
-      // const endDate = moment(value.endDate).format("L");
-      // console.log(startDate);
-      // console.log(endDate);
+      this.$store.dispatch("dashboard/searchSellerTotalSales");
+      this.$store.dispatch("dashboard/getTotalRevenue");
     },
   },
 };
