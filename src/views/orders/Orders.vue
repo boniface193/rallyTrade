@@ -2,22 +2,17 @@
   <v-container>
     <div class="mx-3">
       <p class="sub-header">
-        You have
-        <span class="font-weight-bold">{{ ordersItems.length }}</span> orders.
+        You have <span class="font-weight-bold">20</span> orders.
       </p>
       <!-- search filter -->
       <v-row class="d-flex justify-end">
         <v-col cols="10" lg="5" md="5">
-          <Search placeholder="Order Number or Product Name" @search="getSearchValue" />
+          <Search placeholder="Search orders" @search="getSearchValue" />
         </v-col>
         <v-col cols="2" lg="1" md="1" class="px-0">
-          <BasicFilter
-            :price="filterParameters.price"
-            toolTipText="Filter products"
-            headerName="Filter Orders"
-            @filterOption="filterTable"
-            @resetFilter="resetFilter"
-          />
+          <div class="primary text-center rounded-lg">
+            <v-icon color="white" style="padding: 5.3px">mdi-menu</v-icon>
+          </div>
         </v-col>
       </v-row>
 
@@ -33,19 +28,22 @@
         ></v-progress-circular>
       </div>
       <!-- loader ends here -->
-      <!-- if no order -->
-      <p class="text-center mt-8">{{ empty }}</p>
+
       <v-row>
         <v-col sm="4" v-for="orders in ordersItems" :key="orders.id">
+          <!-- if no order -->
+          <p v-if="orders.length == 0" class="text-center mt-8">
+            No Item Found
+          </p>
           <v-card outlined class="rounded-lg pa-5 mb-3">
             <step-progress
               :steps="['Processing', 'Shipped', 'Delivered']"
               :current-step="
-                orders.delivery_status_label == 'Processing' ||
-                orders.delivery_status_label == 'Shipped'
+                orders.isProcessing || orders.isShipped || orders.isDelivered
                   ? 1
-                  : 3
+                  : 0
               "
+              icon-class="fa fa-check"
               :line-thickness="lineThickness"
               active-color="#5064CC"
               :active-thickness="activeThickness"
@@ -85,7 +83,7 @@
                 </div>
                 <div class="order-item-font">
                   Customer:
-                  <span class="order-no-grey">{{ orders.customer.name }}</span>
+                  <span class="order-no-grey">{{ orders.customer_name }}</span>
                 </div>
                 <div class="order-item-font">
                   Payment Status:
@@ -105,22 +103,10 @@
         </v-col>
       </v-row>
     </div>
-    <!-- pagination -->
-    <div class="text-center pa-3">
-      <v-pagination
-        v-model="getCurrentPage.currentPage"
-        :length="pageDetails.last_page"
-        @input="setCurentPage"
-        circle
-        small
-        style="font-size: 8px"
-      ></v-pagination>
-    </div>
   </v-container>
 </template>
 
 <script>
-import BasicFilter from "@/components/general/BasicFilter.vue";
 import Search from "@/components/general/SearchBar.vue";
 import StepProgress from "vue-step-progress";
 import { mapGetters, mapState } from "vuex";
@@ -131,24 +117,17 @@ import "vue-step-progress/dist/main.css";
 export default {
   components: {
     Search,
-    BasicFilter,
     "step-progress": StepProgress,
   },
   data() {
     return {
       isLoading: true,
-      empty: "",
-      deliveryStatus: "",
-      date: "",
-      time: "",
+      // searchValue: "",
       filterItems: "",
       lineThickness: 1,
       activeThickness: 3,
       passiveThickness: 3,
       mySteps: ["Step 1", "Step 2", "Step 3"],
-      filterParameters: {
-        price: true,
-      },
     };
   },
 
@@ -156,30 +135,18 @@ export default {
     // to populate items on the table
     ...mapGetters({
       ordersItems: "orders/orders",
+      searchOrder: "orders/searchOrder",
     }),
     ...mapState({
-      page: (state) => state.orders.page,
+      searchValue: (state) => state.orders.searchValue,
       pageDetails: (state) => state.orders.pageDetails,
-      getCurrentPage() {
-        return {
-          currentPage: this.pageDetails.current_page,
-        };
-      },
     }),
   },
   created() {
-    this.$store.dispatch("orders/getOrders").then((e) => {
+    this.$store.dispatch("orders/getOrders").then(() => {
       this.isLoading = false;
-      if (e.length < 1) {
-        this.empty = "No Item Found";
-      }
     });
     this.$store.dispatch("orders/filterGetOrders");
-
-    let ifConnected = window.navigator.onLine;
-    if (!ifConnected) {
-      this.empty = "please connect to the internet";
-    }
   },
 
   methods: {
@@ -187,52 +154,25 @@ export default {
     getSearchValue(params) {
       this.$store.commit("orders/getSearchValue", params);
       this.$store.commit("orders/setSearchOrder", true);
-      this.$store.dispatch("orders/searchOrders").then(() => {
-        this.isLoading = false;
+      this.$store.dispatch("orders/searchOrders").then((response) => {
+        this.isLoading = true;
+        if (response) {
+          this.isLoading = false;
+          if (!response) {
+            alert('hello')
+          }
+        }
+        
       });
-      this.getOrder();
     },
-
-    getOrder() {
-      this.$store.dispatch("orders/searchOrders").then((e) => {
-        console.log(e);
-      });
-    },
-
-    filterGetOrders() {
-      this.$store
-        .dispatch("orders/filterGetOrders")
-        .then(() => {})
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    // filter function
-    filterTable(params) {
-      this.$store.commit("orders/filterOrders", {
-        minPrice: params.minPrice,
-        maxPrice: params.maxPrice,
-      });
-      this.filterGetOrders();
-    },
-
-    // reset the filter and it will affect the table
-    resetFilter() {
-      this.$store.commit("orders/filterOrders", {
-        minPrice: 0,
-        maxPrice: 0,
-        selectedOptions: [],
-      });
-      this.filterGetOrders();
-    },
-
-    // set current page
-    setCurentPage() {
-      this.$store.commit("orders/setPageDetails", this.getCurrentPage.currentPage)
-      // this.$store.commit("orders/setPage", this.getCurrentPage.currentPage);
-      // this.getOrders === true ? this.getSearchValue() : "";
-    },
-  },
+  }
+  // computed: {
+  //   filterItem: function () {
+  //     return this.ordersItems.filter((blog) => {
+  //       return blog.customers_name.match(this.searchValue);
+  //     });
+  //   },
+  // },
 };
 </script>
 <style lang="scss" >

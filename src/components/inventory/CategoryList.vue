@@ -56,8 +56,8 @@ export default {
     min-width: fit-content;
     cursor: pointer;
     &:hover {
-      background: #DDF8F7;
-      color: #029B97 !important;
+      background: #f3f5ff;
+      color: #758bfc !important;
     }
   }
   &::-webkit-scrollbar {

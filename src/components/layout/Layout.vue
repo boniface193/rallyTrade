@@ -83,7 +83,7 @@
         v-model="drawer"
       >
         <v-container class="mx-5 my-10 d-flex">
-          <div class="d-flex nova-logo align-center">
+          <div class="d-flex nova-logo">
             N<span
               ><v-img
                 src="@/assets/images/fire.svg"
@@ -106,25 +106,25 @@
               link
               router
               :to="item.routes"
-              :class="{ activeColor: $route.path === item.routes }"
             >
               <v-list-item-content class="mx-5">
                 <v-list-item-title
                   class="text-size-md"
+                  :class="{ activeColor: item.routes }"
                 >
                   <v-img
                     v-if="!item.icons"
                     :src="item.icon"
-                    width="22px"
+                    width="30px"
                     class="float-left"
                   ></v-img>
                   <v-icon
                     v-if="item.icons"
                     class="float-left primary--text"
-                    size="25"
+                    size="33"
                     >{{ item.icon }}</v-icon
                   >
-                  <div class="ml-11 pt-1 grey--text">
+                  <div class="ml-12 pt-1 grey--text">
                     {{ item.title }}
                   </div>
                 </v-list-item-title>
@@ -132,11 +132,12 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
-        <div class="ml-3 my-5">
-          <div class="grey--text text-size-md" @click="logout">
-            <v-icon class="mx-4 primary--text mb-2" size="25">mdi-logout</v-icon> Log
-            Out
-          </div>
+        <div class="ml-3 mt-5">
+          <span class="grey--text text-size-md" @click="logout"
+            ><v-icon class="ml-4 mr-4 primary--text" size="33"
+              >mdi-logout</v-icon
+            >Log Out</span
+          >
         </div>
       </v-navigation-drawer>
     </v-card>
@@ -187,16 +188,17 @@ export default {
   created() {
     if (this.$store.getters["settings/profile"].name === "") {
       this.$store.dispatch("settings/getUserProfile");
-    }
+    };
 
     this.largerScreen();
+
   },
   methods: {
     closeDrawer() {
       this.drawer = false;
     },
 
-    largerScreen() {
+    largerScreen(){
       if (window.screen.width >= 1024) {
         this.drawer = true;
       }
@@ -234,9 +236,6 @@ export default {
 .v-list-item--link::before {
   background-color: transparent;
   z-index: 1;
-}
-.activeColor {
-  background: #DDEFEF !important;
 }
 
 .text-size-md {

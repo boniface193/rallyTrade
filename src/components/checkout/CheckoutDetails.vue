@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8">
+  <div>
     <h2 class="mb-4">{{ pageDetails.orderDetails.product_name }}</h2>
     <!-- <p class="primary--text mb-2">&#8358;{{ orderDetails.subtotal_label }}</p> -->
     <p class="secondary--text" style="font-size: 14px">
@@ -13,7 +13,7 @@
       <a
         :href="
           '//' +
-          `api.whatsapp.com/send?text=Hello my name is ${pageDetails.orderDetails.customer.name}, I would like to find out more about your product&phone=${pageDetails.orderDetails.customer.phone}`
+          `api.whatsapp.com/send?text=''&phone=${pageDetails.orderDetails.customer.phone}`
         "
         target="_blank"
         style="text-decoration: none"
@@ -32,34 +32,32 @@
       </p>
     </div>
     <!-- select quantity container -->
-    <div class="mt-5">
+    <div class="mt-5 d-flex align-center">
       <!-- <div class="d-flex align-center mr-5">
         <span class="minus-btn" @click="decreaseNum">-</span>
         <span class="mx-4">{{ quantity }}</span>
         <span class="add-btn" @click="increaseNum">+</span>
       </div> -->
-      <h5 class="mb-3">No. of items: <span>{{ pageDetails.orderDetails.total_items }}</span></h5 >
       <p class="mb-0">
-        <span class="primary--text mr-4" style="font-size: 20px"
-          >&#8358;{{ pageDetails.orderDetails.subtotal_label }}</span>
-        <br/><span class="secondary--text" style="font-size: 14px"
+        <span class="primary--text" style="font-size: 20px"
+          >&#8358;{{ pageDetails.orderDetails.subtotal_label }}</span
+        ><br /><span class="secondary--text" style="font-size: 14px"
           >Delivery fee not included yet</span
         >
       </p>
     </div>
     <div class="btn-container">
-       <v-checkbox
-        v-model="acceptTerms"
-        label="By clicking continue, you are agreeing to our terms of service and our
-        disclaimer"
-        class="mt-7"
-      ></v-checkbox>
       <v-btn
-        class="primary mb-3"
+        class="primary mt-7 mb-3"
         @click="gotoDeliveryPage"
         :disabled="!acceptTerms"
         >Continue</v-btn
       >
+      <v-checkbox
+        v-model="acceptTerms"
+        label="By clicking continue, you are agreeing to our terms of service and our
+        disclaimer"
+      ></v-checkbox>
     </div>
   </div>
 </template>
@@ -126,7 +124,7 @@ export default {
 }
 .add-btn {
   border-radius: 50%;
-  background: #029B97;
+  background: #758bfc;
   width: 25px;
   height: 25px;
   display: flex;
@@ -142,7 +140,7 @@ export default {
   height: 25px;
   display: flex;
   align-items: center;
-  color: #029B97;
+  color: #758bfc;
   justify-content: center;
   cursor: pointer;
 }

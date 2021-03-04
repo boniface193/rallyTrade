@@ -45,7 +45,7 @@ body {
     align-items: center;
     justify-content: center;
     .v-btn__loader {
-      color: #029B97;
+      color: #5064cc;
     }
   }
 }
