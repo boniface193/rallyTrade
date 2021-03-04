@@ -32,6 +32,9 @@ const state = {
     presentSignupForm: 'form1',
     token: localStorage.getItem('accessToken') || null,
     tokenIsPresent: false,
+    accessEmailVerifcationPage: false,
+    accessForgotPasswordVerificationPage: false,
+    accessPasswordRecoveryPage: false,
     tokenExpired: true,
     doNothing: null,
 };
@@ -187,6 +190,9 @@ const mutations = {
         localStorage.removeItem('accessToken');
         state.token = localStorage.getItem('accessToken') || null
     },
+    accessEmailVerifcationPage: (state, status) => (state.accessEmailVerifcationPage = status),
+    accessForgotPasswordVerificationPage: (state, status) => (state.accessForgotPasswordVerificationPage = status),
+    accessPasswordRecoveryPage: (state, status) => (state.accessPasswordRecoveryPage = status),
     tokenIsPresent: (state) => {
         const tokenIsPresent = checkIfTokenIsPresent();
         state.tokenIsPresent = tokenIsPresent;

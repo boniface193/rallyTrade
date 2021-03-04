@@ -15,11 +15,10 @@ import Onboarding from "@/views/onboarding/Onboarding.vue";
 // dashbord
 import dashboardView from "@/views/dashboard/dashboardView.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
+import Sales_history from "@/views/dashboard/salesHistory.vue";
+import Payment_history from "@/views/dashboard/paymentHistory.vue";
 import Reward from "@/views/dashboard/Reward.vue";
 import Leaderboard from "@/views/dashboard/Leaderboard.vue";
-// sales history pages
-import PaymentHistory from "@/components/salesHistory/PaymentHistory.vue";
-import SettlementHistory from "@/components/salesHistory/SettlementHistory.vue";
 // order routes
 import orderView from "@/views/orders/orderView.vue";
 import Orders from "@/views/orders/Orders.vue";
@@ -29,11 +28,7 @@ import Settings from "@/views/Settings.vue";
 import ProfilePage from "@/components/settings/ProfilePage.vue";
 import Profile from "@/components/settings/Profile.vue";
 import Privacy from '@/components/settings/Privacy.vue';
-// withdrawal 
-import WithdrawalPage from "@/views/dashboard/WithdrawalPage.vue";
-import WithdrawFund from "@/components/withdrawalPages/WithdrawFund.vue";
-import AddBankDetails from "@/components/withdrawalPages/AddBankDetails.vue";
-import EditBankDetails from '@/components/withdrawalPages/EditBankDetails.vue';
+import BankAccount from '@/components/settings/BankAccount.vue';
 // Inventory
 import Inventory from "@/views/Inventory.vue";
 import InventoryHome from "@/components/inventory/InventoryHome.vue";
@@ -56,7 +51,7 @@ const ifAuthenticated = (to, from, next) => {
   if (store.getters["onboarding/tokenIsPresent"] === true) {
     store.dispatch("onboarding/getUserProfile").then((response) => {
       const profile = response.data.data;
-      if (profile.email_verified === true) {
+      if (profile.email_verified) {
         if (profile.status) {
           store.commit("onboarding/setTokenExpired");
           if (store.getters["onboarding/tokenExpired"] === false) {
@@ -68,10 +63,9 @@ const ifAuthenticated = (to, from, next) => {
           }
         } else {
           store.commit("onboarding/loggedIn", false);
-          next({ name: "SuspensionPage" });
+          next({ name: "SuspensionPage" })
         }
       } else {
-        console.log(666)
         next({
           name: 'Emailverification', params: {
             email: profile.email,
@@ -92,36 +86,24 @@ const ifAuthenticated = (to, from, next) => {
 
 // redirect when a user is already logged in
 const AlreadyLogin = (to, from, next) => {
-  store.commit("onboarding/tokenIsPresent");
-  if (store.getters["onboarding/tokenIsPresent"] === true) {
+  if (localStorage.getItem("accessToken")) {
     next({ name: 'InventoryHome' })
   } else {
     next();
     return
   }
 }
-// check conditon before allowing user to route to payment page 
+
 const allowPayment = (to, from, next) => {
   const params = new URLSearchParams(window.location.search);
   const orderId = params.get("order_id");
-  if (from.name === "CheckoutDetails") {
+  if(from.name === "CheckoutDetails") {
     next();
     return
-  } else {
+  }else {
     next({ path: `/checkout-details?order_id=${orderId}` })
   }
 }
-
-// allow a user to edit account only when comming from the withdrawal page
-const allowEditBankAccount = (to, from, next) => {
-  if (from.name === "WithdrawFund") {
-    next();
-    return
-  } else {
-    next({ name: "WithdrawFund" });
-  }
-}
-
 
 // // verify if access has been given to a user to view email verification page
 // const ifAccessEmailVerifcationPage = (to, from, next) => {
@@ -173,18 +155,17 @@ const routes = [
         name: "Dashboard",
         component: Dashboard,
       },
-
-      // Settlement history
+      // sales history
       {
-        path: "settlement-history",
-        name: "SettlementHistory",
-        component: SettlementHistory
+        path: "sales",
+        name: "sales_history",
+        component: Sales_history
       },
-      // Payment history
+      // payment history
       {
-        path: "payment-history",
-        name: "PaymentHistory",
-        component: PaymentHistory
+        path: "payment",
+        name: "payment_history",
+        component: Payment_history
       },
       // reward
       {
@@ -236,27 +217,10 @@ const routes = [
             component: Privacy
           },
           {
-            path: "",
-            component: WithdrawalPage,
-            children: [
-              {
-                path: "add-account",
-                name: "AddBankDetails",
-                component: AddBankDetails
-              },
-              {
-                path: "withdraw-fund",
-                name: "WithdrawFund",
-                component: WithdrawFund
-              },
-              {
-                path: "change-account",
-                name: "EditBankDetails",
-                component: EditBankDetails ,
-                beforeEnter: allowEditBankAccount
-              }
-            ]
-          },
+            path: "bank-account",
+            name: "BankAccount",
+            component: BankAccount
+          }
         ]
       },
       // inventory routes
@@ -277,8 +241,7 @@ const routes = [
           {
             path: ":id/customer-form",
             name: "CustomerDetailsForm",
-            component: CustomerDetailsForm,
-            //beforeEnter: has_bank_account
+            component: CustomerDetailsForm
           },
           {
             path: ":id/details",

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <BasicFilter
       :price="filterParameters.price"
       toolTipText="Filter products"
@@ -8,8 +9,8 @@
       @resetFilter="resetFilter"
     />
     <!-- do not remove -->
-    <div style="visibility: hidden">.</div>
-
+    <div style="visibility:hidden">.</div>
+  
     <!--------------------------- modal for dialog messages ------------------------------>
     <modal :dialog="dialog" width="400">
       <div class="white pa-3 pb-10 text-center dialog">
@@ -62,14 +63,7 @@ export default {
   methods: {
     // get products
     getProducts() {
-       const params = new URLSearchParams(window.location.search);
       this.$store.commit("inventory/setSearchProduct", false);
-      if(params.get("search") || params.get("page")){
-        this.$router.push({
-        name: "InventoryHome",
-        query: {},
-      });
-      }
       this.$store.commit("inventory/setInventoryLoader", true);
       this.$store
         .dispatch("inventory/getfilteredProducts")

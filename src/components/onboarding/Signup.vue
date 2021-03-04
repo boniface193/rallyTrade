@@ -140,19 +140,13 @@
         @keyup.enter="validateForm(2)"
       ></v-text-field>
 
-       <v-checkbox
-        v-model="acceptTerms"
-        label="By clicking continue, you are agreeing to our terms of service and privacy policy"
-        class="mt-5"
-      ></v-checkbox>
-
       <!-- button container -->
       <div class="pa-0 mt-5 btn-container-form1" style="width: 100%">
         <v-btn
           class="primary px-8 py-5 mb-5 mx-auto"
           @click="validateForm(2)"
           :loading="loading2"
-          :disabled="loading2 || !acceptTerms"
+          :disabled="loading2"
           >Next</v-btn
         >
       </div>
@@ -167,7 +161,6 @@ export default {
     return {
       loading1: false,
       loading2: false,
-      acceptTerms: false,
       errorMessage: "",
       error: false,
       fullName: "",
@@ -216,9 +209,7 @@ export default {
       this.$refs[`form${formNum}`].validate();
       if (this.$refs[`form${formNum}`].validate()) {
         if (formNum == 2) {
-          if(this.acceptTerms){
-             this.submit();
-          }
+          this.submit();
         } else if (formNum == 1) {
           this.loading1 = true;
           this.$store

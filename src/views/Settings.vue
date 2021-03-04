@@ -1,8 +1,8 @@
 <template>
-    <div class="pt-8">
+    <div class="">
         <!-- title -->
         <h2 class="ml-4">Settings</h2>
-        <!-- pages -->
+
         <router-view />
     </div>
 </template>

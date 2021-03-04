@@ -74,7 +74,7 @@
           :disabled="loading2"
           v-if="dashboardBtn"
           @click="grantAccess"
-          >Start Selling</v-btn
+          >Go to Dashboard</v-btn
         >
       </div>
     </modal>
