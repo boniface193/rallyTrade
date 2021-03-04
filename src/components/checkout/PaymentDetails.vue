@@ -1,15 +1,22 @@
 <template>
   <div>
-    <div class="payment-page">
+    <div class="payment-page pb-8 px-8">
       <div class="d-flex align-baseline justify-space-between">
-        <h2>Address Details</h2>
-        <p class="primary--text" style="font-size: 14px">Change Address</p>
+        <h3>Address Details</h3>
+        <!-- change address -->
+        <p
+          class="primary--text"
+          style="font-size: 12px; cursor: Pointer"
+          @click="openEditAddressModal"
+        >
+          Change Address
+        </p>
       </div>
       <div class="mt-2">
         <div class="mb-4">
           <h4>{{ pageDetails.orderDetails.customer.name }}</h4>
           <p class="secondary--text mb-0">
-            {{ pageDetails.orderDetails.delivery_location.address }}<br />{{
+            {{ deliveryLocation }}<br />{{
               pageDetails.orderDetails.customer.phone
             }}
           </p>
@@ -20,7 +27,7 @@
           <v-radio-group v-model="radioGroup" class="mt-1">
             <v-radio
               class="primary--text mb-0"
-              :label="`Express Delivery (₦${pageDetails.orderDetails.delivery_fee_label})`"
+              :label="`Express Delivery (₦${deliveryFee})`"
               value="express"
             ></v-radio>
             <span class="ml-8 mb-4 primary--text"
@@ -40,8 +47,12 @@
         <div class="mb-4">
           <h4>Order Details</h4>
           <p class="secondary--text mb-0">
-            <span style="font-weight: 600; color: black">1</span>
-            <span class="ml-5">{{ pageDetails.orderDetails.product_name }}</span>
+            <span style="font-weight: 600; color: black">{{
+              pageDetails.orderDetails.total_items
+            }} </span> <span class="mx-2">X</span>
+            <span> {{
+              pageDetails.orderDetails.product_name
+            }}</span>
           </p>
         </div>
         <!-- payment summary -->
@@ -57,12 +68,12 @@
           </div> -->
           <div class="d-flex align-center justify-space-between mb-2">
             <p class="secondary--text mb-0">Shipping fee</p>
-            <h4>&#8358;{{ pageDetails.orderDetails.delivery_fee_label }}</h4>
+            <h4>&#8358;{{ deliveryFee }}</h4>
           </div>
           <div class="d-flex align-center justify-space-between mb-2 mt-2">
             <h3 class="mb-0">Total</h3>
             <h3 class="primary--text">
-              &#8358;{{ pageDetails.orderDetails.total_price_label }}
+              &#8358;{{ totalPrice }}
             </h3>
           </div>
           <!-- payment btn -->
@@ -93,6 +104,47 @@
         <h4>{{ dialogMessage }}</h4>
       </div>
     </modal>
+
+    <!-- edit address modal -->
+    <div class="white pa-3 px-5 edit-address-dialog" v-show="editAddressDialog">
+      <div>
+        <div class="d-flex justify-end">
+          <v-icon
+            class="error--text close-btn"
+            @click="editAddressDialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+
+        <!-- description -->
+        <h3 class="mt-5">Change your delivery location</h3>
+        <v-form ref="addressForm">
+          <!-- Address field -->
+          <div class="my-5">
+            <p class="mb-1">Enter your delivery address *</p>
+            <v-text-field
+              color="primary"
+              placeholder="Street address"
+              v-model="address"
+              :rules="addressRules"
+              ref="autocomplete"
+              id="autocomplete"
+              @keyup.enter="submitCustomerDetails"
+              required
+            >
+            </v-text-field>
+          </div>
+        </v-form>
+        <!-- edit address btn -->
+        <v-btn
+          class="primary"
+          :loading="editLoader"
+          :disabled="editLoader"
+          @click="editOrderAddress()"
+          >Update</v-btn
+        >
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -108,35 +160,62 @@ export default {
     return {
       radioGroup: "express",
       dialog: false,
+      editAddressDialog: false,
       statusImage: null,
       dialogMessage: "",
       processingLoader: false,
+      editLoader: false,
+      deliveryLocation: this.orderDetails.delivery_location.address,
+      deliveryFee: this.orderDetails.delivery_fee_label,
+      totalPrice: this.orderDetails.total_price_label,
       paymentDetails: {
-        url: {
-          amount: "",
-          customer: {
-            name: "",
-            email: "",
-            phone: null,
-          },
+        amount: "",
+        customer: {
+          name: "",
+          email: "",
+          phone: null,
         },
       },
+      lat: "",
+      lng: "",
+      address: "",
+      validAddress: false,
+      autocomplete: "",
+      addressRules: [
+        //verifies phone number satisfies the requirement
+        (v) => !!v || "Address is required",
+        () => this.validAddress || "Select a valid Address",
+      ],
     };
   },
+  mounted() {
+    this.autocomplete = new window.google.maps.places.Autocomplete(
+      document.getElementById("autocomplete"),
+      {
+        bounds: new window.google.maps.LatLngBounds(
+          new window.google.maps.LatLng(6.5244, 3.3792)
+        ),
+        types: ["establishment"],
+        componentRestrictions: { country: ["NG"] },
+        fields: ["place_id", "geometry", "name"],
+      }
+    );
 
+    this.autocomplete.addListener("place_changed", this.onPlaceChanged);
+  },
   computed: {
     paymentOption() {
       return {
-        public_key: this.paymentDetails.url.public_key,
-        tx_ref: this.paymentDetails.url.tx_ref,
-        amount: this.paymentDetails.url.amount,
-        currency: this.paymentDetails.url.currency,
-        payment_options: this.paymentDetails.url.payment_options,
+        public_key: this.paymentDetails.public_key,
+        tx_ref: this.paymentDetails.tx_ref,
+        amount: this.paymentDetails.amount,
+        currency: this.paymentDetails.currency,
+        payment_options: this.paymentDetails.payment_options,
         redirect_url: "",
         customer: {
-          name: this.paymentDetails.url.customer.name,
-          email: this.paymentDetails.url.customer.email,
-          phone_number: this.paymentDetails.url.customer.phone,
+          name: this.paymentDetails.customer.name,
+          email: this.paymentDetails.customer.email,
+          phone_number: this.paymentDetails.customer.phone,
         },
         callback: this.makePaymentCallback,
         onclose: this.closedPaymentModal,
@@ -145,7 +224,7 @@ export default {
     pageDetails() {
       return {
         productDetails: this.productDetails,
-        orderDetails: this.orderDetails
+        orderDetails: this.orderDetails,
       };
     },
   },
@@ -183,8 +262,8 @@ export default {
     verifyPayment(value) {
       this.$store
         .dispatch("orders/verifyPayment", {
-          trx_ref: value.tx_ref,
-          trx_id: value.transaction_id,
+          ref: value.tx_ref,
+          id: value.transaction_id,
           orderId: this.pageDetails.orderDetails.id,
         })
         .then(() => {
@@ -212,6 +291,58 @@ export default {
         path: `/payment-details?order_id=${orderId}`,
       });
     },
+    openEditAddressModal() {
+      this.editAddressDialog = true;
+    },
+    editOrderAddress() {
+      this.$refs.addressForm.validate();
+      if (this.$refs.addressForm.validate() && this.validAddress) {
+        this.editLoader = true;
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get("order_id");
+        this.$store
+          .dispatch("orders/editOrderAddress", {
+            customer: {
+              location: {
+                address: this.address,
+                lat: this.lat,
+                lng: this.lng,
+              },
+            },
+            order_id: orderId,
+          })
+          .then((response) => {
+            this.editLoader = false;
+            this.editAddressDialog = false;
+            this.deliveryLocation = response.data.data.delivery_location.address;
+            this.deliveryFee = response.data.data.delivery_fee_label;
+            this.totalPrice = response.data.data.total_price_label
+          })
+          .catch((error) => {
+            this.dialog = true;
+            this.editLoader = false;
+            this.statusImage = failedImage;
+            if (error.response) {
+              this.dialogMessage = error.response.data.message;
+            } else {
+              this.dialogMessage = "No internet Connection!";
+            }
+          });
+      }
+    },
+    onPlaceChanged() {
+      let place = this.autocomplete.getPlace();
+      if (!place.geometry) {
+        // User did not select a prediction; reset the input field
+        this.validAddress = false;
+      } else {
+        //Display details about the valid place
+        this.validAddress = true;
+        this.address = place.name;
+        this.lat = place.geometry.location.lat();
+        this.lng = place.geometry.location.lng();
+      }
+    },
   },
 };
 </script>
@@ -230,7 +361,7 @@ export default {
   padding: 8px 0px;
   cursor: pointer;
   color: white;
-  background: #5064cc;
+  background: #029B97;
   border-radius: 5px;
   margin-top: 20px;
   display: none;
@@ -239,6 +370,18 @@ export default {
   width: 140px;
   .v-image {
     width: 100%;
+  }
+}
+.edit-address-dialog {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 45px;
+    min-width: 100%;
+    padding: 0 16px;
   }
 }
 @media (max-width: 1100px) {

@@ -33,6 +33,8 @@
             ><span style="font-weight: 600; color: black"
               >{{ productDetails.quantity }} Available</span
             >
+            <span class="mx-2">|</span>
+            <span><span>Minimum order quantity:</span> 1</span>
           </p>
           <p class="mb-4">
             <span class="primary--text mr-2"
@@ -100,7 +102,7 @@
           <div v-show="checkout">
             <div class="d-flex mb-3" style="align-items: baseline">
               <p class="mr-5 mb-0" style="font-weight: 600">
-                Enter profit(N) by unit:
+                Enter profit(N) per unit:
               </p>
               <v-form style="width: 200px" ref="form">
                 <v-text-field
@@ -122,7 +124,7 @@
             </div>
             <p class="mb-5">
               <span class="mr-2" style="font-weight: 600">
-                profit (&#8358;): </span
+                profit (&#8358;) <span class="primary--text" style="font-weight:300">(Inclusive of 7.5% VAT): </span> </span
               ><span class="secondary--text">{{
                 numberWithCommas(computedPrices.yourProfit)
               }}</span>
@@ -422,7 +424,7 @@ export default {
   z-index: 3;
   .link {
     background: #f3f5ff;
-    color: #758bfc;
+    color: #029B97;
     text-align: center;
     border-radius: 12px;
     display: flex;
@@ -435,7 +437,7 @@ export default {
     .copy-btn {
       cursor: pointer;
       &:hover {
-        color: #758bfc;
+        color: #03a09b;
       }
     }
     .copy-status {
@@ -451,7 +453,7 @@ export default {
 }
 .add-btn {
   border-radius: 50%;
-  background: #758bfc;
+  background: #029B97;
   width: 25px;
   height: 25px;
   display: flex;
@@ -467,7 +469,7 @@ export default {
   height: 25px;
   display: flex;
   align-items: center;
-  color: #758bfc;
+  color: #029B97;
   justify-content: center;
   cursor: pointer;
 }

@@ -141,6 +141,19 @@
             ></v-progress-circular>
           </span>
         </div>
+        <!-- Email -->
+        <div class="mb-5 settings-input">
+          <p class="mb-1">Email</p>
+          <v-text-field
+            class="input mt-0"
+            type="email"
+            color="primary"
+            v-model="computedInfo.email"
+            disabled
+            required
+          >
+          </v-text-field>
+        </div>
       </v-col>
     </v-row>
 
@@ -200,6 +213,7 @@ export default {
       let fullName = this.userInfo.name;
       let phoneNum = this.userInfo.phone_number;
       let address = "22 Abubakar Way, Abuja";
+      let email = this.userInfo.email;
       let currentFullName = this.userInfo.name;
       let currentPhoneNum = this.userInfo.phone_number;
       let currentAddress = "22 Abubakar Way, Abuja";
@@ -211,6 +225,7 @@ export default {
         currentFullName: currentFullName,
         currentPhoneNum: currentPhoneNum,
         currentAddress: currentAddress,
+        email: email
       };
     },
   },
@@ -318,7 +333,7 @@ export default {
     bottom: 25px;
     right: 0;
     cursor: pointer;
-    color: #5064cc;
+    color: #029B97;
     background: white;
     padding: 5px 0px 0px 5px;
   }

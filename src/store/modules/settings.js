@@ -9,6 +9,8 @@ const state = {
         photo: null,
         role: "",
         status: "",
+        has_bank_account: false,
+        id: ""
     },
 };
 
@@ -22,12 +24,18 @@ const actions = {
 
     // get profile informations
     getUserProfile(context) {
-        axios.get("profile", {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(response => {
-            context.commit("setUserProfile", response.data.data)
+        return new Promise((resolve, reject) => {
+            
+            axios.get("profile", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(response => {
+                context.commit("setUserProfile", response.data.data);
+                resolve(response);
+            }).catch((error)=>{
+                reject(error);
+            })
         })
     },
     // edit user profile

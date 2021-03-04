@@ -1,25 +1,25 @@
 <template>
-  <div class="px-4 px-md-10">
+  <div class="px-2 px-md-7">
     <div class="d-flex align-center" style="justify-content: flex-end">
       <div class="search-container">
         <SearchProduct />
       </div>
 
-      <FilterProducts />
+      <FilterProducts class="ml-1"/>
     </div>
     <CategoryList class="mt-6" />
 
-    <div class="pt-12 pb-5" v-show="products.length !== 0 && !inventoryLoader">
-      <div class="products-container">
+    <div class="pt-12 pb-5 products-container" v-show="products.length !== 0 && !inventoryLoader">
+      <div class="d-flex flex-wrap">
         <ProductCard
-          class="mb-7"
+          class="mb-5"
           v-for="product in products"
           :key="product.id"
           :product="product"
         />
       </div>
       <!-- pagination -->
-      <!-- <div class="d-flex justify-space-between px-4 align-center flex-wrap">
+      <div class="d-flex justify-space-between px-4 align-center flex-wrap">
         <div class="d-flex justify-space-between align-center flex-wrap">
           <p class="mb-2 mr-5">
             Page {{ pageDetails.current_page }} of {{ pageDetails.last_page }}
@@ -33,9 +33,6 @@
             circle
           ></v-pagination>
         </div>
-      </div> -->
-      <div class="d-flex justify-center px-4 text-center">
-        <p style="cursor:pointer" class="primary--text">See more</p>
       </div>
     </div>
     <!-- no data -->
@@ -93,64 +90,152 @@ export default {
       dialog: false,
     };
   },
+  created() {
+    this.$store.commit("inventory/setInventoryLoader", true);
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("page")) {
+      // set page back to page 1
+      this.$store.commit("inventory/setPage", params.get("page"));
+      if (params.get("search")) {
+        this.$store.commit("inventory/setSearchValue", params.get("search"));
+        this.$store.commit("inventory/setSearchProduct", true);
+        this.getSearchProduct();
+      } else {
+        this.$store.commit("inventory/setSearchProduct", false);
+        this.getfilteredProducts();
+      }
+    } else {
+      this.$store.commit("inventory/setSearchProduct", false);
+      this.getProducts();
+    }
+  },
   computed: {
     ...mapGetters({
       products: "inventory/products",
     }),
     ...mapState({
-      // pageDetails: (state) => state.inventory.pageDetails,
       inventoryLoader: (state) => state.inventory.inventoryLoader,
       page: (state) => state.inventory.page,
       pageDetails: (state) => state.inventory.pageDetails,
-      getCurrentPage() {
-        return {
-          currentPage: this.pageDetails.current_page,
-        };
-      },
+      searchValue: (state) => state.inventory.searchValue,
+      searchProduct: (state) => state.inventory.searchProduct,
     }),
+    getCurrentPage() {
+      return {
+        currentPage: this.pageDetails.current_page,
+      };
+    },
   },
   methods: {
+    getProducts() {
+      this.$store
+        .dispatch("inventory/getProducts")
+        .then(() => {
+          this.$store.commit("inventory/setInventoryLoader", false);
+          this.dialog = false;
+        })
+        .catch((error) => {
+          this.$store.commit("inventory/setInventoryLoader", false);
+          this.dialog = true;
+          this.statusImage = failedImage;
+          if (error.response) {
+            this.dialogMessage = "Sorry, this data does not Exist";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
+    },
     // set current page
     setCurentPage() {
       this.$store.commit("inventory/setPage", this.getCurrentPage.currentPage);
-      this.searchProducts === true
-        ? this.getSearchProduct()
-        : this.getfilteredProducts();
+      const params = new URLSearchParams(window.location.search);
+      if (this.searchProduct === true) {
+        if (this.getCurrentPage.currentPage != params.get("page")) {
+          this.$router.push({
+            name: "InventoryHome",
+            query: {
+              search: this.searchValue,
+              page: this.getCurrentPage.currentPage,
+            },
+          });
+          this.getSearchProduct();
+        }
+      } else {
+        this.$router.push({
+          name: "InventoryHome",
+          query: { page: this.getCurrentPage.currentPage },
+        });
+        this.getfilteredProducts();
+      }
     },
     // request for page with the request informations
     getfilteredProducts() {
-      this.$store.dispatch("inventory/getfilteredProducts").catch((error) => {
-        this.statusImage = failedImage;
-        if (error.response) {
-          this.dialogMessage = "Something went wrong, pls try again!";
-        } else {
-          this.dialogMessage = "No internet Connection!";
-        }
-        this.dialog = true;
-      });
+      this.$store
+        .dispatch("inventory/getfilteredProducts")
+        .then(() => this.$store.commit("inventory/setInventoryLoader", false))
+        .catch((error) => {
+          this.statusImage = failedImage;
+          this.$store.commit("inventory/setInventoryLoader", false);
+          this.dialog = true;
+          if (error.response) {
+            this.dialogMessage = "Something went wrong, pls try again!";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
     },
     // search products
     getSearchProduct() {
-      this.$store.dispatch("inventory/searchProducts").catch((error) => {
-        this.statusImage = failedImage;
-        if (error.response) {
-          this.dialogMessage = "Something went wrong, pls try again!";
-        } else {
-          this.dialogMessage = "No internet Connection!";
-        }
-        this.dialog = true;
-      });
+      this.$store
+        .dispatch("inventory/searchProducts")
+        .then(() => this.$store.commit("inventory/setInventoryLoader", false))
+        .catch((error) => {
+          this.statusImage = failedImage;
+          this.$store.commit("inventory/setInventoryLoader", false);
+          this.dialog = true;
+          if (error.response) {
+            this.dialogMessage = "Something went wrong, pls try again!";
+          } else {
+            this.dialogMessage = "No internet Connection!";
+          }
+        });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
 .products-container {
-  display: flex;
-  flex-wrap: wrap;
+  width: 1050px;
+  margin: auto;
 }
 .search-container {
   width: 400px;
+}
+.status-img {
+  width: 140px;
+  .v-image {
+    width: 100%;
+  }
+}
+@media (max-width: 1300px) {
+  .products-container {
+    width: 840px;
+  }
+}
+@media (max-width: 860px) {
+  .products-container {
+    width: 630px;
+  }
+}
+@media (max-width: 650px) {
+  .products-container {
+    width: 400px;
+  }
+}
+@media (max-width: 410px) {
+  .products-container {
+    width: 100%;
+  }
 }
 @media (max-width: 500px) {
   .search-container {

@@ -9,7 +9,7 @@
       </div>
 
       <v-row>
-        <v-col sm="4" md="12">
+        <v-col sm="4" md="8" offset-md="2">
           <v-card outlined class="rounded-lg">
             <v-row>
               <v-col cols="5">
@@ -31,16 +31,16 @@
                 <div class="order-item-font mt-1">
                   Time:
                   <span class="order-no-grey"
-                    >{{ orderDetails.created_at.slice(0, -6) }}
+                    >{{ date }}
                     <span class="order-no-lighter-grey">{{
-                      orderDetails.created_at.slice(10)
+                      time
                     }}</span></span
                   >
                 </div>
                 <div class="order-item-font mt-1">
                   Customer:
                   <span class="order-no-grey">{{
-                    orderDetails.customer_name
+                    customerName
                   }}</span>
                 </div>
               </v-col>
@@ -48,11 +48,11 @@
           </v-card>
         </v-col>
 
-        <v-col sm="4" md="12">
+        <v-col sm="4"  md="8" offset-md="2">
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">Shipping and Billing Address</div>
             <div class="order-no-grey mb-3">
-              32 Oran Street, Wuse zone 1, Abuja<br />
+              {{address}}<br />
               <span>900281</span><br />
               <span>Abuja</span><br />
               <span>Nigeria</span><br />
@@ -60,19 +60,19 @@
                 <span
                   ><v-icon size="10" color="primary" class="mr-2"
                     >mdi-phone-outline</v-icon
-                  >{{ orderDetails.phone }}</span
+                  >{{ phone }}</span
                 ><br />
                 <span
                   ><v-icon size="10" color="primary" class="mr-2"
                     >mdi-email-outline</v-icon
-                  >{{ orderDetails.email }}</span
+                  >{{ email }}</span
                 >
               </div>
             </div>
           </v-card>
         </v-col>
 
-        <v-col sm="4" md="12">
+        <v-col cols="12" sm="4" md="8" offset-md="2">
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
               Payment Status:
@@ -95,18 +95,18 @@
               Shipping
               <div class="d-flex justify-space-between">
                 <span class="order-no-lighter-grey"> Standard Shipping </span>
-                <div class="">NGN3,000.00</div>
+                <div class="">NGN{{orderDetails.delivery_fee_label}}</div>
               </div>
             </div>
 
             <div class="d-flex justify-space-between my-3">
               <span class="order-no-blue"> Total Paid</span>
-              <div class="order-no-grey">NGN3,000.00</div>
+              <div class="order-no-grey">NGN{{orderDetails.total_price_label}}</div>
             </div>
           </v-card>
         </v-col>
 
-        <v-col sm="4" md="12">
+        <v-col cols="12" sm="4" md="8" offset-md="2">
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
               Delivery Status:
@@ -117,13 +117,13 @@
 
             <div class="d-flex mt-3 mb-8">
               <div class="order-no-grey">
-                {{ orderDetails.delivery_location.address }}
+                {{ address }}
               </div>
             </div>
           </v-card>
         </v-col>
 
-        <v-col sm="4" md="12">
+        <v-col cols="12" sm="4" md="8" offset-md="2">
           <v-card outlined class="rounded-lg px-5">
             <div class="order-item-font my-2">
               Point Earned:
@@ -133,7 +133,7 @@
             </div>
 
             <div class="order-item-font my-2 mb-8">
-              Commission:
+              Profit:
               <span class="order-no-blue ml-2 mr-10">
                 NGN{{ orderDetails.seller_profit }}</span
               >
@@ -146,18 +146,36 @@
 </template>
 
 <script>
+// import { mapGetters } from 'vuex'
 export default {
   name: "orderDetails",
   data() {
     return {
-      orderDetails: {},
+      orderDetails: [],
+      date: "",
+      time: "",
+      customerName: "",
+      address: "",
+      phone: "",
+      email: "",
     };
+  },
+  computed: {
+    // ...mapGetters({orderDetails: 'orders/orders'})
   },
   created() {
     this.$store
       .dispatch("orders/getOrdersDetail", { id: this.$route.params.id })
       .then((response) => {
-        this.orderDetails = response.data.data;
+        let data = response.data.data;
+        this.orderDetails = data;
+        this.date = data.created_at.slice(0, -6);
+        this.time = data.created_at.slice(10);
+        this.customerName = data.customer.name;
+        this.address = data.delivery_location.address;
+        this.phone = data.customer.phone;
+        this.email = data.customer.email;
+
       })
       .catch((e) => {
         console.log(e);
