@@ -1,12 +1,15 @@
 <template>
-  <v-app>
-    <router-view />
-  </v-app>
+  <div>
+      hello part
+  </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-};
+
+}
 </script>
 
+<style>
+
+</style>
