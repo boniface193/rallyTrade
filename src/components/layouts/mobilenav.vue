@@ -84,22 +84,22 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 .bg-dark {
+  display: flex;
+  justify-content: center;
   .circle {
     z-index: 2;
     display: flex;
     justify-content: center;
     position: fixed;
-    bottom: (10%);
-    right: (42%);
-    left: (42%);
-    height: (4%/0.56);
+    bottom: 10%;
+    padding: 8%;
     background: $bg-color;
     border-radius: 50%;
     transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
       bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down
     i {
       position: fixed;
-      bottom: (4%/0.34);
+      bottom: (4%/0.31);
       font-size: 1.5rem;
       color: white;
       transform: rotate(45deg);
