@@ -50,7 +50,7 @@
             link
             class="py-1 my-2"
             :to="{ name: item.route }"
-            active-class="active-link"
+            active-class="active"
           >
             <v-list-item-icon>
               <v-icon color="icon_color" light>{{ item.icon }}</v-icon>
@@ -69,7 +69,7 @@
             link
             class="py-1 my-2"
             :to="{ name: item.route }"
-            active-class="active-link"
+            active-class="active"
           >
             <v-list-item-icon>
               <v-badge color="pink" dot v-if="item.active"></v-badge>
@@ -94,7 +94,12 @@ export default {
       changeApp: null,
       drawer: null,
       items: [
-        { title: "Trading", icon: "mdi-home-outline", route: "trading" },
+        {
+          title: "Trading",
+          icon: "mdi-home-outline",
+          route: "trading",
+          active: true,
+        },
         { title: "Contest", icon: "mdi-magnify", route: "contest" },
         {
           title: "Partnership",
@@ -155,7 +160,7 @@ $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
 $main-bg: #0e0e23;
-$logo: #4255d4;
+$logo: #fb8c00;
 :root {
   --delay: 0s;
 }
@@ -174,5 +179,9 @@ html {
 
 .active-link {
   color: $logo !important;
+}
+.active {
+  color: $logo !important;
+  border-left: 2px solid $logo;
 }
 </style>
