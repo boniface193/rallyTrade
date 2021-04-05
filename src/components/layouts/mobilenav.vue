@@ -100,7 +100,7 @@ html {
     i {
       position: fixed;
       text-align: center;
-      bottom: (4%/0.317);
+      bottom: (4%/0.315);
       font-size: 1.5rem;
       color: white;
       transform: rotate(45deg);
