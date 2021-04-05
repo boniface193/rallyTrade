@@ -99,7 +99,8 @@ html {
       bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down
     i {
       position: fixed;
-      bottom: (4%/0.31);
+      text-align: center;
+      bottom: (4%/0.317);
       font-size: 1.5rem;
       color: white;
       transform: rotate(45deg);
@@ -130,7 +131,7 @@ html {
   }
   &.open {
     .circle {
-      top: 30%;
+      bottom: 17%;
       right: (2%/0.26);
       left: (2%/0.26);
       height: fit-content;
@@ -141,8 +142,9 @@ html {
       transition-delay: 0.015s;
       i {
         transform: rotate(0deg);
-        right: 17%;
-        top: -17%;
+        right: 13%;
+        top: -200px;
+        display: none;
       }
     }
     svg {
