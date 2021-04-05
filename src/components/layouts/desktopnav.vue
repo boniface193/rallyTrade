@@ -30,7 +30,12 @@
           <v-list-item-title class="font-weight-medium fs-4"
             >Rally Trade</v-list-item-title
           >
-          <v-btn icon @click.stop="mini = !mini" class="ma-3">
+          <v-btn
+            icon
+            @click.stop="mini = !mini"
+            class="ma-3 miniToggle"
+            id="miniToggle"
+          >
             <v-icon v-show="!mini">mdi-menu-left</v-icon>
             <v-icon v-show="mini">mdi-menu-right</v-icon>
           </v-btn>
@@ -87,7 +92,7 @@ export default {
     return {
       absolute: null,
       changeApp: null,
-      drawer: true,
+      drawer: null,
       items: [
         { title: "Trading", icon: "mdi-home-outline", route: "trading" },
         { title: "Contest", icon: "mdi-magnify", route: "contest" },
@@ -118,19 +123,25 @@ export default {
   },
 
   created() {
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
 
   methods: {
     handleResize() {
-      console.log(window.innerWidth)
       if (window.innerWidth <= 425) {
         this.absolute = true;
         this.changeApp = false;
       } else {
         this.absolute = false;
         this.changeApp = true;
+      }
+
+      if (window.innerWidth >= 1400) {
+        this.mini = false;
+        document.querySelector("#miniToggle").classList.add("d-none");
+      } else {
+        document.querySelector("#miniToggle").classList.remove("d-none");
       }
     },
   },
