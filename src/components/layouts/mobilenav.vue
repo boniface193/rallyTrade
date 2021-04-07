@@ -55,11 +55,8 @@ export default {
 
     onClickOutside() {
       if (
-        document.querySelector(".bg-dark").classList.contains("open") == false
+        document.querySelector(".bg-dark").classList.contains("open") == true
       ) {
-        document.querySelector(".bg-dark").classList.add("open");
-        document.querySelector(".hidden-on-true").classList.remove("d-none");
-      } else {
         document.querySelector(".hidden-on-true").classList.add("d-none");
         document.querySelector(".bg-dark").classList.remove("open");
       }
