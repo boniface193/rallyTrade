@@ -57,9 +57,8 @@
 
             <v-list-item-content>
               <v-list-item-title>
-                <v-item active-class="chang">{{ item.title }}</v-item>
-                
-                </v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -74,7 +73,7 @@
             active-class="active"
           >
             <v-list-item-icon>
-              <v-badge color="pink" dot v-if="item.active"></v-badge>
+              <v-badge color="success" dot v-if="item.active"></v-badge>
               <v-icon color="icon_color" light>{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
@@ -99,11 +98,11 @@ export default {
       items: [
         {
           title: "Trading",
-          icon: "mdi-home-outline",
+          icon: "mdi-bank",
           route: "trading",
           active: true,
         },
-        { title: "Contest", icon: "mdi-magnify", route: "contest" },
+        { title: "Contest", icon: "mdi-gift", route: "contest" },
         {
           title: "Partnership",
           icon: "mdi-chart-box-outline",
@@ -111,14 +110,19 @@ export default {
         },
         {
           title: "Profile",
-          icon: "mdi-file-multiple-outline",
+          icon: "mdi-account-circle",
           route: "profile",
         },
       ],
 
       item: [
-        { title: "Promotions", icon: "mdi-cart-outline", route: "promotion" },
-        { title: "Documents", icon: "mdi-cog-outline", route: "document" },
+        {
+          title: "Promotions",
+          icon: "mdi-email",
+          route: "promotion",
+          active: true,
+        },
+        { title: "Documents", icon: "mdi-folder-open", route: "document" },
         {
           title: "Announcements",
           icon: "mdi-comment-text-outline",

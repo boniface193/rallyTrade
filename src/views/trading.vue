@@ -43,12 +43,10 @@ export default {
   data() {
     return {
       navbar: [
-        // { icon: "mdi-menu", routes: "", text: "" },
-        { icon: "mdi-account-cash", routes: "", text: "w" },
-        { icon: "mdi-drag", routes: "", text: "e" },
-        { icon: "mdi-drag-variant", routes: "", text: "r" },
-        { icon: "mdi-google-analytics", routes: "", text: "t" },
-        // { icon: "mdi-google-analytics", routes: "", text: "" },
+        { icon: "mdi-border-all", routes: "", text: "Dashboard" },
+        { icon: "mdi-account", routes: "", text: "Accounts" },
+        { icon: "mdi-drag-variant", routes: "", text: "Deposit" },
+        { icon: "mdi-credit-card-outline", routes: "", text: "Withdrawals" },
       ],
     };
   },

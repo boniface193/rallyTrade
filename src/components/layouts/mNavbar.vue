@@ -3,7 +3,6 @@
     <v-row class="d-flex justify-end">
       <v-col class="px-5" cols="3" v-for="item in navbar" :key="item.id"
         ><v-icon color="success" size="35">{{ item.icon }} <br /> </v-icon>
-        <!-- <div class="text-cap">{{ item.text }}</div> -->
         </v-col
       >
     </v-row>

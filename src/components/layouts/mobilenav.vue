@@ -1,7 +1,7 @@
 <template>
   <div class="bg-dark">
     <v-btn
-       @click="toggleOpen"
+      @click="toggleOpen"
       v-click-outside="onClickOutside"
       class="mx-2 menu-btn"
       fab
@@ -26,9 +26,6 @@
         </v-list>
       </div>
     </div>
-    <!-- <div> -->
-
-    <!-- </div> -->
     <svg viewBox="0 0 416 896">
       <path
         d="M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
@@ -112,16 +109,11 @@ html {
     margin: 0 0 8% 0;
   }
   .circle {
-    // z-index: 2;
-    display: flex;
-    justify-content: center;
-    position: fixed;
     bottom: 0%;
     padding: 8%;
-    background: $bg-color;
+    display: flex;
+    justify-content: center;
     border-radius: 50%;
-    // transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
-      // bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down
   }
   svg {
     width: 100%;
@@ -146,6 +138,8 @@ html {
   }
   &.open {
     .circle {
+      position: fixed;
+      background: $bg-color;
       z-index: 2;
       bottom: 17%;
       right: (2%/0.26);
@@ -153,7 +147,7 @@ html {
       height: fit-content;
       border-radius: 5%;
       position: fixed;
-      transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
+      transition: 0.025s cubic-bezier(0.25, 0, 0, 1),
         bottom 0.25s cubic-bezier(0.1, 0.1, 0, 1); //Bottom is faster to go up
       transition-delay: 0.015s;
     }
@@ -162,11 +156,6 @@ html {
       display: block;
       bottom: 0;
       position: fixed;
-      // path {
-      //   d: path(
-      //     "M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
-      //   );
-      // }
     }
   }
 }
