@@ -34,7 +34,7 @@
             icon
             @click="toggleMini"
             class="ma-3 miniToggle"
-            ref="miniToggle"
+            id="miniToggle"
           >
             <v-icon>mdi-menu-left</v-icon>
           </v-btn>
@@ -43,24 +43,22 @@
         <v-divider class="mx-1 mb-3"></v-divider>
 
         <v-list dense class="mr-1">
-            <v-list-item
-              v-for="item in items"
-              :key="item.title"
-              link
-              class="py-1 my-2"
-              :to="{ name: item.route }"
-              active-class="active"
-            >
-              <v-list-item-icon>
-                <v-icon :color="active ? pink : pink" @click="active">{{ item.icon }}</v-icon>
-              </v-list-item-icon>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+            class="py-1 my-2"
+            :to="{ name: item.route }"
+            active-class="active"
+          >
+            <v-list-item-icon>
+              <v-icon color="icon_color">{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-              <v-list-item-content>
-                <v-list-item-title>{{
-                  item.title
-                }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
           <v-divider class="mx-1 mb-5"></v-divider>
 
@@ -146,12 +144,10 @@ export default {
 
       if (window.innerWidth >= 1400) {
         this.mini = false;
-        console.log(this.$refs.miniToggle);
-        // document.querySelector(".hide-desktop").getElementsByTagName("nav").querySelector(".v-navigation-drawer__content").getElementsByTagName("button").classList.add("d-none");
+        document.querySelector("#miniToggle").classList.add("d-none");
+      } else {
+        document.querySelector("#miniToggle").classList.remove("d-none");
       }
-      // else {
-      //   document.querySelector(".hide-desktop").getElementsByTagName("nav").querySelector(".v-navigation-drawer__content").getElementsByTagName("button").classList.remove("d-none");
-      // }
     },
 
     toggleMini() {
