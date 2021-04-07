@@ -1,7 +1,18 @@
 <template>
   <div>
-    <v-tabs background-color="main_bg" dark fixed-tabs icons class="rounded-lg">
-      <v-tabs-slider color="active" class="offset-2" style="width: 70%;"></v-tabs-slider>
+    <v-tabs
+      background-color="main_bg"
+      dark
+      fixed-tabs
+      icons
+      class="rounded-lg"
+      show-arrows
+    >
+      <v-tabs-slider
+        color="active"
+        class="offset-2"
+        style="width: 70%"
+      ></v-tabs-slider>
       <v-tab
         v-for="item in navbar"
         :key="item.text"
@@ -28,7 +39,7 @@ $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
 $main-bg: #0e0e23;
-$logo: #FB8C00;
+$logo: #fb8c00;
 :root {
   --delay: 0s;
 }
@@ -48,7 +59,7 @@ html {
 .active {
   background-color: $logo !important;
 }
-.active--text{
+.active--text {
   color: $logo !important;
 }
 </style>

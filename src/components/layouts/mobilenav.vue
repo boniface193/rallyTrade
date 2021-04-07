@@ -1,6 +1,6 @@
 <template>
   <div class="bg-dark">
-    <div class="circle" @click="toggleOpen">
+    <div class="circle" @click="toggleOpen" v-click-outside="onClickOutside">
       <v-icon class="white--text">mdi-close</v-icon>
       <div class="text-center my-3 hidden-on-true d-none">
         <v-list color="transparent">
@@ -42,6 +42,18 @@ export default {
 
   methods: {
     toggleOpen() {
+      if (
+        document.querySelector(".bg-dark").classList.contains("open") == false
+      ) {
+        document.querySelector(".bg-dark").classList.add("open");
+        document.querySelector(".hidden-on-true").classList.remove("d-none");
+      } else {
+        document.querySelector(".hidden-on-true").classList.add("d-none");
+        document.querySelector(".bg-dark").classList.remove("open");
+      }
+    },
+
+    onClickOutside() {
       if (
         document.querySelector(".bg-dark").classList.contains("open") == false
       ) {

@@ -32,34 +32,35 @@
           >
           <v-btn
             icon
-            @click.stop="mini = !mini"
+            @click="toggleMini"
             class="ma-3 miniToggle"
-            id="miniToggle"
+            ref="miniToggle"
           >
-            <v-icon v-show="!mini">mdi-menu-left</v-icon>
-            <v-icon v-show="mini">mdi-menu-right</v-icon>
+            <v-icon>mdi-menu-left</v-icon>
           </v-btn>
         </v-list-item>
 
         <v-divider class="mx-1 mb-3"></v-divider>
 
         <v-list dense class="mr-1">
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-            class="py-1 my-2"
-            :to="{ name: item.route }"
-            active-class="active"
-          >
-            <v-list-item-icon>
-              <v-icon color="icon_color" light>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+            <v-list-item
+              v-for="item in items"
+              :key="item.title"
+              link
+              class="py-1 my-2"
+              :to="{ name: item.route }"
+              active-class="active"
+            >
+              <v-list-item-icon>
+                <v-icon :color="active ? pink : pink" @click="active">{{ item.icon }}</v-icon>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>{{
+                  item.title
+                }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
           <v-divider class="mx-1 mb-5"></v-divider>
 
@@ -90,6 +91,7 @@
 export default {
   data() {
     return {
+      active: false,
       absolute: null,
       changeApp: null,
       drawer: null,
@@ -144,9 +146,19 @@ export default {
 
       if (window.innerWidth >= 1400) {
         this.mini = false;
-        document.querySelector("#miniToggle").classList.add("d-none");
+        console.log(this.$refs.miniToggle);
+        // document.querySelector(".hide-desktop").getElementsByTagName("nav").querySelector(".v-navigation-drawer__content").getElementsByTagName("button").classList.add("d-none");
+      }
+      // else {
+      //   document.querySelector(".hide-desktop").getElementsByTagName("nav").querySelector(".v-navigation-drawer__content").getElementsByTagName("button").classList.remove("d-none");
+      // }
+    },
+
+    toggleMini() {
+      if (this.mini == true) {
+        this.mini = false;
       } else {
-        document.querySelector("#miniToggle").classList.remove("d-none");
+        this.mini = true;
       }
     },
   },
@@ -177,11 +189,11 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-.active-link {
-  color: $logo !important;
-}
 .active {
-  color: $logo !important;
+  color: transparent !important;
   border-left: 2px solid $logo;
+}
+.chang {
+  color: #fff;
 }
 </style>

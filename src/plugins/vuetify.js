@@ -22,7 +22,8 @@ export default new Vuetify({
                 /*****overwritten color******/
                 main_bg: '#0e0e23', //drawer color
                 icon_color: '#9b9ca7',
-                bg_color: '#252954'
+                bg_color: '#252954',
+                active_link: '#fb8c00',
             },
         },
     },
