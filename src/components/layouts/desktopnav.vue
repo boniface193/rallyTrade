@@ -56,7 +56,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>
+                <v-item active-class="chang">{{ item.title }}</v-item>
+                
+                </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -190,6 +193,6 @@ html {
   border-left: 2px solid $logo;
 }
 .chang {
-  color: #fff;
+  color: $logo !important;
 }
 </style>

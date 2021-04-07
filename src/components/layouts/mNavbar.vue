@@ -1,9 +1,10 @@
 <template>
   <div class="icons show-mobile">
-    <v-row class="text-center">
-      <v-col cols="3" v-for="item in navbar" :key="item.id"
-        ><v-icon color="success" size="30">{{ item.icon }} <br /> </v-icon>
-        <div class="text-cap">{{ item.text }}</div></v-col
+    <v-row class="d-flex justify-end">
+      <v-col class="px-5" cols="3" v-for="item in navbar" :key="item.id"
+        ><v-icon color="success" size="35">{{ item.icon }} <br /> </v-icon>
+        <!-- <div class="text-cap">{{ item.text }}</div> -->
+        </v-col
       >
     </v-row>
   </div>
@@ -12,16 +13,6 @@
 <script>
 export default {
   props: ['navbar'],
-  data() {
-    return {
-      firstIcon: [
-        { icon: "mdi-account-cash", routes: "", text: "Account Details" },
-        { icon: "mdi-drag", routes: "", text: "Upcoming Contests" },
-        { icon: "mdi-drag-variant", routes: "", text: "Active Contest" },
-        { icon: "mdi-google-analytics", routes: "", text: "Stats" },
-      ],
-    };
-  },
 };
 </script>
 
@@ -52,8 +43,9 @@ html {
 .icons {
   z-index: 1;
   position: fixed;
-  bottom: 1%;
-  margin: 0 10px;
+  bottom: 0%;
+  margin: 0 0 0 20% ;
+  padding: 0 0 10% 0;
   .text-cap {
     color: #fff !important;
     font-size: 0.7rem;

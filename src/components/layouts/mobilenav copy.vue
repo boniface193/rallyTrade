@@ -1,16 +1,7 @@
 <template>
   <div class="bg-dark">
-    <v-btn
-       @click="toggleOpen"
-      v-click-outside="onClickOutside"
-      class="mx-2 menu-btn"
-      fab
-      dark
-      color="bg_color"
-    >
-      <v-icon dark> mdi-menu </v-icon>
-    </v-btn>
-    <div class="circle">
+    <div class="circle" @click="toggleOpen" v-click-outside="onClickOutside">
+      <v-icon class="white--text">mdi-close</v-icon>
       <div class="text-center my-3 hidden-on-true d-none">
         <v-list color="transparent">
           <v-list-item
@@ -26,12 +17,9 @@
         </v-list>
       </div>
     </div>
-    <!-- <div> -->
-
-    <!-- </div> -->
     <svg viewBox="0 0 416 896">
       <path
-        d="M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
+        d="M287.1 784c-18.4 0-35.3 9-46.4 23.7 -7.5 9.9-19.4 16.3-32.7 16.3s-25.3-6.4-32.7-16.3c-11-14.7-28-23.7-46.4-23.7H0v112h416V784H287.1z"
       ></path>
     </svg>
   </div>
@@ -105,23 +93,29 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 .bg-dark {
-  .menu-btn {
-    z-index: 1;
-    position: fixed;
-    bottom: 0%;
-    margin: 0 0 8% 0;
-  }
+  display: flex;
+  justify-content: center;
   .circle {
-    // z-index: 2;
+    z-index: 2;
     display: flex;
     justify-content: center;
     position: fixed;
-    bottom: 0%;
+    bottom: 10%;
     padding: 8%;
     background: $bg-color;
     border-radius: 50%;
-    // transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
-      // bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down
+    transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
+      bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down
+    i {
+      position: fixed;
+      text-align: center;
+      bottom: (4%/0.315);
+      font-size: 1.5rem;
+      color: white;
+      transform: rotate(45deg);
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
   }
   svg {
     width: 100%;
@@ -146,7 +140,6 @@ html {
   }
   &.open {
     .circle {
-      z-index: 2;
       bottom: 17%;
       right: (2%/0.26);
       left: (2%/0.26);
@@ -156,17 +149,23 @@ html {
       transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
         bottom 0.25s cubic-bezier(0.1, 0.1, 0, 1); //Bottom is faster to go up
       transition-delay: 0.015s;
+      i {
+        transform: rotate(0deg);
+        right: 13%;
+        top: -200px;
+        display: none;
+      }
     }
     svg {
       width: 100%;
       display: block;
       bottom: 0;
       position: fixed;
-      // path {
-      //   d: path(
-      //     "M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
-      //   );
-      // }
+      path {
+        d: path(
+          "M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
+        );
+      }
     }
   }
 }

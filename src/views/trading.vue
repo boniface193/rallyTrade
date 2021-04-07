@@ -43,10 +43,12 @@ export default {
   data() {
     return {
       navbar: [
-        { icon: "mdi-account-cash", routes: "", text: "Account Details" },
-        { icon: "mdi-drag", routes: "", text: "Upcoming Contests" },
-        { icon: "mdi-drag-variant", routes: "", text: "Active Contest" },
-        { icon: "mdi-google-analytics", routes: "", text: "Stats" },
+        // { icon: "mdi-menu", routes: "", text: "" },
+        { icon: "mdi-account-cash", routes: "", text: "w" },
+        { icon: "mdi-drag", routes: "", text: "e" },
+        { icon: "mdi-drag-variant", routes: "", text: "r" },
+        { icon: "mdi-google-analytics", routes: "", text: "t" },
+        // { icon: "mdi-google-analytics", routes: "", text: "" },
       ],
     };
   },
