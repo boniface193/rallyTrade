@@ -68,7 +68,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
 
 $font-family: "Inter", sans-serif;
-$bg-color: #252954;
+$bg-color: #fff;
 $body-color: #9b9ca7;
 $main-bg: #0e0e23;
 $logo: #4255d4;
@@ -102,7 +102,7 @@ html {
     position: fixed;
     bottom: 10%;
     padding: 8%;
-    background: $bg-color;
+    background: #fff;
     border-radius: 50%;
     transition: 0.25s cubic-bezier(0.25, 0, 0, 1),
       bottom 0.25s cubic-bezier(0.5, 0, 0.25, 1); //Bottom is slower to go down

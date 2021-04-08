@@ -1,52 +1,49 @@
 <template>
   <div>
-    <v-container>
-      <div class="hide-desktop">
-        <NavbarTab :navbar="navbar"></NavbarTab>
-      </div>
-    </v-container>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <h1>hello</h1>
-    <MobileNavbar :navbar="navbar"/>
+    <div class="hide-desktop mx-8">
+      <NavbarTab :navbar="navbar"></NavbarTab>
+    </div>
+    <MobileNavbar :navbar="navbar" />
   </div>
 </template>
 
 <script>
-  import NavbarTab from "@/components/layouts/navbar.vue";
-  import MobileNavbar from "@/components/layouts/mNavbar.vue";
+import NavbarTab from "@/components/layouts/navbar.vue";
+import MobileNavbar from "@/components/layouts/mNavbar.vue";
 export default {
   name: "trading",
   components: {
     NavbarTab,
-    MobileNavbar
+    MobileNavbar,
   },
   data() {
     return {
       navbar: [
-        { icon: "mdi-border-all", routes: "", text: "Dashboard" },
-        { icon: "mdi-account", routes: "", text: "Accounts" },
-        { icon: "mdi-drag-variant", routes: "", text: "Deposit" },
-        { icon: "mdi-credit-card-outline", routes: "", text: "Withdrawals" },
+        {
+          icon: "mdi-border-all",
+          routes: "",
+          text: "Dashboard",
+          content: "hello mr",
+          active: true,
+        },
+        {
+          icon: "mdi-account",
+          routes: "",
+          text: "Accounts",
+          content: "good evening",
+        },
+        {
+          icon: "mdi-drag-variant",
+          routes: "",
+          text: "Deposit",
+          content: "oops",
+        },
+        {
+          icon: "mdi-credit-card-outline",
+          routes: "",
+          text: "Withdrawals",
+          content: "dance",
+        },
       ],
     };
   },

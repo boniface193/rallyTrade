@@ -3,14 +3,13 @@
     <v-btn
       @click="toggleOpen"
       v-click-outside="onClickOutside"
-      class="mx-2 menu-btn"
+      class="mx-2 menu-btn elevation-6"
       fab
-      dark
-      color="bg_color"
+      color="white"
     >
-      <v-icon dark> mdi-menu </v-icon>
+      <v-icon dark color="main_bg"> mdi-menu </v-icon>
     </v-btn>
-    <div class="circle">
+    <div class="circle elevation-8">
       <div class="text-center my-3 hidden-on-true d-none">
         <v-list color="transparent">
           <v-list-item
@@ -80,20 +79,16 @@ $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
 $main-bg: #0e0e23;
-$logo: #4255d4;
+$blue: #4255d4;
+$white: #fff;
+$orange: #fb8c00;
 :root {
   --delay: 0s;
-}
-
-.active {
-  background-color: #a8ff78;
-  border-radius: 5px;
 }
 
 * {
   outline: none;
   box-sizing: border-box;
-  color: $body-color;
   font-family: $font-family;
 }
 
@@ -108,12 +103,17 @@ html {
     bottom: 0%;
     margin: 0 0 8% 0;
   }
+  .active {
+    background-color: $orange;
+    border-radius: 5px;
+    color: $white !important;
+  }
+
+  .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+    color: $body-color !important;
+  }
   .circle {
-    bottom: 0%;
-    padding: 8%;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
+    display: none;
   }
   svg {
     width: 100%;
@@ -123,7 +123,7 @@ html {
 
     path {
       transition: 0.25s cubic-bezier(0.25, 0, 0, 1);
-      fill: $main-bg;
+      fill: $white;
     }
   }
   &:not(.open) {
@@ -138,14 +138,16 @@ html {
   }
   &.open {
     .circle {
+      display: flex;
+      justify-content: center;
       position: fixed;
-      background: $bg-color;
+      background: $white;
       z-index: 2;
       bottom: 17%;
       right: (2%/0.26);
       left: (2%/0.26);
       height: fit-content;
-      border-radius: 5%;
+      border-radius: 3%;
       position: fixed;
       transition: 0.025s cubic-bezier(0.25, 0, 0, 1),
         bottom 0.25s cubic-bezier(0.1, 0.1, 0, 1); //Bottom is faster to go up

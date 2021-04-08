@@ -7,6 +7,7 @@
       icons
       class="rounded-lg"
       show-arrows
+      v-model="tab"
     >
       <v-tabs-slider
         color="active"
@@ -23,12 +24,24 @@
         >{{ item.text }}
       </v-tab>
     </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item v-for="item in navbar" :key="item.id">
+        <!-- <slot></slot> -->
+        {{item.content}}
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
 <script>
 export default {
   props: ["navbar"],
+  data() {
+    return {
+      tab: null,
+    };
+  },
 };
 </script>
 
