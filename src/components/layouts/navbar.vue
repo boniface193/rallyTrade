@@ -17,20 +17,16 @@
       <v-tab
         v-for="item in navbar"
         :key="item.text"
-        class="text-capitalize on_hover"
-        active-class="active--text"
+        :to="{ name: item.routes }"
+        class="text-capitalize"
+        exact-active-class="active--text"
       >
-        <v-icon class="mx-3">{{ item.icon }}</v-icon
-        >{{ item.text }}
+        <!-- <v-img src="@/assets/images/dashboard.svg" max-width="22" class="mr-3 active--text"></v-img>
+        {{ item.text }} -->
+        <!-- <v-img :src="`@/assets/images/${item.icon}`"></v-img> -->
+        <v-icon class="mx-3">{{ item.icon }}</v-icon>{{ item.text }}
       </v-tab>
     </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in navbar" :key="item.id">
-        <!-- <slot></slot> -->
-        {{item.content}}
-      </v-tab-item>
-    </v-tabs-items>
   </div>
 </template>
 
@@ -46,7 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
 
 $font-family: "Inter", sans-serif;
 $bg-color: #252954;
@@ -60,7 +55,7 @@ $logo: #fb8c00;
 * {
   outline: none;
   box-sizing: border-box;
-  color: $body-color;
+  // color: $body-color;
   font-family: $font-family;
 }
 

@@ -3,6 +3,9 @@
     <div class="hide-desktop mx-8">
       <NavbarTab :navbar="navbar"></NavbarTab>
     </div>
+    <v-container>
+      <router-view />
+    </v-container>
     <MobileNavbar :navbar="navbar" />
   </div>
 </template>
@@ -21,28 +24,23 @@ export default {
       navbar: [
         {
           icon: "mdi-border-all",
-          routes: "",
+          routes: "dashboard",
           text: "Dashboard",
-          content: "hello mr",
-          active: true,
         },
         {
           icon: "mdi-account",
-          routes: "",
+          routes: "accounts",
           text: "Accounts",
-          content: "good evening",
         },
         {
           icon: "mdi-drag-variant",
-          routes: "",
+          routes: "deposit",
           text: "Deposit",
-          content: "oops",
         },
         {
           icon: "mdi-credit-card-outline",
-          routes: "",
+          routes: "withdrawal",
           text: "Withdrawals",
-          content: "dance",
         },
       ],
     };
@@ -51,36 +49,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
-
-$font-family: "Inter", sans-serif;
-$bg-color: #252954;
-$body-color: #9b9ca7;
-$main-bg: #0e0e23;
-$logo: #4255d4;
-:root {
-  --delay: 0s;
-}
-
-* {
-  outline: none;
-  box-sizing: border-box;
-  color: $body-color;
-  font-family: $font-family;
-  font-size: 15px;
-}
-
-html {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-}
-
-.active {
-  background-color: $logo !important;
-}
-.on_hover:hover {
-  color: $logo !important;
-}
 
 @media (max-width: 426px) {
   .hide-desktop {

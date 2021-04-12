@@ -3,7 +3,7 @@
     <v-btn
       @click="toggleOpen"
       v-click-outside="onClickOutside"
-      class="mx-2 menu-btn elevation-6"
+      class="menu-btn elevation-6"
       fab
       color="white"
     >
@@ -15,7 +15,7 @@
           <v-list-item
             v-for="item in links"
             :key="item.id"
-            :to="{ name: item.routes }"
+            :to="{ path: item.routes }"
             active-class="active"
           >
             <v-list-item-content>
@@ -37,13 +37,13 @@ export default {
   data() {
     return {
       links: [
-        { link: "Trading", routes: "trading" },
-        { link: "Contest", routes: "contest" },
-        { link: "Partnership", routes: "partnership" },
-        { link: "Profile", routes: "profile" },
-        { link: "Promotions", routes: "promotion" },
-        { link: "Documents", routes: "document" },
-        { link: "Announcements", routes: "announcement" },
+        { link: "Trading", routes: "/trading" },
+        { link: "Contest", routes: "/contest" },
+        { link: "Partnership", routes: "/partnership" },
+        { link: "Profile", routes: "/profile" },
+        { link: "Promotions", routes: "/promotion" },
+        { link: "Documents", routes: "/documents" },
+        { link: "Announcements", routes: "/announcement" },
       ],
     };
   },
@@ -73,8 +73,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
-
 $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
@@ -101,7 +99,7 @@ html {
     z-index: 1;
     position: fixed;
     bottom: 0%;
-    margin: 0 0 8% 0;
+    margin: 0 0 8% 5%;
   }
   .active {
     background-color: $orange;
@@ -142,13 +140,12 @@ html {
       justify-content: center;
       position: fixed;
       background: $white;
-      z-index: 2;
+      z-index: 1 !important;
       bottom: 17%;
       right: (2%/0.26);
       left: (2%/0.26);
       height: fit-content;
       border-radius: 3%;
-      position: fixed;
       transition: 0.025s cubic-bezier(0.25, 0, 0, 1),
         bottom 0.25s cubic-bezier(0.1, 0.1, 0, 1); //Bottom is faster to go up
       transition-delay: 0.015s;

@@ -1,30 +1,30 @@
 <template>
   <div class="icons show-mobile">
-    <v-row class="d-flex justify-end">
-      <v-col class="px-5" cols="3" v-for="item in navbar" :key="item.id"
-        ><v-icon :class="item.active ? 'active' : 'not-active'" size="35">{{ item.icon }} <br /> </v-icon>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col class="px-5 py-0 text-center" cols="3">
-        <v-icon size="20" class="text-center active"
-          >mdi-triangle</v-icon
-        >
-      </v-col>
-    </v-row>
+    <v-tabs v-model="tab" align-with-title hide-slider link>
+      <v-tab
+        v-for="item in navbar"
+        :key="item.id"
+        exact-active-class="active--text"
+        :to="{ name: item.routes }"
+      >
+        <v-icon>{{ item.icon }} </v-icon>
+      </v-tab>
+    </v-tabs>
   </div>
 </template>
 
 <script>
 export default {
   props: ["navbar"],
+  data() {
+    return {
+      tab: null,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
-
 $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
@@ -39,7 +39,6 @@ $orange: #fb8c00;
 * {
   outline: none;
   box-sizing: border-box;
-  color: $body-color;
   font-family: $font-family;
 }
 
@@ -52,13 +51,45 @@ html {
   z-index: 1;
   position: fixed;
   bottom: 0%;
-  margin: 0 0 0 20%;
-  padding: 0 0 5% 0;
-  .active {
+  left: 11%;
+  padding: 0 0 8% 0;
+  .active--text {
     color: $orange;
   }
-  .not-active{
-    color: $main-bg !important;
+
+  .text--color {
+    color: $body-color;
+  }
+
+  .v-tab {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex: 0 1 auto;
+    font-size: 0.875rem;
+    font-weight: 500;
+    justify-content: space-around;
+    letter-spacing: 0.0892857143em;
+    line-height: normal;
+    min-width: 70px !important;
+    max-width: 360px;
+    outline: none;
+    padding: 0px 0px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (max-width: 320px) {
+    .v-tab {
+      min-width: 60px !important;
+    }
   }
 }
 

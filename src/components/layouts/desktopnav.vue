@@ -48,7 +48,7 @@
             :key="item.title"
             link
             class="py-1 my-2"
-            :to="{ name: item.route }"
+            :to="{ path: item.route }"
             active-class="active"
           >
             <v-list-item-icon>
@@ -69,7 +69,7 @@
             :key="item.title"
             link
             class="py-1 my-2"
-            :to="{ name: item.route }"
+            :to="{ path: item.route }"
             active-class="active"
           >
             <v-list-item-icon>
@@ -99,19 +99,18 @@ export default {
         {
           title: "Trading",
           icon: "mdi-bank",
-          route: "trading",
-          active: true,
+          route: "/trading",
         },
-        { title: "Contest", icon: "mdi-gift", route: "contest" },
+        { title: "Contest", icon: "mdi-gift", route: "/contest" },
         {
           title: "Partnership",
           icon: "mdi-chart-box-outline",
-          route: "partnership",
+          route: "/partnership",
         },
         {
           title: "Profile",
           icon: "mdi-account-circle",
-          route: "profile",
+          route: "/profile",
         },
       ],
 
@@ -119,15 +118,15 @@ export default {
         {
           title: "Promotions",
           icon: "mdi-email",
-          route: "promotion",
+          route: "/promotion",
           active: true,
         },
-        { title: "Documents", icon: "mdi-folder-open", route: "document" },
+        { title: "Documents", icon: "mdi-folder-open", route: "/documents" },
         {
           title: "Announcements",
           icon: "mdi-comment-text-outline",
           active: true,
-          route: "announcement",
+          route: "/announcement",
         },
       ],
       mini: true,
@@ -169,7 +168,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
 
 $font-family: "Inter", sans-serif;
 $bg-color: #252954;

@@ -1,8 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/home.vue"
-import Contest from "@/views/contest.vue"
+      /**trading**/
 import Trading from "@/views/trading.vue"
+import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
+import Accounts from "@/components/navRoutes/trading/accounts.vue"
+import Deposit from "@/components/navRoutes/trading/deposit.vue"
+import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
+
+import Contest from "@/views/contest.vue"
 import Partnership from "@/views/partnership.vue"
 import Profile from "@/views/profile.vue"
 import Promotion from "@/views/promotion.vue"
@@ -14,44 +20,62 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     component: Home,
     children: [
       {
-        path: "",
+        path: "/trading",
+        component: Trading,
+        children: [
+          {
+            path: "",
+            name: "dashboard",
+            component: Dashboard
+          },
+          {
+            path: "accounts",
+            name: "accounts",
+            component: Accounts
+          },
+          {
+            path: "deposit",
+            name: "deposit",
+            component: Deposit
+          },
+          {
+            path: "withdrawal",
+            name: "withdrawal",
+            component: Withdrawal
+          },
+        ]
       },
       {
-        path: "contest",
+        path: "/contest",
         name: "contest",
         component: Contest
       },
       {
-        path: "trading",
-        name: "trading",
-        component: Trading
-      },
-      {
-        path: "partnership",
+        path: "/partnership",
         name: "partnership",
         component: Partnership
       },
       {
-        path: "profile",
+        path: "/profile",
         name: "profile",
         component: Profile
       },
       {
-        path: "promotion",
+        path: "/promotion",
         name: "promotion",
         component: Promotion
       },
       {
-        path: "documents",
+        path: "/documents",
         name: "document",
         component: Document
       },
       {
-        path: "announcement",
+        path: "/announcement",
         name: "announcement",
         component: Announcement
       },
