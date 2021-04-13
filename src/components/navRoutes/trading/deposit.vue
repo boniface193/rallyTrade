@@ -60,6 +60,14 @@ export default {
           status: "mdi-upload",
           statusColor: "primary",
         },
+        {
+          chip: "4:30",
+          time: "",
+          moneySign: "₦",
+          color: "primary_bg",
+          status: "mdi-upload",
+          statusColor: "primary",
+        },
       ],
     };
   },

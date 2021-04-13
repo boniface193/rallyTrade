@@ -49,10 +49,13 @@ html {
 
 .icons {
   z-index: 1;
+  text-align: center;
   position: fixed;
   bottom: 0%;
-  left: 11%;
-  padding: 0 0 8% 0;
+  left: 1 ;
+  right: 0;
+  padding: 8% 0 8% 20%;
+  background-color: $white;
   .active--text {
     color: $orange;
   }
@@ -75,6 +78,7 @@ html {
     max-width: 360px;
     outline: none;
     padding: 0px 0px;
+    // margin: auto 10%;
     position: relative;
     text-align: center;
     text-decoration: none;
