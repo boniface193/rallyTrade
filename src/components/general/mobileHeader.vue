@@ -1,6 +1,6 @@
 <template>
   <div class="show-mobile">
-    <v-app-bar color="success" dense dark app height="80" class="d-flex justify-center">
+    <v-app-bar color="success" dark fixed height="80" class="d-flex justify-center elevation-0 ">
 
       <v-toolbar-title class="text-center">Deposit</v-toolbar-title>
 

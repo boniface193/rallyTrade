@@ -70,4 +70,9 @@ html {
 .active--text {
   color: $logo !important;
 }
+
+// .v-tabs-bar.v-item-group>* {
+//     cursor: auto;
+//     color: aqua;
+// }
 </style>

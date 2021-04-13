@@ -52,7 +52,7 @@ html {
   text-align: center;
   position: fixed;
   bottom: 0%;
-  left: 1 ;
+  left: 1;
   right: 0;
   padding: 8% 0 8% 20%;
   background-color: $white;
@@ -74,7 +74,7 @@ html {
     justify-content: space-around;
     letter-spacing: 0.0892857143em;
     line-height: normal;
-    min-width: 70px !important;
+    min-width: 80px !important;
     max-width: 360px;
     outline: none;
     padding: 0px 0px;
@@ -89,10 +89,35 @@ html {
     -ms-user-select: none;
     user-select: none;
   }
+  // .v-item-group.theme--light.v-slide-group.v-tabs-bar.v-tabs-bar--is-mobile.primary--text {
+  //     color: $body-color !important;
+  // }
+  .v-application .primary--text {
+    color: $body-color !important;
+    caret-color: $body-color !important;
+  }
+
+    @media (max-width: 375px) {
+    .v-tab {
+      min-width: 75px !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .v-tab {
+      min-width: 70px !important;
+    }
+  }
 
   @media (max-width: 320px) {
     .v-tab {
       min-width: 60px !important;
+    }
+  }
+
+    @media (max-width: 280px) {
+    .v-tab {
+      min-width: 52px !important;
     }
   }
 }

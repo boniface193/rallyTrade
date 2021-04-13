@@ -1,6 +1,7 @@
 <template>
   <div>
     <Mobile-Header />
+    <div class="my-16 mr-1">
     <div class="mb-5" v-for="item in chipCard" :key="item.id">
       <Chip-Card
         :colors="item.color"
@@ -13,6 +14,7 @@
       </Chip-Card>
     </div>
     <div class="py-16"></div>
+  </div>
   </div>
 </template>
 

@@ -101,6 +101,12 @@ html {
     bottom: 0%;
     margin: 0 0 8% 5%;
   }
+  @media (max-width: 280px) {
+    .menu-btn {
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
   .active {
     background-color: $orange;
     border-radius: 5px;
