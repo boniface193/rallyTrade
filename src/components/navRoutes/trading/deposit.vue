@@ -1,24 +1,28 @@
 <template>
   <div>
     <Mobile-Header />
-    <div class="my-16 mr-1">
-    <div class="mb-5" v-for="item in chipCard" :key="item.id">
-      <Chip-Card
-        :colors="item.color"
-        :chip="item.chip"
-        :moneySign="item.moneySign"
-        :status="item.status"
-        :statusColor="item.statusColor"
-        :active="item.active"
-      >
-      </Chip-Card>
+    <div class="my-16 pt-5 mr-1">
+      <div class="mt-8" v-for="item in chipCard" :key="item.id">
+        <Chip-Card
+          :depositDetails="{ name: 'depositDetails', params: { id: item.id } }"
+          :colors="item.color"
+          :chip="item.chip"
+          :moneySign="item.moneySign"
+          :status="item.status"
+          :statusColor="item.statusColor"
+          :active="item.active"
+          :icon="item.icon"
+          :depositType="item.depositType"
+        >
+        </Chip-Card>
+      </div>
+      <div class="py-16"></div>
     </div>
-    <div class="py-16"></div>
-  </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import MobileHeader from "@/components/general/mobileHeader.vue";
 import ChipCard from "@/components/general/chipCard.vue";
 export default {
@@ -27,51 +31,17 @@ export default {
     MobileHeader,
   },
   data() {
-    return {
-      chipCard: [
-        {
-          chip: "4:30",
-          time: "",
-          moneySign: "₦",
-          color: "success_bg",
-          status: "mdi-check-circle-outline",
-          statusColor: "success",
-          active: true,
-        },
-        {
-          chip: "4:30",
-          time: "",
-          moneySign: "₦",
-          color: "error_bg",
-          status: "mdi-close-circle-outline",
-          statusColor: "error",
-        },
-        {
-          chip: "4:30",
-          time: "",
-          moneySign: "₦",
-          color: "secondary_bg",
-          status: "mdi-update",
-          statusColor: "secondary",
-        },
-        {
-          chip: "4:30",
-          time: "",
-          moneySign: "₦",
-          color: "primary_bg",
-          status: "mdi-upload",
-          statusColor: "primary",
-        },
-        {
-          chip: "4:30",
-          time: "",
-          moneySign: "₦",
-          color: "primary_bg",
-          status: "mdi-upload",
-          statusColor: "primary",
-        },
-      ],
-    };
+    return {};
+  },
+
+  computed: {
+    ...mapGetters({chipCard: "trading/getChipCard"}),
+  },
+
+  methods: {
+    checking() {
+      console.log("clicked");
+    },
   },
 };
 </script>

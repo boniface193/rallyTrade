@@ -1,11 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/home.vue"
-      /**trading**/
+/**trading**/
 import Trading from "@/views/trading.vue"
 import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
 import Accounts from "@/components/navRoutes/trading/accounts.vue"
 import Deposit from "@/components/navRoutes/trading/deposit.vue"
+
+// Deposit Detail Page
+import depositPage from "@/components/detailPages/deposits/depositPage.vue"
+import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
+
 import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
 
 import Contest from "@/views/contest.vue"
@@ -39,14 +44,27 @@ const routes = [
           },
           {
             path: "deposit",
-            name: "deposit",
-            component: Deposit
+            component: depositPage,
+            children: [
+              {
+                path: "",
+                name: "deposit",
+                component: Deposit,
+              },
+              {
+                path: ":id",
+                name: "depositDetails",
+                component: depositDetailPage,
+                props: true
+              }
+            ]
           },
           {
             path: "withdrawal",
             name: "withdrawal",
             component: Withdrawal
           },
+
         ]
       },
       {

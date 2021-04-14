@@ -25,11 +25,11 @@
         </v-list>
       </div>
     </div>
-    <svg viewBox="0 0 416 896">
+    <!-- <svg viewBox="0 0 416 896">
       <path
         d="M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
       ></path>
-    </svg>
+    </svg> -->
   </div>
 </template>
 <script>

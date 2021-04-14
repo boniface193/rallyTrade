@@ -1,12 +1,15 @@
 <template>
   <div class="icons show-mobile">
-    <v-tabs v-model="tab" align-with-title hide-slider link>
+    <v-tabs v-model="tab" align-with-title link>
+      <v-tabs-slider color="active--text"
+      ></v-tabs-slider>
       <v-tab
         v-for="item in navbar"
         :key="item.id"
         exact-active-class="active--text"
         :to="{ name: item.routes }"
       >
+            
         <v-icon>{{ item.icon }} </v-icon>
       </v-tab>
     </v-tabs>

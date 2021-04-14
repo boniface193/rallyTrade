@@ -1,32 +1,30 @@
 <template>
   <div class="show-mobile">
-    <v-chip :color="colors" class="rounded chip z-index mt-5" apppend small>
+    <v-chip :color="colors" class="rounded chip z-index" apppend small>
       {{ chip }}
     </v-chip>
-    <!-- <v-chip small class="rounded d-flex justify-center mx-16">
-      Claim Bonus
-    </v-chip> -->
-    <v-card class="mx-auto" flat :color="colors">
+    <v-card class="mx-auto" flat :color="colors" :to="depositDetails" link>
       <v-badge color="#9EE8FF" avatar overlap class="float-right z-index">
         <template v-slot:badge>
-          <div class="text-center my-1 white--text">{{ moneySign }}</div>
+          <v-icon class="text-center my-1">{{moneySign}}</v-icon>
+          <!-- <div class="text-center my-1 white--text">{{ moneySign }}</div> -->
         </template>
       </v-badge>
       <div class="mx-3">
-        <v-row class="pt-2">
+        <v-row>
           <v-col cols="3" class="text-center">
             <div class="d-flex justify-center">
-              <v-img width="40.43px" src="@/assets/images/wire.svg"></v-img>
+              <img width="50%" height="50%" :src='require(`@/assets/images/${icon}`)' />
             </div>
             <div class="text-caption sm-text">
-              <div class="sm-text">WIRE</div>
+              <div class="sm-text">{{depositType}}</div>
               <div class="sm-text">15.04.21</div>
             </div>
           </v-col>
-          <v-col cols="1" class="pt-0">
+          <v-col cols="1">
             <v-divider vertical class="new"></v-divider>
           </v-col>
-          <v-col md=""  class="text-caption px-0">
+          <v-col class="text-caption px-0">
             <div class="d-flex justify-space-between mr-3 sm-text">
               <div>Account</div>
               <div>Amount</div>
@@ -35,7 +33,7 @@
             <div class="d-flex justify-space-between mr-3 sm-text">
               <div>854715</div>
               <div>10,000,000</div>
-              <div class=" sm-text">
+              <div class="sm-text">
                 <v-icon :color="statusColor">{{ status }}</v-icon>
               </div>
             </div>
@@ -66,15 +64,22 @@
     >
       Claim Bonus!
     </v-chip>
-    <!-- <v-chip :color="colors" class="rounded mx-5 icon_color" style="bottom: 23vh; position: relative">
-      {{ chip }}
-    </v-chip> -->
   </div>
 </template>
 
 <script>
 export default {
-  props: ["colors", "chip", "moneySign", "status", "statusColor", "active"],
+  props: [
+    "colors",
+    "chip",
+    "moneySign",
+    "status",
+    "statusColor",
+    "active",
+    "depositDetails",
+    "icon",
+    "depositType"
+  ],
 };
 </script>
 

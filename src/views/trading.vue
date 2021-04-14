@@ -4,7 +4,9 @@
       <NavbarTab :navbar="navbar"></NavbarTab>
     </div>
     <v-container>
-      <router-view />
+      <transition>
+        <router-view />
+      </transition>
     </v-container>
     <MobileNavbar :navbar="navbar" />
   </div>
@@ -49,7 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @media (max-width: 426px) {
   .hide-desktop {
     display: none;
