@@ -15,7 +15,7 @@
           <v-list-item
             v-for="item in links"
             :key="item.id"
-            :to="{ path: item.routes }"
+            :to="{ name: item.routes }"
             active-class="active"
           >
             <v-list-item-content>
@@ -37,13 +37,13 @@ export default {
   data() {
     return {
       links: [
-        { link: "Trading", routes: "/trading" },
-        { link: "Contest", routes: "/contest" },
-        { link: "Partnership", routes: "/partnership" },
-        { link: "Profile", routes: "/profile" },
-        { link: "Promotions", routes: "/promotion" },
-        { link: "Documents", routes: "/documents" },
-        { link: "Announcements", routes: "/announcement" },
+        { link: "Trading", routes: "dashboard" },
+        { link: "Contest", routes: "contest" },
+        { link: "Partnership", routes: "partnership" },
+        { link: "Profile", routes: "profile" },
+        { link: "Promotions", routes: "promotion" },
+        { link: "Documents", routes: "documents" },
+        { link: "Announcements", routes: "announcement" },
       ],
     };
   },

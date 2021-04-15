@@ -15,6 +15,7 @@ import Deposit from "@/components/navRoutes/trading/deposit.vue"
 // Deposit Detail Page
 import depositPage from "@/components/detailPages/deposits/depositPage.vue"
 import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
+import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
 
 import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
 
@@ -62,7 +63,12 @@ const routes = [
                 component: Deposit,
               },
               {
-                path: ":id",
+                path: "",
+                name: "selectCurrency",
+                component: selectCurrency,
+              },
+              {
+                path: "",
                 name: "depositDetails",
                 component: depositDetailPage,
                 props: true

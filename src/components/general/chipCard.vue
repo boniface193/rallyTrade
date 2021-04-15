@@ -1,23 +1,39 @@
 <template>
   <div class="show-mobile">
-    <v-chip :color="colors" class="rounded chip z-index" apppend small>
+    <v-chip
+      :color="colors"
+      :outlined="outlined"
+      class="rounded chip z-index"
+      apppend
+      small
+    >
       {{ chip }}
     </v-chip>
-    <v-card class="mx-auto" flat :color="colors" :to="depositDetails" link>
+    <v-card
+      class="mx-auto"
+      flat
+      :color="colors"
+      :to="depositDetails"
+      link
+      :outlined="outlined"
+    >
       <v-badge color="#9EE8FF" avatar overlap class="float-right z-index">
         <template v-slot:badge>
-          <v-icon class="text-center my-1">{{moneySign}}</v-icon>
-          <!-- <div class="text-center my-1 white--text">{{ moneySign }}</div> -->
+          <v-icon class="text-center my-1">{{ moneySign }}</v-icon>
         </template>
       </v-badge>
       <div class="mx-3">
         <v-row>
           <v-col cols="3" class="text-center">
             <div class="d-flex justify-center">
-              <img width="50%" height="50%" :src='require(`@/assets/images/${icon}`)' />
+              <img
+                width="50%"
+                height="50%"
+                :src="require(`@/assets/images/${icon}`)"
+              />
             </div>
             <div class="text-caption sm-text">
-              <div class="sm-text">{{depositType}}</div>
+              <div class="sm-text">{{ depositType }}</div>
               <div class="sm-text">15.04.21</div>
             </div>
           </v-col>
@@ -28,7 +44,7 @@
             <div class="d-flex justify-space-between mr-3 sm-text">
               <div>Account</div>
               <div>Amount</div>
-              <div>Status</div>
+              <div>{{ statu }}</div>
             </div>
             <div class="d-flex justify-space-between mr-3 sm-text">
               <div>854715</div>
@@ -37,25 +53,18 @@
                 <v-icon :color="statusColor">{{ status }}</v-icon>
               </div>
             </div>
-            <div class="text-body-1 mt-3 mb-0 text-left">message goes here</div>
-
-            <!-- <v-row>
-              <v-col cols="4"> Account </v-col>
-              <v-col cols="4"> Amount </v-col>
-              <v-col cols="4"> Status </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4"> 854715 </v-col>
-              <v-col cols="4"> 10,000,000 </v-col>
-              <v-col cols="4"> <v-icon>mdi-check-circle-outline</v-icon> </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" class="text-body-1"> message goes here </v-col>
-            </v-row> -->
+            <div class="text-body-1 mt-3 mb-0 text-left">{{ msg }}</div>
           </v-col>
         </v-row>
       </div>
     </v-card>
+    <div class="d-flex border-all" style="">
+      <v-btn depressed dark color="success" small class="rounde-lg"
+        >Confirm</v-btn
+      >
+      <div class="px-2"></div>
+      <v-btn depressed outlined small class="rounde-lg">Cancel</v-btn>
+    </div>
     <v-chip
       v-if="active"
       :color="statusColor"
@@ -78,7 +87,10 @@ export default {
     "active",
     "depositDetails",
     "icon",
-    "depositType"
+    "depositType",
+    "outlined",
+    "msg",
+    "statu",
   ],
 };
 </script>
@@ -119,9 +131,39 @@ html {
   color: $body-color !important;
 }
 
+.border-all {
+  margin-left: 40%;
+  position: absolute;
+  top: 18%;
+}
+
+.v-btn--outlined {
+  border: thin solid;
+  background-color: #fff;
+}
+
 @media (max-width: 280px) {
   .sm-text {
     font-size: 9px !important;
+  }
+  .border-all {
+    margin-left: 35%;
+    top: 17.3%;
+  }
+  .v-btn:not(.v-btn--round).v-size--small {
+    height: 22px;
+    min-width: 20px;
+    padding: 0 12.4444444444px;
+  }
+  .v-btn.v-size--small {
+    font-size: 0.52rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .border-all {
+        margin-left: 30%;
+
   }
 }
 
