@@ -30,18 +30,8 @@ export default {
     ChipCard,
     MobileHeader,
   },
-  data() {
-    return {};
-  },
-
   computed: {
     ...mapGetters({chipCard: "trading/getChipCard"}),
-  },
-
-  methods: {
-    checking() {
-      console.log("clicked");
-    },
   },
 };
 </script>

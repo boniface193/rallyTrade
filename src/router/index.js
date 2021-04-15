@@ -1,5 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+/*******Index page *******/
+import Index from "@/views/index.vue"
+/*******Index page *******/
+
+// client page
 import Home from "@/views/home.vue"
 /**trading**/
 import Trading from "@/views/trading.vue"
@@ -26,10 +31,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    name: "index",
+    component: Index
+  },
+  {
+    path: "/home",
     component: Home,
     children: [
       {
-        path: "/trading",
+        path: "",
         component: Trading,
         children: [
           {
@@ -89,7 +99,7 @@ const routes = [
       },
       {
         path: "/documents",
-        name: "document",
+        name: "documents",
         component: Document
       },
       {

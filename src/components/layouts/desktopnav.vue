@@ -48,7 +48,7 @@
             :key="item.title"
             link
             class="py-1 my-2"
-            :to="{ path: item.route }"
+            :to="{ name: item.route }"
             active-class="active"
           >
             <v-list-item-icon>
@@ -69,7 +69,7 @@
             :key="item.title"
             link
             class="py-1 my-2"
-            :to="{ path: item.route }"
+            :to="{ name: item.route }"
             active-class="active"
           >
             <v-list-item-icon>
@@ -99,18 +99,18 @@ export default {
         {
           title: "Trading",
           icon: "mdi-bank",
-          route: "/trading",
+          route: "dashboard",
         },
-        { title: "Contest", icon: "mdi-gift", route: "/contest" },
+        { title: "Contest", icon: "mdi-gift", route: "contest" },
         {
           title: "Partnership",
           icon: "mdi-chart-box-outline",
-          route: "/partnership",
+          route: "partnership",
         },
         {
           title: "Profile",
           icon: "mdi-account-circle",
-          route: "/profile",
+          route: "profile",
         },
       ],
 
@@ -118,15 +118,15 @@ export default {
         {
           title: "Promotions",
           icon: "mdi-email",
-          route: "/promotion",
+          route: "promotion",
           active: true,
         },
-        { title: "Documents", icon: "mdi-folder-open", route: "/documents" },
+        { title: "Documents", icon: "mdi-folder-open", route: "documents" },
         {
           title: "Announcements",
           icon: "mdi-comment-text-outline",
           active: true,
-          route: "/announcement",
+          route: "announcement",
         },
       ],
       mini: true,
