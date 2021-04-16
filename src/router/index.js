@@ -16,6 +16,7 @@ import Deposit from "@/components/navRoutes/trading/deposit.vue"
 import depositPage from "@/components/detailPages/deposits/depositPage.vue"
 import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
 import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
+import bankDetails from "@/components/detailPages/deposits/bankingDetails.vue"
 
 import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
 
@@ -72,7 +73,13 @@ const routes = [
                 name: "depositDetails",
                 component: depositDetailPage,
                 props: true
-              }
+              },
+              {
+                path: "",
+                name: "bankDetails",
+                component: bankDetails,
+                props: true
+              },
             ]
           },
           {

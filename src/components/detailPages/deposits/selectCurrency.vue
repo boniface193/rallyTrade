@@ -29,20 +29,20 @@
     <v-expand-transition>
       <v-row class="d-flex justify-center mx-3 mt-8 mb-16" v-if="reveal">
         <v-col cols="12" class="d-flex justify-center">
-          <Gen-Card :width="110" class="text-center" :link="true">
+          <Gen-Card :width="110" class="text-center" :link="true" :to="{name: 'bankDetails'}">
             <img width="70%" src="@/assets/images/credit-card.svg" alt="" />
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
           </Gen-Card></v-col
         >
         <v-col cols="6" class="d-flex justify-center">
-          <Gen-Card :width="125" class="text-center" :link="true">
+          <Gen-Card :width="125" class="text-center" :link="true" :to="{name: 'bankDetails'}">
             <img width="70%" src="@/assets/images/wire-deposite.svg" alt="" />
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
             </Gen-Card
           ></v-col
         >
         <v-col cols="6" class="d-flex justify-center">
-          <Gen-Card :width="125" class="text-center" :link="true">
+          <Gen-Card :width="125" class="text-center" :link="true" :to="{name: 'bankDetails'}">
             <img width="70%" src="@/assets/images/teller.svg" alt="" />
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
           </Gen-Card></v-col
