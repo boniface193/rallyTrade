@@ -1,49 +1,39 @@
 <template>
-  <div class="mx-8">
+  <div class="mx-3-forSmallerScreen">
     <div class="text-center text-h5 font-weight-bold my-8">Banking Details</div>
-    <v-row>
+    <v-row class="mb-1">
       <v-col cols="3" class="text-body-1 pr-0">Amount</v-col>
-      <v-col cols="2"
-        ><div class="chip d-flex justify-center">
-          <v-icon class="text-center white--text">mdi-currency-ngn</v-icon>
-        </div></v-col
-      >
+      <v-col cols="2"><Chip :currencyChip="'mdi-currency-ngn'" /> </v-col>
       <v-col
         cols="7"
-        class="text-h5 text-black pl-0 mb-1 grey--text darken-4 font-weight-bold"
+        class="text-h6 pl-0 pt-2 grey--text darken-4 font-weight-bold"
         >10,000,000</v-col
       >
     </v-row>
-    <!-- <div class="d-flex">
-      <p>Amount </p> <div class="chip d-flex justify-center mx-5">
-          <v-icon class="text-center white--text">mdi-currency-ngn</v-icon>
-       </div>
-       <div>10,000,000</div>
-    </div> -->
     <div class="text-body-1">Select FRNG Bank</div>
     <div>
-      <v-row class="d-flex justify-center mx-3 my-3">
+      <v-row class="d-flex justify-center my-1 mxforSmallerScreen">
         <v-col cols="4" class="d-flex justify-center">
           <Gen-Card class="text-center" :link="true">
             <img
               width="50%"
-              class="my-2"
-              src="@/assets/images/gtbank.jpg"
+              class="my-2 pa-1 forSmallerScreen"
+              src="@/assets/images/bank-logo/gtbank.jpg"
               alt=""
             />
-            <div>GT BANK</div>
+            <div class="text-caption">GT BANK</div>
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
           </Gen-Card></v-col
         >
         <v-col cols="4" class="d-flex justify-center">
-          <Gen-Card class="text-center" :link="true">
+          <Gen-Card :width="125" class="text-center" :link="true">
             <img
               width="70%"
-              class="mt-2 mb-4"
-              src="@/assets/images/wema.png"
+              class="mt-2 mb-4 pa-1 forSmallerScreen"
+              src="@/assets/images/bank-logo/wema.png"
               alt=""
             />
-            <div>WEMA</div>
+            <div class="text-caption">WEMA</div>
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
           </Gen-Card></v-col
         >
@@ -51,11 +41,11 @@
           <Gen-Card class="text-center" :link="true">
             <img
               width="50%"
-              class="my-2"
-              src="@/assets/images/zenith.png"
+              class="my-2 pa-1 forSmallerScreen"
+              src="@/assets/images/bank-logo/zenith.png"
               alt=""
             />
-            <div>ZENITH</div>
+            <div class="text-caption">ZENITH</div>
             <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
           </Gen-Card></v-col
         >
@@ -63,7 +53,7 @@
     </div>
     <div>
       <v-row>
-        <v-col cols="5">Account Name</v-col>
+        <v-col cols="5" class="text-body-2">Account Name</v-col>
         <v-col
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
@@ -71,7 +61,7 @@
         >
       </v-row>
       <v-row>
-        <v-col cols="5">Account Number</v-col>
+        <v-col cols="5" class="text-body-2">Account Number</v-col>
         <v-col
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
@@ -82,21 +72,31 @@
     <v-divider class="my-2"></v-divider>
     <div class="mt-5">
       <v-row>
-        <v-col cols="5">Select your bank</v-col>
+        <v-col cols="5" class="text-body-2 pt-6">Select your bank</v-col>
         <v-col cols="7">
-          <v-select :item="items.text" label="Select your bank" dense outlined>
+          <v-select
+            :items="items"
+            item-text="text"
+            label="Select your bank"
+            dense
+            outlined
+            class="text-caption pa-0"
+          >
             <template v-slot:selection="{ item }">
-              <!-- <v-chip v-if="index === 0">
-                <span>{{ item }}</span>
-              </v-chip> -->
-              <v-icon>{{ item.icon }}</v-icon>
-              <!-- <span
-          v-if="index === 1"
-          class="grey--text caption"
-        >
-          (+{{ value.length - 1 }} others)
-        </span> -->
+              <img :src="item.icon" width="20px" />
+              <span class="ml-1">{{ item.text }}</span>
             </template>
+
+            <template v-slot:item="{ item }">
+              <img :src="item.icon" width="20px" class="mr-2" />
+              <span class="" style="font-size: 8px">{{ item.text }}</span>
+            </template>
+            <!-- <template v-slot:prepend-item>
+              <img
+                src="@/assets/images/wema.png"
+                width="20px"
+              />
+            </template> -->
           </v-select>
         </v-col>
       </v-row>
@@ -106,14 +106,29 @@
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
+import Chip from "@/components/general/currencyChip.vue";
 export default {
   components: {
     GenCard,
+    Chip,
   },
   data: () => ({
     items: [
-      { text: "foo", icon: "mdi-home" },
-      { text: "bar", icon: "mdi-home" },
+      { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
+      { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
+      { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png") },
+      {
+        text: "Heritage",
+        icon: require("@/assets/images/bank-logo/heritage.jpg"),
+      },
+      {
+        text: "Fidelity",
+        icon: require("@/assets/images/bank-logo/fidelity.svg"),
+      },
+      {
+        text: "Sterling",
+        icon: require("@/assets/images/bank-logo/sterling.jpg"),
+      },
       { text: "OTHER BANK" },
     ],
   }),
@@ -143,14 +158,21 @@ html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
-.chip {
-  float: left;
-  width: 30px;
-  // padding: 10px;
-  // height: 100%;
-  // margin: 20px;
-  shape-outside: circle();
-  clip-path: circle();
-  background: lightblue;
+
+.mx-3-forSmallerScreen {
+  margin: 5%;
+}
+.mxforSmallerScreen {
+  margin: 5%;
+}
+@media (max-width: 280px) {
+  .mx-3-forSmallerScreen {
+    margin: 5px;
+  }
+}
+@media (max-width: 360px) {
+  .mxforSmallerScreen {
+    margin: 0;
+  }
 }
 </style>
