@@ -1,5 +1,5 @@
 <template>
-  <div class="show-mobile">
+  <div>
     <v-chip
       :color="colors"
       :outlined="outlined"
@@ -167,9 +167,4 @@ html {
   }
 }
 
-@media (min-width: 426px) {
-  .show-mobile {
-    display: none;
-  }
-}
 </style>

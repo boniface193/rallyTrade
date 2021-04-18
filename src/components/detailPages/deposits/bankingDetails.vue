@@ -1,6 +1,11 @@
 <template>
-  <div class="mx-3-forSmallerScreen">
-    <div class="text-center text-h5 font-weight-bold my-8">Banking Details</div>
+  <div class="mx-3-forSmallerScreen show-mobile">
+    <div class="text-center text-h5 font-weight-bold my-8">
+      <router-link :to="{ name: 'selectCurrency' }">
+        <v-icon class="float-left">mdi-arrow-left</v-icon>
+      </router-link>
+      Banking Details
+    </div>
     <v-row class="mb-1">
       <v-col cols="3" class="text-body-1 pr-0">Amount</v-col>
       <v-col cols="2"><Chip :currencyChip="'mdi-currency-ngn'" /> </v-col>
@@ -13,40 +18,22 @@
     <div class="text-body-1">Select FRNG Bank</div>
     <div>
       <v-row class="d-flex justify-center my-1 mxforSmallerScreen">
-        <v-col cols="4" class="d-flex justify-center">
+        <v-col
+          cols="4"
+          class="d-flex justify-center"
+          v-for="item in bankName"
+          :key="item.id"
+          @click="GTselected(item.id)"
+        >
           <Gen-Card class="text-center" :link="true">
             <img
               width="50%"
-              class="my-2 pa-1 forSmallerScreen"
-              src="@/assets/images/bank-logo/gtbank.jpg"
+              class=" forSmallerScreen"
+              :class="item.class"
+              :src="item.icon"
               alt=""
             />
-            <div class="text-caption">GT BANK</div>
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
-          </Gen-Card></v-col
-        >
-        <v-col cols="4" class="d-flex justify-center">
-          <Gen-Card :width="125" class="text-center" :link="true">
-            <img
-              width="70%"
-              class="mt-2 mb-4 pa-1 forSmallerScreen"
-              src="@/assets/images/bank-logo/wema.png"
-              alt=""
-            />
-            <div class="text-caption">WEMA</div>
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
-          </Gen-Card></v-col
-        >
-        <v-col cols="4" class="d-flex justify-center">
-          <Gen-Card class="text-center" :link="true">
-            <img
-              width="50%"
-              class="my-2 pa-1 forSmallerScreen"
-              src="@/assets/images/bank-logo/zenith.png"
-              alt=""
-            />
-            <div class="text-caption">ZENITH</div>
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
+            <div class="text-caption">{{ item.text }}</div>
           </Gen-Card></v-col
         >
       </v-row>
@@ -55,17 +42,21 @@
       <v-row>
         <v-col cols="5" class="text-body-2">Account Name</v-col>
         <v-col
+        v-for="item in bankInfo" :key="item.id"
+          v-show="reveal"
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
-          >FRNG LIMITED-CLIENT'S ACCOUNT</v-col
+          >{{item.acctName}}</v-col
         >
       </v-row>
       <v-row>
         <v-col cols="5" class="text-body-2">Account Number</v-col>
         <v-col
+        v-for="item in bankInfo" :key="item.id"
+          v-show="reveal"
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
-          >198832466</v-col
+          >{{item.acctNum}}</v-col
         >
       </v-row>
     </div>
@@ -89,14 +80,8 @@
 
             <template v-slot:item="{ item }">
               <img :src="item.icon" width="20px" class="mr-2" />
-              <span class="" style="font-size: 8px">{{ item.text }}</span>
+              <span style="font-size: 8px">{{ item.text }}</span>
             </template>
-            <!-- <template v-slot:prepend-item>
-              <img
-                src="@/assets/images/wema.png"
-                width="20px"
-              />
-            </template> -->
           </v-select>
         </v-col>
       </v-row>
@@ -113,6 +98,7 @@ export default {
     Chip,
   },
   data: () => ({
+    reveal: false,
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
       { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
@@ -131,7 +117,30 @@ export default {
       },
       { text: "OTHER BANK" },
     ],
+
+    bankName: [
+      { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg"), class: "my-2 pa-1", acctName: "FRNG LIMITED-CLIENT'S ACCOUNT", acctNum: "198832466", id: "001" },
+      { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png"), class: "mt-2 mb-4 pa-1", acctName: "FRNG LIMITED CLIENT ACCOUNT", acctNum: "122598731", id: "002" },
+      { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png"), class: "my-2 pa-1", acctName: "FRNG LIMITED (CLIENT ACCT)", acctNum: "1014414254", id: "003" },
+    ],
+
+    bankInfo: [],
   }),
+
+  methods: {
+    GTselected(params) {
+      this.bankInfo = this.bankName.filter(item => item.id === params)
+      this.reveal = true;
+    },
+
+    wemaselected() {
+      console.log("clicked wema bank");
+    },
+
+    zenithselected() {
+      console.log("clicked zenith bank");
+    },
+  },
 };
 </script>
 

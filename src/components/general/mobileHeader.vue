@@ -15,9 +15,5 @@
 </template>
 
 <style lang="scss" scoped>
-@media (min-width: 426px) {
-  .show-mobile {
-    display: none;
-  }
-}
+
 </style>

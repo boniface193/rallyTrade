@@ -124,10 +124,4 @@ html {
     }
   }
 }
-
-@media (min-width: 426px) {
-  .show-mobile {
-    display: none;
-  }
-}
 </style>
