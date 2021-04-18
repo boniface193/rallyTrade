@@ -1,17 +1,17 @@
 <template>
   <div class="mx-3-forSmallerScreen show-mobile">
-    <div class="text-center text-h5 font-weight-bold my-8">
+    <div class="text-center text-h5 my-8">
       <router-link :to="{ name: 'selectCurrency' }">
         <v-icon class="float-left">mdi-arrow-left</v-icon>
       </router-link>
       Banking Details
     </div>
     <v-row class="mb-1">
-      <v-col cols="3" class="text-body-1 pr-0">Amount</v-col>
-      <v-col cols="2"><Chip :currencyChip="'mdi-currency-ngn'" /> </v-col>
-      <v-col
-        cols="7"
-        class="text-h6 pl-0 pt-2 grey--text darken-4 font-weight-bold"
+      <v-col cols="3" class="text-body-1">Amount</v-col>
+      <v-col cols="1" class="px-0"
+        ><Chip :currencyChip="'mdi-currency-ngn'" :width="'width: 25px;'" fontSize="font-size: 19px;" padding="pa-1" />
+      </v-col>
+      <v-col cols="7" class="text-h6 pt-2 grey--text darken-4 font-weight-bold"
         >10,000,000</v-col
       >
     </v-row>
@@ -23,12 +23,12 @@
           class="d-flex justify-center"
           v-for="item in bankName"
           :key="item.id"
-          @click="GTselected(item.id)"
+          @click="BankInfo(item.id)"
         >
           <Gen-Card class="text-center" :link="true">
             <img
               width="50%"
-              class=" forSmallerScreen"
+              class="forSmallerScreen"
               :class="item.class"
               :src="item.icon"
               alt=""
@@ -42,21 +42,23 @@
       <v-row>
         <v-col cols="5" class="text-body-2">Account Name</v-col>
         <v-col
-        v-for="item in bankInfo" :key="item.id"
+          v-for="item in bankInfo"
+          :key="item.id"
           v-show="reveal"
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
-          >{{item.acctName}}</v-col
+          >{{ item.acctName }}</v-col
         >
       </v-row>
       <v-row>
         <v-col cols="5" class="text-body-2">Account Number</v-col>
         <v-col
-        v-for="item in bankInfo" :key="item.id"
+          v-for="item in bankInfo"
+          :key="item.id"
           v-show="reveal"
           cols="7"
           class="grey--text darken-4 font-weight-bold text-caption"
-          >{{item.acctNum}}</v-col
+          >{{ item.acctNum }}</v-col
         >
       </v-row>
     </div>
@@ -80,7 +82,7 @@
 
             <template v-slot:item="{ item }">
               <img :src="item.icon" width="20px" class="mr-2" />
-              <span style="font-size: 8px">{{ item.text }}</span>
+              <span class="text-caption">{{ item.text }}</span>
             </template>
           </v-select>
         </v-col>
@@ -119,26 +121,39 @@ export default {
     ],
 
     bankName: [
-      { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg"), class: "my-2 pa-1", acctName: "FRNG LIMITED-CLIENT'S ACCOUNT", acctNum: "198832466", id: "001" },
-      { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png"), class: "mt-2 mb-4 pa-1", acctName: "FRNG LIMITED CLIENT ACCOUNT", acctNum: "122598731", id: "002" },
-      { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png"), class: "my-2 pa-1", acctName: "FRNG LIMITED (CLIENT ACCT)", acctNum: "1014414254", id: "003" },
+      {
+        text: "GTbank",
+        icon: require("@/assets/images/bank-logo/gtbank.jpg"),
+        class: "my-2 pa-1",
+        acctName: "FRNG LIMITED-CLIENT'S ACCOUNT",
+        acctNum: "198832466",
+        id: "001",
+      },
+      {
+        text: "Wema",
+        icon: require("@/assets/images/bank-logo/wema.png"),
+        class: "mt-2 mb-4 pa-1",
+        acctName: "FRNG LIMITED CLIENT ACCOUNT",
+        acctNum: "122598731",
+        id: "002",
+      },
+      {
+        text: "Zenith",
+        icon: require("@/assets/images/bank-logo/zenith.png"),
+        class: "my-2 pa-1",
+        acctName: "FRNG LIMITED (CLIENT ACCT)",
+        acctNum: "1014414254",
+        id: "003",
+      },
     ],
 
     bankInfo: [],
   }),
 
   methods: {
-    GTselected(params) {
-      this.bankInfo = this.bankName.filter(item => item.id === params)
+    BankInfo(params) {
+      this.bankInfo = this.bankName.filter((item) => item.id === params);
       this.reveal = true;
-    },
-
-    wemaselected() {
-      console.log("clicked wema bank");
-    },
-
-    zenithselected() {
-      console.log("clicked zenith bank");
     },
   },
 };
@@ -160,7 +175,6 @@ $orange: #fb8c00;
   outline: none;
   box-sizing: border-box;
   font-family: $font-family;
-  color: $body-color;
 }
 
 html {
@@ -183,5 +197,15 @@ html {
   .mxforSmallerScreen {
     margin: 0;
   }
+}
+.display-1,
+.v-application .display-2 {
+  font-weight: lighter;
+  font-family: Roboto, sans-serif !important;
+}
+.v-application .display-1 {
+  font-size: 1.5rem !important;
+  line-height: 1.5rem;
+  letter-spacing: 0.0073529412em !important;
 }
 </style>

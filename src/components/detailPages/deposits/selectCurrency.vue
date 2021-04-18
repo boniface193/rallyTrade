@@ -17,9 +17,7 @@
             @click="select1"
             v-click-outside="onClickOutside"
           >
-            <!-- <v-card-actions> -->
             <v-icon size="70">mdi-currency-ngn</v-icon>
-            <!-- </v-card-actions> -->
           </v-card>
         </v-col>
         <v-col cols="6" class="d-flex justify-center"
@@ -31,43 +29,43 @@
       <div class="text-h5 mt-8" v-if="reveal">Select Deposit Type</div>
     </div>
 
-    <v-expand-transition>
-      <v-row class="d-flex justify-center mx-3 mt-8 mb-16" v-if="reveal">
-        <v-col cols="12" class="d-flex justify-center">
-          <Gen-Card
-            :width="110"
-            class="text-center"
-            :link="true"
-            :to="{ name: 'bankDetails' }"
-          >
-            <img width="70%" src="@/assets/images/credit-card.svg" alt="" />
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
-          </Gen-Card></v-col
+    <v-row class="d-flex justify-center mx-3 mt-8 mb-16" v-if="reveal">
+      <v-col cols="12" class="d-flex justify-center">
+        <Gen-Card
+          :width="110"
+          class="text-center"
+          :link="true"
+          :to="{ name: 'bankDetails' }"
         >
-        <v-col cols="6" class="d-flex justify-center">
-          <Gen-Card
-            :width="125"
-            class="text-center"
-            :link="true"
-            :to="{ name: 'bankDetails' }"
-          >
-            <img width="70%" src="@/assets/images/wire-deposite.svg" alt="" />
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
-          </Gen-Card></v-col
+          <img
+            width="70%"
+            src="@/assets/images/credit-card.svg"
+            alt=""
+          /> <span class="text-h6">INSTANT</span></Gen-Card
+      ></v-col>
+      <v-col cols="6" class="d-flex justify-center">
+        <Gen-Card
+          :width="125"
+          class="text-center"
+          :link="true"
+          :to="{ name: 'bankDetails' }"
         >
-        <v-col cols="6" class="d-flex justify-center">
-          <Gen-Card
-            :width="125"
-            class="text-center"
-            :link="true"
-            :to="{ name: 'bankDetails' }"
-          >
-            <img width="70%" src="@/assets/images/teller.svg" alt="" />
-            <!-- <v-icon size="70">mdi-currency-ngn</v-icon> -->
-          </Gen-Card></v-col
+          <img
+            width="70%"
+            src="@/assets/images/wire-deposite.svg"
+            alt=""
+          /> <span class="text-h6">WIRE</span></Gen-Card
+      ></v-col>
+      <v-col cols="6" class="d-flex justify-center">
+        <Gen-Card
+          :width="125"
+          class="text-center"
+          :link="true"
+          :to="{ name: 'bankDetails' }"
         >
-      </v-row>
-    </v-expand-transition>
+          <img width="70%" src="@/assets/images/teller.svg" alt="" /> <span class="text-h6">TELLER</span></Gen-Card
+      ></v-col>
+    </v-row>
   </div>
 </template>
 
@@ -89,13 +87,6 @@ export default {
       this.reveal = true;
       this.dark = true;
       this.color = "#fb8c00";
-    },
-
-    select2() {
-      // console.log("clicked")
-      // // this.reveal = true;
-      // this.dark = true;
-      // this.color = "#fb8c00";
     },
 
     onClickOutside() {

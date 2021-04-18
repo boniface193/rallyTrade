@@ -1,21 +1,27 @@
 <template>
-    <div class="chip d-flex justify-center">
-      <v-icon class="text-center white--text">{{currencyChip}}</v-icon>
-    </div>
+  <div class="chip d-flex justify-center" :style="width">
+    <v-icon
+      class="white--text"
+      :class="padding"
+      :size="size"
+      :style="fontSize"
+      >{{ currencyChip }}</v-icon
+    >
+  </div>
 </template>
 
 <script>
 export default {
-    props: ["currencyChip"]
+  props: ["currencyChip", "size", "width", "padding", "fontSize"],
 };
 </script>
 
 <style lang="scss" scoped>
 .chip {
   float: left;
-  width: 30px;
+  width: 25px;
   shape-outside: circle();
   clip-path: circle();
-  background: lightblue;
+  background: #9ee8ff;
 }
 </style>

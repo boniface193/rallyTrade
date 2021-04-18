@@ -1,6 +1,10 @@
 <template>
   <div class="ma-4 show-mobile">
-    <v-row>
+    <router-link :to="{ name: 'deposit' }" style="text-decoration: none">
+      <v-icon class="">mdi-arrow-left</v-icon>
+    </router-link>
+
+    <v-row class="mt-8">
       <v-col cols="6" class="px-0">
         <v-row>
           <v-col cols="6" class="pr-0 text-center">
@@ -10,97 +14,122 @@
             />
           </v-col>
           <v-col cols="6" class="pl-0 mt-2"
-            ><div class="d-flex text-body-1">
+            ><div class="d-flex text-normal">
               {{ depositItem.depositType }} DEPOSIT
             </div></v-col
           >
         </v-row>
       </v-col>
       <v-col cols="6"
-        ><div class="mt-2">
-          <span>Status</span> <br />
+        ><div>
+          <span class="text-body-1 font-weight-light" v-if="depositItem.status"
+            >Status</span
+          >
+          <br />
           <span
             ><v-icon class="pb-1" :color="depositItem.statusColor">{{
               depositItem.status
             }}</v-icon>
-            <span v-if="depositItem.active" class="success--text mx-2"
-              >APPROVED</span
+            <span
+              class="mx-2 text-normal-light"
+              :class="`${depositItem.statusColor}--text`"
+              >{{ depositItem.statusText }}</span
             ></span
           >
         </div></v-col
       >
     </v-row>
 
-    <v-row>
-      <v-col cols="4">
-        <div>Account</div>
-        <div>Amount</div>
-        <div>Reference</div>
-        <div>From</div>
-        <div>To</div>
+    <v-row class="">
+      <v-col
+        cols="4"
+        style="font-weight: 300; font-size: 20px; line-height: 23px"
+      >
+        <div class="mb-1">Account</div>
+        <div class="mb-1">Amount</div>
+        <div class="mb-1">Reference</div>
+        <div class="mb-1">From</div>
+        <div class="mb-1">To</div>
       </v-col>
       <v-col cols="4" class="font-weight-bold">
-        <div>859647</div>
-        <div>10,000,000</div>
-        <div>1587469</div>
-        <div>GTB</div>
-        <div>ZENITH</div>
+        <div class="mb-1">859647</div>
+        <div class="mb-1">10,000,000</div>
+        <div class="mb-1">1587469</div>
+        <div class="mb-1">GTB</div>
+        <div class="mb-1">ZENITH</div>
       </v-col>
-      <v-col cols="4" class="">
-        <div
-          class="icon-text text-center pa-2 mt-4"
-          style="border-radius: 50%; width: 70%"
-        >
-          <v-icon class="text-center" size="45" color="black">{{
-            depositItem.moneySign
-          }}</v-icon>
+      <v-col cols="4">
+        <div class="text-center">
+          <Chip
+            :currencyChip="depositItem.moneySign"
+            :width="'width: 60px'"
+            fontSize="font-size: 45px;"
+            padding="pa-6"
+          />
         </div>
       </v-col>
     </v-row>
 
     <v-divider class="mt-8"></v-divider>
-    <div>
+
+    <!-- once success -->
+    <div v-show="depositItem.bonus">
       <div class="float-right mt-2">BONUS</div>
-      <div class="d-flex justify-center pt-8">
-        <div class="icon-text text-center pa-3 mt-4" style="border-radius: 50%">
-          <v-icon
-            class="text-center font-weight-bold"
-            size="30"
-            color="black"
-            >{{ depositItem.moneySign }}</v-icon
-          >
+      <div class="text-center pt-8">
+        <div class="d-flex justify-center">
+          <Chip
+            :currencyChip="depositItem.moneySign"
+            :width="'width: 40px'"
+            fontSize="font-size: 25px;"
+            padding="pa-6"
+            class="text-center"
+          />
+          <div class="mt-4 ml-2 font-weight-bold" style="font-size: 30px">
+            500,000
+          </div>
         </div>
-        <div class="mt-8 ml-2 font-weight-bold" style="font-size: 30px">
-          500,000
+        <div style="font-weight: 300; font-size: 20px; line-height: 23px">
+          First Deposit Bonus
         </div>
-      </div>
-      <div class="text-center">
-        <div>First Deposit Bonus</div>
         <v-btn
           color="success"
-          class="text-capitalize text-body-1 my-2"
+          class="text-capitalize mt-5"
+          style="font-weight: 400; font-size: 20px; line-height: 23px"
           depressed
           >Claim Bonus!</v-btn
         >
       </div>
     </div>
+
+    <!-- upload -->
+    <div>
+      <div class="float-right mt-2">UPLOAD SLIP</div>
+    </div>
+
     <v-divider class="mt-8"></v-divider>
-    <div class="left mt-2">HISTORY</div>
-    <div v-for="item in history" :key="item.id">
-      <div class="d-flex mt-3">
-        <v-chip class="rounded mr-3" apppend small>
-          {{ item.time }}
-        </v-chip>
-        <div class="text-h6">{{ item.status }}</div>
+    <div v-show="depositItem.bonus">
+      <div class="mt-2">HISTORY</div>
+
+      <div v-for="item in history" :key="item.id">
+        <div class="d-flex mt-3">
+          <v-chip class="rounded mr-3 pb-0" apppend small>
+            {{ item.time }}
+          </v-chip>
+          <div class="text-h6">{{ item.status }}</div>
+        </div>
+        <div v-if="success == false">{{ item.errorMsg }}</div>
       </div>
-      <div v-if="success == false">{{ item.errorMsg }}</div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Chip from "@/components/general/currencyChip.vue";
 export default {
+  components: {
+    Chip,
+  },
   data() {
     return {
       depositItem: {},
@@ -112,8 +141,18 @@ export default {
           errorMsg: "hello",
           success: true,
         },
-        // {time: '12:35', status: '', errorMsg: '', success: true},
-        // {time: '12:40', status: '', errorMsg: '', success: false},
+        {
+          time: "12:35",
+          status: "Deposit Created",
+          errorMsg: "",
+          success: true,
+        },
+        {
+          time: "12:40",
+          status: "Deposit Created",
+          errorMsg: "",
+          success: false,
+        },
         // {time: '12:50', status: '', errorMsg: '', success: false},
         // {time: '12:55', status: '', errorMsg: '', success: true},
         // {time: '1:00', status: '', errorMsg: '', success: true}
@@ -147,15 +186,31 @@ export default {
 
 <style lang="scss" scoped>
 $body-color: #999a9e;
-$font-family: "Inter", sans-serif;
-.icon-text {
-  background-color: #9ee8ff;
-}
+$font-family: Roboto "Inter", sans-serif;
+
 * {
   outline: none;
   box-sizing: border-box;
   color: $body-color;
   font-family: $font-family;
+}
+.text-normal {
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.text-normal-light {
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 @media (min-width: 426px) {
   .show-mobile {
