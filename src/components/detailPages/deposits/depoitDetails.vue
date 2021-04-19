@@ -142,18 +142,52 @@
         </div>
       </div>
 
-      <div>
-        <div class="text-caption font-weight-bold">image should</div>
-        <div>minimixed resolution 800 x 800</div>
-        <div>Image should not exceed 20MB</div>
-      </div>
+      <v-row>
+        <v-col cols="6">
+          <div>
+            <div class="text-caption font-weight-bold">image should</div>
+            <div class="error--text" style="font-size: 70%">
+              - minimixed resolution 800 x 800
+            </div>
+            <div class="error--text" style="font-size: 70%">
+              - Image should not exceed 20MB
+            </div>
+          </div>
 
-      <div>
-        SLIP should contain:
-        <span>your Name</span>
-        <span>Amount</span>
-        <span>Rally Account Number</span>
-      </div>
+          <div class="mt-2">
+            <div class="text-caption font-weight-bold">
+              SLIP should contain:
+            </div>
+            <div class="error--text" style="font-size: 70%">- your Name</div>
+            <div class="error--text" style="font-size: 70%">- Amount</div>
+            <div class="error--text" style="font-size: 70%">
+              - Rally Account Number
+            </div>
+          </div>
+
+          <div class="text-caption d-flex">
+            <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
+            <div class="mt-1 mx-1" style="font-size: 70%">
+              File Name goes here
+            </div>
+            <v-icon size="18" class="mt-1">mdi-close-circle-outline</v-icon>
+          </div>
+        </v-col>
+        <v-col cols="6">
+          <div class="my-8 d-flex justify-space-around">
+            <v-file-input hide-input accept="image/*"></v-file-input>
+            <!-- <img src="@/assets/images/upload.svg" width="30%"/> -->
+            <img src="@/assets/images/camera.svg" width="30%" />
+          </div>
+          <v-btn
+            block
+            depressed
+            class="white--text text-caption"
+            color="#9B9FFF"
+            >Upload</v-btn
+          >
+        </v-col>
+      </v-row>
     </div>
 
     <div v-show="depositItem.bonus">
@@ -170,6 +204,7 @@
         <!-- <div v-if="success == false">{{ item.errorMsg }}</div> -->
       </div>
     </div>
+    <div class="py-16"></div>
   </div>
 </template>
 
