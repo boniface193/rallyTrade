@@ -175,8 +175,8 @@
         </v-col>
         <v-col cols="6">
           <div class="my-8 d-flex justify-space-around">
-            <v-file-input hide-input accept="image/*"></v-file-input>
-            <!-- <img src="@/assets/images/upload.svg" width="30%"/> -->
+            <!-- <v-file-input hide-input accept="image/*"></v-file-input> -->
+            <img src="@/assets/images/upload.svg" width="30%"/>
             <img src="@/assets/images/camera.svg" width="30%" />
           </div>
           <v-btn
