@@ -74,7 +74,7 @@
 
     <!-- once success -->
     <div v-show="depositItem.bonus">
-      <div class="float-right mt-2">BONUS</div>
+      <div class="float-right mt-2 divider-header">BONUS</div>
       <div class="text-center pt-8">
         <div class="d-flex justify-center">
           <Chip
@@ -102,13 +102,63 @@
     </div>
 
     <!-- upload -->
-    <div>
-      <div class="float-right mt-2">UPLOAD SLIP</div>
+    <div class="mt-4" v-show="depositItem.statusText == 'UPLOAD'">
+      <div class="float-right divider-header">UPLOAD SLIP</div>
+      <div>
+        <div class="pt-3">
+          <span>Name on the SLIP</span>
+          <input
+            type="text"
+            class="text-normal pa-1"
+            style="border: solid 1px #999a9e; width: 100%"
+          />
+        </div>
+
+        <div class="pt-3">
+          <span>SLIP Number</span>
+          <input
+            type="text"
+            class="text-normal pa-1"
+            style="border: solid 1px #999a9e; width: 100%"
+          />
+        </div>
+
+        <div class="pt-3">
+          <span>Amount</span>
+          <div class="d-flex">
+            <Chip
+              :currencyChip="depositItem.moneySign"
+              :width="'width: 30px'"
+              fontSize="font-size: 20px;"
+              padding=""
+              class="text-center"
+            />
+            <input
+              type="text"
+              class="text-normal pa-1 ml-2"
+              style="border: solid 1px #999a9e; width: 100%"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="text-caption font-weight-bold">image should</div>
+        <div>minimixed resolution 800 x 800</div>
+        <div>Image should not exceed 20MB</div>
+      </div>
+
+      <div>
+        SLIP should contain:
+        <span>your Name</span>
+        <span>Amount</span>
+        <span>Rally Account Number</span>
+      </div>
     </div>
 
-    <v-divider class="mt-8"></v-divider>
     <div v-show="depositItem.bonus">
-      <div class="mt-2">HISTORY</div>
+      <v-divider class="mt-8"></v-divider>
+      <div class="mt-2 divider-header">HISTORY</div>
 
       <div v-for="item in history" :key="item.id">
         <div class="d-flex mt-3">
@@ -117,7 +167,7 @@
           </v-chip>
           <div class="text-h6">{{ item.status }}</div>
         </div>
-        <div v-if="success == false">{{ item.errorMsg }}</div>
+        <!-- <div v-if="success == false">{{ item.errorMsg }}</div> -->
       </div>
     </div>
   </div>
@@ -170,16 +220,6 @@ export default {
       (item) => item.id == this.$route.params.id
     );
     this.depositItem = deposit;
-    console.log(deposit);
-    // .find((item) => {
-    //       return item.id == this.id;
-    //     })
-    // console.log("chiCard", this.chipCard);
-    // (id) => {
-    //     return state.chipCard.find(items => items.id == id) }
-    // console.log(this.$store.getters["trading/getChipCard"]);
-    // console.log(this.$route.params.id);
-    // console.log(this.$store.dispatch("trading/getChipCard"));
   },
 };
 </script>
@@ -211,6 +251,11 @@ $font-family: Roboto "Inter", sans-serif;
   line-height: 21px;
   letter-spacing: 0em;
   text-align: left;
+}
+.divider-header {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
 }
 @media (min-width: 426px) {
   .show-mobile {

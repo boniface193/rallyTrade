@@ -11,8 +11,8 @@
       <v-col cols="1" class="px-0"
         ><Chip :currencyChip="'mdi-currency-ngn'" :width="'width: 25px;'" fontSize="font-size: 19px;" padding="pa-1" />
       </v-col>
-      <v-col cols="7" class="text-h6 pt-2 grey--text darken-4 font-weight-bold"
-        >10,000,000</v-col
+      <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold"
+        ><v-text-field label="Amount" class="pa-0"></v-text-field></v-col
       >
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
