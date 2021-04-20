@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="show-mobile">
-      <Mobile-Header @click.native="selectCurrency" />
+      <Mobile-Header
+        @click.native="selectCurrency"
+        title="Deposit"
+        colors="success"
+        fixed_top="true"
+      />
       <div class="my-16 pt-5 mr-1">
         <div class="mt-7" v-for="item in chipCard" :key="item.id">
           <Chip-Card

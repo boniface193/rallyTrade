@@ -9,11 +9,16 @@
     <v-row class="mb-1">
       <v-col cols="3" class="text-body-1">Amount</v-col>
       <v-col cols="1" class="px-0"
-        ><Chip :currencyChip="'mdi-currency-ngn'" :width="'width: 25px;'" fontSize="font-size: 19px;" padding="pa-1" />
+        ><Chip
+          :currencyChip="'mdi-currency-ngn'"
+          :width="'width: 25px;'"
+          fontSize="font-size: 19px;"
+          padding="pa-1"
+        />
       </v-col>
       <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold"
-        ><v-text-field label="Amount" class="pa-0"></v-text-field></v-col
-      >
+        ><v-text-field label="Amount" class="pa-0"></v-text-field
+      ></v-col>
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
     <div>
@@ -39,26 +44,38 @@
       </v-row>
     </div>
     <div>
+      <v-snackbar
+        class="text-caption"
+        v-model="snackbar"
+        :timeout="timeout"
+        centered
+      >
+        {{ text }}
+      </v-snackbar>
       <v-row>
-        <v-col cols="5" class="text-body-2">Account Name</v-col>
+        <v-col cols="5" class="text-body-2 pb-0">Account Name</v-col>
         <v-col
+          @click="copyName"
           v-for="item in bankInfo"
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption"
-          >{{ item.acctName }}</v-col
+          class="grey--text darken-4 font-weight-bold text-caption pb-0"
+          >{{ item.acctName }}
+          <v-icon color="active_link" size="15">mdi-content-copy</v-icon></v-col
         >
       </v-row>
       <v-row>
-        <v-col cols="5" class="text-body-2">Account Number</v-col>
+        <v-col cols="5" class="text-body-2 pt-1">Account Number</v-col>
         <v-col
+          @click="copyNumber"
           v-for="item in bankInfo"
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption"
-          >{{ item.acctNum }}</v-col
+          class="grey--text darken-4 font-weight-bold text-caption pt-1"
+          >{{ item.acctNum }}
+          <v-icon color="active_link" size="15">mdi-content-copy</v-icon></v-col
         >
       </v-row>
     </div>
@@ -88,19 +105,100 @@
         </v-col>
       </v-row>
     </div>
+
+    <v-row>
+      <v-col cols="12">
+        <Gen-Card class="rounded-0 pb-3">
+          <v-app-bar
+            :fixed="fixed_top"
+            color="orange darken-4"
+            width=""
+            class="elevation-0 white--text"
+            dense
+          >
+            <v-icon class="float-left white--text" size="15"
+              >mdi-arrow-left</v-icon
+            >
+            <v-spacer></v-spacer>
+            <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
+            <div class="px-6"></div>
+          </v-app-bar>
+
+          <div>
+            <v-tabs
+              active-class="orange darken-4 white--text"
+              hide-slider
+            >
+              <v-tab class="" style="font-size: 10px">Save Beneficials</v-tab>
+              <v-tab class="" style="font-size: 10px">New Beneficials</v-tab>
+            </v-tabs>
+            <div class="mx-3 my-3">
+              <v-text-field
+                label="select transfer type"
+                append-icon="mdi-menu-down"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <v-text-field
+                label="select Account to debit"
+                append-icon="mdi-menu-down"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <v-text-field
+                label="select transfer type"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <v-text-field
+                label="select transfer type"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <v-text-field
+                label="select transfer type"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <div>Remark Optional</div>
+
+              <v-text-field
+                label="select transfer type"
+                dense
+                color="orange darken-4"
+              ></v-text-field>
+
+              <v-btn color="orange darken-4 rounded-0 elevation-0"  block dark>Continue</v-btn>
+            </div>
+          </div>
+        </Gen-Card>
+      </v-col>
+      <v-col cols="4"> hello </v-col>
+    </v-row>
+    <div class="py-10"></div>
   </div>
 </template>
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
 import Chip from "@/components/general/currencyChip.vue";
+// import Header from "@/components/general/mobileHeader.vue"
 export default {
   components: {
     GenCard,
     Chip,
+    // Header
   },
   data: () => ({
     reveal: false,
+    timeout: 2000,
+    snackbar: false,
+    text: "Copied to clipboard",
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
       { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
@@ -154,6 +252,22 @@ export default {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);
       this.reveal = true;
+    },
+
+    copyName() {
+      this.snackbar = true;
+      navigator.clipboard.writeText(this.bankInfo[0].acctName);
+      // let textToCopy = this.$refs.textToCopy.$el.querySelector(
+      //   ".textToBeCopied"
+      // );
+      // console.log(textToCopy);
+      // textToCopy.select();
+      // document.execCommand("copy");
+    },
+
+    copyNumber() {
+      this.snackbar = true;
+      navigator.clipboard.writeText(this.bankInfo[0].acctNum);
     },
   },
 };
