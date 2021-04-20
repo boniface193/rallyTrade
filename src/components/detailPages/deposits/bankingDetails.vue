@@ -106,80 +106,94 @@
       </v-row>
     </div>
 
-    <v-row>
-      <v-col cols="12">
-        <Gen-Card class="rounded-0 pb-3">
-          <v-app-bar
-            :fixed="fixed_top"
-            color="orange darken-4"
-            width=""
-            class="elevation-0 white--text"
-            dense
+    <!-- <v-row>
+      <v-col cols="8"> -->
+    <div class="d-flex">
+      <Gen-Card class="rounded-0 pb-3" width="250">
+        <v-app-bar
+          :fixed="fixed_top"
+          color="orange darken-4"
+          width=""
+          class="elevation-0 white--text"
+          dense
+        >
+          <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
+          <v-spacer></v-spacer>
+          <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
+          <div class="px-10"></div>
+        </v-app-bar>
+
+        <div class="mx-3 my-3">
+          <v-tabs
+            disabled
+            active-class="orange darken-4 white--text"
+            hide-slider
+            height="30"
+            grow
           >
-            <v-icon class="float-left white--text" size="15"
-              >mdi-arrow-left</v-icon
+            <v-tab class="" style="font-size: 10px" dark
+              >Save <br />
+              Beneficials</v-tab
             >
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-            <div class="px-6"></div>
-          </v-app-bar>
-
-          <div>
-            <v-tabs
-              active-class="orange darken-4 white--text"
-              hide-slider
+            <v-tab class="" style="font-size: 10px" dark
+              >New <br />
+              Beneficials</v-tab
             >
-              <v-tab class="" style="font-size: 10px">Save Beneficials</v-tab>
-              <v-tab class="" style="font-size: 10px">New Beneficials</v-tab>
-            </v-tabs>
-            <div class="mx-3 my-3">
-              <v-text-field
-                label="select transfer type"
-                append-icon="mdi-menu-down"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+          </v-tabs>
+          <div class="mt-5">
+            <v-text-field
+              label="select transfer type"
+              append-icon="mdi-menu-down"
+              dense
+              color="orange darken-4"
+              class="text-caption"
+            ></v-text-field>
 
-              <v-text-field
-                label="select Account to debit"
-                append-icon="mdi-menu-down"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+            <v-text-field
+              label="select Account to debit"
+              append-icon="mdi-menu-down"
+              dense
+              color="orange darken-4"
+              class="text-caption"
+            ></v-text-field>
 
-              <v-text-field
-                label="select transfer type"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+            <v-text-field
+              dense
+              color=""
+              class="text-caption"
+            ></v-text-field>
 
-              <v-text-field
-                label="select transfer type"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+            <v-text-field
+              dense
+              color="orange darken-4"
+              class="text-caption"
+            ></v-text-field>
 
-              <v-text-field
-                label="select transfer type"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+            <v-text-field
+              dense
+              color="orange darken-4"
+              class="text-caption"
+            ></v-text-field>
 
-              <div>Remark Optional</div>
+            <div class="my-2 text-caption">Remark Optional</div>
 
-              <v-text-field
-                label="select transfer type"
-                dense
-                color="orange darken-4"
-              ></v-text-field>
+            <v-text-field
+              dense
+              color="orange darken-4 mt-2"
+              class="text-caption"
+            ></v-text-field>
 
-              <v-btn color="orange darken-4 rounded-0 elevation-0"  block dark>Continue</v-btn>
-            </div>
+            <v-btn color="orange darken-4 rounded-0 elevation-0" block dark
+              >Continue</v-btn
+            >
           </div>
-        </Gen-Card>
-      </v-col>
+        </div>
+      </Gen-Card>
+      <div class="ml-2">hello world</div>
+    </div>
+    <!-- </v-col>
       <v-col cols="4"> hello </v-col>
-    </v-row>
+    </v-row> -->
     <div class="py-10"></div>
   </div>
 </template>
@@ -302,6 +316,9 @@ html {
 .mxforSmallerScreen {
   margin: 5%;
 }
+// .text-smaller{
+//   font-size: 8px !important;
+// }
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {
     margin: 5px;
