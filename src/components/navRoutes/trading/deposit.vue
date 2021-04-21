@@ -5,7 +5,7 @@
         @click.native="selectCurrency"
         title="Deposit"
         colors="success"
-        fixed_top="true"
+        :fixed_top="true"
       />
       <div class="my-16 pt-5 mr-1">
         <div class="mt-7" v-for="item in chipCard" :key="item.id">
@@ -25,6 +25,8 @@
             :depositType="item.depositType"
             :outlined="item.outlined"
             :msg="item.msg"
+            :padding="item.outlined ? 'py-3' : ''"
+            :addPaddingToChip="item.outlined? 'white' : ''"
           >
           </Chip-Card>
         </div>

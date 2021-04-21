@@ -2,8 +2,9 @@
   <div>
     <v-chip
       :color="colors"
-      :outlined="outlined"
       class="rounded chip z-index"
+      :class="addPaddingToChip"
+      style=""
       apppend
       small
     >
@@ -23,7 +24,7 @@
         </template>
       </v-badge>
       <div class="mx-3">
-        <v-row>
+        <v-row :class="padding">
           <v-col cols="3" class="text-center">
             <div class="d-flex justify-center">
               <img
@@ -91,6 +92,8 @@ export default {
     "outlined",
     "msg",
     "statu",
+    "padding",
+    "addPaddingToChip"
   ],
 };
 </script>
@@ -134,7 +137,7 @@ html {
 .border-all {
   margin-left: 40%;
   position: absolute;
-  top: 18%;
+  top: 20%;
 }
 
 .v-btn--outlined {
@@ -148,7 +151,7 @@ html {
   }
   .border-all {
     margin-left: 35%;
-    top: 17.3%;
+    top: 19%;
   }
   .v-btn:not(.v-btn--round).v-size--small {
     height: 22px;
@@ -162,9 +165,7 @@ html {
 
 @media (max-width: 320px) {
   .border-all {
-        margin-left: 30%;
-
+    margin-left: 30%;
   }
 }
-
 </style>

@@ -17,7 +17,12 @@
         />
       </v-col>
       <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold"
-        ><v-text-field label="Amount" class="pa-0"></v-text-field
+        ><v-text-field
+          label="Amount"
+          v-model="amount"
+          @keyup="addCommaToValue"
+          class="pa-0"
+        ></v-text-field
       ></v-col>
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
@@ -109,9 +114,9 @@
     <!-- <v-row>
       <v-col cols="8"> -->
     <div class="d-flex">
-      <Gen-Card class="rounded-0 pb-3" width="250">
+      <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
         <v-app-bar
-          :fixed="fixed_top"
+          :fixed="false"
           color="orange darken-4"
           width=""
           class="elevation-0 white--text"
@@ -120,7 +125,7 @@
           <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
           <v-spacer></v-spacer>
           <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-          <div class="px-10"></div>
+          <div class="px-16"></div>
         </v-app-bar>
 
         <div class="mx-3 my-3">
@@ -161,18 +166,21 @@
               dense
               color=""
               class="text-caption"
+              id="v-step-1"
             ></v-text-field>
 
             <v-text-field
               dense
               color="orange darken-4"
               class="text-caption"
+              id="v-step-2"
             ></v-text-field>
 
             <v-text-field
               dense
               color="orange darken-4"
               class="text-caption"
+              id="v-step-3"
             ></v-text-field>
 
             <div class="my-2 text-caption">Remark Optional</div>
@@ -181,6 +189,7 @@
               dense
               color="orange darken-4 mt-2"
               class="text-caption"
+              id="v-step-4"
             ></v-text-field>
 
             <v-btn color="orange darken-4 rounded-0 elevation-0" block dark
@@ -189,20 +198,21 @@
           </div>
         </div>
       </Gen-Card>
-      <div class="ml-2">hello world</div>
     </div>
-    <!-- </v-col>
-      <v-col cols="4"> hello </v-col>
-    </v-row> -->
+    <div class="d-flex justify-end">
+    <v-btn color="success rounded-0 elevation-0 text-caption" dark
+      >Submit</v-btn
+    ></div>
     <div class="py-10"></div>
+    <v-tour name="myTour" :steps="steps"></v-tour>
   </div>
 </template>
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
 import Chip from "@/components/general/currencyChip.vue";
-// import Header from "@/components/general/mobileHeader.vue"
 export default {
+  name: "my-tour",
   components: {
     GenCard,
     Chip,
@@ -212,6 +222,8 @@ export default {
     reveal: false,
     timeout: 2000,
     snackbar: false,
+    amount: "100",
+    changedValued: "",
     text: "Copied to clipboard",
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
@@ -260,7 +272,34 @@ export default {
     ],
 
     bankInfo: [],
+
+    steps: [
+      {
+        target: "#v-step-1",
+        content: "<span class='text-caption'>Rally Account Name!</span>",
+        // params: {
+        //       placement: 'right' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        //     }
+      },
+      {
+        target: "#v-step-2",
+        content: "<span class='text-caption'>Rally Account Number!</span>",
+      },
+      {
+        target: "#v-step-3",
+        content: "<span class='text-caption'>Amount to transfer!</span>",
+      },
+      {
+        target: "#v-step-4",
+        content:
+          "<span class='text-caption'>Rally Trade Account Number!</span>",
+      },
+    ],
   }),
+
+  mounted: function () {
+    this.$tours["myTour"].start();
+  },
 
   methods: {
     BankInfo(params) {
@@ -282,6 +321,11 @@ export default {
     copyNumber() {
       this.snackbar = true;
       navigator.clipboard.writeText(this.bankInfo[0].acctNum);
+    },
+
+    addCommaToValue() {
+      this.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      console.log(this.changedValued);
     },
   },
 };

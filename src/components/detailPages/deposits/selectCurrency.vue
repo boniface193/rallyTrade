@@ -30,40 +30,18 @@
     </div>
 
     <v-row class="d-flex justify-center mx-3 mt-8 mb-16" v-if="reveal">
-      <v-col cols="12" class="d-flex justify-center">
+      <v-col :cols="item.cols" class="d-flex justify-center" v-for="item in depositeType" :key="item.id">
         <Gen-Card
-          :width="110"
+          :width="item.size"
           class="text-center"
           :link="true"
-          :to="{ name: 'bankDetails' }"
+          :to="{ name: item.routes }"
         >
           <img
             width="70%"
-            src="@/assets/images/credit-card.svg"
+            :src="item.image"
             alt=""
-          /> <span class="text-h6">INSTANT</span></Gen-Card
-      ></v-col>
-      <v-col cols="6" class="d-flex justify-center">
-        <Gen-Card
-          :width="125"
-          class="text-center"
-          :link="true"
-          :to="{ name: 'bankDetails' }"
-        >
-          <img
-            width="70%"
-            src="@/assets/images/wire-deposite.svg"
-            alt=""
-          /> <span class="text-h6">WIRE</span></Gen-Card
-      ></v-col>
-      <v-col cols="6" class="d-flex justify-center">
-        <Gen-Card
-          :width="125"
-          class="text-center"
-          :link="true"
-          :to="{ name: 'bankDetails' }"
-        >
-          <img width="70%" src="@/assets/images/teller.svg" alt="" /> <span class="text-h6">TELLER</span></Gen-Card
+          /> <div class="text-h6">{{item.text}}</div></Gen-Card
       ></v-col>
     </v-row>
   </div>
@@ -80,6 +58,11 @@ export default {
       reveal: false,
       dark: false,
       color: "",
+      depositeType: [
+        {cols: 12, size: "112", routes: "", image: require("@/assets/images/credit-card.svg"), text: "INSTANT"},
+        {cols: 6, size: "125", routes: "bankDetails", image: require("@/assets/images/wire-deposite.svg"), text: "WIRE"},
+        {cols: 6, size: "125", routes: "", image: require("@/assets/images/teller.svg"), text: "TELLER"},
+      ]
     };
   },
   methods: {

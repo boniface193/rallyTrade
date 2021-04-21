@@ -1,4 +1,5 @@
 const state = {
+    emptyMsg: "",
     chipCard: [
         {
             id: "deposit001",
