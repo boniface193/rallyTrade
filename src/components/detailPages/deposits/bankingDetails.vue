@@ -21,6 +21,7 @@
           label="Amount"
           v-model="price"
           class="pa-0"
+          type="tel"
         ></v-text-field
       >
       </v-col>

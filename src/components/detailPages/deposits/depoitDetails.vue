@@ -176,7 +176,18 @@
         <v-col cols="6">
           <div class="my-8 d-flex justify-space-around">
             <!-- <v-file-input hide-input accept="image/*"></v-file-input> -->
-            <img src="@/assets/images/upload.svg" width="30%"/>
+            <v-file-input
+              label="File input"
+              filled
+              hide-input
+              prepend-icon="mdi-camera"
+            ></v-file-input>
+            <!-- <v-file-input hide-input>
+              <template v-slot:prepend-icon="{ image }">
+                <img :src="image" width="30%" />
+              </template>
+            </v-file-input> -->
+            <!-- <img src="@/assets/images/upload.svg" width="30%" /> -->
             <img src="@/assets/images/camera.svg" width="30%" />
           </div>
           <v-btn
@@ -218,6 +229,7 @@ export default {
   data() {
     return {
       depositItem: {},
+      image: require("@/assets/images/upload.svg"),
       // errorMsg: "",
       history: [
         {
