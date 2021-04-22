@@ -44,6 +44,7 @@
           /> <div class="text-h6">{{item.text}}</div></Gen-Card
       ></v-col>
     </v-row>
+    <div class="py-8"></div>
   </div>
 </template>
 

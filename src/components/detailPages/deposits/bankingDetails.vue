@@ -49,70 +49,75 @@
       </v-row>
     </div>
     <div>
-      <v-snackbar
-        class="text-caption"
-        v-model="snackbar"
-        :timeout="timeout"
-        centered
-      >
-        {{ text }}
-      </v-snackbar>
       <v-row>
-        <v-col cols="5" class="text-body-2 pb-0">Account Name</v-col>
+        <v-col cols="5" class="text-body-2 pb-0 pr-0">Account Name</v-col>
         <v-col
           @click="copyName"
           v-for="item in bankInfo"
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption pb-0"
+          class="grey--text darken-4 font-weight-bold text-caption pb-0 px-0"
           >{{ item.acctName }}
-          <v-icon color="active_link" size="15">mdi-content-copy</v-icon></v-col
-        >
+          <v-tooltip class="" v-model="snackbarName" top
+            >{{ text }}
+            <v-icon color="active_link" size="15" style="">mdi-close</v-icon>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
+                >mdi-content-copy</v-icon
+              >
+            </template>
+          </v-tooltip>
+        </v-col>
       </v-row>
       <v-row>
-        <v-col cols="5" class="text-body-2 pt-1">Account Number</v-col>
+        <v-col cols="5" class="text-body-2 pt-1 pr-0">Account Number</v-col>
         <v-col
           @click="copyNumber"
           v-for="item in bankInfo"
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption pt-1"
+          class="grey--text darken-4 font-weight-bold text-caption pt-1 px-0"
           >{{ item.acctNum }}
-          <v-icon color="active_link" size="15">mdi-content-copy</v-icon></v-col
-        >
-      </v-row>
-    </div>
-    <v-divider class="my-2"></v-divider>
-    <div class="mt-5">
-      <v-row>
-        <v-col cols="5" class="text-body-2 pt-6">Select your bank</v-col>
-        <v-col cols="7">
-          <v-select
-            :items="items"
-            item-text="text"
-            label="Select your bank"
-            dense
-            outlined
-            class="text-caption pa-0"
-          >
-            <template v-slot:selection="{ item }">
-              <img :src="item.icon" width="20px" />
-              <span class="ml-1">{{ item.text }}</span>
+          <v-tooltip class="" v-model="snackbarNumber" bottom
+            >{{ text }}
+            <v-icon color="active_link" size="15" style="">mdi-close</v-icon>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
+                >mdi-content-copy</v-icon
+              >
             </template>
-
-            <template v-slot:item="{ item }">
-              <img :src="item.icon" width="20px" class="mr-2" />
-              <span class="text-caption">{{ item.text }}</span>
-            </template>
-          </v-select>
+          </v-tooltip>
         </v-col>
       </v-row>
     </div>
+    <v-divider class="my-3"></v-divider>
+    <v-row>
+      <v-col cols="5" class="text-body-2 pt-6 pr-0">Select your bank</v-col>
+      <v-col cols="7">
+        <v-select
+          :items="items"
+          item-text="text"
+          label="Select your bank"
+          dense
+          outlined
+          class="text-caption pa-0"
+        >
+          <template v-slot:selection="{ item }">
+            <img :src="item.icon" width="20px" />
+            <span class="ml-1">{{ item.text }}</span>
+          </template>
 
-    <!-- <v-row>
-      <v-col cols="8"> -->
+          <template v-slot:item="{ item }">
+            <img :src="item.icon" width="20px" class="mr-2" />
+            <span class="text-caption">{{ item.text }}</span>
+          </template>
+        </v-select>
+      </v-col>
+    </v-row>
+
+      <div id="v-step-0"></div>
     <div class="d-flex">
       <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
         <v-app-bar
@@ -125,10 +130,11 @@
           <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
           <v-spacer></v-spacer>
           <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-          <div class="px-16"></div>
+          <v-spacer></v-spacer>
+          <v-toolbar-title class="text-caption"></v-toolbar-title>
         </v-app-bar>
 
-        <div class="mx-3 my-3">
+        <div class="mx-3 my-4">
           <v-tabs
             disabled
             active-class="orange darken-4 white--text"
@@ -147,40 +153,15 @@
           </v-tabs>
           <div class="mt-5">
             <v-text-field
-              label="select transfer type"
-              append-icon="mdi-menu-down"
+              v-for="item in inputInfo"
+              :key="item.id"
+              :label="item.label"
+              :append-icon="item.appendIcon"
               dense
               color="orange darken-4"
               class="text-caption"
-            ></v-text-field>
-
-            <v-text-field
-              label="select Account to debit"
-              append-icon="mdi-menu-down"
-              dense
-              color="orange darken-4"
-              class="text-caption"
-            ></v-text-field>
-
-            <v-text-field
-              dense
-              color=""
-              class="text-caption"
-              id="v-step-1"
-            ></v-text-field>
-
-            <v-text-field
-              dense
-              color="orange darken-4"
-              class="text-caption"
-              id="v-step-2"
-            ></v-text-field>
-
-            <v-text-field
-              dense
-              color="orange darken-4"
-              class="text-caption"
-              id="v-step-3"
+              type="text"
+              :id="item.id"
             ></v-text-field>
 
             <div class="my-2 text-caption">Remark Optional</div>
@@ -200,9 +181,8 @@
       </Gen-Card>
     </div>
     <div class="d-flex justify-end">
-    <v-btn color="success rounded-0 elevation-0 text-caption" dark
-      >Submit</v-btn
-    ></div>
+      <v-btn color="success elevation-0 text-body-1" block dark>Submit</v-btn>
+    </div>
     <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
   </div>
@@ -220,8 +200,10 @@ export default {
   },
   data: () => ({
     reveal: false,
-    timeout: 2000,
-    snackbar: false,
+    timeout: 0,
+    snackbarName: false,
+    snackbarNumber: false,
+    Ttype: "Transfer to Pther Bank",
     amount: "100",
     changedValued: "",
     text: "Copied to clipboard",
@@ -275,11 +257,16 @@ export default {
 
     steps: [
       {
+        target: "#v-step-0",
+        content:
+          "<span class='text-body-1'>it is important to add in the remarks or comment field the<div class='orange--text '> rally account number.<br /> 859647!</span></span>",
+        params: {
+          placement: "top", // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
         target: "#v-step-1",
         content: "<span class='text-caption'>Rally Account Name!</span>",
-        // params: {
-        //       placement: 'right' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        //     }
       },
       {
         target: "#v-step-2",
@@ -295,6 +282,14 @@ export default {
           "<span class='text-caption'>Rally Trade Account Number!</span>",
       },
     ],
+
+    inputInfo: [
+      { label: "select transfer type", id: "1", appendIcon: "mdi-menu-down" },
+      { label: "select Account to debit", id: "2", appendIcon: "mdi-menu-down" },
+      { label: "", id: "v-step-1" },
+      { label: "", id: "v-step-2" },
+      { label: "", id: "v-step-3" },
+    ],
   }),
 
   mounted: function () {
@@ -308,7 +303,7 @@ export default {
     },
 
     copyName() {
-      this.snackbar = true;
+      this.snackbarName = true;
       navigator.clipboard.writeText(this.bankInfo[0].acctName);
       // let textToCopy = this.$refs.textToCopy.$el.querySelector(
       //   ".textToBeCopied"
@@ -319,13 +314,13 @@ export default {
     },
 
     copyNumber() {
-      this.snackbar = true;
+      this.snackbarNumber = true;
       navigator.clipboard.writeText(this.bankInfo[0].acctNum);
     },
 
     addCommaToValue() {
       this.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      console.log(this.changedValued);
+      console.log(this.amount);
     },
   },
 };
