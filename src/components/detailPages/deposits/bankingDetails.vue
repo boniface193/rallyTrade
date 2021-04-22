@@ -16,14 +16,14 @@
           padding="pa-1"
         />
       </v-col>
-      <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold"
-        ><v-text-field
+      <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold">
+        <v-text-field
           label="Amount"
-          v-model="amount"
-          @keyup="addCommaToValue"
+          v-model="price"
           class="pa-0"
         ></v-text-field
-      ></v-col>
+      >
+      </v-col>
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
     <div>
@@ -117,7 +117,7 @@
       </v-col>
     </v-row>
 
-      <div id="v-step-0"></div>
+    <div id="v-step-0"></div>
     <div class="d-flex">
       <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
         <v-app-bar
@@ -196,7 +196,6 @@ export default {
   components: {
     GenCard,
     Chip,
-    // Header
   },
   data: () => ({
     reveal: false,
@@ -204,7 +203,7 @@ export default {
     snackbarName: false,
     snackbarNumber: false,
     Ttype: "Transfer to Pther Bank",
-    amount: "100",
+    price: 0,
     changedValued: "",
     text: "Copied to clipboard",
     items: [
@@ -285,7 +284,11 @@ export default {
 
     inputInfo: [
       { label: "select transfer type", id: "1", appendIcon: "mdi-menu-down" },
-      { label: "select Account to debit", id: "2", appendIcon: "mdi-menu-down" },
+      {
+        label: "select Account to debit",
+        id: "2",
+        appendIcon: "mdi-menu-down",
+      },
       { label: "", id: "v-step-1" },
       { label: "", id: "v-step-2" },
       { label: "", id: "v-step-3" },
@@ -317,10 +320,14 @@ export default {
       this.snackbarNumber = true;
       navigator.clipboard.writeText(this.bankInfo[0].acctNum);
     },
+  },
 
-    addCommaToValue() {
-      this.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      console.log(this.amount);
+  watch: {
+    price: function (newValue) {
+      const result = newValue
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.price = result
     },
   },
 };
