@@ -168,26 +168,31 @@
           <div class="text-caption d-flex">
             <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
             <div class="mt-1 mx-1" style="font-size: 70%">
-              File Name goes here
+              {{files.name || 'No File Selected'}}
             </div>
             <v-icon size="18" class="mt-1">mdi-close-circle-outline</v-icon>
           </div>
         </v-col>
         <v-col cols="6">
           <div class="my-8 d-flex justify-space-around">
-            <!-- <v-file-input hide-input accept="image/*"></v-file-input> -->
-            <v-file-input
-              label="File input"
-              filled
-              hide-input
-              prepend-icon="mdi-camera"
-            ></v-file-input>
+            <input
+              type="file"
+              id="file"
+              ref="myFiles"
+              class="d-none"
+              @change="previewFiles"
+            />
             <!-- <v-file-input hide-input>
               <template v-slot:prepend-icon="{ image }">
                 <img :src="image" width="30%" />
               </template>
             </v-file-input> -->
-            <!-- <img src="@/assets/images/upload.svg" width="30%" /> -->
+            <img
+            id="fileInputButton"
+              src="@/assets/images/upload.svg"
+              onclick="document.getElementById('file').click()"
+              width="30%"
+            />
             <img src="@/assets/images/camera.svg" width="30%" />
           </div>
           <v-btn
@@ -212,7 +217,6 @@
           </v-chip>
           <div class="text-h6">{{ item.status }}</div>
         </div>
-        <!-- <div v-if="success == false">{{ item.errorMsg }}</div> -->
       </div>
     </div>
     <div class="py-16"></div>
@@ -230,7 +234,8 @@ export default {
     return {
       depositItem: {},
       image: require("@/assets/images/upload.svg"),
-      // errorMsg: "",
+      files: {},
+      imageURl: "",
       history: [
         {
           time: "12:30",
@@ -250,9 +255,6 @@ export default {
           errorMsg: "",
           success: false,
         },
-        // {time: '12:50', status: '', errorMsg: '', success: false},
-        // {time: '12:55', status: '', errorMsg: '', success: true},
-        // {time: '1:00', status: '', errorMsg: '', success: true}
       ],
     };
   },
@@ -267,9 +269,43 @@ export default {
       (item) => item.id == this.$route.params.id
     );
     this.depositItem = deposit;
+    console.log(this.createImage())
+  },
+
+  methods: {
+    previewFiles() {
+    this.files = this.$refs.myFiles.files[0]
+
+    let reader = new FileReader();
+    console.log(reader.readAsDataURL(this.files))
+
+    
+    },
+
+    // createImage(file){
+    //   var image = new Image();
+    //   var reader = new FileReader();
+    //   var vm = this;
+
+    //   reader.onload = (e) => {
+    //     vm.imageURL = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
+// createImage(file) {
+      // var image = new Image();
+      // var reader = new FileReader();
+      // var vm = this;
+
+      // reader.onload = (e) => {
+      //   vm.image = e.target.result;
+      // };
+      // reader.readAsDataURL(file);
+//     },
   },
 };
 </script>
+
 
 <style lang="scss" scoped>
 $body-color: #999a9e;
