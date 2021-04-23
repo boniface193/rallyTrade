@@ -36,7 +36,7 @@
           :key="item.id"
           @click="BankInfo(item.id)"
         >
-          <Gen-Card class="text-center" :link="true">
+          <Gen-Card class="text-center" :link="true" activeClass="active_link">
             <img
               width="50%"
               class="forSmallerScreen"
@@ -104,6 +104,7 @@
           dense
           outlined
           class="text-caption pa-0"
+          @change="sectedBank"
         >
           <template v-slot:selection="{ item }">
             <img :src="item.icon" width="20px" />
@@ -118,8 +119,8 @@
       </v-col>
     </v-row>
 
+    <div v-if="selectYourBank">
     <div id="v-step-0"></div>
-    <div class="d-flex">
       <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
         <v-app-bar
           :fixed="false"
@@ -152,7 +153,7 @@
               Beneficials</v-tab
             >
           </v-tabs>
-          <div class="mt-5">
+          <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
             <v-text-field
               v-for="item in inputInfo"
               :key="item.id"
@@ -162,6 +163,7 @@
               color="orange darken-4"
               class="text-caption"
               type="text"
+              :value="item.id == 'v-step-1' ? bankItem.acctName : '' || item.id == 'v-step-2' ? bankItem.acctNum : '' || item.id == 'v-step-3' ? price : '' "
               :id="item.id"
             ></v-text-field>
 
@@ -180,9 +182,9 @@
           </div>
         </div>
       </Gen-Card>
-    </div>
     <div class="d-flex justify-end">
       <v-btn color="success elevation-0 text-body-1" block dark>Submit</v-btn>
+    </div>
     </div>
     <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
@@ -200,12 +202,10 @@ export default {
   },
   data: () => ({
     reveal: false,
-    timeout: 0,
     snackbarName: false,
     snackbarNumber: false,
-    Ttype: "Transfer to Pther Bank",
+    selectYourBank: false,
     price: '',
-    changedValued: "",
     text: "Copied to clipboard",
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
@@ -303,7 +303,12 @@ export default {
   methods: {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);
-      this.reveal = true;
+      this.reveal = true;    
+      console.log(this.bankInfo)
+    },
+
+    sectedBank(){
+      this.selectYourBank = true
     },
 
     copyName() {
@@ -364,9 +369,12 @@ html {
 .mxforSmallerScreen {
   margin: 5%;
 }
-// .text-smaller{
-//   font-size: 8px !important;
+// input#v-step-1 {
+//     color: #e65100 !important;
 // }
+.theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
+    color: #e65100 !important;
+}
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {
     margin: 5px;
