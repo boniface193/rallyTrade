@@ -3,7 +3,24 @@
     <router-link :to="{ name: 'deposit' }" style="text-decoration: none">
       <v-icon class="">mdi-arrow-left</v-icon>
     </router-link>
+<!-- error msg -->
+    <v-snackbar
+      v-model="snackbar"
+    >
+      {{ text }}
 
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+<!-- error msg -->
     <v-row class="mt-8">
       <v-col cols="6" class="px-0">
         <v-row>
@@ -170,11 +187,14 @@
             <div class="mt-1 mx-1" style="font-size: 70%">
               {{files.name || 'No File Selected'}}
             </div>
-            <v-icon size="18" class="mt-1">mdi-close-circle-outline</v-icon>
+            <v-icon size="18" class="mt-1" @click="removeImage">mdi-close-circle-outline</v-icon>
           </div>
         </v-col>
         <v-col cols="6">
-          <div class="my-8 d-flex justify-space-around">
+          <div v-if="image">
+            <img :src="image" width="100%"/>
+          </div>
+          <div class="my-8 d-flex justify-space-around" v-else>
             <input
               type="file"
               id="file"
@@ -182,11 +202,6 @@
               class="d-none"
               @change="previewFiles"
             />
-            <!-- <v-file-input hide-input>
-              <template v-slot:prepend-icon="{ image }">
-                <img :src="image" width="30%" />
-              </template>
-            </v-file-input> -->
             <img
             id="fileInputButton"
               src="@/assets/images/upload.svg"
@@ -233,9 +248,11 @@ export default {
   data() {
     return {
       depositItem: {},
-      image: require("@/assets/images/upload.svg"),
       files: {},
-      imageURl: "",
+      previews: [],
+      image: '',
+      snackbar: false,
+      text: "",
       history: [
         {
           time: "12:30",
@@ -269,39 +286,35 @@ export default {
       (item) => item.id == this.$route.params.id
     );
     this.depositItem = deposit;
-    console.log(this.createImage())
   },
 
   methods: {
     previewFiles() {
-    this.files = this.$refs.myFiles.files[0]
-
-    let reader = new FileReader();
-    console.log(reader.readAsDataURL(this.files))
-
-    
+    let getFiles = this.$refs.myFiles.files[0]
+      if (getFiles == undefined) {
+        this.text = 'undefined, you have not selected any image'
+        this.snackbar = true
+      } else {
+        this.files = getFiles
+      }
+      this.createImage(this.files);
     },
 
-    // createImage(file){
-    //   var image = new Image();
-    //   var reader = new FileReader();
-    //   var vm = this;
+    createImage(file) {
+      var reader = new FileReader();
+      var vm = this;
 
-    //   reader.onload = (e) => {
-    //     vm.imageURL = e.target.result;
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
-// createImage(file) {
-      // var image = new Image();
-      // var reader = new FileReader();
-      // var vm = this;
+      reader.onload = (e) => {
+        vm.image = e.target.result;
+        console.log(vm.image)
+      };
+      reader.readAsDataURL(file);
+    },
 
-      // reader.onload = (e) => {
-      //   vm.image = e.target.result;
-      // };
-      // reader.readAsDataURL(file);
-//     },
+    removeImage(){
+      this.files = {}
+      this.image = ''
+    }
   },
 };
 </script>

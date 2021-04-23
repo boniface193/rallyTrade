@@ -148,7 +148,7 @@
               >Save <br />
               Beneficials</v-tab
             >
-            <v-tab class="" style="font-size: 10px" dark
+            <v-tab disabled class="" style="font-size: 10px" dark
               >New <br />
               Beneficials</v-tab
             >
