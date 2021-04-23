@@ -163,6 +163,7 @@
               color="orange darken-4"
               class="text-caption"
               type="text"
+              disabled
               :value="item.id == 'v-step-1' ? bankItem.acctName : '' || item.id == 'v-step-2' ? bankItem.acctNum : '' || item.id == 'v-step-3' ? price : '' "
               :id="item.id"
             ></v-text-field>
@@ -176,7 +177,7 @@
               id="v-step-4"
             ></v-text-field>
 
-            <v-btn color="orange darken-4 rounded-0 elevation-0" block dark
+            <v-btn disabled class="orange darken-4 rounded-0 elevation-0" block 
               >Continue</v-btn
             >
           </div>
@@ -296,10 +297,6 @@ export default {
     ],
   }),
 
-  mounted: function () {
-    this.$tours["myTour"].start();
-  },
-
   methods: {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);
@@ -309,6 +306,7 @@ export default {
 
     sectedBank(){
       this.selectYourBank = true
+      this.$tours["myTour"].start();
     },
 
     copyName() {
@@ -374,6 +372,10 @@ html {
 // }
 .theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
     color: #e65100 !important;
+}
+.theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
+    background-color: #e65100!important;
+    color: $white!important;
 }
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {
