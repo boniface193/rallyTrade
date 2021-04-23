@@ -204,7 +204,7 @@ export default {
     snackbarName: false,
     snackbarNumber: false,
     Ttype: "Transfer to Pther Bank",
-    price: 0,
+    price: '',
     changedValued: "",
     text: "Copied to clipboard",
     items: [
@@ -326,8 +326,9 @@ export default {
   watch: {
     price: function (newValue) {
       const result = newValue
-        .replace(/\D/g, "")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // .replace(/\D/g, "")
+        .replace(/[^0-9a-zA-Z.]/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")        
         this.price = result
     },
   },
