@@ -191,8 +191,8 @@
           </div>
         </v-col>
         <v-col cols="6">
-          <div v-if="image">
-            <img :src="image" width="100%"/>
+          <div class="my-3" v-if="image">
+            <img :src="image" width="100%" height="100%"/>
           </div>
           <div class="my-8 d-flex justify-space-around" v-else>
             <input
@@ -291,12 +291,21 @@ export default {
   methods: {
     previewFiles() {
     let getFiles = this.$refs.myFiles.files[0]
+    console.log(getFiles.size )
       if (getFiles == undefined) {
         this.text = 'undefined, you have not selected any image'
         this.snackbar = true
       } else {
         this.files = getFiles
       }
+
+      if (getFiles.size > 169572 ) {
+        this.text = "File size exceeded. (Max. 20 MB)"
+        this.snackbar = true
+        this.files = {}
+      this.image = ''
+      } 
+
       this.createImage(this.files);
     },
 
@@ -306,7 +315,6 @@ export default {
 
       reader.onload = (e) => {
         vm.image = e.target.result;
-        console.log(vm.image)
       };
       reader.readAsDataURL(file);
     },
