@@ -3,25 +3,18 @@
     <router-link :to="{ name: 'deposit' }" style="text-decoration: none">
       <v-icon class="">mdi-arrow-left</v-icon>
     </router-link>
-<!-- error msg -->
-    <v-snackbar
-      v-model="snackbar"
-    >
+    <!-- error msg -->
+    <v-snackbar v-model="snackbar">
       {{ text }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="pink"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
     </v-snackbar>
-<!-- error msg -->
-    <v-row class="mt-8">
+    <!-- error msg -->
+    <v-row class="mt-4">
       <v-col cols="6" class="px-0">
         <v-row>
           <v-col cols="6" class="pr-0 text-center">
@@ -181,20 +174,12 @@
               - Rally Account Number
             </div>
           </div>
-
-          <div class="text-caption d-flex">
-            <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
-            <div class="mt-1 mx-1" style="font-size: 70%">
-              {{files.name || 'No File Selected'}}
-            </div>
-            <v-icon size="18" class="mt-1" @click="removeImage">mdi-close-circle-outline</v-icon>
-          </div>
         </v-col>
-        <v-col cols="6">
-          <div class="my-3" v-if="image">
-            <img :src="image" width="100%" height="100%"/>
+        <v-col cols="6" class="px-0 text-center">
+          <div class="mt-2 mr-3" v-if="image">
+            <img :src="image" width="100%" height="100%" />
           </div>
-          <div class="my-8 d-flex justify-space-around" v-else>
+          <div class="my-8" v-else>
             <input
               type="file"
               id="file"
@@ -203,21 +188,26 @@
               @change="previewFiles"
             />
             <img
-            id="fileInputButton"
+              id="fileInputButton"
               src="@/assets/images/upload.svg"
               onclick="document.getElementById('file').click()"
               width="30%"
             />
-            <img src="@/assets/images/camera.svg" width="30%" />
           </div>
-          <v-btn
-            block
-            depressed
-            class="white--text text-caption"
-            color="#9B9FFF"
-            >Upload</v-btn
-          >
+
+          <div class="text-caption d-flex justify-center">
+            <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
+            <div class="mt-1 mx-1" style="font-size: 100%">
+              {{ files.name || "No File Selected" }}
+            </div>
+            <v-icon size="18" class="mt-1" @click="removeImage"
+              >mdi-close-circle-outline</v-icon
+            >
+          </div>
         </v-col>
+        <v-btn block depressed class="white--text text-caption" color="#9B9FFF"
+          >Upload</v-btn
+        >
       </v-row>
     </div>
 
@@ -250,7 +240,7 @@ export default {
       depositItem: {},
       files: {},
       previews: [],
-      image: '',
+      image: "",
       snackbar: false,
       text: "",
       history: [
@@ -290,21 +280,21 @@ export default {
 
   methods: {
     previewFiles() {
-    let getFiles = this.$refs.myFiles.files[0]
-    console.log(getFiles.size )
+      let getFiles = this.$refs.myFiles.files[0];
+      console.log(getFiles);
       if (getFiles == undefined) {
-        this.text = 'undefined, you have not selected any image'
-        this.snackbar = true
+        this.text = "undefined, you have not selected any image";
+        this.snackbar = true;
       } else {
-        this.files = getFiles
+        this.files = getFiles;
       }
 
-      if (getFiles.size > 169572 ) {
-        this.text = "File size exceeded. (Max. 20 MB)"
-        this.snackbar = true
-        this.files = {}
-      this.image = ''
-      } 
+      if (getFiles.size > 3876690) {
+        this.text = "File size exceeded. (Max. 20 MB)";
+        this.snackbar = true;
+        this.files = {};
+        this.image = "";
+      }
 
       this.createImage(this.files);
     },
@@ -319,10 +309,10 @@ export default {
       reader.readAsDataURL(file);
     },
 
-    removeImage(){
-      this.files = {}
-      this.image = ''
-    }
+    removeImage() {
+      this.files = {};
+      this.image = "";
+    },
   },
 };
 </script>

@@ -21,7 +21,9 @@
           </v-card>
         </v-col>
         <v-col cols="6" class="d-flex justify-center"
-          ><v-card width="125" link>
+          ><v-card width="125" link :dark="dark"
+            :color="color"
+            @click="select2">
             <v-icon size="70">mdi-currency-usd</v-icon></v-card
           ></v-col
         >
@@ -71,6 +73,12 @@ export default {
       this.reveal = true;
       this.dark = true;
       this.color = "#fb8c00";
+    },
+
+            // 
+    select2(){
+      
+      
     },
 
     onClickOutside() {
