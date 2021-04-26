@@ -21,8 +21,8 @@
           </v-card>
         </v-col>
         <v-col cols="6" class="d-flex justify-center"
-          ><v-card width="125" link :dark="dark"
-            :color="color"
+          ><v-card width="125" link 
+            
             @click="select2">
             <v-icon size="70">mdi-currency-usd</v-icon></v-card
           ></v-col

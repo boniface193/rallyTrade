@@ -185,6 +185,7 @@
               id="file"
               ref="myFiles"
               class="d-none"
+              accept="image/*"
               @change="previewFiles"
             />
             <img
@@ -195,7 +196,7 @@
             />
           </div>
 
-          <div class="text-caption d-flex justify-center">
+          <div class="text-caption d-flex justify-center mr-5">
             <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
             <div class="mt-1 mx-1" style="font-size: 100%">
               {{ files.name || "No File Selected" }}
@@ -281,7 +282,6 @@ export default {
   methods: {
     previewFiles() {
       let getFiles = this.$refs.myFiles.files[0];
-      console.log(getFiles);
       if (getFiles == undefined) {
         this.text = "undefined, you have not selected any image";
         this.snackbar = true;

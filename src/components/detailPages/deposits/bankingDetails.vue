@@ -22,8 +22,8 @@
           v-model="price"
           class="pa-0"
           type="tel"
-        ></v-text-field
-      >
+          :rules="rules"
+        ></v-text-field>
       </v-col>
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
@@ -93,8 +93,8 @@
         </v-col>
       </v-row>
     </div>
-    <v-divider class="my-3"></v-divider>
-    <v-row>
+    <v-divider v-show="reveal" class="my-3"></v-divider>
+    <v-row v-show="reveal">
       <v-col cols="5" class="text-body-2 pt-6 pr-0">Select your bank</v-col>
       <v-col cols="7">
         <v-select
@@ -120,7 +120,7 @@
     </v-row>
 
     <div v-if="selectYourBank">
-    <div id="v-step-0"></div>
+      <div id="v-step-0"></div>
       <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
         <v-app-bar
           :fixed="false"
@@ -164,7 +164,15 @@
               class="text-caption"
               type="text"
               disabled
-              :value="item.id == 'v-step-1' ? bankItem.acctName : '' || item.id == 'v-step-2' ? bankItem.acctNum : '' || item.id == 'v-step-3' ? price : '' "
+              :value="
+                item.id == 'v-step-1'
+                  ? bankItem.acctName
+                  : '' || item.id == 'v-step-2'
+                  ? bankItem.acctNum
+                  : '' || item.id == 'v-step-3'
+                  ? price
+                  : ''
+              "
               :id="item.id"
             ></v-text-field>
 
@@ -177,15 +185,15 @@
               id="v-step-4"
             ></v-text-field>
 
-            <v-btn disabled class="orange darken-4 rounded-0 elevation-0" block 
+            <v-btn disabled class="orange darken-4 rounded-0 elevation-0" block
               >Continue</v-btn
             >
           </div>
         </div>
       </Gen-Card>
-    <div class="d-flex justify-end">
-      <v-btn color="success elevation-0 text-body-1" block dark>Submit</v-btn>
-    </div>
+      <div class="d-flex justify-end">
+        <v-btn color="success elevation-0 text-body-1" block dark>Submit</v-btn>
+      </div>
     </div>
     <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
@@ -206,8 +214,11 @@ export default {
     snackbarName: false,
     snackbarNumber: false,
     selectYourBank: false,
-    price: '',
+    price: "",
     text: "Copied to clipboard",
+    rules: [
+      (value) => !!value || "Required.",
+    ],
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
       { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
@@ -300,12 +311,11 @@ export default {
   methods: {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);
-      this.reveal = true;    
-      console.log(this.bankInfo)
+      this.reveal = true;
     },
 
-    sectedBank(){
-      this.selectYourBank = true
+    sectedBank() {
+      this.selectYourBank = true;
       this.$tours["myTour"].start();
     },
 
@@ -331,8 +341,8 @@ export default {
       const result = newValue
         // .replace(/\D/g, "")
         .replace(/[^0-9a-zA-Z.]/g, "")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")        
-        this.price = result
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.price = result;
     },
   },
 };
@@ -370,12 +380,14 @@ html {
 // input#v-step-1 {
 //     color: #e65100 !important;
 // }
-.theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
-    color: #e65100 !important;
+.theme--light.v-input,
+.theme--light.v-input input,
+.theme--light.v-input textarea {
+  color: #e65100 !important;
 }
 .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
-    background-color: #e65100!important;
-    color: $white!important;
+  background-color: #e65100 !important;
+  color: $white !important;
 }
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {

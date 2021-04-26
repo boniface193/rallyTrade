@@ -137,7 +137,7 @@ html {
 .border-all {
   margin-left: 40%;
   position: absolute;
-  top: 20%;
+  top: 50%;
 }
 
 .v-btn--outlined {
@@ -151,7 +151,7 @@ html {
   }
   .border-all {
     margin-left: 35%;
-    top: 19%;
+    top: 50%;
   }
   .v-btn:not(.v-btn--round).v-size--small {
     height: 22px;
