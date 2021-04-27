@@ -141,7 +141,7 @@ html {
 .border-all {
   margin-left: 40%;
   position: absolute;
-  top: 50%;
+  top: 40%;
 }
 
 .v-btn--outlined {

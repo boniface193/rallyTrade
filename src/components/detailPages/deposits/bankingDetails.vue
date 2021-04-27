@@ -168,7 +168,11 @@
               class="text-caption"
               type="text"
               :disabled="
-                true ? item.id == 'v-step-1' || item.id == 'v-step-2' || item.id == 'v-step-3' : ''
+                true
+                  ? item.id == 'v-step-1' ||
+                    item.id == 'v-step-2' ||
+                    item.id == 'v-step-3'
+                  : ''
               "
               :value="
                 item.id == 'v-step-1'
@@ -199,7 +203,13 @@
         </div>
       </Gen-Card>
       <div class="d-flex justify-end">
-        <v-btn color="success elevation-0 text-body-1" block dark @click="submitForm">Submit</v-btn>
+        <v-btn
+          color="success elevation-0 text-body-1"
+          block
+          dark
+          @click="submitForm"
+          >Submit</v-btn
+        >
       </div>
     </div>
     <div class="py-10"></div>
@@ -207,29 +217,61 @@
     <Modal :dialog="dialog">
       <div class="text-center text-subtitle-1 py-8 mx-3 body-text">
         <div class="text-h6 error--text mb-3">Important!</div>
-        <div class="text-left">Rally Trade <span class="font-weight-black">does not accept</span> deposits from third parties.</div>
-        <div class="text-left my-3">The deposit must come from your <span class="font-weight-medium text-uppercase error--text">personal account</span></div>
-        <div class="text-left">If the deposit is done through an agent the transfer <span class="font-weight-medium text-uppercase error--text"> must </span>contain in the description:</div>
+        <div class="text-left">
+          Rally Trade
+          <span class="font-weight-black">does not accept</span> deposits from
+          third parties.
+        </div>
+        <div class="text-left my-3">
+          The deposit must come from your
+          <span class="font-weight-medium text-uppercase error--text"
+            >personal account</span
+          >
+        </div>
+        <div class="text-left">
+          If the deposit is done through an agent the transfer
+          <span class="font-weight-medium text-uppercase error--text">
+            must </span
+          >contain in the description:
+        </div>
         <ul class="font-weight-medium text-uppercase error--text text-left">
           <li>your name</li>
           <li>rally account number</li>
         </ul>
-        <v-btn color="success" small class="my-4 elevation-0" @click="closeAndSubmit">continue!</v-btn>
+        <v-btn
+          color="success"
+          small
+          class="my-4 elevation-0"
+          @click="closeAndSubmit"
+          >continue!</v-btn
+        >
       </div>
     </Modal>
+
+    <!-- error msg -->
+    <v-snackbar v-model="snackbar">
+      {{ snackbarText }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <!-- error msg -->
   </div>
 </template>
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
 import Chip from "@/components/general/currencyChip.vue";
-import Modal from "@/components/general/modal.vue"
+import Modal from "@/components/general/modal.vue";
 export default {
   name: "my-tour",
   components: {
     GenCard,
     Chip,
-    Modal
+    Modal,
   },
   data: () => ({
     dialog: false,
@@ -237,7 +279,9 @@ export default {
     snackbarName: false,
     snackbarNumber: false,
     selectYourBank: false,
+    snackbar: false,
     price: "",
+    snackbarText: "",
     text: "Copied to clipboard",
     rules: [(value) => !!value || "Required."],
     items: [
@@ -356,15 +400,19 @@ export default {
       navigator.clipboard.writeText(this.bankInfo[0].acctNum);
     },
 
-    submitForm(){
-      console.log(this.inputInfo)
-      this.dialog = true;
+    submitForm() {
+      if (this.price == 0) {
+        this.snackbar = true;
+        this.snackbarText = "Please fill the Amount";
+      } else {
+        this.dialog = true;
+      }
     },
 
-    closeAndSubmit(){
-      this.dialog = false
-      this.$router.push({name: 'deposit'})
-    }
+    closeAndSubmit() {
+      this.dialog = false;
+      this.$router.push({ name: "deposit" });
+    },
   },
 
   watch: {
@@ -407,7 +455,7 @@ html {
 .mxforSmallerScreen {
   margin: 5%;
 }
-.body-text{
+.body-text {
   color: rgba(0, 0, 0, 0.748);
 }
 .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
