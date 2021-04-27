@@ -61,7 +61,7 @@
     </v-card>
 
     <div class="d-flex border-all" style="" v-if="outlined">
-      <v-btn depressed dark color="success" small class="rounde-lg"
+      <v-btn depressed dark color="success" @click="confirmDeposit" small class="rounde-lg"
         >Confirm</v-btn
       >
       <div class="px-2"></div>
@@ -99,6 +99,12 @@ export default {
     "acctNum",
     "amount"
   ],
+
+  methods: {
+    confirmDeposit(){
+      this.$emit('getDeposit', 'hi from this side')
+    }
+  }
 };
 </script>
 
@@ -141,7 +147,7 @@ html {
 .border-all {
   margin-left: 40%;
   position: absolute;
-  top: 40%;
+  top: 50%;
 }
 
 .v-btn--outlined {

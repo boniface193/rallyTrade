@@ -412,6 +412,21 @@ export default {
     closeAndSubmit() {
       this.dialog = false;
       this.$router.push({ name: "deposit" });
+      this.$store.commit("trading/setChipCard", {
+        id: "deposit001",
+        time: "4:30",
+        day: new Date().toLocaleDateString(),
+        moneySign: "mdi-currency-ngn",
+        icon: "wire.svg",
+        depositType: "WIRE",
+        color: "white",
+        routes: "",
+        amount: "10,000,000",
+        acctNum: "854715",
+        date: "",
+        active: false,
+        outlined: true,
+      });
     },
   },
 

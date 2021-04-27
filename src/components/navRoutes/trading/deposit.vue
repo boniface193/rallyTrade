@@ -34,6 +34,7 @@
             :acctNum="item.acctNum"
             :amount="item.amount"
             :addPaddingToChip="item.outlined ? 'white' : ''"
+            @getDeposit="submitDeposit()"
           >
           </Chip-Card>
         </div>
@@ -52,12 +53,37 @@ export default {
     ChipCard,
     MobileHeader,
   },
+  data() {
+    return {
+    };
+  },
   computed: {
     ...mapGetters({ chipCard: "trading/getChipCard" }),
   },
   methods: {
     selectCurrency() {
       this.$router.push({ name: "selectCurrency" });
+    },
+    submitDeposit() {
+      this.chipCard.shift()
+      this.$store.commit("trading/setChipCard", {
+        id: "deposit005",
+        time: "4:30",
+        day: new Date().toLocaleDateString(),
+        msg: "message goes here",
+        moneySign: "mdi-currency-ngn",
+        icon: "wire.svg",
+        depositType: "WIRE",
+        color: "primary_bg",
+        status: "mdi-upload",
+        statu: "Status",
+        statusText: "UPLOAD",
+        routes: "",
+        amount: "10,000,000",
+        acctNum: "854715",
+        date: "",
+        statusColor: "primary",
+        });
     },
   },
 };

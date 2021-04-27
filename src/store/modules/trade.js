@@ -1,22 +1,22 @@
 const state = {
     emptyMsg: "",
     chipCard: [
-        {
-            id: "deposit001",
-            time: "4:30",
-            // day: new Date().toLocaleTimeString().splice('/', ''),
-            day: new Date().toLocaleDateString(),
-            moneySign: "mdi-currency-ngn",
-            icon: "wire.svg",
-            depositType: "WIRE",
-            color: "white",
-            routes: "",
-            amount: "10,000,000",
-            acctNum: "854715",
-            date: "",
-            active: false,
-            outlined: true,
-        },
+        // {
+        // id: "deposit001",
+        // time: "4:30",
+        // // day: new Date().toLocaleTimeString().splice('/', ''),
+        // day: new Date().toLocaleDateString(),
+        // moneySign: "mdi-currency-ngn",
+        // icon: "wire.svg",
+        // depositType: "WIRE",
+        // color: "white",
+        // routes: "",
+        // amount: "10,000,000",
+        // acctNum: "854715",
+        // date: "",
+        // active: false,
+        // outlined: true,
+        // },
         // {
         //     id: "deposit002",
         //     time: "4:30",
@@ -70,24 +70,24 @@ const state = {
         // date: "",
         //     statusColor: "secondary",
         // },
-        {
-            id: "deposit005",
-            time: "4:30",
-            day: new Date().toLocaleDateString(),
-            msg: "message goes here",
-            moneySign: "mdi-currency-ngn",
-            icon: "wire.svg",
-            depositType: "WIRE",
-            color: "primary_bg",
-            status: "mdi-upload",
-            statu: "Status",
-            statusText: "UPLOAD",
-            routes: "",
-            amount: "10,000,000",
-            acctNum: "854715",
-            date: "",
-            statusColor: "primary",
-        },
+        // {
+        // id: "deposit005",
+        // time: "4:30",
+        // day: new Date().toLocaleDateString(),
+        // msg: "message goes here",
+        // moneySign: "mdi-currency-ngn",
+        // icon: "wire.svg",
+        // depositType: "WIRE",
+        // color: "primary_bg",
+        // status: "mdi-upload",
+        // statu: "Status",
+        // statusText: "UPLOAD",
+        // routes: "",
+        // amount: "10,000,000",
+        // acctNum: "854715",
+        // date: "",
+        // statusColor: "primary",
+        // },
         // {
         //     id: "deposit006",
         //     time: "4:30",
@@ -116,6 +116,10 @@ const actions = {
 };
 
 const mutations = {
+
+    setChipCard(state, data) {
+        state.chipCard.push(data)
+    }
 
 };
 
