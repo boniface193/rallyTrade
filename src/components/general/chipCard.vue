@@ -8,7 +8,7 @@
       apppend
       small
     >
-      {{ chip }}
+      {{ time }}
     </v-chip>
     <v-card
       class="mx-auto"
@@ -35,7 +35,7 @@
             </div>
             <div class="text-caption sm-text">
               <div class="sm-text">{{ depositType }}</div>
-              <div class="sm-text">15.04.21</div>
+              <div class="sm-text">{{ day }}</div>
             </div>
           </v-col>
           <v-col cols="1">
@@ -48,8 +48,8 @@
               <div>{{ statu }}</div>
             </div>
             <div class="d-flex justify-space-between mr-3 sm-text">
-              <div>854715</div>
-              <div>10,000,000</div>
+              <div>{{acctNum}}</div>
+              <div>{{amount}}</div>
               <div class="sm-text">
                 <v-icon :color="statusColor">{{ status }}</v-icon>
               </div>
@@ -59,7 +59,8 @@
         </v-row>
       </div>
     </v-card>
-    <div class="d-flex border-all" style="">
+
+    <div class="d-flex border-all" style="" v-if="outlined">
       <v-btn depressed dark color="success" small class="rounde-lg"
         >Confirm</v-btn
       >
@@ -81,7 +82,7 @@
 export default {
   props: [
     "colors",
-    "chip",
+    "time",
     "moneySign",
     "status",
     "statusColor",
@@ -93,7 +94,10 @@ export default {
     "msg",
     "statu",
     "padding",
-    "addPaddingToChip"
+    "addPaddingToChip",
+    "day",
+    "acctNum",
+    "amount"
   ],
 };
 </script>

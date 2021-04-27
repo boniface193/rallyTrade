@@ -14,6 +14,7 @@
           :width="'width: 25px;'"
           fontSize="font-size: 19px;"
           padding="pa-1"
+          class="padding-smaller"
         />
       </v-col>
       <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold">
@@ -51,14 +52,16 @@
     </div>
     <div>
       <v-row>
-        <v-col cols="5" class="text-body-2 pb-0 pr-0">Account Name</v-col>
+        <v-col cols="5" class="text-body-2 pb-0 pr-0font-smaller"
+          >Account Name</v-col
+        >
         <v-col
           @click="copyName"
           v-for="item in bankInfo"
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption pb-0 px-0"
+          class="grey--text darken-4 font-weight-bold text-caption pb-0 px-0 font-smaller"
           >{{ item.acctName }}
           <v-tooltip class="" v-model="snackbarName" top
             >{{ text }}
@@ -160,10 +163,13 @@
               :label="item.label"
               :append-icon="item.appendIcon"
               dense
+              required
               color="orange darken-4"
               class="text-caption"
               type="text"
-              disabled
+              :disabled="
+                true ? item.id == 'v-step-1' || item.id == 'v-step-2' || item.id == 'v-step-3' : ''
+              "
               :value="
                 item.id == 'v-step-1'
                   ? bankItem.acctName
@@ -183,6 +189,7 @@
               color="orange darken-4 mt-2"
               class="text-caption"
               id="v-step-4"
+              value="859647"
             ></v-text-field>
 
             <v-btn disabled class="orange darken-4 rounded-0 elevation-0" block
@@ -192,33 +199,47 @@
         </div>
       </Gen-Card>
       <div class="d-flex justify-end">
-        <v-btn color="success elevation-0 text-body-1" block dark>Submit</v-btn>
+        <v-btn color="success elevation-0 text-body-1" block dark @click="submitForm">Submit</v-btn>
       </div>
     </div>
     <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
+    <Modal :dialog="dialog">
+      <div class="text-center text-subtitle-1 py-8 mx-3 body-text">
+        <div class="text-h6 error--text mb-3">Important!</div>
+        <div class="text-left">Rally Trade <span class="font-weight-black">does not accept</span> deposits from third parties.</div>
+        <div class="text-left my-3">The deposit must come from your <span class="font-weight-medium text-uppercase error--text">personal account</span></div>
+        <div class="text-left">If the deposit is done through an agent the transfer <span class="font-weight-medium text-uppercase error--text"> must </span>contain in the description:</div>
+        <ul class="font-weight-medium text-uppercase error--text text-left">
+          <li>your name</li>
+          <li>rally account number</li>
+        </ul>
+        <v-btn color="success" small class="my-4 elevation-0" @click="closeAndSubmit">continue!</v-btn>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
 import Chip from "@/components/general/currencyChip.vue";
+import Modal from "@/components/general/modal.vue"
 export default {
   name: "my-tour",
   components: {
     GenCard,
     Chip,
+    Modal
   },
   data: () => ({
+    dialog: false,
     reveal: false,
     snackbarName: false,
     snackbarNumber: false,
     selectYourBank: false,
     price: "",
     text: "Copied to clipboard",
-    rules: [
-      (value) => !!value || "Required.",
-    ],
+    rules: [(value) => !!value || "Required."],
     items: [
       { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
       { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
@@ -304,7 +325,7 @@ export default {
       },
       { label: "", id: "v-step-1" },
       { label: "", id: "v-step-2" },
-      { label: "", id: "v-step-3" },
+      { label: "", id: "v-step-3", appendIcon: "mdi-currency-ngn", size: "25" },
     ],
   }),
 
@@ -334,12 +355,21 @@ export default {
       this.snackbarNumber = true;
       navigator.clipboard.writeText(this.bankInfo[0].acctNum);
     },
+
+    submitForm(){
+      console.log(this.inputInfo)
+      this.dialog = true;
+    },
+
+    closeAndSubmit(){
+      this.dialog = false
+      this.$router.push({name: 'deposit'})
+    }
   },
 
   watch: {
     price: function (newValue) {
       const result = newValue
-        // .replace(/\D/g, "")
         .replace(/[^0-9a-zA-Z.]/g, "")
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       this.price = result;
@@ -377,13 +407,8 @@ html {
 .mxforSmallerScreen {
   margin: 5%;
 }
-// input#v-step-1 {
-//     color: #e65100 !important;
-// }
-.theme--light.v-input,
-.theme--light.v-input input,
-.theme--light.v-input textarea {
-  color: #e65100 !important;
+.body-text{
+  color: rgba(0, 0, 0, 0.748);
 }
 .theme--light.v-btn.v-btn--disabled.v-btn--has-bg {
   background-color: #e65100 !important;
@@ -392,6 +417,12 @@ html {
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {
     margin: 5px;
+  }
+  .padding-smaller {
+    margin: 0 8px !important;
+  }
+  .font-smaller {
+    font-size: 8px !important;
   }
 }
 @media (max-width: 360px) {
