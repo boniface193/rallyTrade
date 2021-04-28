@@ -14,7 +14,7 @@
         title="Deposit"
         colors="grey"
         :fixed_top="true"
-        @click="tryToSelectCurrency"
+        @click.native="tryToSelectCurrency"
       />
       <div class="my-16 pt-5 mr-1">
         <div v-show="chipCard < 1" class="mt-16 text-center">
@@ -39,7 +39,7 @@
             :depositType="item.depositType"
             :outlined="item.outlined"
             :msg="item.msg"
-            :padding="item.outlined ? 'py-3' : ''"
+            :padding="item.outlined ? 'py-1' : ''"
             :acctNum="item.acctNum"
             :amount="item.amount"
             :addPaddingToChip="item.outlined ? 'white' : ''"

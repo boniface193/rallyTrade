@@ -7,7 +7,51 @@
         </router-link>
         <div>Select Currency</div>
       </div>
-      <v-row class="d-flex justify-center mx-3">
+      <v-slide-group v-model="model" class="pa-2">
+        <v-slide-item
+          v-for="item in selectCurrency"
+          :key="item.id"
+          v-slot="{ active, toggle }"
+        >
+          <v-card
+            :color="active ? 'active_link' : 'grey lighten-1'"
+            class="ma-4"
+            width="125"
+            @click="toggle"
+          >
+            <v-icon size="70" color="white">{{ item.currency }}</v-icon>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+
+      <v-expand-transition>
+        <v-sheet v-if="model != null" height="80" tile>
+          <v-row class="fill-height" align="center" justify="center">
+            <h3 class="title mt-8">Select Deposit Type</h3>
+            <div v-if="model == 0">
+              <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
+                <v-col
+                  :cols="item.cols"
+                  class="d-flex justify-center"
+                  v-for="item in depositeType"
+                  :key="item.id"
+                >
+                  <Gen-Card
+                    :width="item.size"
+                    class="text-center"
+                    :link="true"
+                    :to="{ name: item.routes }"
+                  >
+                    <img width="70%" :src="item.image" alt="" />
+                    <div class="text-h6">{{ item.text }}</div></Gen-Card
+                  ></v-col
+                >
+              </v-row>
+            </div>
+          </v-row>
+        </v-sheet>
+      </v-expand-transition>
+      <!-- <v-row class="d-flex justify-center mx-3">
         <v-col cols="6" class="d-flex justify-center">
           <v-card
             width="125"
@@ -27,25 +71,9 @@
             <v-icon size="70">mdi-currency-usd</v-icon></v-card
           ></v-col
         >
-      </v-row>
-      <div class="text-h5 mt-8" v-if="reveal">Select Deposit Type</div>
+      </v-row> -->
+      <div class="text-h5 mt-8"></div>
     </div>
-
-    <v-row class="d-flex justify-center mx-3 mt-8 mb-16" v-if="reveal">
-      <v-col :cols="item.cols" class="d-flex justify-center" v-for="item in depositeType" :key="item.id">
-        <Gen-Card
-          :width="item.size"
-          class="text-center"
-          :link="true"
-          :to="{ name: item.routes }"
-        >
-          <img
-            width="70%"
-            :src="item.image"
-            alt=""
-          /> <div class="text-h6">{{item.text}}</div></Gen-Card
-      ></v-col>
-    </v-row>
     <div class="py-8"></div>
   </div>
 </template>
@@ -61,11 +89,34 @@ export default {
       reveal: false,
       dark: false,
       color: "",
+      model: null,
+      selectCurrency: [
+        { id: "001", currency: "mdi-currency-ngn" },
+        { id: "002", currency: "mdi-currency-usd" },
+      ],
       depositeType: [
-        {cols: 12, size: "112", routes: "", image: require("@/assets/images/credit-card.svg"), text: "INSTANT"},
-        {cols: 6, size: "125", routes: "bankDetails", image: require("@/assets/images/wire-deposite.svg"), text: "WIRE"},
-        {cols: 6, size: "125", routes: "", image: require("@/assets/images/teller.svg"), text: "TELLER"},
-      ]
+        {
+          cols: 12,
+          size: "112",
+          routes: "",
+          image: require("@/assets/images/credit-card.svg"),
+          text: "INSTANT",
+        },
+        {
+          cols: 6,
+          size: "125",
+          routes: "bankDetails",
+          image: require("@/assets/images/wire-deposite.svg"),
+          text: "WIRE",
+        },
+        {
+          cols: 6,
+          size: "125",
+          routes: "",
+          image: require("@/assets/images/teller.svg"),
+          text: "TELLER",
+        },
+      ],
     };
   },
   methods: {
@@ -75,11 +126,8 @@ export default {
       this.color = "#fb8c00";
     },
 
-            // 
-    select2(){
-      
-      
-    },
+    //
+    select2() {},
 
     onClickOutside() {
       this.dark = false;

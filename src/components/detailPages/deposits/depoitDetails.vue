@@ -176,7 +176,7 @@
           </div>
         </v-col>
         <v-col cols="6" class="px-0 text-center">
-          <div class="mt-2 mr-3" v-if="image">
+          <div class="mt-2 mr-3" v-if="image" style="height: 80%;">
             <img :src="image" width="100%" height="100%" />
           </div>
           <div class="my-8" v-else>
@@ -206,7 +206,7 @@
             >
           </div>
         </v-col>
-        <v-btn block depressed class="white--text text-caption" color="#9B9FFF"
+        <v-btn v-if="image" block depressed class="white--text text-caption" color="#9B9FFF"
           >Upload</v-btn
         >
 
