@@ -29,6 +29,7 @@
           <v-row class="fill-height" align="center" justify="center">
             <h3 class="title mt-8">Select Deposit Type</h3>
             <div v-if="model == 0">
+              <v-scale-transition>
               <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
                 <v-col
                   :cols="item.cols"
@@ -46,32 +47,17 @@
                     <div class="text-h6">{{ item.text }}</div></Gen-Card
                   ></v-col
                 >
-              </v-row>
+              </v-row></v-scale-transition>
+            </div>
+
+            <div v-if="model == 1">
+              <h3 class="title mt-8">
+              No currency to select yet
+              </h3>
             </div>
           </v-row>
         </v-sheet>
       </v-expand-transition>
-      <!-- <v-row class="d-flex justify-center mx-3">
-        <v-col cols="6" class="d-flex justify-center">
-          <v-card
-            width="125"
-            :dark="dark"
-            :color="color"
-            link
-            @click="select1"
-            v-click-outside="onClickOutside"
-          >
-            <v-icon size="70">mdi-currency-ngn</v-icon>
-          </v-card>
-        </v-col>
-        <v-col cols="6" class="d-flex justify-center"
-          ><v-card width="125" link 
-            
-            @click="select2">
-            <v-icon size="70">mdi-currency-usd</v-icon></v-card
-          ></v-col
-        >
-      </v-row> -->
       <div class="text-h5 mt-8"></div>
     </div>
     <div class="py-8"></div>
@@ -120,19 +106,7 @@ export default {
     };
   },
   methods: {
-    select1() {
-      this.reveal = true;
-      this.dark = true;
-      this.color = "#fb8c00";
-    },
 
-    //
-    select2() {},
-
-    onClickOutside() {
-      this.dark = false;
-      this.color = "";
-    },
   },
 };
 </script>
