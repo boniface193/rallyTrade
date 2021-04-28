@@ -14,12 +14,16 @@
 
 <script>
 export default {
-  props: ["text", "snackbar"],
+  props: ["text"],
 
   data() {
     return {
     };
   },
+
+  methods: {
+    
+  }
 };
 </script>
 

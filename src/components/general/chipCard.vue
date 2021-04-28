@@ -4,7 +4,6 @@
       :color="colors"
       class="rounded chip z-index"
       :class="addPaddingToChip"
-      style=""
       apppend
       small
     >
@@ -48,25 +47,40 @@
               <div>{{ statu }}</div>
             </div>
             <div class="d-flex justify-space-between mr-3 sm-text">
-              <div>{{acctNum}}</div>
-              <div>{{amount}}</div>
+              <div>{{ acctNum }}</div>
+              <div>{{ amount }}</div>
               <div class="sm-text">
                 <v-icon :color="statusColor">{{ status }}</v-icon>
               </div>
             </div>
+            <div class="d-flex justify-space-between">
             <div class="text-body-1 mt-3 mb-0 text-left">{{ msg }}</div>
+            </div>
           </v-col>
+          <div class="d-flex border-all" v-if="outlined">
+            <v-btn
+              depressed
+              dark
+              color="success"
+              @click="confirmDeposit"
+              small
+              class="rounde-lg z-index"
+              >Confirm</v-btn
+            >
+            <div class="px-2"></div>
+            <v-btn
+              depressed
+              outlined
+              small
+              class="rounde-lg"
+              @click="cancelDeposit"
+              >Cancel</v-btn
+            >
+          </div>
         </v-row>
       </div>
     </v-card>
 
-    <div class="d-flex border-all" style="" v-if="outlined">
-      <v-btn depressed dark color="success" @click="confirmDeposit" small class="rounde-lg"
-        >Confirm</v-btn
-      >
-      <div class="px-2"></div>
-      <v-btn depressed outlined small class="rounde-lg">Cancel</v-btn>
-    </div>
     <v-chip
       v-if="active"
       :color="statusColor"
@@ -97,14 +111,17 @@ export default {
     "addPaddingToChip",
     "day",
     "acctNum",
-    "amount"
+    "amount",
   ],
 
   methods: {
-    confirmDeposit(){
-      this.$emit('getDeposit', 'hi from this side')
-    }
-  }
+    confirmDeposit() {
+      this.$emit("getDeposit", "hi from this side");
+    },
+    cancelDeposit() {
+      this.$emit("deleteDeposit");
+    },
+  },
 };
 </script>
 
@@ -147,7 +164,8 @@ html {
 .border-all {
   margin-left: 40%;
   position: absolute;
-  top: 50%;
+  top: 90%;
+  // height: 100%;
 }
 
 .v-btn--outlined {

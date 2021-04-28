@@ -118,7 +118,7 @@ const actions = {
 const mutations = {
 
     setChipCard(state, data) {
-        state.chipCard.push(data)
+        state.chipCard.unshift(data)
     }
 
 };

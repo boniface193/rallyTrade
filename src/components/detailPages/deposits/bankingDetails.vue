@@ -52,7 +52,7 @@
     </div>
     <div>
       <v-row>
-        <v-col cols="5" class="text-body-2 pb-0 pr-0font-smaller"
+        <v-col cols="5" class="text-body-2 pb-0 pr-0font-smaller pr-0"
           >Account Name</v-col
         >
         <v-col
@@ -61,7 +61,7 @@
           :key="item.id"
           v-show="reveal"
           cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption pb-0 px-0 font-smaller"
+          class="grey--text darken-4 font-weight-bold pb-0 px-0" style="font-size: 10px;"
           >{{ item.acctName }}
           <v-tooltip class="" v-model="snackbarName" top
             >{{ text }}
@@ -266,6 +266,7 @@
 import GenCard from "@/components/general/genCard.vue";
 import Chip from "@/components/general/currencyChip.vue";
 import Modal from "@/components/general/modal.vue";
+import moment from "moment"
 export default {
   name: "my-tour",
   components: {
@@ -414,14 +415,14 @@ export default {
       this.$router.push({ name: "deposit" });
       this.$store.commit("trading/setChipCard", {
         id: "deposit001",
-        time: "4:30",
+        time: moment(new Date()).format('LT'),
         day: new Date().toLocaleDateString(),
         moneySign: "mdi-currency-ngn",
         icon: "wire.svg",
         depositType: "WIRE",
         color: "white",
         routes: "",
-        amount: "10,000,000",
+        amount: this.price,
         acctNum: "854715",
         date: "",
         active: false,

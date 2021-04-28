@@ -209,6 +209,11 @@
         <v-btn block depressed class="white--text text-caption" color="#9B9FFF"
           >Upload</v-btn
         >
+
+                <!-- delete upload -->
+        <v-btn block depressed class="white--text text-caption my-3" color="grey"
+          >Delete</v-btn
+        >
       </v-row>
     </div>
 
