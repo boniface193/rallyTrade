@@ -239,7 +239,7 @@
     <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
     <Modal :dialog="dialog">
-      <div class="text-center text-subtitle-1 py-8 mx-3 body-text">
+      <div class="text-center py-8 mx-4 body-text" style="font-size: 14px;">
         <div class="text-h6 error--text mb-3">Important!</div>
         <div class="text-left">
           Rally Trade
@@ -258,13 +258,13 @@
             must </span
           >contain in the description:
         </div>
-        <ul class="font-weight-medium text-uppercase error--text text-left">
+        <ul class="font-weight-medium text-uppercase error--text text-left mt-4">
           <li>your name</li>
           <li>rally account number</li>
         </ul>
         <v-btn
           color="success"
-          small
+          block
           class="my-4 elevation-0"
           @click="closeAndSubmit"
           >continue!</v-btn
@@ -397,7 +397,7 @@ export default {
       { label: "", id: "v-step-3", appendIcon: "mdi-currency-ngn", size: "25" },
     ],
   }),
-  
+
   methods: {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);

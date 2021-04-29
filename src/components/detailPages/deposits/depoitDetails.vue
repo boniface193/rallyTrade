@@ -62,8 +62,8 @@
         <div class="mb-1">To</div>
       </v-col>
       <v-col cols="4" class="font-weight-bold">
-        <div class="mb-1">859647</div>
-        <div class="mb-1">10,000,000</div>
+        <div class="mb-1">{{depositItem .acctNum}}</div>
+        <div class="mb-1">{{depositItem .amount}}</div>
         <div class="mb-1">1587469</div>
         <div class="mb-1">GTB</div>
         <div class="mb-1">ZENITH</div>
@@ -176,7 +176,7 @@
           </div>
         </v-col>
         <v-col cols="6" class="px-0 text-center">
-          <div class="mt-2 mr-3" v-if="image" style="height: 80%;">
+          <div class="mt-2 mr-3" v-if="image" style="height: 80%">
             <img :src="image" width="100%" height="100%" />
           </div>
           <div class="my-8" v-else>
@@ -206,12 +206,21 @@
             >
           </div>
         </v-col>
-        <v-btn v-if="image" block depressed class="white--text text-caption" color="#9B9FFF"
+        <v-btn
+          v-if="image"
+          block
+          depressed
+          class="white--text text-caption"
+          color="#9B9FFF"
           >Upload</v-btn
         >
 
-                <!-- delete upload -->
-        <v-btn block depressed class="white--text text-caption my-3" color="grey"
+        <!-- delete upload -->
+        <v-btn
+          block
+          depressed
+          class="white--text text-caption my-3"
+          color="grey"
           >Delete</v-btn
         >
       </v-row>

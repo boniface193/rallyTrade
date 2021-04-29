@@ -53,7 +53,9 @@
           <v-divider></v-divider>
           <div>History</div>
 
-          <div class="text-center text-caption mt-12">you don't have any deposit History</div>
+          <div class="text-center text-caption mt-12">
+            you don't have any deposit History
+          </div>
         </div>
 
         <div class="py-16"></div>
@@ -79,7 +81,7 @@ import { mapGetters } from "vuex";
 import MobileHeader from "@/components/general/mobileHeader.vue";
 import ChipCard from "@/components/general/chipCard.vue";
 import moment from "moment";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     ChipCard,
@@ -90,6 +92,7 @@ export default {
       active: null,
       snackbar: false,
       text: "",
+      firstDepositeCard: {},
     };
   },
   computed: {
@@ -103,6 +106,11 @@ export default {
       this.active = false;
     }
   },
+  mounted() {
+    this.firstDepositeCard = this.chipCard.find(
+      (item) => item.id === "deposit001"
+    );
+  },
   methods: {
     selectCurrency() {
       this.$router.push({ name: "selectCurrency" });
@@ -110,7 +118,6 @@ export default {
     tryToSelectCurrency() {
       this.snackbar = true;
       this.text = "Please confirm your deposit";
-      console.log("selcted");
     },
     submitDeposit() {
       this.chipCard.shift();
@@ -127,8 +134,8 @@ export default {
         statu: "Status",
         statusText: "UPLOAD",
         routes: "depositDetails",
-        amount: "10,000,000",
-        acctNum: "854715",
+        amount: this.firstDepositeCard.amount,
+        acctNum: this.firstDepositeCard.acctNum,
         date: "",
         statusColor: "primary",
       });
