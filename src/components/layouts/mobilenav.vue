@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark">
+  <div class="bg-dark" ref="bg_class">
     <v-btn
       @click="toggleOpen"
       v-click-outside="onClickOutside"
@@ -10,7 +10,7 @@
       <v-icon dark color="main_bg"> mdi-menu </v-icon>
     </v-btn>
     <div class="circle elevation-8">
-      <div class="text-center my-3 hidden-on-true d-none">
+      <div class="text-center my-3 hidden-on-true d-none" ref="hidden_on_true">
         <v-list color="transparent">
           <v-list-item
             v-for="item in links"
@@ -50,23 +50,19 @@ export default {
 
   methods: {
     toggleOpen() {
-      if (
-        document.querySelector(".bg-dark").classList.contains("open") == false
-      ) {
-        document.querySelector(".bg-dark").classList.add("open");
-        document.querySelector(".hidden-on-true").classList.remove("d-none");
+      if (this.$refs.bg_class.classList.contains("open") == false) {
+        this.$refs.bg_class.classList.add("open");
+        this.$refs.hidden_on_true.classList.remove("d-none");
       } else {
-        document.querySelector(".hidden-on-true").classList.add("d-none");
-        document.querySelector(".bg-dark").classList.remove("open");
+        this.$refs.hidden_on_true.classList.add("d-none");
+        this.$refs.bg_class.classList.remove("open");
       }
     },
 
     onClickOutside() {
-      if (
-        document.querySelector(".bg-dark").classList.contains("open") == true
-      ) {
-        document.querySelector(".hidden-on-true").classList.add("d-none");
-        document.querySelector(".bg-dark").classList.remove("open");
+      if (this.$refs.bg_class.classList.contains("open") == true) {
+        this.$refs.hidden_on_true.classList.add("d-none");
+        this.$refs.bg_class.classList.remove("open");
       }
     },
   },

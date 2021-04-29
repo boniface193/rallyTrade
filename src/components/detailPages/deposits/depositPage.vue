@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-main>
+    <!-- <v-main> -->
       <!-- <v-slide-x-transition> -->
         <router-view></router-view>
       <!-- </v-slide-x-transition> -->
-    </v-main>
+    <!-- </v-main> -->
   </div>
 </template>
 

@@ -29,76 +29,99 @@
     </v-row>
     <div class="text-body-1">Select FRNG Bank</div>
     <div>
-      <v-row class="d-flex justify-center my-1 mxforSmallerScreen">
-        <v-col
-          cols="4"
-          class="d-flex justify-center"
+      <v-slide-group v-model="model" class="pa-2">
+        <v-slide-item
           v-for="item in bankName"
           :key="item.id"
-          @click="BankInfo(item.id)"
+          v-slot="{ active, toggle }"
         >
-          <Gen-Card class="text-center" :link="true" activeClass="active_link">
-            <img
+          <v-card
+            :color="active ? 'grey lighten-2' : 'white'"
+            class="ma-2"
+            width="80"
+            align="center"
+            justify="center"
+            @click="toggle"
+          >
+            <v-img
               width="50%"
               class="forSmallerScreen"
               :class="item.class"
               :src="item.icon"
               alt=""
-            />
+              @click="BankInfo(item.id)"
+            ></v-img>
             <div class="text-caption">{{ item.text }}</div>
-          </Gen-Card></v-col
-        >
-      </v-row>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+
+      <v-expand-transition>
+        <v-sheet v-if="model != null" height="80" tile>
+          <v-row>
+            <v-col cols="4" class="text-body-2 pb-0 pr-0 font-smaller"
+              >Account Name</v-col
+            >
+            <v-col
+              cols="8"
+              class="grey--text darken-4 font-weight-bold pr-0"
+              style="font-size: 10px"
+              @click="copyName"
+              >{{
+                model == 0
+                  ? "FRNG LIMITED-CLIENT'S ACCOUNT"
+                  : "" || model == 1
+                  ? "FRNG LIMITED CLIENT ACCOUNT"
+                  : "" || model == 2
+                  ? "FRNG LIMITED (CLIENT ACCT)"
+                  : ""
+              }}
+              <v-tooltip class="" v-model="snackbarName" top
+                >{{ text }}
+                <v-icon color="active_link" size="15" style=""
+                  >mdi-close</v-icon
+                >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
+                    >mdi-content-copy</v-icon
+                  >
+                </template>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="5" class="text-body-2 pt-1 pr-0">Account Number</v-col>
+            <v-col
+              @click="copyNumber"
+              cols="7"
+              class="grey--text darken-4 font-weight-bold text-caption pt-1 px-0"
+              >{{
+                model == 0
+                  ? "198832466"
+                  : "" || model == 1
+                  ? "122598731"
+                  : "" || model == 2
+                  ? "1014414254"
+                  : ""
+              }}
+              <v-tooltip class="" v-model="snackbarNumber" bottom
+                >{{ text }}
+                <v-icon color="active_link" size="15" style=""
+                  >mdi-close</v-icon
+                >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
+                    >mdi-content-copy</v-icon
+                  >
+                </template>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+        </v-sheet>
+      </v-expand-transition>
     </div>
-    <div>
-      <v-row>
-        <v-col cols="4" class="text-body-2 pb-0 pr-0 font-smaller"
-          >Account Name</v-col
-        >
-        <v-col
-          @click="copyName"
-          v-for="item in bankInfo"
-          :key="item.id"
-          v-show="reveal"
-          cols="8"
-          class="grey--text darken-4 font-weight-bold pb-0 pr-0"
-          style="font-size: 10px"
-          >{{ item.acctName }}
-          <v-tooltip class="" v-model="snackbarName" top
-            >{{ text }}
-            <v-icon color="active_link" size="15" style="">mdi-close</v-icon>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
-                >mdi-content-copy</v-icon
-              >
-            </template>
-          </v-tooltip>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="5" class="text-body-2 pt-1 pr-0">Account Number</v-col>
-        <v-col
-          @click="copyNumber"
-          v-for="item in bankInfo"
-          :key="item.id"
-          v-show="reveal"
-          cols="7"
-          class="grey--text darken-4 font-weight-bold text-caption pt-1 px-0"
-          >{{ item.acctNum }}
-          <v-tooltip class="" v-model="snackbarNumber" bottom
-            >{{ text }}
-            <v-icon color="active_link" size="15" style="">mdi-close</v-icon>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
-                >mdi-content-copy</v-icon
-              >
-            </template>
-          </v-tooltip>
-        </v-col>
-      </v-row>
-    </div>
-    <v-divider v-show="reveal" class="my-3"></v-divider>
-    <v-row v-show="reveal">
+    <v-divider class="my-3"></v-divider>
+    <v-row v-if="model != null">
       <v-col cols="5" class="text-body-2 pt-6 pr-0">Select your bank</v-col>
       <v-col cols="7">
         <v-select
@@ -277,11 +300,11 @@ export default {
   },
   data: () => ({
     dialog: false,
-    reveal: false,
     snackbarName: false,
     snackbarNumber: false,
     selectYourBank: false,
     snackbar: false,
+    model: null,
     price: "",
     snackbarText: "",
     text: "Copied to clipboard",
@@ -317,7 +340,7 @@ export default {
       {
         text: "Wema",
         icon: require("@/assets/images/bank-logo/wema.png"),
-        class: "mt-2 mb-4 pa-1",
+        class: "mt-4 mb-4 pa-1",
         acctName: "FRNG LIMITED CLIENT ACCOUNT",
         acctNum: "122598731",
         id: "002",
@@ -374,11 +397,10 @@ export default {
       { label: "", id: "v-step-3", appendIcon: "mdi-currency-ngn", size: "25" },
     ],
   }),
-
+  
   methods: {
     BankInfo(params) {
       this.bankInfo = this.bankName.filter((item) => item.id === params);
-      this.reveal = true;
     },
 
     sectedBank() {
@@ -387,8 +409,13 @@ export default {
     },
 
     copyName() {
-      this.snackbarName = true;
-      navigator.clipboard.writeText(this.bankInfo[0].acctName);
+      this.model == 0
+        ? navigator.clipboard.writeText("FRNG LIMITED-CLIENT'S ACCOUNT")
+        : "" || this.model == 1
+        ? navigator.clipboard.writeText("FRNG LIMITED CLIENT ACCOUNT")
+        : "" || this.model == 2
+        ? navigator.clipboard.writeText("FRNG LIMITED (CLIENT ACCT)")
+        : "";
       // let textToCopy = this.$refs.textToCopy.$el.querySelector(
       //   ".textToBeCopied"
       // );
@@ -398,8 +425,13 @@ export default {
     },
 
     copyNumber() {
-      this.snackbarNumber = true;
-      navigator.clipboard.writeText(this.bankInfo[0].acctNum);
+      this.model == 0
+        ? navigator.clipboard.writeText("198832466")
+        : "" || this.model == 1
+        ? navigator.clipboard.writeText("122598731")
+        : "" || this.model == 2
+        ? navigator.clipboard.writeText("1014414254")
+        : "";
     },
 
     submitForm() {

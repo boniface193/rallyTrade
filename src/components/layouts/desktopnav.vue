@@ -35,6 +35,7 @@
             @click="toggleMini"
             class="ma-3 miniToggle"
             id="miniToggle"
+            ref="hidden_on_lager_screen"
           >
             <v-icon>mdi-menu-left</v-icon>
           </v-btn>
@@ -133,7 +134,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -150,9 +151,11 @@ export default {
 
       if (window.innerWidth >= 1400) {
         this.mini = false;
-        document.querySelector("#miniToggle").classList.add("d-none");
+        this.$refs.hidden_on_lager_screen.$el.classList.add('d-none')
+        // document.querySelector("#miniToggle").classList.add("d-none");
       } else {
-        document.querySelector("#miniToggle").classList.remove("d-none");
+        this.$refs.hidden_on_lager_screen.$el.classList.remove('d-none')
+        // document.querySelector("#miniToggle").classList.remove("d-none");
       }
     },
 
@@ -168,7 +171,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 $font-family: "Inter", sans-serif;
 $bg-color: #252954;
 $body-color: #9b9ca7;
