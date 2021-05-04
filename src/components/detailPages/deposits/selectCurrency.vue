@@ -43,7 +43,7 @@
                     :link="true"
                     :to="{ name: item.routes }"
                   >
-                    <img width="70%" :src="item.image" alt="" />
+                    <img width="50%" :src="item.image" alt="" />
                     <div class="text-h6">{{ item.text }}</div></Gen-Card
                   ></v-col
                 >
