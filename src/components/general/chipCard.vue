@@ -17,11 +17,8 @@
       link
       :outlined="outlined"
     >
-      <v-badge color="#9EE8FF" avatar overlap class="float-right z-index">
-        <template v-slot:badge>
-          <v-icon class="text-center my-1">{{ moneySign }}</v-icon>
-        </template>
-      </v-badge>
+      <!-- currency badge -->
+      <Badge :moneySign="moneySign" currencyColor="#9EE8FF"/>
       <div class="mx-3">
         <v-row :class="padding">
           <v-col cols="3" class="text-center">
@@ -93,7 +90,11 @@
 </template>
 
 <script>
+import Badge from '@/components/general/currencyBadge.vue'
 export default {
+  components: {
+    Badge
+  },
   props: [
     "colors",
     "time",

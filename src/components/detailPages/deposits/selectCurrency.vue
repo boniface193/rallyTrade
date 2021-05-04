@@ -5,21 +5,36 @@
         <router-link :to="{ name: 'deposit' }">
           <v-icon class="float-left">mdi-arrow-left</v-icon>
         </router-link>
-        <div>Select Currency</div>
+        <div>Select Account</div>
       </div>
-      <v-slide-group v-model="model" class="pa-2">
+      <v-slide-group v-model="model" show-arrows class="py-2">
         <v-slide-item
           v-for="item in selectCurrency"
           :key="item.id"
           v-slot="{ active, toggle }"
         >
           <v-card
-            :color="active ? 'active_link' : 'grey lighten-1'"
+            :color="active ? 'active_link white--text' : 'white'"
             class="ma-4"
             width="125"
             @click="toggle"
           >
-            <v-icon size="70" color="white">{{ item.currency }}</v-icon>
+            <!-- currency badge -->
+            <Badge
+              :moneySign="item.currency"
+              :currencyColor="item.currencyColor"
+            />
+            <div class="d-flex justify-space-around py-2">
+              <img src="@/assets/images/mt4.png" width="22px" height="21px" class="elevation-1" v-if="item.acctType == 'mt4'"/>
+              <img src="@/assets/images/fx.svg" width="22px" height="21px" class="elevation-1" v-else/>
+              <div class="caption font-weight-black">889554</div>
+            </div>
+            <div class="text-center py-2">
+              <div class="caption ">Balance</div>
+              <div class="caption font-weight-black">100,000</div>
+              <div class="caption">Bonus</div>
+              <div class="caption font-weight-black">50,000</div>
+            </div>
           </v-card>
         </v-slide-item>
       </v-slide-group>
@@ -65,9 +80,11 @@
 
 <script>
 import GenCard from "@/components/general/genCard.vue";
+import Badge from "@/components/general/currencyBadge.vue";
 export default {
   components: {
     GenCard,
+    Badge,
   },
   data() {
     return {
@@ -76,8 +93,24 @@ export default {
       color: "",
       model: null,
       selectCurrency: [
-        { id: "001", currency: "mdi-currency-ngn" },
-        { id: "002", currency: "mdi-currency-usd" },
+        {
+          id: "001",
+          currency: "mdi-currency-ngn",
+          currencyColor: "#9EE8FF",
+          acctType: "mt4",
+        },
+        {
+          id: "002",
+          currency: "mdi-currency-usd",
+          currencyColor: "#A0FF9E",
+          acctType: "fx",
+        },
+        {
+          id: "003",
+          currency: "mdi-currency-usd",
+          currencyColor: "#A0FF9E",
+          acctType: "fx",
+        },
       ],
       depositeType: [
         {
