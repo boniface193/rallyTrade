@@ -245,7 +245,7 @@
 
           <div class="text-caption d-flex justify-center mr-5">
             <v-icon color="#9B9FFF">mdi-file-document-outline</v-icon>
-            <div class="mt-1 mx-1" style="font-size: 100%">
+            <div class="mt-1 mx-2 text-truncate" style="font-size: 100%">
               {{ files.name || "No File Selected" }}
             </div>
             <v-icon size="18" class="mt-1" @click="removeImage"
@@ -254,10 +254,11 @@
           </div>
         </v-col>
         <v-btn
+          @click="submitUpLoads"
           v-if="image"
           block
           depressed
-          class="white--text text-caption"
+          class="white--text text-caption mt-5"
           color="#9B9FFF"
           >Upload</v-btn
         >
@@ -354,17 +355,16 @@ export default {
       if (getFiles == undefined) {
         this.text = "undefined, you have not selected any image";
         this.snackbar = true;
-      } else if (getFiles.size > 3876690) {
+      } else {
+        this.files = getFiles;
+      }
+      if (getFiles.size > 3876690) {
         this.text = "File size exceeded. (Max. 20 MB)";
         this.snackbar = true;
         this.files = {};
         this.image = "";
-      } else {
-        setInterval(() => {
-          this.files = getFiles;
-        }, 2000);
       }
-      this.createImage(getFiles);
+      this.createImage(this.files);
     },
 
     createImage(file) {
@@ -377,8 +377,8 @@ export default {
         img.onload = (event) => {
           let Dwidth = event.target.width;
           let Dheight = event.target.height;
-          if (Dwidth > 800 || Dheight > 800) {
-            this.text = "File resolution exceeded. (Max. 800 x 800)";
+          if (Dwidth < 600 || Dheight < 400) {
+            this.text = "File resolution must be. (Min. 600 x 400)";
             this.snackbar = true;
             this.files = {};
             this.image = "";
@@ -415,6 +415,17 @@ export default {
         this.failedValidateAmount = true;
       } else {
         this.failedValidateAmount = false;
+      }
+    },
+
+    submitUpLoads() {
+      if (this.clientName < 1 || this.slipNumber < 1 || this.slipAmount < 1) {
+        console.log("check back");
+        this.failedValidateAmount = true;
+        this.failedValidateNumber = true;
+        this.failedValidationName = true;
+      } else {
+        console.log("Name: ", this.clientName, "Slip: ", this.slipNumber, "Amount: ", this.slipAmount);
       }
     },
   },
