@@ -1,6 +1,6 @@
 <template>
-  <div class="icons show-mobile">
-    <v-tabs v-model="tab" align-with-title link>
+  <div class="icons show-mobile elevation-10 rounded-t-xl">
+    <v-tabs v-model="tab" align-with-title link class="">
       <v-tabs-slider color="active--text"
       ></v-tabs-slider>
       <v-tab
@@ -57,7 +57,7 @@ html {
   bottom: 0%;
   left: 1;
   right: 0;
-  padding: 8% 0 8% 20%;
+  padding: 4% 0 4% 20%;
   background-color: $white;
   .active--text {
     color: $orange;

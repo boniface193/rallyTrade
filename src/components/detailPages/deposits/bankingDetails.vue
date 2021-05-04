@@ -236,7 +236,6 @@
         >
       </div>
     </div>
-    <div class="py-10"></div>
     <v-tour name="myTour" :steps="steps"></v-tour>
     <Modal :dialog="dialog">
       <div class="text-center py-8 mx-4 body-text" style="font-size: 14px;">
@@ -283,6 +282,8 @@
       </template>
     </v-snackbar>
     <!-- error msg -->
+    
+    <div class="py-16"></div>
   </div>
 </template>
 

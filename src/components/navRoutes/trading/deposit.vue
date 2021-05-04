@@ -18,7 +18,7 @@
       />
       <div class="my-16 pt-5 mr-1">
         <div v-show="chipCard < 1" class="mt-16 text-center">
-          <img src="@/assets/images/emptyState/empty-deposit.svg" width="50%" />
+          <img src="@/assets/images/emptyState/empty-deposit.svg" width="30%" />
           <div class="text-body-1 mt-3">please make a deposit</div>
         </div>
         <div class="mt-7" v-for="item in chipCard" :key="item.id">

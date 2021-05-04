@@ -32,9 +32,7 @@
       </v-col>
       <v-col cols="6"
         ><div>
-          <span class="text-body-1 font-weight-light" v-if="depositItem.status"
-            >Status</span
-          >
+          <span class="body-1" v-if="depositItem.status">Status</span>
           <br />
           <span
             ><v-icon class="pb-1" :color="depositItem.statusColor">{{
@@ -50,10 +48,11 @@
       >
     </v-row>
 
-    <v-row class="">
+    <v-row>
       <v-col
         cols="4"
-        style="font-weight: 300; font-size: 20px; line-height: 23px"
+        class="text-normal"
+        style="font-size: 20px; line-height: 23px"
       >
         <div class="mb-1">Account</div>
         <div class="mb-1">Amount</div>
@@ -61,9 +60,9 @@
         <div class="mb-1">From</div>
         <div class="mb-1">To</div>
       </v-col>
-      <v-col cols="4" class="font-weight-bold">
-        <div class="mb-1">{{depositItem .acctNum}}</div>
-        <div class="mb-1">{{depositItem .amount}}</div>
+      <v-col cols="4" class="body-1">
+        <div class="mb-1">{{ depositItem.acctNum }}</div>
+        <div class="mb-1">{{ depositItem.amount }}</div>
         <div class="mb-1">1587469</div>
         <div class="mb-1">GTB</div>
         <div class="mb-1">ZENITH</div>
@@ -80,11 +79,11 @@
       </v-col>
     </v-row>
 
-    <v-divider class="mt-8"></v-divider>
+    <v-divider class="mt-4"></v-divider>
 
     <!-- once success -->
     <div v-show="depositItem.bonus">
-      <div class="float-right mt-2 divider-header">BONUS</div>
+      <div class="float-right mt-2 body-1 font-weight-light">BONUS</div>
       <div class="text-center pt-8">
         <div class="d-flex justify-center">
           <Chip
@@ -113,28 +112,36 @@
 
     <!-- upload -->
     <div class="mt-4" v-show="depositItem.statusText == 'UPLOAD'">
-      <div class="float-right divider-header">UPLOAD SLIP</div>
+      <div class="float-right divider-header body-1 font-weight-light">
+        UPLOAD SLIP
+      </div>
       <div>
-        <div class="pt-3">
-          <span>Name on the SLIP</span>
+        <div class="pt-5">
+          <span class="text-normal" style="font-size: 14px"
+            >Name on the SLIP</span
+          >
           <input
             type="text"
-            class="text-normal pa-1"
+            class="body-1 pa-1"
             style="border: solid 1px #999a9e; width: 100%"
           />
         </div>
 
         <div class="pt-3">
-          <span>SLIP Number</span>
+          <span class="text-normal" style="font-size: 14px"
+            >SLIP Number</span
+          >
           <input
-            type="text"
-            class="text-normal pa-1"
+            type="number"
+            class="body-1 pa-1"
             style="border: solid 1px #999a9e; width: 100%"
           />
         </div>
 
         <div class="pt-3">
-          <span>Amount</span>
+          <span class="text-normal" style="font-size: 14px"
+            >Amount</span
+          >
           <div class="d-flex">
             <Chip
               :currencyChip="depositItem.moneySign"
@@ -144,8 +151,8 @@
               class="text-center"
             />
             <input
-              type="text"
-              class="text-normal pa-1 ml-2"
+              type="number"
+              class="body-1 pa-1 ml-2"
               style="border: solid 1px #999a9e; width: 100%"
             />
           </div>
@@ -299,26 +306,37 @@ export default {
       if (getFiles == undefined) {
         this.text = "undefined, you have not selected any image";
         this.snackbar = true;
-      } else {
-        this.files = getFiles;
-      }
-
-      if (getFiles.size > 3876690) {
+      } else if (getFiles.size > 3876690) {
         this.text = "File size exceeded. (Max. 20 MB)";
         this.snackbar = true;
         this.files = {};
         this.image = "";
+      } else {
+        setInterval(() => {
+          this.files = getFiles;
+        }, 2000);
       }
-
-      this.createImage(this.files);
+      this.createImage(getFiles);
     },
 
     createImage(file) {
       var reader = new FileReader();
       var vm = this;
-
       reader.onload = (e) => {
         vm.image = e.target.result;
+
+        const img = new Image();
+        img.onload = (event) => {
+          let Dwidth = event.target.width;
+          let Dheight = event.target.height;
+          if (Dwidth > 800 || Dheight > 800) {
+            this.text = "File resolution exceeded. (Max. 800 x 800)";
+            this.snackbar = true;
+            this.files = {};
+            this.image = "";
+          }
+        };
+        img.src = this.image;
       };
       reader.readAsDataURL(file);
     },

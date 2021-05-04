@@ -25,11 +25,6 @@
         </v-list>
       </div>
     </div>
-    <!-- <svg viewBox="0 0 416 896">
-      <path
-        d="M287.1 784c-18.4 0-37.1 0-53.1 0 -12.4 0-12.6 0-26 0s-13.6 0-26 0c-18 0-34.8 0-53.1 0H0v112h416V784H287.1z"
-      ></path>
-    </svg> -->
   </div>
 </template>
 <script>
@@ -95,7 +90,7 @@ html {
     z-index: 1;
     position: fixed;
     bottom: 0%;
-    margin: 0 0 8% 5%;
+    margin: 0 0 3% 5%;
   }
   @media (max-width: 280px) {
     .menu-btn {
