@@ -120,41 +120,81 @@
           <span class="text-normal" style="font-size: 14px"
             >Name on the SLIP</span
           >
-          <input
-            type="text"
-            class="body-1 pa-1"
-            style="border: solid 1px #999a9e; width: 100%"
-          />
-        </div>
-
-        <div class="pt-3">
-          <span class="text-normal" style="font-size: 14px"
-            >SLIP Number</span
-          >
-          <input
-            type="number"
-            class="body-1 pa-1"
-            style="border: solid 1px #999a9e; width: 100%"
-          />
-        </div>
-
-        <div class="pt-3">
-          <span class="text-normal" style="font-size: 14px"
-            >Amount</span
-          >
-          <div class="d-flex">
-            <Chip
-              :currencyChip="depositItem.moneySign"
-              :width="'width: 30px'"
-              fontSize="font-size: 20px;"
-              padding=""
-              class="text-center"
-            />
+          <div>
+            <v-icon
+              v-if="failedValidationName"
+              color="error"
+              style="position: absolute; right: 35px"
+              class="mt-1"
+              >mdi-alert-circle</v-icon
+            >
             <input
-              type="number"
-              class="body-1 pa-1 ml-2"
+              v-model="clientName"
+              @blur="checkIfBlurName"
+              type="text"
+              class="body-1 pa-1"
               style="border: solid 1px #999a9e; width: 100%"
             />
+          </div>
+          <div class="caption error--text" v-if="failedValidationName">
+            field is required
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <span class="text-normal" style="font-size: 14px">SLIP Number</span>
+          <div>
+            <v-icon
+              v-if="failedValidateNumber"
+              color="error"
+              style="position: absolute; right: 35px"
+              class="mt-1"
+              >mdi-alert-circle</v-icon
+            >
+            <input
+              @blur="checkIfBlurNumber"
+              type="text"
+              v-model="slipNumber"
+              class="body-1 pa-1"
+              style="border: solid 1px #999a9e; width: 100%"
+            />
+          </div>
+          <div class="caption error--text" v-if="failedValidateNumber">
+            field is required
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <span class="text-normal" style="font-size: 14px">Amount</span>
+          <div class="row">
+            <div class="col-1 pt-2">
+              <Chip
+                :currencyChip="depositItem.moneySign"
+                :width="'width: 30px'"
+                fontSize="font-size: 20px;"
+                padding="pa-3"
+                class="text-center"
+              />
+            </div>
+            <div class="col-11">
+              <v-icon
+                v-if="failedValidateAmount"
+                color="error"
+                style="position: absolute; right: 35px"
+                class="mt-1"
+                >mdi-alert-circle</v-icon
+              >
+              <input
+                @blur="checkIfBlurAmount"
+                type="number"
+                v-model="slipAmount"
+                class="body-1 pa-1"
+                style="border: solid 1px #999a9e; width: 100%"
+              />
+              <div class="caption error--text" v-if="failedValidateAmount">
+                field is required
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -265,6 +305,14 @@ export default {
       image: "",
       snackbar: false,
       text: "",
+      // validation
+      failedValidationName: false,
+      failedValidateNumber: false,
+      failedValidateAmount: false,
+      clientName: "",
+      slipNumber: "",
+      slipAmount: "",
+
       history: [
         {
           time: "12:30",
@@ -344,6 +392,30 @@ export default {
     removeImage() {
       this.files = {};
       this.image = "";
+    },
+
+    checkIfBlurName() {
+      if (this.clientName < 1) {
+        this.failedValidationName = true;
+      } else {
+        this.failedValidationName = false;
+      }
+    },
+
+    checkIfBlurNumber() {
+      if (this.slipNumber < 1) {
+        this.failedValidateNumber = true;
+      } else {
+        this.failedValidateNumber = false;
+      }
+    },
+
+    checkIfBlurAmount() {
+      if (this.slipAmount < 1) {
+        this.failedValidateAmount = true;
+      } else {
+        this.failedValidateAmount = false;
+      }
     },
   },
 };

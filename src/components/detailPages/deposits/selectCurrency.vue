@@ -1,5 +1,5 @@
 <template>
-  <div class="container show-mobile">
+  <div class="show-mobile">
     <div class="text-center">
       <div class="text-h5 my-5">
         <router-link :to="{ name: 'deposit' }">
@@ -25,12 +25,24 @@
               :currencyColor="item.currencyColor"
             />
             <div class="d-flex justify-space-around py-2">
-              <img src="@/assets/images/mt4.png" width="22px" height="21px" class="elevation-1" v-if="item.acctType == 'mt4'"/>
-              <img src="@/assets/images/fx.svg" width="22px" height="21px" class="elevation-1" v-else/>
+              <img
+                src="@/assets/images/mt4.png"
+                width="22px"
+                height="21px"
+                class="elevation-1"
+                v-if="item.acctType == 'mt4'"
+              />
+              <img
+                src="@/assets/images/fx.svg"
+                width="22px"
+                height="21px"
+                class="elevation-1"
+                v-else
+              />
               <div class="caption font-weight-black">889554</div>
             </div>
             <div class="text-center py-2">
-              <div class="caption ">Balance</div>
+              <div class="caption">Balance</div>
               <div class="caption font-weight-black">100,000</div>
               <div class="caption">Bonus</div>
               <div class="caption font-weight-black">50,000</div>
@@ -54,12 +66,12 @@
                   >
                     <Gen-Card
                       :width="item.size"
-                      class="text-center"
+                      class="text-center py-5"
                       :link="true"
                       :to="{ name: item.routes }"
                     >
-                      <img width="50%" :src="item.image" alt="" />
-                      <div class="text-h6">{{ item.text }}</div></Gen-Card
+                      <img width="30%" :src="item.image" alt="" />
+                      <div class="font-weight-bold">{{ item.text }}</div></Gen-Card
                     ></v-col
                   >
                 </v-row></v-scale-transition
@@ -137,7 +149,9 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
 
