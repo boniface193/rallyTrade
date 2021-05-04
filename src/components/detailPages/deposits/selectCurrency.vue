@@ -30,37 +30,36 @@
             <h3 class="title mt-8">Select Deposit Type</h3>
             <div v-if="model == 0">
               <v-scale-transition>
-              <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
-                <v-col
-                  :cols="item.cols"
-                  class="d-flex justify-center"
-                  v-for="item in depositeType"
-                  :key="item.id"
-                >
-                  <Gen-Card
-                    :width="item.size"
-                    class="text-center"
-                    :link="true"
-                    :to="{ name: item.routes }"
+                <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
+                  <v-col
+                    :cols="item.cols"
+                    class="d-flex justify-center"
+                    v-for="item in depositeType"
+                    :key="item.id"
                   >
-                    <img width="50%" :src="item.image" alt="" />
-                    <div class="text-h6">{{ item.text }}</div></Gen-Card
-                  ></v-col
-                >
-              </v-row></v-scale-transition>
+                    <Gen-Card
+                      :width="item.size"
+                      class="text-center"
+                      :link="true"
+                      :to="{ name: item.routes }"
+                    >
+                      <img width="50%" :src="item.image" alt="" />
+                      <div class="text-h6">{{ item.text }}</div></Gen-Card
+                    ></v-col
+                  >
+                </v-row></v-scale-transition
+              >
             </div>
 
             <div v-if="model == 1">
-              <h3 class="title mt-8">
-              No currency to select yet
-              </h3>
+              <h3 class="title mt-8">No currency to select yet</h3>
             </div>
           </v-row>
         </v-sheet>
       </v-expand-transition>
       <div class="text-h5 mt-8"></div>
     </div>
-    <div class="py-8"></div>
+    <div class="py-10"></div>
   </div>
 </template>
 
@@ -83,7 +82,7 @@ export default {
       depositeType: [
         {
           cols: 12,
-          size: "112",
+          size: "125",
           routes: "",
           image: require("@/assets/images/credit-card.svg"),
           text: "INSTANT",
@@ -105,9 +104,7 @@ export default {
       ],
     };
   },
-  methods: {
-
-  },
+  methods: {},
 };
 </script>
 

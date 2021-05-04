@@ -1,5 +1,5 @@
 <template>
-  <div class="icons show-mobile elevation-10 rounded-t-xl">
+  <div class="icons show-mobile elevation-10">
     <v-tabs v-model="tab" align-with-title link class="">
       <v-tabs-slider color="active--text"
       ></v-tabs-slider>
