@@ -196,6 +196,50 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-1 pt-2">
+              <v-icon size="35" class="mt-1">mdi-calendar-month</v-icon>
+            </div>
+            <div class="col-11">
+              <v-icon
+              v-if="failedValidateDate"
+                color="error"
+                style="position: absolute; right: 35px"
+                class="mt-1"
+                >mdi-alert-circle</v-icon
+              >
+              <v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="date"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <input
+                    class="body-1 pa-1"
+                    style="border: solid 1px #999a9e; width: 100%"
+                    v-model="date"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker v-model="date" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-dialog>
+              <div class="caption error--text" v-if="failedValidateDate">field is required</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -310,9 +354,12 @@ export default {
       failedValidationName: false,
       failedValidateNumber: false,
       failedValidateAmount: false,
+      failedValidateDate: false,
       clientName: "",
       slipNumber: "",
       slipAmount: "",
+      date: new Date().toISOString().substr(0, 10),
+      modal: false,
 
       history: [
         {
@@ -420,12 +467,19 @@ export default {
 
     submitUpLoads() {
       if (this.clientName < 1 || this.slipNumber < 1 || this.slipAmount < 1) {
-        console.log("check back");
         this.failedValidateAmount = true;
         this.failedValidateNumber = true;
         this.failedValidationName = true;
       } else {
-        console.log("Name: ", this.clientName, "Slip: ", this.slipNumber, "Amount: ", this.slipAmount);
+        console.log(
+          "Name: ",
+          this.clientName,
+          "Slip: ",
+          this.slipNumber,
+          "Amount: ",
+          this.slipAmount,
+          "date", this.date, "image: ", this.image
+        );
       }
     },
   },

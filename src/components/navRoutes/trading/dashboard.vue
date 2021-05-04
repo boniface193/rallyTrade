@@ -1,45 +1,138 @@
 <template>
-  <div class="text-center">
-    <v-slide-group v-model="model" class="pa-2" show-arrows>
-      <v-slide-item v-for="n in 2" :key="n" v-slot="{ active, toggle }">
-        <v-card
-          :color="active ? 'active_link' : 'grey lighten-1'"
-          class="ma-4"
-          height="50"
-          width="125"
-          @click="toggle"
+  <v-row>
+    <!-- <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="date"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="Picker in menu"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="date"
+          no-title
+          scrollable
         >
-          <v-row class="fill-height" align="center" justify="center">
-            <v-scale-transition>
-              <v-icon
-                v-if="active"
-                color="white"
-                size="48"
-                v-text="'mdi-close-circle-outline'"
-              ></v-icon>
-            </v-scale-transition>
-          </v-row>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
-
-    <v-expand-transition>
-      <v-sheet v-if="model != null" height="200" tile>
-        <v-row class="fill-height" align="center" justify="center">
-          <h3 class="title">Selected {{ model }}</h3>
-        </v-row>
-      </v-sheet>
-    </v-expand-transition>
-  </div>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="menu = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.menu.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-menu>
+    </v-col> -->
+    <v-spacer></v-spacer>
+    <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-dialog
+        ref="dialog"
+        v-model="modal"
+        :return-value.sync="date"
+        persistent
+        width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <input
+          style="border: solid 1px #999a9e; width: 100%"
+            v-model="date"
+            label="Picker in dialog"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          />
+        </template>
+        <v-date-picker
+          v-model="date"
+          scrollable
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="modal = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.dialog.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-dialog>
+    </v-col>
+    <!-- <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-menu
+        v-model="menu2"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="Picker without buttons"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="date"
+          @input="menu2 = false"
+        ></v-date-picker>
+      </v-menu>
+    </v-col> -->
+    <v-spacer></v-spacer>
+  </v-row>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    model: null,
-  }),
-};
+  export default {
+    data: () => ({
+      date: new Date().toISOString().substr(0, 10),
+      // menu: false,
+      modal: false,
+      // menu2: false,
+    }),
+  }
 </script>
-
-<style>
-</style>
