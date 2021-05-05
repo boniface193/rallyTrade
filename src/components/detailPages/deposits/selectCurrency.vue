@@ -26,14 +26,14 @@
             />
             <div class="d-flex justify-space-around py-2">
               <img
-                src="@/assets/images/mt4.png"
+                src="@/assets/images/general/mt4.png"
                 width="22px"
                 height="21px"
                 class="elevation-1"
                 v-if="item.acctType == 'mt4'"
               />
               <img
-                src="@/assets/images/fx.svg"
+                src="@/assets/images/general/fx.svg"
                 width="22px"
                 height="21px"
                 class="elevation-1"
@@ -129,21 +129,21 @@ export default {
           cols: 12,
           size: "125",
           routes: "",
-          image: require("@/assets/images/credit-card.svg"),
+          image: require("@/assets/images/general/credit-card.svg"),
           text: "INSTANT",
         },
         {
           cols: 6,
           size: "125",
           routes: "bankDetails",
-          image: require("@/assets/images/wire-deposite.svg"),
+          image: require("@/assets/images/general/wire-deposite.svg"),
           text: "WIRE",
         },
         {
           cols: 6,
           size: "125",
           routes: "",
-          image: require("@/assets/images/teller.svg"),
+          image: require("@/assets/images/general/teller.svg"),
           text: "TELLER",
         },
       ],

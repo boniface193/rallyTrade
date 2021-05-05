@@ -4,6 +4,11 @@ import VueRouter from "vue-router";
 import Index from "@/views/index.vue"
 /*******Index page *******/
 
+/******** onboarding **********/
+import Onboarding from "@/views/onboarding.vue"
+import Login from "@/components/navRoutes/onboarding/login.vue"
+/******** onboarding **********/
+
 // client page
 import Home from "@/views/home.vue"
 /**trading**/
@@ -35,6 +40,17 @@ const routes = [
     path: "/",
     name: "index",
     component: Index
+  },
+  {
+    path: "/login",
+    component: Onboarding,
+    children: [
+      {
+        path: "",
+        name: "login",
+        component: Login
+      },
+    ]
   },
   {
     path: "/home",

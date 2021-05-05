@@ -167,7 +167,7 @@
         <div class="pt-3">
           <span class="text-normal" style="font-size: 14px">Amount</span>
           <div class="row">
-            <div class="col-1 pt-2">
+            <div class="col-2 pt-2">
               <Chip
                 :currencyChip="depositItem.moneySign"
                 :width="'width: 30px'"
@@ -176,7 +176,7 @@
                 class="text-center"
               />
             </div>
-            <div class="col-11">
+            <div class="col-10 pl-0">
               <v-icon
                 v-if="failedValidateAmount"
                 color="error"
@@ -198,12 +198,12 @@
           </div>
 
           <div class="row">
-            <div class="col-1 pt-2">
+            <div class="col-2 pt-2">
               <v-icon size="35" class="mt-1">mdi-calendar-month</v-icon>
             </div>
-            <div class="col-11">
+            <div class="col-10 pl-0">
               <v-icon
-              v-if="failedValidateDate"
+                v-if="failedValidateDate"
                 color="error"
                 style="position: absolute; right: 35px"
                 class="mt-1"
@@ -237,7 +237,9 @@
                   </v-btn>
                 </v-date-picker>
               </v-dialog>
-              <div class="caption error--text" v-if="failedValidateDate">field is required</div>
+              <div class="caption error--text" v-if="failedValidateDate">
+                field is required
+              </div>
             </div>
           </div>
         </div>
@@ -281,7 +283,7 @@
             />
             <img
               id="fileInputButton"
-              src="@/assets/images/upload.svg"
+              src="@/assets/images/general/upload.svg"
               onclick="document.getElementById('file').click()"
               width="30%"
             />
@@ -478,7 +480,10 @@ export default {
           this.slipNumber,
           "Amount: ",
           this.slipAmount,
-          "date", this.date, "image: ", this.image
+          "date",
+          this.date,
+          "image: ",
+          this.image
         );
       }
     },

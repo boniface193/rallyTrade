@@ -23,6 +23,8 @@ export default new Vuetify({
                 secondary_bg: '#F3F3F3',
                 primary_bg: '#F2F5FF',
                 error_bg: '#FFEEEE',
+                /******** onboaring **************/
+                btn_gold: '#C3A500',
             },
         },
     },
