@@ -7,6 +7,9 @@ import Index from "@/views/index.vue"
 /******** onboarding **********/
 import Onboarding from "@/views/onboarding.vue"
 import Login from "@/components/navRoutes/onboarding/login.vue"
+import ForgotPwd from "@/components/navRoutes/onboarding/forgotPwd.vue"
+import Register from "@/components/navRoutes/onboarding/register.vue"
+
 /******** onboarding **********/
 
 // client page
@@ -49,6 +52,16 @@ const routes = [
         path: "",
         name: "login",
         component: Login
+      },
+      {
+        path: "forgotpassword",
+        name: "forgotPwd",
+        component: ForgotPwd
+      },
+      {
+        path: "register",
+        name: "register",
+        component: Register
       },
     ]
   },

@@ -28,9 +28,19 @@
                 Login
               </v-btn>
 
-              <h5>Forgot Password!</h5>
-              <div class="caption mt-10">If you don’t have an account with Rally Trade please</div>
-              <div class="text-uppercase success--text body-2 mb-3">Register</div>
+              <router-link style="text-decoration: none; color: inherit" :to="{ name: 'forgotPwd' }">
+                <h5>Forgot Password!</h5>
+              </router-link>
+              <div class="mt-16">
+                <div class="text-caption">
+                  If you don’t have an account with Rally Trade please
+                </div>
+                 <router-link :to="{name: 'register'}" style="text-decoration: none; color: inherit">
+                <div class="text-uppercase success--text body-2 mb-3">
+                  Register
+                </div>
+                </router-link>
+              </div>
             </v-form>
           </div>
         </div>
@@ -48,11 +58,8 @@ export default {
 
   data: () => ({
     show1: false,
-    valid: true,
     password: "",
-    nameRules: [
-      (v) => !!v || "Name is required",
-    ],
+    nameRules: [(v) => !!v || "Name is required"],
     email: "",
     emailRules: [
       (v) => !!v || "E-mail is required",
@@ -70,9 +77,9 @@ export default {
 
 <style lang="scss" scoped>
 @media (min-width: 426px) {
-  *{
-    margin:0;
-	padding:0;
+  * {
+    margin: 0;
+    padding: 0;
   }
   .set_bg {
     background-color: #03b10a;
