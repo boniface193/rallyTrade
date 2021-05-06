@@ -41,35 +41,46 @@
                 </v-col>
 
                 <v-col cols="6">
-                  <v-select :items="items" label="Country"></v-select>
+                  <v-select
+                    :items="items"
+                    item-text="name"
+                    label="Country"
+                  ></v-select>
                 </v-col>
 
                 <v-col cols="6">
-                  <v-select :items="items" label="State"></v-select>
+                  <v-select :items="state" item-text="name" label="State"></v-select>
                 </v-col>
 
                 <v-col cols="12">
                   <v-text-field
-                  type="tel"
+                    type="tel"
                     v-model="contact"
                     label="Phone Number"
                     required
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="8">
+                <v-col cols="7">
                   <v-text-field
-                  type="number"
+                    type="number"
                     v-model="otp"
                     label="Verify your Phone Number"
                     required
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4">
-                  <v-btn color="active_link--text white" class="mt-3" depressed disabled>
-                    SEND CODE</v-btn>
+                <v-col cols="3">
+                  <v-btn
+                    color="active_link--text white"
+                    class="mt-3"
+                    depressed
+                    disabled
+                  >
+                    SEND CODE</v-btn
+                  >
                 </v-col>
+                <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
               </v-row>
 
               <v-btn large color="btn_gold" dark class="my-5 elevation-0" block>
@@ -99,19 +110,39 @@
 
 <script>
 import HeaderLogo from "@/components/navRoutes/onboarding/header.vue";
+import csc from "country-state-city";
+// Import Interfaces`
+// import { ICountry, IState, ICity } from 'country-state-city'
+
 export default {
   components: {
     HeaderLogo,
   },
 
   data: () => ({
-    items: ["Nigeria", "France", "Belgium", "Swizaland"],
+    lname: "",
+    fname: "",
+    contact: "",
+    otp: "",
+    country: "",
+    state: [],
+    items: {},
     email: "",
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
   }),
+
+  created() {
+    this.country = csc.getAllCountries();
+    this.items = this.country.filter((item) => item);
+    this.state = csc.getAllStates();
+    console.log("name-", this.state);
+    // this.check.forEach((i) => {
+    //   this.items = i.name
+    // });
+  },
 
   methods: {
     submitForm() {

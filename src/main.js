@@ -3,21 +3,16 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import VueClipboard from 'vue-clipboard2'
-// import Flutterwave from  "flutterwave-vue-v3";
 import VueTour from 'vue-tour'
-
+// import VueTelInput from 'vue-tel-input'
+// import 'vue-tel-input/dist/vue-tel-input.css'
 require('vue-tour/dist/vue-tour.css')
 
 Vue.use(VueTour)
 
-Vue.use(VueClipboard);
-
-Vue.use(require('vue-moment'));
-
-// Vue.use(Flutterwave, { publicKey: '' } )
-
 Vue.config.productionTip = false;
+
+// Vue.use(VueTelInput)
 
 new Vue({
   router,
