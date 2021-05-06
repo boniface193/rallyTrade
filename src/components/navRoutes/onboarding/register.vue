@@ -15,72 +15,89 @@
             <v-form method="post" ref="form" @submit="submitForm" class="mt-8">
               <v-row>
                 <v-col cols="12">
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                  ></v-text-field>
-                </v-col>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="fname"
-                    type="text"
-                    label="First Name"
-                    required
-                  ></v-text-field>
-                </v-col>
+                  <v-row>
+                    <v-col cols="6">
+                    <v-text-field
+                      v-model="fname"
+                      type="text"
+                      label="First Name"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="lname"
+                      label="Last Name"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  </v-row>
 
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="lname"
-                    label="Last Name"
-                    required
-                  ></v-text-field>
-                </v-col>
+                  <v-row>
+                    <v-col cols="6">
+                    <v-select
+                      :items="items"
+                      item-text="name"
+                      label="Country"
+                    ></v-select>
+                  </v-col>
 
-                <v-col cols="6">
-                  <v-select
-                    :items="items"
-                    item-text="name"
-                    label="Country"
-                  ></v-select>
-                </v-col>
+                  <v-col cols="6">
+                    <v-select
+                      :items="state"
+                      item-text="name"
+                      label="State"
+                    ></v-select>
+                  </v-col>
+                  </v-row>
+                  
+                  <v-row>
+                    <v-col cols="12">
+                    <v-text-field
+                      type="tel"
+                      v-model="contact"
+                      label="Phone Number"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  </v-row>
+              
+                  <v-row>
+                    <v-col cols="7">
+                    <v-text-field
+                      type="number"
+                      v-model="otp"
+                      label="Verify your Phone Number"
+                      required
+                    ></v-text-field>
+                  </v-col>
 
-                <v-col cols="6">
-                  <v-select :items="state" item-text="name" label="State"></v-select>
+                  <v-col cols="3">
+                    <v-btn
+                      color="active_link--text white"
+                      class="mt-3"
+                      depressed
+                      disabled
+                    >
+                      SEND COD</v-btn
+                    >
+                  </v-col>
+                  </v-row>
+                                   
+                  <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
                 </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    type="tel"
-                    v-model="contact"
-                    label="Phone Number"
-                    required
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="7">
-                  <v-text-field
-                    type="number"
-                    v-model="otp"
-                    label="Verify your Phone Number"
-                    required
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="3">
-                  <v-btn
-                    color="active_link--text white"
-                    class="mt-3"
-                    depressed
-                    disabled
-                  >
-                    SEND CODE</v-btn
-                  >
-                </v-col>
-                <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
               </v-row>
 
               <v-btn large color="btn_gold" dark class="my-5 elevation-0" block>
