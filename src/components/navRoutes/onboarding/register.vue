@@ -13,92 +13,78 @@
           <div class="text-center">
             <h2 class="text-uppercase">Register</h2>
             <v-form method="post" ref="form" @submit="submitForm" class="mt-8">
-              <v-row>
-                <v-col cols="12">
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
+              <div>
+                <div>
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                </div>
 
-                  <v-row>
-                    <v-col cols="6">
-                    <v-text-field
-                      v-model="fname"
-                      type="text"
-                      label="First Name"
-                      required
-                    ></v-text-field>
-                  </v-col>
+                <div class="d-flex">
+                  <v-text-field
+                  class="mr-3"
+                    v-model="fname"
+                    type="text"
+                    label="First Name"
+                    required
+                  ></v-text-field>
                   
-                  <v-col cols="6">
-                    <v-text-field
-                      v-model="lname"
-                      label="Last Name"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  </v-row>
+                  <v-text-field
+                    v-model="lname"
+                    label="Last Name"
+                    required
+                  ></v-text-field>
+                </div>
 
-                  <v-row>
-                    <v-col cols="6">
-                    <v-select
-                      :items="items"
-                      item-text="name"
-                      label="Country"
-                    ></v-select>
-                  </v-col>
-
-                  <v-col cols="6">
-                    <v-select
-                      :items="state"
-                      item-text="name"
-                      label="State"
-                    ></v-select>
-                  </v-col>
-                  </v-row>
+                <div class="d-flex">
+                  <v-select
+                  class="mr-3"
+                    :items="items"
+                    item-text="name"
+                    label="Country"
+                  ></v-select>
                   
-                  <v-row>
-                    <v-col cols="12">
-                    <v-text-field
-                      type="tel"
-                      v-model="contact"
-                      label="Phone Number"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  </v-row>
-              
-                  <v-row>
-                    <v-col cols="7">
-                    <v-text-field
-                      type="number"
-                      v-model="otp"
-                      label="Verify your Phone Number"
-                      required
-                    ></v-text-field>
-                  </v-col>
+                  <v-select
+                    :items="state"
+                    item-text="name"
+                    label="State"
+                  ></v-select>
+                </div>
 
-                  <v-col cols="3">
-                    <v-btn
-                      color="active_link--text white"
-                      class="mt-3"
-                      depressed
-                      disabled
-                    >
-                      SEND COD</v-btn
-                    >
-                  </v-col>
-                  </v-row>
-                                   
-                  <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
+                <div>
+                  <v-text-field
+                    type="tel"
+                    v-model="contact"
+                    label="Phone Number"
+                    required
+                  ></v-text-field>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field
+                    type="number"
+                    v-model="otp"
+                    label="Verify your Phone Number"
+                    required
+                  ></v-text-field>
+                  
+                  <v-btn
+                    color="active_link--text white"
+                    class="mt-3"
+                    depressed
+                  >
+                    SEND CODE</v-btn
+                  >
+                </div>
+
+                <v-col cols="3">
+                  
                 </v-col>
-              </v-row>
+                <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
+              </div>
 
               <v-btn large color="btn_gold" dark class="my-5 elevation-0" block>
                 Register
