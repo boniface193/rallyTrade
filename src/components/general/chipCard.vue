@@ -117,7 +117,7 @@ export default {
 
   methods: {
     confirmDeposit() {
-      this.$emit("getDeposit", "hi from this side");
+      this.$emit("getDeposit");
     },
     cancelDeposit() {
       this.$emit("deleteDeposit");

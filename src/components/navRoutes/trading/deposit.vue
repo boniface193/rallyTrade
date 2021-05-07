@@ -121,6 +121,7 @@ export default {
     },
     submitDeposit() {
       this.chipCard.shift();
+      this.active = true;
       this.$store.commit("trading/setChipCard", {
         id: uuidv4(),
         time: moment(new Date()).format("LT"),
