@@ -1,6 +1,6 @@
 <template>
   <div class="set_bg">
-    <div class="row justify-center pt-lg-15">
+    <div class="row justify-center pt-lg-15 pt-md-15 py-sm-12">
       <div class="col-lg-4 col-sm-8 col-md-5 rounded-lg white">
         <div class="mx-5">
           <HeaderLogo width="220px" />
@@ -80,6 +80,7 @@ export default {
   * {
     margin: 0;
     padding: 0;
+        overflow: hidden;
   }
   .set_bg {
     background-color: #03b10a;

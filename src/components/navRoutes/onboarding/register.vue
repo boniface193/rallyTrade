@@ -1,6 +1,6 @@
 <template>
   <div class="set_bg">
-    <div class="row justify-center pt-lg-15 pt-md-15 pt-sm-15">
+    <div class="row justify-center pt-lg-5 pt-md-5 pt-sm-5">
       <div class="col-lg-4 col-sm-8 col-md-5 rounded-lg white">
         <div class="mx-5">
           <router-link
@@ -12,7 +12,7 @@
           <HeaderLogo width="150px" />
           <div class="text-center">
             <h2 class="text-uppercase">Register</h2>
-            <v-form method="post" ref="form" @submit="submitForm" class="mt-8">
+            <v-form method="post" ref="form" @submit="submitForm" class="">
               <div>
                 <div>
                   <v-text-field
@@ -25,13 +25,13 @@
 
                 <div class="d-flex">
                   <v-text-field
-                  class="mr-3"
+                    class="mr-3"
                     v-model="fname"
                     type="text"
                     label="First Name"
                     required
                   ></v-text-field>
-                  
+
                   <v-text-field
                     v-model="lname"
                     label="Last Name"
@@ -41,12 +41,12 @@
 
                 <div class="d-flex">
                   <v-select
-                  class="mr-3"
+                    class="mr-3"
                     :items="items"
                     item-text="name"
                     label="Country"
                   ></v-select>
-                  
+
                   <v-select
                     :items="state"
                     item-text="name"
@@ -70,27 +70,19 @@
                     label="Verify your Phone Number"
                     required
                   ></v-text-field>
-                  
-                  <v-btn
-                    color="active_link--text white"
-                    class="mt-3"
-                    depressed
-                  >
+
+                  <v-btn color="active_link--text white" class="mt-1" depressed>
                     SEND CODE</v-btn
                   >
                 </div>
-
-                <v-col cols="3">
-                  
-                </v-col>
-                <!-- <vue-tel-input v-model="phone"></vue-tel-input> -->
+                <vue-tel-input v-model="phone"></vue-tel-input>
               </div>
 
               <v-btn large color="btn_gold" dark class="my-5 elevation-0" block>
                 Register
               </v-btn>
 
-              <div class="pt-16">
+              <div>
                 <div class="text-caption">
                   If you have an account with Rally Trade please
                 </div>
@@ -171,6 +163,9 @@ export default {
 @media (min-width: 426px) {
   .show-mobile {
     display: none;
+  }
+  .mx-large {
+padding: 5px 35% !important;
   }
 }
 </style>
