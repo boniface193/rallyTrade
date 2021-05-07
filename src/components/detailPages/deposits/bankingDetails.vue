@@ -59,12 +59,12 @@
       <v-expand-transition>
         <v-sheet v-if="model != null" height="80" tile>
           <v-row>
-            <v-col cols="4" class="text-body-2 pb-0 pr-0 font-smaller"
+            <v-col cols="4" class="text-body-2  pr-0"
               >Account Name</v-col
             >
             <v-col
               cols="8"
-              class="grey--text darken-4 font-weight-bold pr-0"
+              class="grey--text darken-4 font-weight-bold pr-0 pl-3  mt-1"
               style="font-size: 10px"
               @click="copyName"
               >{{
@@ -94,7 +94,7 @@
             <v-col
               @click="copyNumber"
               cols="7"
-              class="grey--text darken-4 font-weight-bold text-caption pt-1 px-0"
+              class="grey--text darken-4 font-weight-bold text-caption pt-1 px-2 "
               >{{
                 model == 0
                   ? "198832466"
@@ -519,8 +519,8 @@ html {
   .padding-smaller {
     margin: 0 8px !important;
   }
-  .font-smaller {
-    font-size: 8px !important;
+  .v-application .text-body-2, .v-application .text-button{
+    font-size: 11px !important;
   }
 }
 @media (max-width: 360px) {

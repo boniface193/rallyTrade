@@ -71,7 +71,7 @@
                     required
                   ></v-text-field>
 
-                  <v-btn color="active_link--text white" class="mt-1" depressed>
+                  <v-btn color="active_link--text white" class="mt-3" depressed>
                     SEND CODE</v-btn
                   >
                 </div>
