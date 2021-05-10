@@ -23,7 +23,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-btn depressed class="mb-3" dark color="success" outlined small block>Logout</v-btn>
+        <v-btn depressed class="mb-3" dark color="success" outlined small block :to="{name: 'login'}">Logout</v-btn>
       </div>
     </div>
   </div>
