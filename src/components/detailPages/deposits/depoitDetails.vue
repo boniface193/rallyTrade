@@ -49,18 +49,14 @@
     </v-row>
 
     <v-row>
-      <v-col
-        cols="4"
-        class="text-normal"
-        style="font-size: 20px; line-height: 23px"
-      >
+      <v-col cols="4" class="text-normal-large">
         <div class="mb-1">Account</div>
         <div class="mb-1">Amount</div>
         <div class="mb-1">Reference</div>
         <div class="mb-1">From</div>
         <div class="mb-1">To</div>
       </v-col>
-      <v-col cols="4" class="body-1">
+      <v-col cols="4" class="text-normal-small">
         <div class="mb-1">{{ depositItem.acctNum }}</div>
         <div class="mb-1">{{ depositItem.amount }}</div>
         <div class="mb-1">1587469</div>
@@ -176,7 +172,7 @@
                 class="text-center"
               />
             </div>
-            <div class="col-10 pl-0">
+            <div class="col-10 pl-2">
               <v-icon
                 v-if="failedValidateAmount"
                 color="error"
@@ -201,7 +197,7 @@
             <div class="col-2 pt-2">
               <v-icon size="35" class="mt-1">mdi-calendar-month</v-icon>
             </div>
-            <div class="col-10 pl-0">
+            <div class="col-10 pl-2">
               <v-icon
                 v-if="failedValidateDate"
                 color="error"
@@ -218,6 +214,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <input
+                    @blur="checkIfBlurDate"
                     class="body-1 pa-1"
                     style="border: solid 1px #999a9e; width: 100%"
                     v-model="date"
@@ -225,6 +222,7 @@
                     readonly
                     v-bind="attrs"
                     v-on="on"
+                    placeholder="Select Date"
                   />
                 </template>
                 <v-date-picker v-model="date" scrollable>
@@ -237,10 +235,10 @@
                   </v-btn>
                 </v-date-picker>
               </v-dialog>
-              <div class="caption error--text" v-if="failedValidateDate">
-                field is required
-              </div>
             </div>
+          </div>
+          <div class="caption error--text mb-3" v-if="failedValidateDate">
+            field is required
           </div>
         </div>
       </div>
@@ -340,6 +338,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Chip from "@/components/general/currencyChip.vue";
+import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     Chip,
@@ -360,7 +359,7 @@ export default {
       clientName: "",
       slipNumber: "",
       slipAmount: "",
-      date: new Date().toISOString().substr(0, 10),
+      date: "",
       modal: false,
 
       history: [
@@ -467,24 +466,46 @@ export default {
       }
     },
 
-    submitUpLoads() {
-      if (this.clientName < 1 || this.slipNumber < 1 || this.slipAmount < 1) {
-        this.failedValidateAmount = true;
-        this.failedValidateNumber = true;
-        this.failedValidationName = true;
+    checkIfBlurDate() {
+      if (this.date == "") {
+        this.failedValidateDate = true;
       } else {
-        console.log(
-          "Name: ",
-          this.clientName,
-          "Slip: ",
-          this.slipNumber,
-          "Amount: ",
-          this.slipAmount,
-          "date",
-          this.date,
-          "image: ",
-          this.image
+        this.failedValidateDate = false;
+      }
+    },
+
+    submitUpLoads() {
+      if (this.clientName < 1) {
+        this.failedValidationName = true;
+      } else if (this.slipNumber < 1) {
+        this.failedValidateNumber = true;
+      } else if (this.slipAmount < 1) {
+        this.failedValidateAmount = true;
+      } else if (this.date == "") {
+        this.failedValidateDate = true;
+      } else {
+        this.$router.push({ name: "deposit" });
+        const deposit = this.$store.getters["trading/getChipCard"].find(
+          (item) => item.id == this.$route.params.id
         );
+        console.log(deposit);
+        this.$store.commit("trading/setChipCard", {
+          id: uuidv4(),
+          time: "4:30",
+          msg: "message goes here",
+          moneySign: "mdi-currency-ngn",
+          icon: "wire.svg",
+          depositType: "WIRE",
+          color: "secondary_bg",
+          status: "mdi-update",
+          statu: "Status",
+          statusText: "PROGRESS",
+          routes: "",
+          acctName: "",
+          acctNum: "",
+          date: "",
+          statusColor: "secondary",
+        });
       }
     },
   },
@@ -511,6 +532,18 @@ $font-family: Roboto "Inter", sans-serif;
   letter-spacing: 0em;
   text-align: left;
 }
+.text-normal-large {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.text-normal-small {
+  font-size: 15.5px;
+}
 .text-normal-light {
   font-family: Roboto;
   font-size: 18px;
@@ -525,6 +558,22 @@ $font-family: Roboto "Inter", sans-serif;
   font-size: 20px;
   line-height: 23px;
 }
+
+@media (max-width: 320px) {
+  .text-normal {
+    font-size: 14px;
+  }
+  .text-normal-light {
+    font-size: 14px !important;
+  }
+  .text-normal-large {
+    font-size: 15px;
+  }
+  .text-normal-small {
+    font-size: 15.5px;
+  }
+}
+
 @media (min-width: 426px) {
   .show-mobile {
     display: none;

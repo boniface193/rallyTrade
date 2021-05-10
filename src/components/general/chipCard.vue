@@ -18,7 +18,7 @@
       :outlined="outlined"
     >
       <!-- currency badge -->
-      <Badge :moneySign="moneySign" currencyColor="#9EE8FF"/>
+      <Badge :moneySign="moneySign" currencyColor="#9EE8FF" />
       <div class="mx-3">
         <v-row :class="padding">
           <v-col cols="3" class="text-center">
@@ -31,7 +31,7 @@
             </div>
             <div class="text-caption sm-text">
               <div class="sm-text">{{ depositType }}</div>
-              <div class="sm-text">{{ day }}</div>
+              <div class="sm-text text-smaller">{{ day }}</div>
             </div>
           </v-col>
           <v-col cols="1">
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="d-flex justify-space-between">
-            <div class="text-body-1 mt-3 mb-0 text-left">{{ msg }}</div>
+              <div class="text-body-1 mt-3 mb-0 text-left">{{ msg }}</div>
             </div>
           </v-col>
           <div class="d-flex border-all" v-if="outlined">
@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import Badge from '@/components/general/currencyBadge.vue'
+import Badge from "@/components/general/currencyBadge.vue";
 export default {
   components: {
-    Badge
+    Badge,
   },
   props: [
     "colors",
@@ -194,6 +194,9 @@ html {
 @media (max-width: 320px) {
   .border-all {
     margin-left: 30%;
+  }
+  .text-smaller {
+    font-size: 8.4px !important;
   }
 }
 </style>
