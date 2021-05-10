@@ -222,7 +222,7 @@
                     readonly
                     v-bind="attrs"
                     v-on="on"
-                    placeholder="Select Date"
+                    placeholder="Select slip date"
                   />
                 </template>
                 <v-date-picker v-model="date" scrollable>
@@ -339,6 +339,7 @@
 import { mapGetters } from "vuex";
 import Chip from "@/components/general/currencyChip.vue";
 import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 export default {
   components: {
     Chip,
@@ -485,13 +486,12 @@ export default {
         this.failedValidateDate = true;
       } else {
         this.$router.push({ name: "deposit" });
-        const deposit = this.$store.getters["trading/getChipCard"].find(
-          (item) => item.id == this.$route.params.id
-        );
-        console.log(deposit);
+        const check = this.chipCard.find((item) => item.id);
+        this.chipCard.splice(0, check.id == check.id);
         this.$store.commit("trading/setChipCard", {
           id: uuidv4(),
-          time: "4:30",
+          time: moment(new Date()).format("LT"),
+          day: new Date().toLocaleDateString(),
           msg: "message goes here",
           moneySign: "mdi-currency-ngn",
           icon: "wire.svg",
@@ -501,9 +501,8 @@ export default {
           statu: "Status",
           statusText: "PROGRESS",
           routes: "",
-          acctName: "",
-          acctNum: "",
-          date: "",
+          amount: this.depositItem.amount,
+          acctNum: this.depositItem.acctNum,
           statusColor: "secondary",
         });
       }
