@@ -486,8 +486,8 @@ export default {
         this.failedValidateDate = true;
       } else {
         this.$router.push({ name: "deposit" });
-        const check = this.chipCard.find((item) => item.id);
-        this.chipCard.splice(0, check.id == check.id);
+        const addProgressCard = this.chipCard.find((item) => item.id);
+        this.chipCard.splice(0, addProgressCard.id == addProgressCard.id);
         this.$store.commit("trading/setChipCard", {
           id: uuidv4(),
           time: moment(new Date()).format("LT"),
