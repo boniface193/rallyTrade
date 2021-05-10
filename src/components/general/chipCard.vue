@@ -168,6 +168,10 @@ html {
   top: 90%;
 }
 
+  .sm-text {
+    font-size: 11px !important;
+  }
+
 .v-btn--outlined {
   border: thin solid;
   background-color: #fff;
