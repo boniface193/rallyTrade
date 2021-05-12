@@ -1,6 +1,6 @@
 <template>
   <div class="show-mobile">
-    <div class="text-center">
+    <div class="text-center mb-16 ">
       <div class="text-h5 my-5">
         <router-link :to="{ name: 'deposit' }">
           <v-icon class="float-left">mdi-arrow-left</v-icon>
@@ -66,7 +66,7 @@
                   >
                     <Gen-Card
                       :width="item.size"
-                      class="text-center py-5"
+                      class="text-center py-5 mb-5"
                       :link="true"
                       :to="{ name: item.routes }"
                     >
@@ -84,9 +84,7 @@
           </v-row>
         </v-sheet>
       </v-expand-transition>
-      <!-- <div class="text-h5 mt-8"></div> -->
     </div>
-    <div class="py-10"></div>
   </div>
 </template>
 

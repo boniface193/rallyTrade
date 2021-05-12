@@ -51,7 +51,7 @@
 
         <div class="my-9">
           <v-divider></v-divider>
-          <div>History</div>
+          <div>Processed</div>
 
           <div class="text-center text-caption mt-12">
             you don't have any deposit History

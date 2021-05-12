@@ -178,9 +178,7 @@ html {
 }
 
 @media (max-width: 280px) {
-  .sm-text {
-    font-size: 9px !important;
-  }
+
   .border-all {
     left: 5%;
     bottom: 10%;
@@ -199,8 +197,8 @@ html {
   .border-all {
     margin-left: 30%;
   }
-  .text-smaller {
-    font-size: 8.4px !important;
+    .sm-text {
+    font-size: 7px !important;
   }
 }
 </style>
