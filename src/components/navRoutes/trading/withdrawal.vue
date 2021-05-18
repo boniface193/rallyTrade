@@ -1,5 +1,13 @@
 <template>
-  <div>withdrawer</div>
+    <div>
+    <!-- Destop View design -->
+    <div>
+      <div class="text-h5 my-5 mx-8">
+        <div>withdrawer</div>
+      </div>
+    </div>
+    <!-- Destop View design -->
+  </div>
 </template>
 
 <script>

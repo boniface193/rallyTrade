@@ -1,13 +1,13 @@
 <template>
-  <div class="show-mobile">
-    <div class="text-center mb-16 ">
+  <div>
+    <div class="text-center text-sm-left mx-sm-5 mb-16">
       <div class="text-h5 my-5">
-        <router-link :to="{ name: 'deposit' }">
+        <router-link :to="{ name: 'deposit' }" class="show-mobile">
           <v-icon class="float-left">mdi-arrow-left</v-icon>
         </router-link>
         <div>Select Account</div>
       </div>
-      <v-slide-group v-model="model" show-arrows class="py-2">
+      <v-slide-group v-model="model" show-arrows class="py-2 offset-xl-2">
         <v-slide-item
           v-for="item in selectCurrency"
           :key="item.id"
@@ -53,9 +53,9 @@
 
       <v-expand-transition>
         <v-sheet v-if="model != null" height="80" tile>
-          <v-row class="fill-height" align="center" justify="center">
-            <h3 class="title mt-8">Select Deposit Type</h3>
+          <v-row class="fill-height" justify="center">
             <div v-if="model == 0">
+            <h3 class="title mt-8">Select Deposit Type</h3>
               <v-scale-transition>
                 <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
                   <v-col
@@ -71,7 +71,9 @@
                       :to="{ name: item.routes }"
                     >
                       <img width="30%" :src="item.image" alt="" />
-                      <div class="font-weight-bold">{{ item.text }}</div></Gen-Card
+                      <div class="font-weight-bold">
+                        {{ item.text }}
+                      </div></Gen-Card
                     ></v-col
                   >
                 </v-row></v-scale-transition
@@ -102,53 +104,15 @@ export default {
       dark: false,
       color: "",
       model: null,
-      selectCurrency: [
-        {
-          id: "001",
-          currency: "mdi-currency-ngn",
-          currencyColor: "#9EE8FF",
-          acctType: "mt4",
-        },
-        {
-          id: "002",
-          currency: "mdi-currency-usd",
-          currencyColor: "#A0FF9E",
-          acctType: "fx",
-        },
-        {
-          id: "003",
-          currency: "mdi-currency-usd",
-          currencyColor: "#A0FF9E",
-          acctType: "fx",
-        },
-      ],
-      depositeType: [
-        {
-          cols: 12,
-          size: "125",
-          routes: "",
-          image: require("@/assets/images/general/credit-card.svg"),
-          text: "INSTANT",
-        },
-        {
-          cols: 6,
-          size: "125",
-          routes: "bankDetails",
-          image: require("@/assets/images/general/wire-deposite.svg"),
-          text: "WIRE",
-        },
-        {
-          cols: 6,
-          size: "125",
-          routes: "",
-          image: require("@/assets/images/general/teller.svg"),
-          text: "TELLER",
-        },
-      ],
+      selectCurrency: [],
+      depositeType: [],
     };
   },
-  methods: {
-    
+  created() {
+    // select currency
+    this.selectCurrency = this.$store.getters["trading/getCurrency"];
+    // select acct
+    this.depositeType = this.$store.getters["trading/getAcct"]
   },
 };
 </script>

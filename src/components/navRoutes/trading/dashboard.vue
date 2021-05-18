@@ -1,6 +1,15 @@
 <template>
-  <div id="app">
-  <v-app id="inspire">
+  <div>
+      <div>
+    <!-- Destop View design -->
+    <div>
+      <div class="text-h5 my-5 mx-8">
+        <div>dashboard</div>
+      </div>
+    </div>
+    <!-- Destop View design -->
+  </div>
+  <!-- <v-app id="inspire">
     <v-form>
       <v-container>
         <v-row>        
@@ -16,7 +25,7 @@
         submit
       </v-btn>
     </v-form>
-  </v-app>
+  </v-app> -->
 </div>
 </template>
 
@@ -29,13 +38,13 @@ export default {
     }
   },
   methods: {
-    countryChanged(country) {
-      this.country = country.dialCode
-    },
-    submit() {
-      console.log(this.phone);
-      console.log(this.country);
-    }
+    // countryChanged(country) {
+    //   this.country = country.dialCode
+    // },
+    // submit() {
+    //   console.log(this.phone);
+    //   console.log(this.country);
+    // }
   }
 
 }

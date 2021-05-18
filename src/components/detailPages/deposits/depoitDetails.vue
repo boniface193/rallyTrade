@@ -500,7 +500,7 @@ export default {
           status: "mdi-update",
           statu: "Status",
           statusText: "PROGRESS",
-          routes: "",
+          routes: "depositDetails",
           amount: this.depositItem.amount,
           acctNum: this.depositItem.acctNum,
           statusColor: "secondary",

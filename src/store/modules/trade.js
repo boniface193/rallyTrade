@@ -2,22 +2,6 @@ const state = {
     emptyMsg: "",
     chipCard: [
         // {
-        // id: "deposit001",
-        // time: "4:30",
-        // // day: new Date().toLocaleTimeString().splice('/', ''),
-        // day: new Date().toLocaleDateString(),
-        // moneySign: "mdi-currency-ngn",
-        // icon: "wire.svg",
-        // depositType: "WIRE",
-        // color: "white",
-        // routes: "",
-        // amount: "10,000,000",
-        // acctNum: "854715",
-        // date: "",
-        // active: false,
-        // outlined: true,
-        // },
-        // {
         //     id: "deposit002",
         //     time: "4:30",
         //     msg: "message goes here",
@@ -53,62 +37,147 @@ const state = {
         // date: "",
         //     statusColor: "error",
         // },
-        // {
-        //     id: "deposit004",
-        //     time: "4:30",
-        //     msg: "message goes here",
-        //     moneySign: "mdi-currency-ngn",
-        //     icon: "wire.svg",
-        //     depositType: "WIRE",
-        //     color: "secondary_bg",
-        //     status: "mdi-update",
-        //     statu: "Status",
-        //     statusText: "PROGRESS",
-        //     routes: "",
-        // acctName: "",
-        // acctNum: "",
-        // date: "",
-        //     statusColor: "secondary",
-        // },
-        // {
-        // id: "deposit005",
-        // time: "4:30",
-        // day: new Date().toLocaleDateString(),
-        // msg: "message goes here",
-        // moneySign: "mdi-currency-ngn",
-        // icon: "wire.svg",
-        // depositType: "WIRE",
-        // color: "primary_bg",
-        // status: "mdi-upload",
-        // statu: "Status",
-        // statusText: "UPLOAD",
-        // routes: "",
-        // amount: "10,000,000",
-        // acctNum: "854715",
-        // date: "",
-        // statusColor: "primary",
-        // },
-        // {
-        //     id: "deposit006",
-        //     time: "4:30",
-        //     msg: "message goes here",
-        //     moneySign: "mdi-currency-ngn",
-        //     icon: "wire.svg",
-        //     depositType: "WIRE",
-        //     color: "primary_bg",
-        //     status: "mdi-upload",
-        //     statu: "Status",
-        //     statusText: "UPLOAD",
-        //     routes: "",
-        // acctName: "",
-        // acctNum: "",
-        // date: "",
-        //     statusColor: "primary",
-        // },
     ],
+    depositeType: [
+        {
+            cols: 12,
+            size: "125",
+            routes: "",
+            image: require("@/assets/images/general/credit-card.svg"),
+            text: "INSTANT",
+        },
+        {
+            cols: 6,
+            size: "125",
+            routes: "bankDetails",
+            image: require("@/assets/images/general/wire-deposite.svg"),
+            text: "WIRE",
+        },
+        {
+            cols: 6,
+            size: "125",
+            routes: "",
+            image: require("@/assets/images/general/teller.svg"),
+            text: "TELLER",
+        },
+    ],
+    selectCurrency: [
+        {
+            id: "001",
+            currency: "mdi-currency-ngn",
+            currencyColor: "#9EE8FF",
+            acctType: "mt4",
+        },
+        {
+            id: "002",
+            currency: "mdi-currency-usd",
+            currencyColor: "#A0FF9E",
+            acctType: "fx",
+        },
+        {
+            id: "003",
+            currency: "mdi-currency-usd",
+            currencyColor: "#A0FF9E",
+            acctType: "fx",
+        },
+        {
+            id: "004",
+            currency: "mdi-currency-usd",
+            currencyColor: "#A0FF9E",
+            acctType: "fx",
+        },
+        {
+            id: "005",
+            currency: "mdi-currency-usd",
+            currencyColor: "#A0FF9E",
+            acctType: "fx",
+        },
+        {
+            id: "006",
+            currency: "mdi-currency-usd",
+            currencyColor: "#A0FF9E",
+            acctType: "fx",
+        },
+    ],
+    selectBank: [
+        { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
+        { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
+        { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png") },
+        {
+            text: "Heritage",
+            icon: require("@/assets/images/bank-logo/heritage.jpg"),
+        },
+        {
+            text: "Fidelity",
+            icon: require("@/assets/images/bank-logo/fidelity.svg"),
+        },
+        {
+            text: "Sterling",
+            icon: require("@/assets/images/bank-logo/sterling.jpg"),
+        },
+        { text: "OTHER BANK" },
+    ],
+    selectFRNGBank: [
+        {
+            text: "GTbank",
+            icon: require("@/assets/images/bank-logo/gtbank.jpg"),
+            class: "my-2 pa-1",
+            acctName: "FRNG LIMITED-CLIENT'S ACCOUNT",
+            acctNum: "198832466",
+            id: "001",
+        },
+        {
+            text: "Wema",
+            icon: require("@/assets/images/bank-logo/wema.png"),
+            class: "mt-4 mb-4 pa-1",
+            acctName: "FRNG LIMITED CLIENT ACCOUNT",
+            acctNum: "122598731",
+            id: "002",
+        },
+        {
+            text: "Zenith",
+            icon: require("@/assets/images/bank-logo/zenith.png"),
+            class: "my-2 pa-1",
+            acctName: "FRNG LIMITED (CLIENT ACCT)",
+            acctNum: "1014414254",
+            id: "003",
+        },
+    ],
+    tour: [
+        {
+            target: "#v-step-0",
+            content:
+                "<span class='text-body-1'>it is important to add in the remarks or comment field the<div class='orange--text '> rally account number.<br /> 859647!</span></span>",
+            params: {
+                placement: "top", // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            },
+        },
+        {
+            target: "#v-step-1",
+            content: "<span class='text-caption'>Rally Account Name!</span>",
+        },
+        {
+            target: "#v-step-2",
+            content: "<span class='text-caption'>Rally Account Number!</span>",
+        },
+        {
+            target: "#v-step-3",
+            content: "<span class='text-caption'>Amount to transfer!</span>",
+        },
+        {
+            target: "#v-step-4",
+            content:
+                "<span class='text-caption'>Rally Trade Account Number!</span>",
+        },
+    ]
 };
 const getters = {
-    getChipCard: state => state.chipCard
+    getChipCard: state => state.chipCard,
+    getCurrency: state => state.selectCurrency,
+    getAcct: state => state.depositeType,
+    getSelectBank: state => state.selectBank,
+    getFRNGBank: state => state.selectFRNGBank,
+    getTour: state => state.tour,
 };
 
 const actions = {

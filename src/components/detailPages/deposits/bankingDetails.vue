@@ -1,244 +1,268 @@
 <template>
-  <div class="mx-3-forSmallerScreen show-mobile">
-    <div class="text-center text-h5 my-8">
-      <router-link :to="{ name: 'selectCurrency' }">
-        <v-icon class="float-left">mdi-arrow-left</v-icon>
-      </router-link>
-      Banking Details
-    </div>
-    <v-row class="mb-1">
-      <v-col cols="3" class="text-body-1">Amount</v-col>
-      <v-col cols="1" class="px-0"
-        ><Chip
-          :currencyChip="'mdi-currency-ngn'"
-          :width="'width: 25px;'"
-          fontSize="font-size: 19px;"
-          padding="pa-1"
-          class="padding-smaller"
-        />
-      </v-col>
-      <v-col cols="7" class="text-h6 py-0 grey--text darken-4 font-weight-bold">
-        <v-text-field
-          label="Amount"
-          v-model="price"
-          class="pa-0"
-          type="tel"
-          :rules="rules"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <div class="text-body-1">Select FRNG Bank</div>
-    <div>
-      <v-slide-group v-model="model" class="pa-2">
-        <v-slide-item
-          v-for="item in bankName"
-          :key="item.id"
-          v-slot="{ active, toggle }"
+  <div>
+    <!--------------------------------------- mobile view ------------------------------------->
+    <div class="mx-3-forSmallerScreen">
+      <div class="text-center text-sm-left text-h5 my-8">
+        <router-link :to="{ name: 'selectCurrency' }" class="show-mobile">
+          <v-icon class="float-left">mdi-arrow-left</v-icon>
+        </router-link>
+        Banking Details
+      </div>
+      <v-row class="mb-1 col-sm-6">
+        <v-col cols="3" sm="4" lg="2" class="text-body-1 pl-0">Amount</v-col>
+        <v-col cols="1" class="px-0"
+          ><Chip
+            :currencyChip="'mdi-currency-ngn'"
+            :width="'width: 25px;'"
+            fontSize="font-size: 19px;"
+            padding="pa-1"
+            class="padding-smaller"
+          />
+        </v-col>
+        <v-col
+          cols="7"
+          class="text-h6 py-0 grey--text darken-4 font-weight-bold"
         >
-          <v-card
-            :color="active ? 'grey lighten-2' : 'white'"
-            class="ma-2"
-            width="80"
-            align="center"
-            justify="center"
-            @click="toggle"
+          <v-text-field
+            label="Amount"
+            v-model="price"
+            class="pa-0"
+            type="tel"
+            :rules="rules"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <div class="text-body-1">Select FRNG Bank</div>
+      <div>
+        <v-slide-group v-model="model" class="pa-2">
+          <v-slide-item
+            v-for="item in bankName"
+            :key="item.id"
+            v-slot="{ active, toggle }"
           >
-            <v-img
-              width="50%"
-              class="forSmallerScreen"
-              :class="item.class"
-              :src="item.icon"
-              alt=""
-              @click="BankInfo(item.id)"
-            ></v-img>
-            <div class="text-caption">{{ item.text }}</div>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-
-      <v-expand-transition>
-        <v-sheet v-if="model != null" height="80" tile>
-          <v-row>
-            <v-col cols="4" class="text-body-2  pr-0"
-              >Account Name</v-col
+            <v-card
+              :color="active ? 'grey lighten-2' : 'white'"
+              class="ma-2"
+              width="80"
+              align="center"
+              justify="center"
+              @click="toggle"
             >
-            <v-col
-              cols="8"
-              class="grey--text darken-4 font-weight-bold pr-0 pl-3  mt-1"
-              style="font-size: 10px"
-              @click="copyName"
-              >{{
-                model == 0
-                  ? "FRNG LIMITED-CLIENT'S ACCOUNT"
-                  : "" || model == 1
-                  ? "FRNG LIMITED CLIENT ACCOUNT"
-                  : "" || model == 2
-                  ? "FRNG LIMITED (CLIENT ACCT)"
-                  : ""
-              }}
-              <v-tooltip class="" v-model="snackbarName" top
-                >{{ text }}
-                <v-icon color="active_link" size="15" style=""
-                  >mdi-close</v-icon
-                >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
-                    >mdi-content-copy</v-icon
+              <v-img
+                width="50%"
+                class="forSmallerScreen"
+                :class="item.class"
+                :src="item.icon"
+                alt=""
+                @click="BankInfo(item.id)"
+              ></v-img>
+              <div class="text-caption">{{ item.text }}</div>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+
+        <v-expand-transition>
+          <v-sheet v-if="model != null" height="80" tile>
+            <v-row>
+              <v-col cols="4" md="2" sm="3" class="text-body-2 pr-0"
+                >Account Name</v-col
+              >
+              <v-col
+                cols="8"
+                class="grey--text darken-4 font-weight-bold pr-0 pl-3 mt-1"
+                style="font-size: 10px"
+                @click="copyName"
+                >{{
+                  model == 0
+                    ? "FRNG LIMITED-CLIENT'S ACCOUNT"
+                    : "" || model == 1
+                    ? "FRNG LIMITED CLIENT ACCOUNT"
+                    : "" || model == 2
+                    ? "FRNG LIMITED (CLIENT ACCT)"
+                    : ""
+                }}
+                <v-tooltip class="" v-model="snackbarName" top
+                  >{{ text }}
+                  <v-icon color="active_link" size="15" style=""
+                    >mdi-close</v-icon
                   >
-                </template>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="5" class="text-body-2 pt-1 pr-0">Account Number</v-col>
-            <v-col
-              @click="copyNumber"
-              cols="7"
-              class="grey--text darken-4 font-weight-bold text-caption pt-1 px-2 "
-              >{{
-                model == 0
-                  ? "198832466"
-                  : "" || model == 1
-                  ? "122598731"
-                  : "" || model == 2
-                  ? "1014414254"
-                  : ""
-              }}
-              <v-tooltip class="" v-model="snackbarNumber" bottom
-                >{{ text }}
-                <v-icon color="active_link" size="15" style=""
-                  >mdi-close</v-icon
-                >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon v-bind="attrs" v-on="on" color="active_link" size="15"
-                    >mdi-content-copy</v-icon
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      v-bind="attrs"
+                      v-on="on"
+                      color="active_link"
+                      size="15"
+                      >mdi-content-copy</v-icon
+                    >
+                  </template>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="5" md="2" sm="3" class="text-body-2 pt-1 pr-0"
+                >Account Number</v-col
+              >
+              <v-col
+                @click="copyNumber"
+                cols="7"
+                class="grey--text darken-4 font-weight-bold text-caption pt-1 px-2"
+                >{{
+                  model == 0
+                    ? "198832466"
+                    : "" || model == 1
+                    ? "122598731"
+                    : "" || model == 2
+                    ? "1014414254"
+                    : ""
+                }}
+                <v-tooltip class="" v-model="snackbarNumber" bottom
+                  >{{ text }}
+                  <v-icon color="active_link" size="15" style=""
+                    >mdi-close</v-icon
                   >
-                </template>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-sheet>
-      </v-expand-transition>
-    </div>
-    <v-divider class="my-3"></v-divider>
-    <v-row v-if="model != null">
-      <v-col cols="5" class="text-body-2 pt-6 pr-0">Select your bank</v-col>
-      <v-col cols="7">
-        <v-select
-          :items="items"
-          item-text="text"
-          label="Select your bank"
-          dense
-          outlined
-          class="text-caption pa-0"
-          @change="sectedBank"
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      v-bind="attrs"
+                      v-on="on"
+                      color="active_link"
+                      size="15"
+                      >mdi-content-copy</v-icon
+                    >
+                  </template>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+          </v-sheet>
+        </v-expand-transition>
+      </div>
+      <v-divider class="my-3"></v-divider>
+      <v-row v-if="model != null">
+        <v-col md="2" sm="3" class="text-body-2 pt-6 pr-0"
+          >Select your bank</v-col
         >
-          <template v-slot:selection="{ item }">
-            <img :src="item.icon" width="20px" />
-            <span class="ml-1">{{ item.text }}</span>
-          </template>
-
-          <template v-slot:item="{ item }">
-            <img :src="item.icon" width="20px" class="mr-2" />
-            <span class="text-caption">{{ item.text }}</span>
-          </template>
-        </v-select>
-      </v-col>
-    </v-row>
-
-    <div v-if="selectYourBank">
-      <div id="v-step-0"></div>
-      <Gen-Card class="rounded-0 pb-3 mb-3" width="100%">
-        <v-app-bar
-          :fixed="false"
-          color="orange darken-4"
-          width=""
-          class="elevation-0 white--text"
-          dense
-        >
-          <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
-          <v-spacer></v-spacer>
-          <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-title class="text-caption"></v-toolbar-title>
-        </v-app-bar>
-
-        <div class="mx-3 my-4">
-          <v-tabs
-            disabled
-            active-class="orange darken-4 white--text"
-            hide-slider
-            height="30"
-            grow
+        <v-col cols="7" lg="4">
+          <v-select
+            :items="items"
+            item-text="text"
+            label="Select your bank"
+            dense
+            outlined
+            class="text-caption pa-0"
+            @change="sectedBank"
           >
-            <v-tab class="" style="font-size: 10px" dark
-              >Save <br />
-              Beneficials</v-tab
-            >
-            <v-tab disabled class="" style="font-size: 10px" dark
-              >New <br />
-              Beneficials</v-tab
-            >
-          </v-tabs>
-          <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
-            <v-text-field
-              v-for="item in inputInfo"
-              :key="item.id"
-              :label="item.label"
-              :append-icon="item.appendIcon"
-              dense
-              required
-              color="orange darken-4"
-              class="text-caption"
-              type="text"
-              :disabled="
-                true
-                  ? item.id == 'v-step-1' ||
-                    item.id == 'v-step-2' ||
-                    item.id == 'v-step-3'
-                  : ''
-              "
-              :value="
-                item.id == 'v-step-1'
-                  ? bankItem.acctName
-                  : '' || item.id == 'v-step-2'
-                  ? bankItem.acctNum
-                  : '' || item.id == 'v-step-3'
-                  ? price
-                  : ''
-              "
-              :id="item.id"
-            ></v-text-field>
+            <template v-slot:selection="{ item }">
+              <img :src="item.icon" width="20px" />
+              <span class="ml-1">{{ item.text }}</span>
+            </template>
 
-            <div class="my-2 text-caption">Remark Optional</div>
+            <template v-slot:item="{ item }">
+              <img :src="item.icon" width="20px" class="mr-2" />
+              <span class="text-caption">{{ item.text }}</span>
+            </template>
+          </v-select>
+        </v-col>
+      </v-row>
 
-            <v-text-field
-              dense
-              color="orange darken-4 mt-2"
-              class="text-caption"
-              id="v-step-4"
-              value="859647"
-            ></v-text-field>
+      <div v-if="selectYourBank">
+        <div id="v-step-0"></div>
 
-            <v-btn disabled class="orange darken-4 rounded-0 elevation-0" block
-              >Continue</v-btn
+        <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
+          <v-app-bar
+            :fixed="false"
+            color="orange darken-4"
+            width=""
+            class="elevation-0 white--text"
+            dense
+          >
+            <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
+            <v-spacer></v-spacer>
+            <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-title class="text-caption"></v-toolbar-title>
+          </v-app-bar>
+
+          <div class="mx-3 my-4">
+            <v-tabs
+              disabled
+              active-class="orange darken-4 white--text"
+              hide-slider
+              height="30"
+              grow
             >
+              <v-tab class="" style="font-size: 10px" dark
+                >Save <br />
+                Beneficials</v-tab
+              >
+              <v-tab disabled class="" style="font-size: 10px" dark
+                >New <br />
+                Beneficials</v-tab
+              >
+            </v-tabs>
+            <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
+              <v-text-field
+                v-for="item in inputInfo"
+                :key="item.id"
+                :label="item.label"
+                :append-icon="item.appendIcon"
+                dense
+                required
+                color="orange darken-4"
+                class="text-caption"
+                type="text"
+                :disabled="
+                  true
+                    ? item.id == 'v-step-1' ||
+                      item.id == 'v-step-2' ||
+                      item.id == 'v-step-3'
+                    : ''
+                "
+                :value="
+                  item.id == 'v-step-1'
+                    ? bankItem.acctName
+                    : '' || item.id == 'v-step-2'
+                    ? bankItem.acctNum
+                    : '' || item.id == 'v-step-3'
+                    ? price
+                    : ''
+                "
+                :id="item.id"
+              ></v-text-field>
+
+              <div class="my-2 text-caption">Remark Optional</div>
+
+              <v-text-field
+                dense
+                color="orange darken-4 mt-2"
+                class="text-caption"
+                id="v-step-4"
+                value="859647"
+              ></v-text-field>
+
+              <v-btn
+                disabled
+                class="orange darken-4 rounded-0 elevation-0"
+                block
+                >Continue</v-btn
+              >
+            </div>
           </div>
-        </div>
-      </Gen-Card>
-      <div class="d-flex justify-end">
+        </Gen-Card>
         <v-btn
-          color="success elevation-0 text-body-1"
-          block
+          color="success elevation-0 text-body-1 btn-width"
+          :loading="btnLoading"
           dark
           @click="submitForm"
           >Submit</v-btn
         >
       </div>
     </div>
+    <!--------------------------------------- mobile view ------------------------------------->
+
+    <div></div>
+
     <v-tour name="myTour" :steps="steps"></v-tour>
-    <Modal :dialog="dialog">
-      <div class="text-center py-8 mx-4 body-text" style="font-size: 14px;">
+    <Modal :dialog="dialog" width="350px">
+      <div class="text-center py-8 mx-4 body-text" style="font-size: 14px">
         <div class="text-h6 error--text mb-3">Important!</div>
         <div class="text-left">
           Rally Trade
@@ -257,7 +281,9 @@
             must </span
           >contain in the description:
         </div>
-        <ul class="font-weight-medium text-uppercase error--text text-left mt-4">
+        <ul
+          class="font-weight-medium text-uppercase error--text text-left mt-4"
+        >
           <li>your name</li>
           <li>rally account number</li>
         </ul>
@@ -282,7 +308,7 @@
       </template>
     </v-snackbar>
     <!-- error msg -->
-    
+
     <div class="py-16"></div>
   </div>
 </template>
@@ -307,84 +333,18 @@ export default {
     snackbar: false,
     model: null,
     price: "",
+    btnLoading: false,
     snackbarText: "",
     text: "Copied to clipboard",
     rules: [(value) => !!value || "Required."],
-    items: [
-      { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
-      { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
-      { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png") },
-      {
-        text: "Heritage",
-        icon: require("@/assets/images/bank-logo/heritage.jpg"),
-      },
-      {
-        text: "Fidelity",
-        icon: require("@/assets/images/bank-logo/fidelity.svg"),
-      },
-      {
-        text: "Sterling",
-        icon: require("@/assets/images/bank-logo/sterling.jpg"),
-      },
-      { text: "OTHER BANK" },
-    ],
-
-    bankName: [
-      {
-        text: "GTbank",
-        icon: require("@/assets/images/bank-logo/gtbank.jpg"),
-        class: "my-2 pa-1",
-        acctName: "FRNG LIMITED-CLIENT'S ACCOUNT",
-        acctNum: "198832466",
-        id: "001",
-      },
-      {
-        text: "Wema",
-        icon: require("@/assets/images/bank-logo/wema.png"),
-        class: "mt-4 mb-4 pa-1",
-        acctName: "FRNG LIMITED CLIENT ACCOUNT",
-        acctNum: "122598731",
-        id: "002",
-      },
-      {
-        text: "Zenith",
-        icon: require("@/assets/images/bank-logo/zenith.png"),
-        class: "my-2 pa-1",
-        acctName: "FRNG LIMITED (CLIENT ACCT)",
-        acctNum: "1014414254",
-        id: "003",
-      },
-    ],
-
+    // select bank name
+    items: [],
+    // frng banks
+    bankName: [],
+    // individual bank info
     bankInfo: [],
-
-    steps: [
-      {
-        target: "#v-step-0",
-        content:
-          "<span class='text-body-1'>it is important to add in the remarks or comment field the<div class='orange--text '> rally account number.<br /> 859647!</span></span>",
-        params: {
-          placement: "top", // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: "#v-step-1",
-        content: "<span class='text-caption'>Rally Account Name!</span>",
-      },
-      {
-        target: "#v-step-2",
-        content: "<span class='text-caption'>Rally Account Number!</span>",
-      },
-      {
-        target: "#v-step-3",
-        content: "<span class='text-caption'>Amount to transfer!</span>",
-      },
-      {
-        target: "#v-step-4",
-        content:
-          "<span class='text-caption'>Rally Trade Account Number!</span>",
-      },
-    ],
+    // tour
+    steps: [],
 
     inputInfo: [
       { label: "select transfer type", id: "1", appendIcon: "mdi-menu-down" },
@@ -398,6 +358,12 @@ export default {
       { label: "", id: "v-step-3", appendIcon: "mdi-currency-ngn", size: "25" },
     ],
   }),
+
+  created() {
+    this.items = this.$store.getters["trading/getSelectBank"];
+    this.bankName = this.$store.getters["trading/getFRNGBank"];
+    this.steps = this.$store.getters["trading/getTour"];
+  },
 
   methods: {
     BankInfo(params) {
@@ -417,12 +383,6 @@ export default {
         : "" || this.model == 2
         ? navigator.clipboard.writeText("FRNG LIMITED (CLIENT ACCT)")
         : "";
-      // let textToCopy = this.$refs.textToCopy.$el.querySelector(
-      //   ".textToBeCopied"
-      // );
-      // console.log(textToCopy);
-      // textToCopy.select();
-      // document.execCommand("copy");
     },
 
     copyNumber() {
@@ -436,6 +396,7 @@ export default {
     },
 
     submitForm() {
+      this.btnLoading = true;
       if (this.price == 0) {
         this.snackbar = true;
         this.snackbarText = "Please fill the Amount";
@@ -512,6 +473,9 @@ html {
   background-color: #e65100 !important;
   color: $white !important;
 }
+.btn-width {
+  width: 350px;
+}
 @media (max-width: 280px) {
   .mx-3-forSmallerScreen {
     margin: 5px;
@@ -519,13 +483,19 @@ html {
   .padding-smaller {
     margin: 0 8px !important;
   }
-  .v-application .text-body-2, .v-application .text-button{
+  .v-application .text-body-2,
+  .v-application .text-button {
     font-size: 11px !important;
   }
 }
 @media (max-width: 360px) {
   .mxforSmallerScreen {
     margin: 0;
+  }
+}
+@media (max-width: 375px) {
+  .btn-width {
+    width: 100%;
   }
 }
 .display-1,

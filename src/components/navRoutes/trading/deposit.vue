@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <div class="show-mobile">
+  <div class="row">
+    <!-- mobile view design -->
+    <div class="col-lg-4 col-md-5 col-sm-8">
       <Mobile-Header
         v-if="active"
         @click.native="selectCurrency"
         title="Deposit"
         colors="success"
-        :fixed_top="true"
+        :fixed_top="fixed_top"
       />
 
       <Mobile-Header
         v-else
         title="Deposit"
         colors="grey"
-        :fixed_top="true"
+        :fixed_top="fixed_top"
         @click.native="tryToSelectCurrency"
       />
-      <div class="my-16 pt-5 mr-1">
+      <div class=" mr-1">
         <div v-show="chipCard < 1" class="mt-16 text-center">
           <img src="@/assets/images/emptyState/empty-deposit.svg" width="30%" />
           <div class="text-body-1 mt-3">please make a deposit</div>
@@ -59,20 +60,25 @@
         </div>
 
         <div class="py-16"></div>
-
-        <!-- error msg -->
-        <v-snackbar v-model="snackbar">
-          {{ text }}
-
-          <template v-slot:action="{ attrs }">
-            <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
-        <!-- error msg -->
       </div>
     </div>
+    <!-- mobile view design -->
+
+    <!------------------------------------------------Desktop----------------------------------------->
+    
+
+    <!---------------------------------------------------Error Message------------------------------->
+    <!-- error msg -->
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <!-- error msg -->
   </div>
 </template>
 
@@ -81,24 +87,38 @@ import { mapGetters } from "vuex";
 import MobileHeader from "@/components/general/mobileHeader.vue";
 import ChipCard from "@/components/general/chipCard.vue";
 import moment from "moment";
+// import Badge from "@/components/general/currencyBadge.vue";
+// import GenCard from "@/components/general/genCard.vue";
 import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     ChipCard,
     MobileHeader,
+    // GenCard,
+    // Badge,
   },
   data() {
     return {
       active: null,
       snackbar: false,
       text: "",
+      model: null,
       firstDepositeCard: {},
+      reveal: false,
+      SelectCurrency: [],
+      depositeType: [],
+      fixed_top: null,
     };
   },
   computed: {
     ...mapGetters({ chipCard: "trading/getChipCard" }),
   },
   created() {
+    // get all account from store for desktop
+    this.SelectCurrency = this.$store.getters["trading/getCurrency"];
+    this.depositeType = this.$store.getters["trading/getAcct"];
+
+    // chip card for mobile
     let checkIfActive = this.chipCard.find((item) => item.id == "deposit001");
     if (checkIfActive === undefined) {
       this.active = true;
@@ -110,6 +130,12 @@ export default {
     this.firstDepositeCard = this.chipCard.find(
       (item) => item.id === "deposit001"
     );
+
+    if (window.innerWidth <= 425) {
+      this.fixed_top = true
+    } else {
+      this.fixed_top = false
+    }
   },
   methods: {
     selectCurrency() {

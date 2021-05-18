@@ -1,5 +1,5 @@
 <template>
-  <v-dialog persistent v-model="dialog">
+  <v-dialog persistent v-model="dialog" :width="width">
     <Gen-card>
         <slot></slot>
     </Gen-card>
@@ -13,7 +13,7 @@ export default {
         GenCard,
 
     },
-    props: ["dialog"],
+    props: ["dialog", "width"],
     data(){
         return {
             
