@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="cursor: pointer;">
     <v-app-bar
       :fixed="fixed_top"
       color="white"

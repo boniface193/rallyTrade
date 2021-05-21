@@ -1,7 +1,6 @@
 <template>
   <div class="row">
-    <!-- mobile view design -->
-    <div class="col-lg-4 col-md-5 col-sm-8">
+    <div class="col-lg-4 col-md-5 col-sm-6">
       <Mobile-Header
         v-if="active"
         @click.native="selectCurrency"
@@ -17,8 +16,8 @@
         :fixed_top="fixed_top"
         @click.native="tryToSelectCurrency"
       />
-      <div class=" mr-1">
-        <div v-show="chipCard < 1" class="mt-16 text-center">
+      <div class="mr-1 margin-top-mobile">
+        <div v-show="chipCard < 1" class="text-center py-8">
           <img src="@/assets/images/emptyState/empty-deposit.svg" width="30%" />
           <div class="text-body-1 mt-3">please make a deposit</div>
         </div>
@@ -50,7 +49,7 @@
           </Chip-Card>
         </div>
 
-        <div class="my-9">
+        <div class="my-9 show-mobile">
           <v-divider></v-divider>
           <div>Processed</div>
 
@@ -58,16 +57,26 @@
             you don't have any deposit History
           </div>
         </div>
-
-        <div class="py-16"></div>
       </div>
     </div>
     <!-- mobile view design -->
+    <div class="col-1 pr-0 text-center hide-desktop">
+      <v-divider vertical class="mt-6" style="height: 80vh"></v-divider>
+    </div>
+    <div class="col-lg-7 col-md-6 col-sm-5 hide-desktop">
+      <!------------------------------------------------Desktop----------------------------------------->
+      <div>
+        <div class="text-left text-h5 mt-3">Processed</div>
+        <v-divider style="width: 18%"> </v-divider>
 
-    <!------------------------------------------------Desktop----------------------------------------->
-    
+        <div class="text-center text-caption mt-12">
+          you don't have any deposit History
+        </div>
+      </div>
 
-    <!---------------------------------------------------Error Message------------------------------->
+      <!---------------------------------------------------Error Message------------------------------->
+    </div>
+    <div class="py-16"></div>
     <!-- error msg -->
     <v-snackbar v-model="snackbar">
       {{ text }}
@@ -86,22 +95,21 @@
 import { mapGetters } from "vuex";
 import MobileHeader from "@/components/general/mobileHeader.vue";
 import ChipCard from "@/components/general/chipCard.vue";
+// import DepositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue";
 import moment from "moment";
-// import Badge from "@/components/general/currencyBadge.vue";
-// import GenCard from "@/components/general/genCard.vue";
 import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     ChipCard,
     MobileHeader,
-    // GenCard,
-    // Badge,
+    // DepositDetailPage,
   },
   data() {
     return {
       active: null,
       snackbar: false,
       text: "",
+      depositPage: "",
       model: null,
       firstDepositeCard: {},
       reveal: false,
@@ -131,13 +139,17 @@ export default {
       (item) => item.id === "deposit001"
     );
 
-    if (window.innerWidth <= 425) {
-      this.fixed_top = true
-    } else {
-      this.fixed_top = false
-    }
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
   methods: {
+    handleResize() {
+      if (window.innerWidth <= 425) {
+        this.fixed_top = true;
+      } else {
+        this.fixed_top = false;
+      }
+    },
     selectCurrency() {
       this.$router.push({ name: "selectCurrency" });
     },
@@ -146,6 +158,7 @@ export default {
       this.text = "Please confirm your deposit";
     },
     submitDeposit() {
+      // this.depositPage = this.$router.push({ name: "deposit" });
       this.chipCard.shift();
       this.active = true;
       this.$store.commit("trading/setChipCard", {
@@ -185,6 +198,14 @@ export default {
 <style lang="scss" scoped>
 .bottom {
   bottom: 40vh;
+}
+.margin-top {
+  padding-top: 30%;
+}
+@media (max-width: 426px) {
+  .margin-top-mobile {
+    margin-top: 30%;
+  }
 }
 </style>
 

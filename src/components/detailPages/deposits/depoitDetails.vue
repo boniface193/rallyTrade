@@ -1,6 +1,10 @@
 <template>
-  <div class="ma-4 show-mobile">
-    <router-link :to="{ name: 'deposit' }" style="text-decoration: none">
+  <div class="ma-4 col-8 margin-lg">
+    <router-link
+      :to="{ name: 'deposit' }"
+      style="text-decoration: none"
+      class="show-mobile"
+    >
       <v-icon class="">mdi-arrow-left</v-icon>
     </router-link>
     <!-- error msg -->
@@ -56,14 +60,14 @@
         <div class="mb-1">From</div>
         <div class="mb-1">To</div>
       </v-col>
-      <v-col cols="4" class="text-normal-small">
+      <v-col cols="5" class="text-normal-small">
         <div class="mb-1">{{ depositItem.acctNum }}</div>
         <div class="mb-1">{{ depositItem.amount }}</div>
         <div class="mb-1">1587469</div>
         <div class="mb-1">GTB</div>
         <div class="mb-1">ZENITH</div>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="3">
         <div class="text-center">
           <Chip
             :currencyChip="depositItem.moneySign"
@@ -558,6 +562,12 @@ $font-family: Roboto "Inter", sans-serif;
   line-height: 23px;
 }
 
+@media (min-width: 600px) {
+  .margin-lg {
+    padding-left: 25% !important;
+  }
+}
+
 @media (max-width: 320px) {
   .text-normal {
     font-size: 14px;
@@ -570,12 +580,6 @@ $font-family: Roboto "Inter", sans-serif;
   }
   .text-normal-small {
     font-size: 15.5px;
-  }
-}
-
-@media (min-width: 426px) {
-  .show-mobile {
-    display: none;
   }
 }
 </style>
