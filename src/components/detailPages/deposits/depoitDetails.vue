@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-4 col-8 margin-lg">
+  <div class="col-lg-8 col-md-9 col-sm-10 margin-lg">
     <router-link
       :to="{ name: 'deposit' }"
       style="text-decoration: none"
@@ -562,7 +562,24 @@ $font-family: Roboto "Inter", sans-serif;
   line-height: 23px;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) and (min-width: 426px) {
+  .margin-lg {
+    padding-left: 8% !important;
+  }
+}
+
+@media (min-width: 601px) {
+  .margin-lg {
+    padding-left: 15% !important;
+  }
+}
+
+@media (min-width: 765px) {
+  .margin-lg {
+    padding-left: 20% !important;
+  }
+}
+@media (min-width: 900px) {
   .margin-lg {
     padding-left: 25% !important;
   }
