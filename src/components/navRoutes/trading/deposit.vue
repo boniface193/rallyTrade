@@ -49,7 +49,7 @@
           </Chip-Card>
         </div>
 
-        <div class="my-9 show-mobile">
+        <div class="my-9 show-mobile-ex">
           <v-divider></v-divider>
           <div>Processed</div>
 
@@ -60,10 +60,10 @@
       </div>
     </div>
     <!-- mobile view design -->
-    <div class="col-1 pr-0 text-center hide-desktop">
+    <div class="col-1 pr-0 text-center hide-desktop-ex">
       <v-divider vertical class="mt-6" style="height: 80vh"></v-divider>
     </div>
-    <div class="col-lg-7 col-md-6 col-sm-5 hide-desktop">
+    <div class="col-lg-7 col-md-6 col-sm-5 hide-desktop-ex">
       <!------------------------------------------------Desktop----------------------------------------->
       <div>
         <div class="text-left text-h5 mt-3">Processed</div>
@@ -207,5 +207,7 @@ export default {
     margin-top: 30%;
   }
 }
+
+
 </style>
 

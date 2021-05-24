@@ -48,6 +48,7 @@
               align="center"
               justify="center"
               @click="toggle"
+              v-on:click="BankInfo(item.id)"
             >
               <v-img
                 width="50%"
@@ -55,7 +56,6 @@
                 :class="item.class"
                 :src="item.icon"
                 alt=""
-                @click="BankInfo(item.id)"
               ></v-img>
               <div class="text-caption">{{ item.text }}</div>
             </v-card>
@@ -167,6 +167,7 @@
       <div v-if="selectYourBank">
         <div id="v-step-0"></div>
 
+        <div class="d-flex justify-sm-center">
         <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
           <v-app-bar
             :fixed="false"
@@ -183,6 +184,7 @@
           </v-app-bar>
 
           <div class="mx-3 my-4">
+          <div>
             <v-tabs
               disabled
               active-class="orange darken-4 white--text"
@@ -190,7 +192,7 @@
               height="30"
               grow
             >
-              <v-tab class="" style="font-size: 10px" dark
+              <v-tab style="font-size: 10px" dark
                 >Save <br />
                 Beneficials</v-tab
               >
@@ -198,8 +200,10 @@
                 >New <br />
                 Beneficials</v-tab
               >
-            </v-tabs>
+            </v-tabs></div>
+            <!-- bankInfo is from the store -->
             <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
+            <!-- inputInfo is to iterate over text field -->
               <v-text-field
                 v-for="item in inputInfo"
                 :key="item.id"
@@ -248,6 +252,8 @@
             </div>
           </div>
         </Gen-Card>
+        </div>
+        <div class="d-flex justify-sm-center">
         <v-btn
           color="success elevation-0 text-body-1 btn-width"
           :loading="btnLoading"
@@ -255,6 +261,7 @@
           @click="submitForm"
           >Submit</v-btn
         >
+        </div>
       </div>
     </div>
     <!--------------------------------------- mobile view ------------------------------------->
