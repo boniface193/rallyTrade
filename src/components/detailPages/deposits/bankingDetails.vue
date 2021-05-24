@@ -20,7 +20,7 @@
           />
         </v-col>
         <v-col
-          cols="7" 
+          cols="7" sm="5"
           class="text-h6 py-0 grey--text darken-4 font-weight-bold"
         >
           <v-text-field
@@ -39,7 +39,7 @@
             v-for="item in bankName"
             :key="item.id"
             v-slot="{ active, toggle }"
-            class="col-lg-3"
+            class="col-sm-3"
           >
             <v-card
               :color="active ? 'grey lighten-2' : 'white'"
@@ -136,7 +136,7 @@
           </v-sheet>
         </v-expand-transition>
       </div>
-      <v-divider class="my-3 col-lg-10"></v-divider>
+      <v-divider class="my-3 col-sm-10"></v-divider>
       <v-row v-if="model != null">
         <v-col md="2" sm="3" class="text-body-2 pt-6 pr-0"
           >Select your bank</v-col
