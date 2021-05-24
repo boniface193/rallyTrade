@@ -1,14 +1,14 @@
 <template>
   <div>
     <!--------------------------------------- mobile view ------------------------------------->
-    <div class="mx-3-forSmallerScreen">
+    <div class="mx-3-forSmallerScreen offset-lg-2">
       <div class="text-center text-sm-left text-h5 my-8">
         <router-link :to="{ name: 'selectCurrency' }" class="show-mobile">
           <v-icon class="float-left">mdi-arrow-left</v-icon>
         </router-link>
         Banking Details
       </div>
-      <v-row class="mb-1 col-sm-6">
+      <v-row class="mb-1 col-sm-12">
         <v-col cols="3" sm="4" lg="2" class="text-body-1 pl-0">Amount</v-col>
         <v-col cols="1" class="px-0"
           ><Chip
@@ -20,7 +20,7 @@
           />
         </v-col>
         <v-col
-          cols="7"
+          cols="7" 
           class="text-h6 py-0 grey--text darken-4 font-weight-bold"
         >
           <v-text-field
@@ -39,6 +39,7 @@
             v-for="item in bankName"
             :key="item.id"
             v-slot="{ active, toggle }"
+            class="col-lg-3"
           >
             <v-card
               :color="active ? 'grey lighten-2' : 'white'"
@@ -135,7 +136,7 @@
           </v-sheet>
         </v-expand-transition>
       </div>
-      <v-divider class="my-3"></v-divider>
+      <v-divider class="my-3 col-lg-10"></v-divider>
       <v-row v-if="model != null">
         <v-col md="2" sm="3" class="text-body-2 pt-6 pr-0"
           >Select your bank</v-col
