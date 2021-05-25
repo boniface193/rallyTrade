@@ -207,7 +207,10 @@ export default {
     margin-top: 30%;
   }
 }
-
-
+@media (max-width: 280px){
+.margin-top-mobile {
+    margin-top: 40%;
+  }
+}
 </style>
 

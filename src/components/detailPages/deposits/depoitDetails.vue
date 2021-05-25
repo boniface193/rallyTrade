@@ -315,8 +315,9 @@
         <v-btn
           block
           depressed
-          class="white--text text-caption my-3"
-          color="grey"
+          class="text-caption my-3"
+          color="secondary"
+          @click="openModalForDelete"
           >Delete</v-btn
         >
       </v-row>
@@ -336,6 +337,31 @@
       </div>
     </div>
     <div class="py-16"></div>
+
+    <!-- modal -->
+    <Modal :dialog="dialog" width="350px">
+      <div class="text-center py-4 mx-4 body-text" style="font-size: 14px">
+        <div class="text-h6 error--text mb-3">Notice!</div>
+        <div class="text-center py-4">
+          Are you sure you want to delete!
+        </div>
+        
+        <v-btn
+          color="success"
+          class="elevation-0 mr-3"
+          @click="dialog = false"  
+          >no</v-btn
+        >
+        
+        <v-btn
+          color="secondary"
+          class="elevation-0"
+          @click="deleteUpload"
+          >yes</v-btn
+        >
+      </div>
+    </Modal>
+    <!-- modal -->
   </div>
 </template>
 
@@ -344,9 +370,11 @@ import { mapGetters } from "vuex";
 import Chip from "@/components/general/currencyChip.vue";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import Modal from "@/components/general/modal.vue";
 export default {
   components: {
     Chip,
+    Modal,
   },
   data() {
     return {
@@ -366,6 +394,7 @@ export default {
       slipAmount: "",
       date: "",
       modal: false,
+      dialog: false,
 
       history: [
         {
@@ -390,6 +419,8 @@ export default {
     };
   },
   computed: {
+    // this mapGetters does same thing with this.$store.getters it depend on what u want to achieve, 
+    // hence, mapGetters can return undefined, and this may break your code, instead use this.$store.getters
     ...mapGetters({
       chipCard: "trading/getChipCard",
     }),
@@ -491,6 +522,7 @@ export default {
       } else {
         this.$router.push({ name: "deposit" });
         const addProgressCard = this.chipCard.find((item) => item.id);
+        console.log(addProgressCard)
         this.chipCard.splice(0, addProgressCard.id == addProgressCard.id);
         this.$store.commit("trading/setChipCard", {
           id: uuidv4(),
@@ -511,6 +543,19 @@ export default {
         });
       }
     },
+
+    openModalForDelete() {
+      this.dialog = true
+    },
+
+    deleteUpload() {
+      if (this.chipCard.length > 1) {
+        this.chipCard.splice(this.depositItem.id === this.depositItem.id);
+      } else {
+        this.chipCard.splice(0, this.depositItem.id === this.depositItem.id);
+      }
+      this.$router.push({ name: "deposit" });
+    }
   },
 };
 </script>
