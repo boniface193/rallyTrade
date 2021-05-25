@@ -135,6 +135,7 @@ export default {
     }
   },
   mounted() {
+    this.pushToSelectCurrency()
     this.firstDepositeCard = this.chipCard.find(
       (item) => item.id === "deposit001"
     );
@@ -191,6 +192,13 @@ export default {
         this.active = false;
       }
     },
+
+    // check if deposit is empty, and push route to selectCurrency
+    pushToSelectCurrency() {
+      if (window.innerWidth >= 426 && this.chipCard.length < 1) {
+        this.$router.push({ name: "selectCurrency" });
+      }
+    },
   },
 };
 </script>
@@ -207,8 +215,8 @@ export default {
     margin-top: 30%;
   }
 }
-@media (max-width: 280px){
-.margin-top-mobile {
+@media (max-width: 280px) {
+  .margin-top-mobile {
     margin-top: 40%;
   }
 }
