@@ -9,6 +9,9 @@ import Onboarding from "@/views/onboarding.vue"
 import Login from "@/components/navRoutes/onboarding/login.vue"
 import ForgotPwd from "@/components/navRoutes/onboarding/forgotPwd.vue"
 import Register from "@/components/navRoutes/onboarding/register.vue"
+import emailVerified from "@/components/navRoutes/onboarding/emailVerified.vue"
+import verifyEmail from "@/components/navRoutes/onboarding/verifyEmail.vue"
+import changePwd from "@/components/navRoutes/onboarding/changePwd.vue"
 
 /******** onboarding **********/
 
@@ -62,6 +65,21 @@ const routes = [
         path: "register",
         name: "register",
         component: Register
+      },
+      {
+        path: "emailverified",
+        name: "emailverified",
+        component: emailVerified
+      },
+      {
+        path: "verifyemail",
+        name: "verifyemail",
+        component: verifyEmail
+      },
+      {
+        path: "changepwd",
+        name: "changepwd",
+        component: changePwd
       },
     ]
   },
