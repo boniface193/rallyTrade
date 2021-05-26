@@ -404,12 +404,12 @@ export default {
     },
 
     submitForm() {
-      this.btnLoading = true;
       if (this.price == 0) {
         this.snackbar = true;
         this.snackbarText = "Please fill the Amount";
       } else {
         this.dialog = true;
+        this.btnLoading = true;
       }
     },
 
