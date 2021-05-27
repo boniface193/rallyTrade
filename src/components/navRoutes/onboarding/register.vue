@@ -5,6 +5,7 @@
         <div>
           <div>
             <v-text-field
+            class="mt-2"
               outlined
               dense
               v-model="email"

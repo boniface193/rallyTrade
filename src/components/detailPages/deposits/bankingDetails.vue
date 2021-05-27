@@ -20,7 +20,8 @@
           />
         </v-col>
         <v-col
-          cols="7" sm="5"
+          cols="7"
+          sm="5"
           class="text-h6 py-0 grey--text darken-4 font-weight-bold"
         >
           <v-text-field
@@ -168,99 +169,100 @@
         <div id="v-step-0"></div>
 
         <div class="d-flex justify-sm-center">
-        <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
-          <v-app-bar
-            :fixed="false"
-            color="orange darken-4"
-            width=""
-            class="elevation-0 white--text"
-            dense
-          >
-            <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="text-caption"></v-toolbar-title>
-          </v-app-bar>
-
-          <div class="mx-3 my-4">
-          <div>
-            <v-tabs
-              disabled
-              active-class="orange darken-4 white--text"
-              hide-slider
-              height="30"
-              grow
+          <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
+            <v-app-bar
+              :fixed="false"
+              color="orange darken-4"
+              width=""
+              class="elevation-0 white--text"
+              dense
             >
-              <v-tab style="font-size: 10px" dark
-                >Save <br />
-                Beneficials</v-tab
-              >
-              <v-tab disabled class="" style="font-size: 10px" dark
-                >New <br />
-                Beneficials</v-tab
-              >
-            </v-tabs></div>
-            <!-- bankInfo is from the store -->
-            <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
-            <!-- inputInfo is to iterate over text field -->
-              <v-text-field
-                v-for="item in inputInfo"
-                :key="item.id"
-                :label="item.label"
-                :append-icon="item.appendIcon"
-                dense
-                required
-                color="orange darken-4"
-                class="text-caption"
-                type="text"
-                :disabled="
-                  true
-                    ? item.id == 'v-step-1' ||
-                      item.id == 'v-step-2' ||
-                      item.id == 'v-step-3'
-                    : ''
-                "
-                :value="
-                  item.id == 'v-step-1'
-                    ? bankItem.acctName
-                    : '' || item.id == 'v-step-2'
-                    ? bankItem.acctNum
-                    : '' || item.id == 'v-step-3'
-                    ? price
-                    : ''
-                "
-                :id="item.id"
-              ></v-text-field>
+              <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="text-caption"></v-toolbar-title>
+            </v-app-bar>
 
-              <div class="my-2 text-caption">Remark Optional</div>
+            <div class="mx-3 my-4">
+              <div>
+                <v-tabs
+                  disabled
+                  active-class="orange darken-4 white--text"
+                  hide-slider
+                  height="30"
+                  grow
+                >
+                  <v-tab style="font-size: 10px" dark
+                    >Save <br />
+                    Beneficials</v-tab
+                  >
+                  <v-tab disabled class="" style="font-size: 10px" dark
+                    >New <br />
+                    Beneficials</v-tab
+                  >
+                </v-tabs>
+              </div>
+              <!-- bankInfo is from the store -->
+              <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
+                <!-- inputInfo is to iterate over text field -->
+                <v-text-field
+                  v-for="item in inputInfo"
+                  :key="item.id"
+                  :label="item.label"
+                  :append-icon="item.appendIcon"
+                  dense
+                  required
+                  color="orange darken-4"
+                  class="text-caption"
+                  type="text"
+                  :disabled="
+                    true
+                      ? item.id == 'v-step-1' ||
+                        item.id == 'v-step-2' ||
+                        item.id == 'v-step-3'
+                      : ''
+                  "
+                  :value="
+                    item.id == 'v-step-1'
+                      ? bankItem.acctName
+                      : '' || item.id == 'v-step-2'
+                      ? bankItem.acctNum
+                      : '' || item.id == 'v-step-3'
+                      ? price
+                      : ''
+                  "
+                  :id="item.id"
+                ></v-text-field>
 
-              <v-text-field
-                dense
-                color="orange darken-4 mt-2"
-                class="text-caption"
-                id="v-step-4"
-                value="859647"
-              ></v-text-field>
+                <div class="my-2 text-caption">Remark Optional</div>
 
-              <v-btn
-                disabled
-                class="orange darken-4 rounded-0 elevation-0"
-                block
-                >Continue</v-btn
-              >
+                <v-text-field
+                  dense
+                  color="orange darken-4 mt-2"
+                  class="text-caption"
+                  id="v-step-4"
+                  value="859647"
+                ></v-text-field>
+
+                <v-btn
+                  disabled
+                  class="orange darken-4 rounded-0 elevation-0"
+                  block
+                  >Continue</v-btn
+                >
+              </div>
             </div>
-          </div>
-        </Gen-Card>
+          </Gen-Card>
         </div>
         <div class="d-flex justify-sm-center">
-        <v-btn
-          color="success elevation-0 text-body-1 btn-width"
-          :loading="btnLoading"
-          dark
-          @click="submitForm"
-          >Submit</v-btn
-        >
+          <v-btn
+            color="success elevation-0 text-body-1 btn-width"
+            :loading="btnLoading"
+            dark
+            @click="submitForm"
+            >Submit</v-btn
+          >
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@
       />
       <div class="mr-1 margin-top-mobile">
         <div v-show="chipCard < 1" class="text-center py-8">
-          <img src="@/assets/images/emptyState/empty-deposit.svg" width="30%" />
+          <img src="@/assets/images/emptyState/empty-deposit.svg" width="40%" />
           <div class="text-body-1 mt-3">please make a deposit</div>
         </div>
         <div class="mt-7" v-for="item in chipCard" :key="item.id">
@@ -49,13 +49,16 @@
           </Chip-Card>
         </div>
 
-        <div class="my-9 show-mobile-ex">
-          <v-divider></v-divider>
-          <div>Processed</div>
-
-          <div class="text-center text-caption mt-12">
-            you don't have any deposit History
-          </div>
+        <div class="my-9 show-mobile-ex mx-5">
+          <v-btn
+            color="active_link"
+            :to="{ name: 'history' }"
+            style="position: fixed; bottom: 15%; width: 83%"
+            text
+            depressed
+            dense
+            >Processed History</v-btn
+          >
         </div>
       </div>
     </div>
@@ -63,14 +66,37 @@
     <div class="col-1 pr-0 text-center hide-desktop-ex">
       <v-divider vertical class="mt-6" style="height: 80vh"></v-divider>
     </div>
+    <!------------------------------------------------Desktop----------------------------------------->
     <div class="col-lg-7 col-md-6 col-sm-5 hide-desktop-ex">
-      <!------------------------------------------------Desktop----------------------------------------->
       <div>
+        <div class="float-right">
+          <DateFilter />
+        </div>
         <div class="text-left text-h5 mt-3">Processed</div>
         <v-divider style="width: 18%"> </v-divider>
+      </div>
 
-        <div class="text-center text-caption mt-12">
-          you don't have any deposit History
+      <div class="container mt-3">
+        <div class="list-group-wrapper">
+          <transition name="fade">
+            <div class="loading" v-show="loading">
+              <v-progress-circular
+                indeterminate
+                color="white"
+                size="25"
+              ></v-progress-circular>
+              Loading
+            </div>
+          </transition>
+
+          <ul class="list-group" id="infinite-list">
+            <li
+              class="list-group-item"
+              v-for="item in items"
+              v-text="item"
+              :key="item.id"
+            ></li>
+          </ul>
         </div>
       </div>
 
@@ -78,9 +104,8 @@
     </div>
     <div class="py-16"></div>
     <!-- error msg -->
-    <v-snackbar v-model="snackbar">
+    <v-snackbar v-model="snackbar" class="caption">
       {{ text }}
-
       <template v-slot:action="{ attrs }">
         <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
           Close
@@ -95,14 +120,14 @@
 import { mapGetters } from "vuex";
 import MobileHeader from "@/components/general/mobileHeader.vue";
 import ChipCard from "@/components/general/chipCard.vue";
-// import DepositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue";
+import DateFilter from "@/components/general/dateFilter.vue";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
     ChipCard,
     MobileHeader,
-    // DepositDetailPage,
+    DateFilter,
   },
   data() {
     return {
@@ -116,6 +141,10 @@ export default {
       SelectCurrency: [],
       depositeType: [],
       fixed_top: null,
+
+      loading: false,
+      nextItem: 1,
+      items: [],
     };
   },
   computed: {
@@ -135,7 +164,18 @@ export default {
     }
   },
   mounted() {
-    this.pushToSelectCurrency()
+    // Detect when scrolled to bottom.
+    const listElm = document.querySelector("#infinite-list");
+    listElm.addEventListener("scroll", () => {
+      if (listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
+        this.loadMore();
+      }
+    });
+
+    // Initially load some items.
+    this.loadMore();
+
+    this.pushToSelectCurrency();
     this.firstDepositeCard = this.chipCard.find(
       (item) => item.id === "deposit001"
     );
@@ -144,6 +184,20 @@ export default {
     this.handleResize();
   },
   methods: {
+    loadMore() {
+      /** This is only for this demo, you could
+       * replace the following with code to hit
+       * an endpoint to pull in more data. **/
+      this.loading = true;
+      setTimeout(() => {
+        for (var i = 0; i < 20; i++) {
+          this.items.push("Item " + this.nextItem++);
+        }
+        this.loading = false;
+      }, 1000);
+      /**************************************/
+    },
+
     handleResize() {
       if (window.innerWidth <= 425) {
         this.fixed_top = true;
@@ -210,6 +264,11 @@ export default {
 .margin-top {
   padding-top: 30%;
 }
+.btn-width {
+  width: 100%;
+  position: fixed;
+  bottom: 15%;
+}
 @media (max-width: 426px) {
   .margin-top-mobile {
     margin-top: 30%;
@@ -219,6 +278,68 @@ export default {
   .margin-top-mobile {
     margin-top: 40%;
   }
+}
+
+// css rules for lazy loading
+
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.list-group-wrapper {
+  position: relative;
+}
+.list-group {
+  overflow: auto;
+  height: 75vh;
+}
+.list-group-item {
+  margin-top: 1px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 2px solid #dce4ec;
+}
+.loading {
+  text-align: center;
+  position: absolute;
+  color: #fff;
+  z-index: 9;
+  background: #fb8c00;
+  padding: 8px 18px;
+  border-radius: 5px;
+  left: calc(50% - 45px);
+  top: calc(50% - 18px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>
 
