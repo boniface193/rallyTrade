@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-4 col-md-5 col-sm-6">
+    <div class="col-lg-4 col-md-5 col-sm-5">
       <Mobile-Header
         v-if="active"
         @click.native="selectCurrency"
@@ -67,12 +67,12 @@
       <v-divider vertical class="mt-6" style="height: 80vh"></v-divider>
     </div>
     <!------------------------------------------------Desktop----------------------------------------->
-    <div class="col-lg-7 col-md-6 col-sm-5 hide-desktop-ex">
+    <div class="col-lg-7 col-md-6 col-sm-6 hide-desktop-ex">
       <div>
         <div class="float-right">
           <DateFilter />
         </div>
-        <div class="text-left text-h5 mt-3">Processed</div>
+        <div class="text-left text-md-h5 mt-3 text-sm-body-2  processed-text">Processed</div>
         <v-divider style="width: 18%"> </v-divider>
       </div>
 
@@ -89,14 +89,40 @@
             </div>
           </transition>
 
-          <ul class="list-group" id="infinite-list">
-            <li
+          <div class="list-group" id="infinite-list">
+            <div
               class="list-group-item"
               v-for="item in items"
-              v-text="item"
+              
               :key="item.id"
-            ></li>
-          </ul>
+            >
+            <Chip-Card
+            :depositDetails="{
+              name: item.routes,
+              params: { id: item.id },
+            }"
+            :colors="item.outlined ? '' : item.color"
+            :time="item.time"
+            :day="item.day"
+            :moneySign="item.moneySign"
+            :status="item.outlined ? '' : item.status"
+            :statu="item.statu"
+            :statusColor="item.statusColor"
+            :active="item.active"
+            :icon="item.icon"
+            :depositType="item.depositType"
+            :outlined="item.outlined"
+            :msg="item.msg"
+            :padding="item.outlined ? 'py-1' : ''"
+            :acctNum="item.acctNum"
+            :amount="item.amount"
+            :addPaddingToChip="item.outlined ? 'white' : ''"
+            @getDeposit="submitDeposit()"
+            @deleteDeposit="cancelDeposit()"
+          >
+          </Chip-Card>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -142,7 +168,6 @@ export default {
       SelectCurrency: [],
       depositeType: [],
       fixed_top: null,
-
       loading: false,
       nextItem: 1,
       items: [],
@@ -192,7 +217,43 @@ export default {
       this.loading = true;
       setTimeout(() => {
         for (var i = 0; i < 20; i++) {
-          this.items.push("Item " + this.nextItem++);
+          this.items.push({
+            id: uuidv4(),
+            time: moment(new Date()).format("LT"),
+            day: new Date().toLocaleDateString(),
+            msg: "message goes here",
+            moneySign: "mdi-currency-ngn",
+            icon: "wire.svg",
+            depositType: "WIRE",
+            color: "success_bg",
+            status: "mdi-check-circle-outline",
+            statu: "Status",
+            statusText: "APPROVED",
+            statusColor: "success",
+            bonus: true,
+            active: true,
+            routes: "",
+            amount: "45,7845",
+            acctNum: 8455633,
+        },
+        {
+            id: uuidv4(),
+            time: moment(new Date()).format("LT"),
+            day: new Date().toLocaleDateString(),
+            msg: "message goes here",
+            moneySign: "mdi-currency-ngn",
+            icon: "wire.svg",
+            depositType: "WIRE",
+            color: "error_bg",
+            status: "mdi-close-circle-outline",
+            statu: "Status",
+            statusText: "DELETED",
+            statusColor: "error",
+            routes: "",
+            amount: "474,578",
+            acctNum: 415556,
+        }
+        );
         }
         this.loading = false;
       }, 1000);
@@ -296,11 +357,8 @@ export default {
   height: 75vh;
 }
 .list-group-item {
-  margin-top: 1px;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-bottom: 2px solid #dce4ec;
+  margin-bottom: 30px;
+  width: 90%;
 }
 .loading {
   text-align: center;
@@ -341,6 +399,13 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@media (min-width: 1366px){
+.list-group-item {
+  margin-bottom: 30px;
+  width: 70%;
+}
 }
 </style>
 

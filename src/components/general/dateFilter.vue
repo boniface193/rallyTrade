@@ -113,10 +113,18 @@ export default {
 .ranges.col-12.col-md-auto {
   width: 20%;
 }
-
+@media (min-width: 768px){
+  .col-12 {
+    flex: 0 0 0 !important;
+}
+}
 .daterangepicker .ranges li.active {
     background-color: #fb8c00;
     color: #fff;
 }
-
+@media (min-width: 600px) and (max-width: 960px){
+ .reportrange-text[data-v-4391f606] {
+  font-size: 8px;
+}
+}
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="col-lg-8 col-md-9 col-sm-10 margin-lg">
+  <div class="col-lg-10 col-md-9 col-sm-10">
     <router-link
       :to="{ name: 'deposit' }"
       style="text-decoration: none"
-      class="show-mobile"
+      class="ml-sm-16 pt-sm-16"
     >
       <v-icon class="">mdi-arrow-left</v-icon>
     </router-link>
@@ -18,6 +18,7 @@
       </template>
     </v-snackbar>
     <!-- error msg -->
+    <div class=" margin-lg">
     <v-row class="mt-4">
       <v-col cols="6" class="px-0">
         <v-row>
@@ -362,6 +363,7 @@
       </div>
     </Modal>
     <!-- modal -->
+     </div>
   </div>
 </template>
 

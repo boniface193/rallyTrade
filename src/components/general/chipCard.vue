@@ -21,7 +21,7 @@
       <Badge :moneySign="moneySign" currencyColor="#9EE8FF" />
       <div class="mx-3">
         <v-row :class="padding">
-          <v-col cols="3" class="text-center">
+          <v-col cols="3" class="text-center pr-sm-0 pr-md-3 pl-sm-1">
             <div class="d-flex justify-center">
               <img
                 width="50%"
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="d-flex justify-space-between">
-              <div class="text-body-1 mt-3 mb-0 text-left">{{ msg }}</div>
+              <div class="my-md-4 text-left text-md-body-1 text-sm-caption ">{{ msg }}</div>
             </div>
           </v-col>
           <div class="d-flex border-all" v-if="outlined">
@@ -82,7 +82,7 @@
       v-if="active"
       :color="statusColor"
       small
-      class="rounded mx-16 d-flex justify-center"
+      class="rounded mx-16 d-flex justify-center sm-text"
     >
       Claim Bonus!
     </v-chip>
@@ -200,5 +200,24 @@ html {
     .sm-text {
     font-size: 7px !important;
   }
+}
+
+@media (min-width: 600px) and (max-width: 900px){
+  .border-all {
+    margin-left: 33%;
+  }
+  .v-btn:not(.v-btn--round).v-size--small {
+    height: 24px;
+    min-width: 50px;
+    padding: 0 5.4444444444px;
+    font-size: 8px;
+}
+.sm-text {
+    font-size: 7px !important;
+    font-weight: bolder;
+  }
+   .msg-goes-here{
+     font-size: 10px !important;
+   }
 }
 </style>
