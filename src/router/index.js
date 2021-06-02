@@ -131,7 +131,7 @@ const routes = [
               },
               {
                 path: "",
-                name: "history",
+                name: "n",
                 component: depositHistory,
               },
             ]
