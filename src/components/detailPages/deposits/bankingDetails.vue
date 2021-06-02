@@ -1,14 +1,14 @@
 <template>
   <div>
     <!--------------------------------------- mobile view ------------------------------------->
-    <div class="mx-3-forSmallerScreen">
+    <div class="mx-3-forSmallerScreen offset-lg-2">
       <div class="text-center text-sm-left text-h5 my-8">
         <router-link :to="{ name: 'selectCurrency' }" class="show-mobile">
           <v-icon class="float-left">mdi-arrow-left</v-icon>
         </router-link>
         Banking Details
       </div>
-      <v-row class="mb-1 col-sm-6">
+      <v-row class="mb-1 col-sm-12">
         <v-col cols="3" sm="4" lg="2" class="text-body-1 pl-0">Amount</v-col>
         <v-col cols="1" class="px-0"
           ><Chip
@@ -21,6 +21,7 @@
         </v-col>
         <v-col
           cols="7"
+          sm="5"
           class="text-h6 py-0 grey--text darken-4 font-weight-bold"
         >
           <v-text-field
@@ -39,6 +40,7 @@
             v-for="item in bankName"
             :key="item.id"
             v-slot="{ active, toggle }"
+            class="col-sm-3"
           >
             <v-card
               :color="active ? 'grey lighten-2' : 'white'"
@@ -47,6 +49,7 @@
               align="center"
               justify="center"
               @click="toggle"
+              v-on:click="BankInfo(item.id)"
             >
               <v-img
                 width="50%"
@@ -54,7 +57,6 @@
                 :class="item.class"
                 :src="item.icon"
                 alt=""
-                @click="BankInfo(item.id)"
               ></v-img>
               <div class="text-caption">{{ item.text }}</div>
             </v-card>
@@ -135,7 +137,7 @@
           </v-sheet>
         </v-expand-transition>
       </div>
-      <v-divider class="my-3"></v-divider>
+      <v-divider class="my-3 col-sm-10"></v-divider>
       <v-row v-if="model != null">
         <v-col md="2" sm="3" class="text-body-2 pt-6 pr-0"
           >Select your bank</v-col
@@ -166,94 +168,102 @@
       <div v-if="selectYourBank">
         <div id="v-step-0"></div>
 
-        <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
-          <v-app-bar
-            :fixed="false"
-            color="orange darken-4"
-            width=""
-            class="elevation-0 white--text"
-            dense
-          >
-            <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="text-caption"></v-toolbar-title>
-          </v-app-bar>
-
-          <div class="mx-3 my-4">
-            <v-tabs
-              disabled
-              active-class="orange darken-4 white--text"
-              hide-slider
-              height="30"
-              grow
+        <div class="d-flex justify-sm-center">
+          <Gen-Card class="rounded-0 pb-3 mb-3" width="350px">
+            <v-app-bar
+              :fixed="false"
+              color="orange darken-4"
+              width=""
+              class="elevation-0 white--text"
+              dense
             >
-              <v-tab class="" style="font-size: 10px" dark
-                >Save <br />
-                Beneficials</v-tab
-              >
-              <v-tab disabled class="" style="font-size: 10px" dark
-                >New <br />
-                Beneficials</v-tab
-              >
-            </v-tabs>
-            <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
-              <v-text-field
-                v-for="item in inputInfo"
-                :key="item.id"
-                :label="item.label"
-                :append-icon="item.appendIcon"
-                dense
-                required
-                color="orange darken-4"
-                class="text-caption"
-                type="text"
-                :disabled="
-                  true
-                    ? item.id == 'v-step-1' ||
-                      item.id == 'v-step-2' ||
-                      item.id == 'v-step-3'
-                    : ''
-                "
-                :value="
-                  item.id == 'v-step-1'
-                    ? bankItem.acctName
-                    : '' || item.id == 'v-step-2'
-                    ? bankItem.acctNum
-                    : '' || item.id == 'v-step-3'
-                    ? price
-                    : ''
-                "
-                :id="item.id"
-              ></v-text-field>
+              <v-icon class="white--text" size="15">mdi-arrow-left</v-icon>
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="text-caption">Transfers</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-title class="text-caption"></v-toolbar-title>
+            </v-app-bar>
 
-              <div class="my-2 text-caption">Remark Optional</div>
+            <div class="mx-3 my-4">
+              <div>
+                <v-tabs
+                  disabled
+                  active-class="orange darken-4 white--text"
+                  hide-slider
+                  height="30"
+                  grow
+                >
+                  <v-tab style="font-size: 10px" dark
+                    >Save <br />
+                    Beneficials</v-tab
+                  >
+                  <v-tab disabled class="" style="font-size: 10px" dark
+                    >New <br />
+                    Beneficials</v-tab
+                  >
+                </v-tabs>
+              </div>
+              <!-- bankInfo is from the store -->
+              <div class="mt-5" v-for="bankItem in bankInfo" :key="bankItem.id">
+                <!-- inputInfo is to iterate over text field -->
+                <v-text-field
+                  v-for="item in inputInfo"
+                  :key="item.id"
+                  :label="item.label"
+                  :append-icon="item.appendIcon"
+                  dense
+                  required
+                  color="orange darken-4"
+                  class="text-caption"
+                  type="text"
+                  :disabled="
+                    true
+                      ? item.id == 'v-step-1' ||
+                        item.id == 'v-step-2' ||
+                        item.id == 'v-step-3'
+                      : ''
+                  "
+                  :value="
+                    item.id == 'v-step-1'
+                      ? bankItem.acctName
+                      : '' || item.id == 'v-step-2'
+                      ? bankItem.acctNum
+                      : '' || item.id == 'v-step-3'
+                      ? price
+                      : ''
+                  "
+                  :id="item.id"
+                ></v-text-field>
 
-              <v-text-field
-                dense
-                color="orange darken-4 mt-2"
-                class="text-caption"
-                id="v-step-4"
-                value="859647"
-              ></v-text-field>
+                <div class="my-2 text-caption">Remark Optional</div>
 
-              <v-btn
-                disabled
-                class="orange darken-4 rounded-0 elevation-0"
-                block
-                >Continue</v-btn
-              >
+                <v-text-field
+                  dense
+                  color="orange darken-4 mt-2"
+                  class="text-caption"
+                  id="v-step-4"
+                  value="859647"
+                ></v-text-field>
+
+                <v-btn
+                  disabled
+                  class="orange darken-4 rounded-0 elevation-0"
+                  block
+                  >Continue</v-btn
+                >
+              </div>
             </div>
-          </div>
-        </Gen-Card>
-        <v-btn
-          color="success elevation-0 text-body-1 btn-width"
-          :loading="btnLoading"
-          dark
-          @click="submitForm"
-          >Submit</v-btn
-        >
+          </Gen-Card>
+        </div>
+        <div class="d-flex justify-sm-center">
+          <v-btn
+            color="success elevation-0 text-body-1 btn-width"
+            :loading="btnLoading"
+            dark
+            @click="submitForm"
+            >Submit</v-btn
+          >
+        </div>
       </div>
     </div>
     <!--------------------------------------- mobile view ------------------------------------->
@@ -396,12 +406,12 @@ export default {
     },
 
     submitForm() {
-      this.btnLoading = true;
       if (this.price == 0) {
         this.snackbar = true;
         this.snackbarText = "Please fill the Amount";
       } else {
         this.dialog = true;
+        this.btnLoading = true;
       }
     },
 

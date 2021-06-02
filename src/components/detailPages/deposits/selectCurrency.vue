@@ -55,7 +55,7 @@
         <v-sheet v-if="model != null" height="80" tile>
           <v-row class="fill-height" justify="center">
             <div v-if="model == 0">
-            <h3 class="title mt-8">Select Deposit Type</h3>
+            <h3 class="title mt-8 text-center">Select Deposit Type</h3>
               <v-scale-transition>
                 <v-row class="d-flex justify-center mx-3 mt-8 mb-16">
                   <v-col
@@ -81,7 +81,7 @@
             </div>
 
             <div v-if="model == 1">
-              <h3 class="title mt-8">No currency to select yet</h3>
+              <h3 class="title mt-8 text-center">No currency to select yet</h3>
             </div>
           </v-row>
         </v-sheet>

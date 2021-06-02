@@ -129,6 +129,12 @@ export default {
           active: true,
           route: "announcement",
         },
+        {
+          title: "Logout",
+          icon: "mdi-logout",
+          active: false,
+          route: "login",
+        },
       ],
       mini: true,
     };

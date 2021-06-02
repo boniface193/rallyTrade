@@ -23,5 +23,17 @@ export default {
     display: none;
   }
 }
+
+@media (min-width: 600px) {
+  .show-mobile-ex {
+    display: none;
+
+  }
+}
+@media (max-width: 599px) {
+  .hide-desktop-ex {
+    display: none;
+  }
+}
 </style>
 

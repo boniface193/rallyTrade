@@ -8,6 +8,8 @@ import VueTour from 'vue-tour'
 // import 'vue-tel-input/dist/vue-tel-input.css'
 require('vue-tour/dist/vue-tour.css')
 
+Vue.use(require('vue-moment'));
+
 Vue.use(VueTour)
 
 Vue.config.productionTip = false;

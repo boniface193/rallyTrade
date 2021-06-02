@@ -9,6 +9,9 @@ import Onboarding from "@/views/onboarding.vue"
 import Login from "@/components/navRoutes/onboarding/login.vue"
 import ForgotPwd from "@/components/navRoutes/onboarding/forgotPwd.vue"
 import Register from "@/components/navRoutes/onboarding/register.vue"
+import emailVerified from "@/components/navRoutes/onboarding/emailVerified.vue"
+import verifyEmail from "@/components/navRoutes/onboarding/verifyEmail.vue"
+import changePwd from "@/components/navRoutes/onboarding/changePwd.vue"
 
 /******** onboarding **********/
 
@@ -25,6 +28,8 @@ import depositPage from "@/components/detailPages/deposits/depositPage.vue"
 import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
 import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
 import bankDetails from "@/components/detailPages/deposits/bankingDetails.vue"
+import depositHistory from "@/components/detailPages/deposits/depositHistory.vue"
+
 
 import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
 
@@ -62,6 +67,21 @@ const routes = [
         path: "register",
         name: "register",
         component: Register
+      },
+      {
+        path: "emailverified",
+        name: "emailverified",
+        component: emailVerified
+      },
+      {
+        path: "verifyemail",
+        name: "verifyemail",
+        component: verifyEmail
+      },
+      {
+        path: "changepwd",
+        name: "changepwd",
+        component: changePwd
       },
     ]
   },
@@ -108,6 +128,11 @@ const routes = [
                 name: "bankDetails",
                 component: bankDetails,
                 props: true
+              },
+              {
+                path: "",
+                name: "history",
+                component: depositHistory,
               },
             ]
           },

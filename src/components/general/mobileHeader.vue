@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div style="cursor: pointer;">
     <v-app-bar
       :fixed="fixed_top"
       color="white"
       height="100"
-      class="elevation-0"
+      class="elevation-0 ma-3 pa-3"
       
     >
       <v-app-bar
@@ -12,7 +12,7 @@
         dark
         fixed
         height="80"
-        class="d-flex justify-center elevation-0 ma-3"
+        class="d-flex justify-center elevation-0"
       >
         <v-toolbar-title class="text-center">{{ title }}</v-toolbar-title>
       </v-app-bar>
