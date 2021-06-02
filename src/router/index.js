@@ -46,15 +46,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "index",
-    component: Index
-  },
-  {
-    path: "/login",
     component: Onboarding,
     children: [
       {
-        path: "",
+        path: "/",
+        name: "index",
+        component: Index
+      },
+      {
+        path: "login",
         name: "login",
         component: Login
       },
@@ -108,40 +108,39 @@ const routes = [
             component: depositPage,
             children: [
               {
-                path: "",
+                path: "/",
                 name: "deposit",
                 component: Deposit,
               },
               {
-                path: "",
+                path: "select_currency",
                 name: "selectCurrency",
                 component: selectCurrency,
               },
               {
-                path: "",
+                path: "deposit_details",
                 name: "depositDetails",
                 component: depositDetailPage,
                 props: true
               },
               {
-                path: "",
+                path: "bank_details",
                 name: "bankDetails",
                 component: bankDetails,
                 props: true
               },
               {
                 path: "",
-                name: "n",
+                name: "history",
                 component: depositHistory,
               },
             ]
           },
           {
-            path: "withdrawal",
+            path: "/withdrawal",
             name: "withdrawal",
             component: Withdrawal
           },
-
         ]
       },
       {
