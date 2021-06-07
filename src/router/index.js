@@ -22,6 +22,8 @@ import Trading from "@/views/trading.vue"
 import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
 import Accounts from "@/components/navRoutes/trading/accounts.vue"
 import Deposit from "@/components/navRoutes/trading/deposit.vue"
+import Stepper from "@/components/navRoutes/profiles/stepper.vue"
+// import Settings from "@/components/navRoutes/profiles/settings.vue"
 
 // Deposit Detail Page
 import depositPage from "@/components/detailPages/deposits/depositPage.vue"
@@ -153,10 +155,14 @@ const routes = [
         name: "partnership",
         component: Partnership
       },
+      { path: "/stepper", name: "stepper", component: Stepper },
       {
         path: "/profile",
         name: "profile",
-        component: Profile
+        component: Profile,
+        // children: [
+        //   { path: "", name: "settings", component: Settings }
+        // ]
       },
       {
         path: "/promotion",
