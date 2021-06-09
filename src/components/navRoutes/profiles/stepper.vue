@@ -121,7 +121,7 @@
             <div class="text-body-1 main_bg--text my-8">Select ID Type</div>
 
             <v-row>
-              <v-col md="4" sm="12">
+              <v-col md="4" sm="12" cols="">
                 <v-select
                   outlined
                   dense
@@ -130,9 +130,9 @@
                   label="Identification"
                 ></v-select>
               </v-col>
-              <v-col md="8" sm="12">
+              <v-col md="8" sm="12" cols="">
                 <v-row>
-                  <v-col>
+                  <v-col lg="4" md="4" sm="4" cols="">
                     <v-file-input
                       outlined
                       dense
@@ -142,7 +142,7 @@
                       label="Upload Front"
                     ></v-file-input>
                   </v-col>
-                  <v-col>
+                  <v-col lg="4" md="4" sm="4" cols="">
                     <v-file-input
                       dense
                       outlined
@@ -152,7 +152,7 @@
                       label="Upload Back"
                     ></v-file-input>
                   </v-col>
-                  <v-col>
+                  <v-col lg="4" md="4" sm="4" cols="">
                     <v-text-field
                       class="text-caption"
                       outlined
