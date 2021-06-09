@@ -119,33 +119,53 @@
 
           <div class="container">
             <div class="text-body-1 main_bg--text my-8">Select ID Type</div>
-            <v-radio-group v-model="row" row class="black--text text-center">
-              <v-radio
-                label="International Passport"
-                value="international_passport"
-                color="active_link"
-              ></v-radio>
-              <v-radio
-                label="National Drivers Licence"
-                value="national_drivers_licence"
-                color="active_link"
-              ></v-radio>
-              <v-radio
-                label="National Identity Card"
-                value="national_identity_card"
-                color="active_link"
-              ></v-radio>
-              <v-radio
-                label="Voter’s Card"
-                value="voters_card"
-                color="active_link"
-              ></v-radio>
-              <v-radio
-                label="Voter’s Card"
-                value="voters_card"
-                color="active_link"
-              ></v-radio>
-            </v-radio-group>
+
+            <v-row>
+              <v-col md="4" sm="12">
+                <v-select
+                  outlined
+                  dense
+                  :items="identification"
+                  item-text="idType"
+                  label="Identification"
+                ></v-select>
+              </v-col>
+              <v-col md="8" sm="12">
+                <v-row>
+                  <v-col>
+                    <v-file-input
+                      outlined
+                      dense
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      prepend-icon="mdi-camera"
+                      label="Upload Front"
+                    ></v-file-input>
+                  </v-col>
+                  <v-col>
+                    <v-file-input
+                      dense
+                      outlined
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      prepend-icon="mdi-camera"
+                      label="Upload Back"
+                    ></v-file-input>
+                  </v-col>
+                  <v-col>
+                    <v-text-field
+                      class="text-caption"
+                      outlined
+                      dense
+                      v-model="idNumber"
+                      type="text"
+                      label="ID Number"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
           </div>
 
           <div class="float-right">
@@ -175,27 +195,58 @@ export default {
       fname: "",
       lname: "",
       gender: [{ sex: "Male" }, { sex: "Female" }],
+      identification: [
+        { idType: "International Passport" },
+        { idType: "National Drivers Licence" },
+        { idType: "National Drivers Licence (Temporary)" },
+        { idType: "National Identity Card (old version)" },
+        { idType: "National Identity Card (new version)" },
+        { idType: "Voter's Card" },
+        { idType: "Voter’s Card (Temporary)" },
+        { idType: "Digital NIN" },
+        { idType: "Digital NIN (printed)" },
+        {
+          idType:
+            "National Identification Number Slip (NINS, NIMC, Enrollment Transaction Slip etc.)",
+        },
+      ],
       date: "",
       modal: false,
       row: null,
+      changeType: "text",
     };
+  },
+
+  methods: {
+    selectFront() {
+      this.changeType = "file";
+    },
   },
 };
 </script>
 
 <style lang="scss">
-@media (max-width: 280px) {
-  .v-stepper--alt-labels .v-stepper__step {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex-basis: 0px;
+.container {
+  .theme--light.v-stepper
+    .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error)
+    .v-stepper__step__step {
+    background: #0e0e23 !important;
   }
-}
+  input.file_input_replacement {
+    padding: 5px 8px;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 100%;
+  }
 
-.theme--light.v-stepper
-  .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error)
-  .v-stepper__step__step {
-  background: #0e0e23 !important;
+  @media (max-width: 280px) {
+    .v-stepper--alt-labels .v-stepper__step {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      flex-basis: 0px;
+    }
+  }
 }
 </style>
