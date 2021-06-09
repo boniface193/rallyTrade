@@ -121,7 +121,7 @@
             <div class="text-body-1 main_bg--text my-8">Select ID Type</div>
 
             <v-row>
-              <v-col md="4" sm="12">
+              <v-col md="4" sm="12" cols="">
                 <v-select
                   outlined
                   dense
@@ -132,7 +132,7 @@
               </v-col>
               <v-col md="8" sm="12">
                 <v-row>
-                  <v-col>
+                  <v-col cols="">
                     <v-file-input
                       outlined
                       dense
