@@ -120,8 +120,8 @@
           <div class="container">
             <div class="text-body-1 main_bg--text my-8">Select ID Type</div>
 
-            <v-layout row wrap>
-              <v-flex sm="4">
+            <v-row>
+              <v-col md="4" sm="12">
                 <v-select
                   outlined
                   dense
@@ -129,10 +129,10 @@
                   item-text="idType"
                   label="Identification"
                 ></v-select>
-              </v-flex>
-              <v-flex sm="8">
-                <!-- <v-layout row> -->
-                  <v-flex sm="4">
+              </v-col>
+              <v-col md="8" sm="12">
+                <v-row>
+                  <v-col>
                     <v-file-input
                       outlined
                       dense
@@ -141,8 +141,8 @@
                       prepend-icon="mdi-camera"
                       label="Upload Front"
                     ></v-file-input>
-                  </v-flex>
-                  <v-flex sm="4">
+                  </v-col>
+                  <v-col>
                     <v-file-input
                       dense
                       outlined
@@ -151,8 +151,8 @@
                       prepend-icon="mdi-camera"
                       label="Upload Back"
                     ></v-file-input>
-                  </v-flex>
-                  <v-flex sm="4">
+                  </v-col>
+                  <v-col>
                     <v-text-field
                       class="text-caption"
                       outlined
@@ -162,10 +162,10 @@
                       label="ID Number"
                       required
                     ></v-text-field>
-                  </v-flex>
-                <!-- </v-layout> -->
-              </v-flex>
-            </v-layout>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
           </div>
 
           <div class="float-right">
