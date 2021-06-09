@@ -104,14 +104,18 @@
           </v-layout>
           <!-- <div class="d-flex pa-3"></div> -->
 
-          <v-btn
-            color="active_link"
-            dark
-            class="float-right mt-8"
-            @click="e1 = 2"
-          >
-            Continue
-          </v-btn>
+          <div :class="add_float_right">
+            <v-btn
+              color="active_link"
+              dark
+              depressed
+              class="mt-8"
+              :block="block"
+              @click="e1 = 2"
+            >
+              Continue
+            </v-btn>
+          </div>
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -128,15 +132,93 @@
                   :items="identification"
                   item-text="idType"
                   label="Identification"
+                  @change="selectID(identification)"
                 ></v-select>
               </v-col>
               <v-col md="8" sm="12" cols="">
                 <v-row>
                   <v-col lg="4" md="4" sm="4" cols="">
+                    <v-dialog
+                      ref="dialog"
+                      v-model="modal"
+                      :return-value.sync="date"
+                      persistent
+                      width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <input
+                          class="body-1 rounded pa-2 text-truncate"
+                          style="
+                            border: solid 1px #999a9e;
+                            width: 100%;
+                            max-width: 100%;
+                          "
+                          v-model="date"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                          placeholder="Date of Issue"
+                        />
+                      </template>
+                      <v-date-picker v-model="date" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="modal = false">
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.dialog.save(date)"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+
+                  <v-col lg="4" md="4" sm="4" cols="">
+                    <v-dialog
+                      ref="dialog"
+                      v-model="modal"
+                      :return-value.sync="date"
+                      persistent
+                      width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <input
+                          class="body-1 rounded pa-2 text-truncate"
+                          style="
+                            border: solid 1px #999a9e;
+                            width: 100%;
+                            max-width: 100%;
+                          "
+                          v-model="date"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                          placeholder="Expired Date"
+                        />
+                      </template>
+                      <v-date-picker v-model="date" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="modal = false">
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="$refs.dialog.save(date)"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+
+                  <v-col lg="4" md="4" sm="4" cols="">
                     <v-file-input
                       outlined
                       dense
-                      :rules="rules"
                       accept="image/png, image/jpeg, image/bmp"
                       prepend-icon="mdi-camera"
                       label="Upload Front"
@@ -146,7 +228,7 @@
                     <v-file-input
                       dense
                       outlined
-                      :rules="rules"
+                      truncate-length
                       accept="image/png, image/jpeg, image/bmp"
                       prepend-icon="mdi-camera"
                       label="Upload Back"
@@ -168,10 +250,29 @@
             </v-row>
           </div>
 
-          <div class="float-right">
-            <v-btn color="secondary" dark> Cancel </v-btn>
-            <v-btn color="primary mx-3" dark @click="e1 = 1"> Back </v-btn>
-            <v-btn color="active_link" dark @click="e1 = 3"> Continue </v-btn>
+          <div :class="add_float_right">
+            <v-btn color="secondary" dark depressed :block="block">
+              Cancel
+            </v-btn>
+            <v-btn
+              color="primary"
+              dark
+              depressed
+              :class="add_my_3"
+              :block="block"
+              @click="e1 = 1"
+            >
+              Back
+            </v-btn>
+            <v-btn
+              color="active_link"
+              dark
+              depressed
+              :block="block"
+              @click="e1 = 3"
+            >
+              Continue
+            </v-btn>
           </div>
         </v-stepper-content>
 
@@ -192,34 +293,61 @@ export default {
   data() {
     return {
       e1: 1,
+      // v-models
       fname: "",
       lname: "",
+      idNumber: "",
+      date: "",
+      // v-models
+
+      modal: false,
+      block: null,
+      add_my_3: "",
+      add_float_right: "",
+      // select gender
       gender: [{ sex: "Male" }, { sex: "Female" }],
+      // select ID
       identification: [
-        { idType: "International Passport" },
-        { idType: "National Drivers Licence" },
-        { idType: "National Drivers Licence (Temporary)" },
-        { idType: "National Identity Card (old version)" },
-        { idType: "National Identity Card (new version)" },
-        { idType: "Voter's Card" },
-        { idType: "Voter’s Card (Temporary)" },
-        { idType: "Digital NIN" },
-        { idType: "Digital NIN (printed)" },
+        { idType: "International Passport", id: "001" },
+        { idType: "National Drivers Licence", id: "002" },
+        { idType: "National Drivers Licence (Temporary)", id: "003" },
+        { idType: "National Identity Card (old version)", id: "004" },
+        { idType: "National Identity Card (new version)", id: "005" },
+        { idType: "Voter's Card", id: "006" },
+        { idType: "Voter’s Card (Temporary)", id: "007" },
+        { idType: "Digital NIN", id: "008" },
+        { idType: "Digital NIN (printed)", id: "009" },
         {
           idType:
             "National Identification Number Slip (NINS, NIMC, Enrollment Transaction Slip etc.)",
+          id: "010",
         },
       ],
-      date: "",
-      modal: false,
-      row: null,
-      changeType: "text",
     };
   },
 
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+
   methods: {
-    selectFront() {
-      this.changeType = "file";
+    handleResize() {
+      if (window.innerWidth <= 599) {
+        this.block = true;
+        this.add_my_3 = "my-3";
+        this.add_float_right = "";
+      } else {
+        this.block = false;
+        this.add_my_3 = "mx-3";
+        this.add_float_right = "float-right";
+      }
+    },
+
+    selectID(params) {
+      if (params[0].id === "002") {
+        console.log("slectd ID");
+      }
     },
   },
 };
