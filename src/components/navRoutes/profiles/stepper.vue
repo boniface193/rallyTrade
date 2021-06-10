@@ -132,7 +132,7 @@
                   :items="identification"
                   item-text="idType"
                   label="Identification"
-                  @change="selectID(identification)"
+                  @change="selectID(item)"
                 ></v-select>
               </v-col>
               <v-col md="8" sm="12" cols="">
@@ -216,6 +216,18 @@
                   </v-col>
 
                   <v-col lg="4" md="4" sm="4" cols="">
+                    <v-text-field
+                      class="text-caption"
+                      outlined
+                      dense
+                      v-model="idNumber"
+                      type="text"
+                      label="ID Number"
+                      required
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col lg="4" md="4" sm="4" cols="">
                     <v-file-input
                       outlined
                       dense
@@ -228,22 +240,10 @@
                     <v-file-input
                       dense
                       outlined
-                      truncate-length
                       accept="image/png, image/jpeg, image/bmp"
                       prepend-icon="mdi-camera"
                       label="Upload Back"
                     ></v-file-input>
-                  </v-col>
-                  <v-col lg="4" md="4" sm="4" cols="">
-                    <v-text-field
-                      class="text-caption"
-                      outlined
-                      dense
-                      v-model="idNumber"
-                      type="text"
-                      label="ID Number"
-                      required
-                    ></v-text-field>
                   </v-col>
                 </v-row>
               </v-col>
@@ -279,9 +279,115 @@
         <v-stepper-content step="3">
           <!-- content goes here -->
 
-          <v-btn color="active_link" dark class="float-right" @click="e1 = 1">
-            Continue
-          </v-btn>
+          <v-layout row wrap class="mt-3 mx-2">
+            
+            <v-flex class="mx-1" xs="6"
+              ><v-text-field
+                outlined
+                dense
+                v-model="lname"
+                label="Cient Name"
+                required
+              ></v-text-field
+            ></v-flex>
+            <v-flex class="mx-1" xs="6"
+              ><v-select
+                :items="items"
+                item-text="text"
+                label="Select your bank"
+                dense
+                outlined
+                class="text-caption pa-0"
+                @change="sectedBank"
+              >
+                <template v-slot:selection="{ item }">
+                  <img :src="item.icon" width="20px" />
+                  <span class="ml-1">{{ item.text }}</span>
+                </template>
+
+                <template v-slot:item="{ item }">
+                  <img :src="item.icon" width="20px" class="mr-2" />
+                  <span class="text-caption">{{ item.text }}</span>
+                </template>
+              </v-select></v-flex
+            >
+
+            <v-flex class="mx-1" xs="6">
+              <v-text-field
+                outlined
+                dense
+                label="10 Digit NUBAN Account Number"
+                required
+              ></v-text-field>
+            </v-flex>
+
+            <v-flex class="mx-1" xs="6"
+              ><v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="date"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <input
+                    class="body-1 rounded pa-2 text-truncate"
+                    style="
+                      border: solid 1px #999a9e;
+                      width: 100%;
+                      max-width: 100%;
+                    "
+                    v-model="date"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    placeholder="Statement Issue Date"
+                  />
+                </template>
+                <v-date-picker v-model="date" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-dialog></v-flex
+            >
+
+
+            <v-flex class="py-0 col-sm-6">
+              <v-divider></v-divider>
+              <v-radio-group v-model="row" row>
+                <v-radio label="Naira" value="naira"></v-radio>
+                <v-radio label="Dollars" value="dollars"></v-radio>
+              </v-radio-group>
+            </v-flex>
+
+            <v-flex class="py-0 col-sm-6">
+              <v-file-input
+                dense
+                outlined
+                accept="image/png, image/jpeg, image/bmp"
+                prepend-icon="mdi-camera"
+                label="Upload bank statement"
+              ></v-file-input>
+            </v-flex>
+          </v-layout>
+
+          <div :class="add_float_right">
+            <v-btn
+              type="submit"
+              color="success"
+              dark
+              depressed
+              class="mt-8"
+              :block="block"
+            >
+              Submit
+            </v-btn>
+          </div>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -323,12 +429,19 @@ export default {
           id: "010",
         },
       ],
+
+      // select bank name
+      items: [],
     };
   },
 
   mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+  },
+
+  created() {
+    this.items = this.$store.getters["trading/getSelectBank"];
   },
 
   methods: {
@@ -345,9 +458,9 @@ export default {
     },
 
     selectID(params) {
-      if (params[0].id === "002") {
-        console.log("slectd ID");
-      }
+      // if (params[0].id === "002") {
+      console.log(params);
+      // }
     },
   },
 };
