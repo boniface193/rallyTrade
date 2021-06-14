@@ -15,7 +15,7 @@
             :complete="e1 > steps.completed"
             :step="steps.steps"
             color="active_link"
-            editable
+            
           >
             {{ steps.title }}
           </v-stepper-step>
