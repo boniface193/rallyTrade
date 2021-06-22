@@ -1,11 +1,13 @@
 <template>
   <div>
-      <p style="font-size: 12px; font-weight: normal; font-family: roboto">
-      {{ messages }}<span class="active_link--text "> {{phoneNumber}}</span>
+    <p style="font-size: 12px; font-weight: normal; font-family: roboto">
+      {{ messages }}<span class="active_link--text"> {{ phoneNumber }}</span>
+      <v-chip link class="ma-2 caption" small @click="goBack"> change </v-chip>
     </p>
     <div class="d-flex">
       <v-text-field
         class="mr-2 mb-0 pb-0"
+        autocomplete="off"
         outlined
         type="tel"
         v-for="(key, i) in activationKeyFields"
@@ -14,22 +16,21 @@
         :data-length="key.length"
         :data-index="i"
         :ref="`input-${i}`"
-        v-model="key.value"
+        v-model="otpp[i]"
         maxlength="1"
         @keyup="handleActivationInput($event)"
+        @input="checkFilledAllInputs"
       ></v-text-field>
     </div>
-    
   </div>
 </template>
 
 <script>
 // import MobileNav from "@/components/layouts/mobilenav.vue";
 export default {
-  props: ["phoneNumber"],
+  props: ["phoneNumber", "otpp"],
   components: {
     // MobileNav,
-
   },
   data() {
     return {
@@ -42,10 +43,31 @@ export default {
         { length: 1, value: "" },
         { length: 1, value: "" },
       ],
+      // otp: [],
     };
   },
 
+  created() {
+    // let checkinng = {}
+    // this.activationKeyFields.forEach((i) => {
+    //   i.varable = i.value;
+    // });
+  },
+
   methods: {
+    goBack() {
+      this.$emit("backToRegister");
+    },
+    // Helper to return OTP from input
+    checkFilledAllInputs() {
+      this.$emit("onComplete");
+      // console.log()
+      // if (this.otp.join("").length === this.activationKeyFields) {
+      //   return this.$emit("on-complete", this.otp.join(""));
+
+      // }
+      // return "Wait until the user enters the required number of characters";
+    },
     handleActivationInput(e) {
       // Grab input's value
       let value = e.target.value;
