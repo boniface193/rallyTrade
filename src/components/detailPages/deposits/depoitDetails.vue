@@ -271,8 +271,8 @@
             </div>
           </div>
         </v-col>
-        <v-col cols="6" class="px-0 text-center">
-          <div class="mt-2 mr-3" v-if="image" style="height: 80%">
+        <v-col cols="6" class="px-0 text-center" style="height: 250px; overflow: auto;">
+          <div class="mt-2 mr-3" v-if="image" >
             <img :src="image" width="100%" height="100%" />
           </div>
           <div class="my-8" v-else>
@@ -645,5 +645,24 @@ $font-family: Roboto "Inter", sans-serif;
   .text-normal-small {
     font-size: 15.5px;
   }
+}
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>

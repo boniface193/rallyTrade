@@ -272,6 +272,7 @@
 
     <v-tour name="myTour" :steps="steps"></v-tour>
     <Modal :dialog="dialog" width="350px">
+      <GenCard>
       <div class="text-center py-8 mx-4 body-text" style="font-size: 14px">
         <div class="text-h6 error--text mb-3">Important!</div>
         <div class="text-left">
@@ -305,6 +306,7 @@
           >continue!</v-btn
         >
       </div>
+      </GenCard>
     </Modal>
 
     <!-- error msg -->

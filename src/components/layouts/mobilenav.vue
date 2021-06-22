@@ -9,7 +9,7 @@
     >
       <v-icon dark color="main_bg"> mdi-menu </v-icon>
     </v-btn>
-    <div class="circle elevation-8">
+    <div class="circle">
       <div class="text-center my-3 hidden-on-true d-none" ref="hidden_on_true">
         <v-list color="transparent">
           <v-list-item
@@ -23,7 +23,17 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-btn depressed class="mb-3" dark color="success" outlined small block :to="{name: 'login'}">Logout</v-btn>
+        <v-btn
+          depressed
+          class="mb-3"
+          dark
+          color="success"
+          outlined
+          small
+          block
+          :to="{ name: 'login' }"
+          >Logout</v-btn
+        >
       </div>
     </div>
   </div>
@@ -56,7 +66,9 @@ export default {
     },
 
     onClickOutside() {
-      if (this.$refs.bg_class.classList.contains("open") == true) {
+      if (this.$route.name == "register" || this.$route.name == "login") {
+        return null
+      } else if (this.$refs.bg_class.classList.contains("open") == true) {
         this.$refs.hidden_on_true.classList.add("d-none");
         this.$refs.bg_class.classList.remove("open");
       }
@@ -93,6 +105,7 @@ html {
     bottom: 0%;
     margin: 0 0 3% 5%;
   }
+
   @media (max-width: 280px) {
     .menu-btn {
       width: 50px !important;
@@ -110,6 +123,7 @@ html {
   }
   .circle {
     display: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
   }
   svg {
     width: 100%;

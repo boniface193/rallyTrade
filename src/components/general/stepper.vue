@@ -15,7 +15,6 @@
             :complete="e1 > steps.completed"
             :step="steps.steps"
             color="active_link"
-            
           >
             {{ steps.title }}
           </v-stepper-step>
@@ -130,6 +129,9 @@
                     :rules="nameRules"
                     v-model="selectID"
                   ></v-select>
+                  <div v-show="cvvBlurText" class="success--text caption">
+                    blur your CVV on the back
+                  </div>
                 </v-col>
                 <v-col md="8" sm="12" cols="">
                   <v-row>
@@ -203,6 +205,38 @@
                       ></v-text-field>
                     </v-col>
 
+                    <v-col v-show="showNinPin" lg="4" md="4" sm="4" cols="">
+                      <v-text-field
+                        class="text-caption"
+                        outlined
+                        dense
+                        v-model="ninPin"
+                        type="number"
+                        label="NIN Pin"
+                        required
+                        :rules="nameRules"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col
+                      v-show="showtrackingNumber"
+                      lg="4"
+                      md="4"
+                      sm="4"
+                      cols=""
+                    >
+                      <v-text-field
+                        class="text-caption"
+                        outlined
+                        dense
+                        v-model="trackingNum"
+                        type="number"
+                        label="Tracking Number"
+                        required
+                        :rules="nameRules"
+                      ></v-text-field>
+                    </v-col>
+
                     <v-col lg="4" md="4" sm="4" cols="">
                       <v-file-input
                         v-model="uploadFront"
@@ -214,6 +248,7 @@
                         :rules="nameRules"
                       ></v-file-input>
                     </v-col>
+
                     <v-col v-show="showUploadBack" lg="4" md="4" sm="4" cols="">
                       <v-file-input
                         v-model="uploadBack"
@@ -224,6 +259,18 @@
                         label="Upload Back"
                         :rules="nameRules"
                       ></v-file-input>
+                    </v-col>
+
+                    <v-col v-show="showCert" lg="4" md="4" sm="4" cols="">
+                      <v-select
+                        v-model="selectCert"
+                        outlined
+                        dense
+                        :items="Cert"
+                        item-text="item"
+                        :rules="nameRules"
+                        label="Select"
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -248,9 +295,14 @@
                 @click="e1 = 3"
                 :disabled="
                   (this.selectID < 1 ||
-                    this.uploadFront < 1||
+                    this.uploadFront < 1 ||
                     this.dateOfIssue < 1 ||
-                  this.idNumber < 1 || this.expiredDate < 1) && this.uploadBack < 1
+                    this.idNumber < 1 ||
+                    this.expiredDate < 1) &&
+                  this.uploadBack < 1 &&
+                  this.ninPin < 1 &&
+                  this.trackingNum < 1 &&
+                  this.selectCert < 1
                 "
               >
                 Continue
@@ -299,12 +351,13 @@
               <v-flex class="mx-1" xs="6">
                 <v-text-field
                   v-model="acctNumber"
+                  :counter="10"
                   outlined
                   dense
                   label="10 Digit NUBAN Account Number"
                   required
                   type="number"
-                  :rules="nameRules"
+                  :rules="maxRule"
                 ></v-text-field>
               </v-flex>
 
@@ -427,7 +480,15 @@ export default {
       expiredDate: "",
       idNumber: "",
       selectID: "",
+      showNinPin: false,
+      showtrackingNumber: false,
+      trackingNum: "",
+      cvvBlurText: false,
       ninPin: "",
+      selectCert: "",
+      showCert: false,
+      // certificate
+      Cert: [{ item: "Certificate of Birth" }, { item: "Affidavit" }],
       // step 3
       clientName: "",
       sidModal: false,
@@ -436,6 +497,9 @@ export default {
       acctNumber: "",
       currency: null,
       uploadBankStatement: [],
+      maxRule: [
+        (v) => (v && v.length == 10) || "NUBAN Account Number must be 10 digit",
+      ],
       // v-models
       block: null,
       add_my_3: "",
@@ -454,9 +518,12 @@ export default {
         { idType: "Digital NIN", id: "008" },
         { idType: "Digital NIN (printed)", id: "009" },
         {
-          idType:
-            "National Identification Number Slip (NINS, NIMC, Enrollment Transaction Slip etc.)",
+          idType: "National Identification Number Slip (NINS)",
           id: "010",
+        },
+        {
+          idType: "Enrollment Transaction Slip",
+          id: "011",
         },
       ],
       // select bank name
@@ -471,6 +538,7 @@ export default {
 
   created() {
     this.items = this.$store.getters["trading/getSelectBank"];
+
   },
 
   methods: {
@@ -497,16 +565,47 @@ export default {
         this.expDate = false;
         this.issueDate = false;
         this.identityNumber = false;
+      } else if (this.selectID == "National Identity Card (new version)") {
+        this.cvvBlurText = true;
       } else if (this.selectID == "Voter’s Card (Temporary)") {
         this.identityNumber = false;
         this.expDate = false;
         this.issueDate = true;
         this.showUploadBack = true;
+      } else if (this.selectID == "Voter's Card") {
+        this.expDate = false;
+        this.showUploadBack = true;
+      } else if (this.selectID == "Digital NIN") {
+        this.issueDate = false;
+        this.expDate = false;
+      } else if (this.selectID == "Digital NIN (printed)") {
+        this.showUploadBack = false;
+        this.issueDate = false;
+        this.expDate = false;
+      } else if (this.selectID == "Enrollment Transaction Slip") {
+        this.showUploadBack = false;
+        this.expDate = false;
+        this.identityNumber = false;
+        this.showtrackingNumber = true;
+        this.showCert = true;
+      } else if (
+        this.selectID == "National Identification Number Slip (NINS)"
+      ) {
+        this.showUploadBack = false;
+        this.expDate = false;
+        this.identityNumber = false;
+        this.showNinPin = true;
+        this.issueDate = false;
+        this.showCert = true;
       } else {
         this.showUploadBack = true;
         this.expDate = true;
         this.issueDate = true;
         this.identityNumber = true;
+        this.cvvBlurText = false;
+        this.showNinPin = false;
+        this.showtrackingNumber = false;
+        this.showCert = false;
       }
     },
 
