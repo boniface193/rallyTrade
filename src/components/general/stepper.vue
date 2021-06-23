@@ -15,6 +15,7 @@
             :complete="e1 > steps.completed"
             :step="steps.steps"
             color="active_link"
+            editable
           >
             {{ steps.title }}
           </v-stepper-step>
@@ -269,8 +270,27 @@
                         :items="Cert"
                         item-text="item"
                         :rules="nameRules"
+                        @change="selectCertificate"
                         label="Select"
                       ></v-select>
+                    </v-col>
+
+                    <v-col
+                      v-show="showAdditionalFile"
+                      lg="4"
+                      md="4"
+                      sm="4"
+                      cols=""
+                    >
+                      <v-file-input
+                        v-model="uploadFile"
+                        outlined
+                        dense
+                        accept="image/png, image/jpeg, image/bmp"
+                        prepend-icon="mdi-camera"
+                        label="Upload File"
+                        :rules="nameRules"
+                      ></v-file-input>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -487,6 +507,8 @@ export default {
       ninPin: "",
       selectCert: "",
       showCert: false,
+      showAdditionalFile: false,
+      uploadFile: "",
       // certificate
       Cert: [{ item: "Certificate of Birth" }, { item: "Affidavit" }],
       // step 3
@@ -538,7 +560,6 @@ export default {
 
   created() {
     this.items = this.$store.getters["trading/getSelectBank"];
-
   },
 
   methods: {
@@ -560,34 +581,56 @@ export default {
         this.expDate = true;
         this.issueDate = true;
         this.identityNumber = true;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "National Identity Card (old version)") {
         this.showUploadBack = true;
         this.expDate = false;
         this.issueDate = false;
         this.identityNumber = false;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "National Identity Card (new version)") {
         this.cvvBlurText = true;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "Voter’s Card (Temporary)") {
         this.identityNumber = false;
         this.expDate = false;
         this.issueDate = true;
         this.showUploadBack = true;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "Voter's Card") {
         this.expDate = false;
         this.showUploadBack = true;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "Digital NIN") {
         this.issueDate = false;
         this.expDate = false;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
       } else if (this.selectID == "Digital NIN (printed)") {
         this.showUploadBack = false;
         this.issueDate = false;
         this.expDate = false;
+        this.showNinPin = false;
+        this.showAdditionalFile = false;
+        this.showCert = false;
       } else if (this.selectID == "Enrollment Transaction Slip") {
         this.showUploadBack = false;
         this.expDate = false;
         this.identityNumber = false;
         this.showtrackingNumber = true;
         this.showCert = true;
+        this.showNinPin = false;
       } else if (
         this.selectID == "National Identification Number Slip (NINS)"
       ) {
@@ -603,9 +646,18 @@ export default {
         this.issueDate = true;
         this.identityNumber = true;
         this.cvvBlurText = false;
-        this.showNinPin = false;
         this.showtrackingNumber = false;
-        this.showCert = false;
+      }
+    },
+
+    selectCertificate() {
+      if (
+        this.selectCert == "Certificate of Birth" ||
+        this.selectCert == "Affidavit"
+      ) {
+        this.showAdditionalFile = true;
+      } else {
+        this.showAdditionalFile = false;
       }
     },
 
