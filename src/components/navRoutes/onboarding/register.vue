@@ -116,17 +116,17 @@
               @backToRegister="nextOTP = true"
             />
 
-            <h6 class="h6">
+            <div class="h4">
               If you did not receive the code
               <span
                 :class="
                   send === 'Sent' ? 'success--text white' : 'active_link--text'
                 "
-                style="cursor: pointer"
+                style="cursor: pointer; font-size: 15px"
                 @click="sendCode"
                 >{{ send }}</span
               >
-            </h6>
+            </div>
           </div>
 
           <div class="d-flex">
