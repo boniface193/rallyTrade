@@ -199,7 +199,7 @@
                         outlined
                         dense
                         v-model="idNumber"
-                        type="number"
+                        type="tel"
                         label="ID Number"
                         required
                         :rules="nameRules"
@@ -212,7 +212,7 @@
                         outlined
                         dense
                         v-model="ninPin"
-                        type="number"
+                        type="tel"
                         label="NIN Pin"
                         required
                         :rules="nameRules"
@@ -231,7 +231,7 @@
                         outlined
                         dense
                         v-model="trackingNum"
-                        type="number"
+                        type="tel"
                         label="Tracking Number"
                         required
                         :rules="nameRules"
@@ -271,7 +271,7 @@
                         item-text="item"
                         :rules="nameRules"
                         @change="selectCertificate"
-                        label="Select"
+                        label="Date of Birth document"
                       ></v-select>
                     </v-col>
 
@@ -376,7 +376,7 @@
                   dense
                   label="10 Digit NUBAN Account Number"
                   required
-                  type="number"
+                  type="tel"
                   :rules="maxRule"
                 ></v-text-field>
               </v-flex>
@@ -584,16 +584,22 @@ export default {
         this.showAdditionalFile = false;
         this.showNinPin = false;
         this.showCert = false;
+        this.cvvBlurText = false;
       } else if (this.selectID == "National Identity Card (old version)") {
         this.showUploadBack = true;
+        this.issueDate = true;
         this.expDate = false;
-        this.issueDate = false;
         this.identityNumber = false;
         this.showAdditionalFile = false;
         this.showNinPin = false;
         this.showCert = false;
+        this.cvvBlurText = false;
       } else if (this.selectID == "National Identity Card (new version)") {
+        this.showUploadBack = true;
+        this.issueDate = true;
+        this.expDate = true;
         this.cvvBlurText = true;
+        this.identityNumber = false;
         this.showAdditionalFile = false;
         this.showNinPin = false;
         this.showCert = false;
@@ -605,18 +611,25 @@ export default {
         this.showAdditionalFile = false;
         this.showNinPin = false;
         this.showCert = false;
+        this.cvvBlurText = false;
       } else if (this.selectID == "Voter's Card") {
+        this.expDate = true;
+        this.issueDate = true
+        this.showUploadBack = true;
+        this.showAdditionalFile = false;
+        this.showNinPin = false;
+        this.showCert = false;
+        this.cvvBlurText = false;
+        this.identityNumber = false;
+      } else if (this.selectID == "Digital NIN") {
+        this.issueDate = false;
         this.expDate = false;
         this.showUploadBack = true;
         this.showAdditionalFile = false;
         this.showNinPin = false;
         this.showCert = false;
-      } else if (this.selectID == "Digital NIN") {
-        this.issueDate = false;
-        this.expDate = false;
-        this.showAdditionalFile = false;
-        this.showNinPin = false;
-        this.showCert = false;
+        this.cvvBlurText = false;
+        this.identityNumber = false;
       } else if (this.selectID == "Digital NIN (printed)") {
         this.showUploadBack = false;
         this.issueDate = false;
@@ -624,6 +637,8 @@ export default {
         this.showNinPin = false;
         this.showAdditionalFile = false;
         this.showCert = false;
+        this.cvvBlurText = false;
+        this.identityNumber = false;
       } else if (this.selectID == "Enrollment Transaction Slip") {
         this.showUploadBack = false;
         this.expDate = false;
@@ -631,6 +646,8 @@ export default {
         this.showtrackingNumber = true;
         this.showCert = true;
         this.showNinPin = false;
+        this.cvvBlurText = false;
+        this.identityNumber = false;
       } else if (
         this.selectID == "National Identification Number Slip (NINS)"
       ) {
@@ -640,6 +657,8 @@ export default {
         this.showNinPin = true;
         this.issueDate = false;
         this.showCert = true;
+        this.cvvBlurText = false;
+        this.identityNumber = false;
       } else {
         this.showUploadBack = true;
         this.expDate = true;
