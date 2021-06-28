@@ -22,6 +22,8 @@ import Trading from "@/views/trading.vue"
 import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
 import Accounts from "@/components/navRoutes/trading/accounts.vue"
 import Deposit from "@/components/navRoutes/trading/deposit.vue"
+import Kyc from "@/components/navRoutes/profiles/kyc.vue"
+// import Settings from "@/components/navRoutes/profiles/settings.vue"
 
 // Deposit Detail Page
 import depositPage from "@/components/detailPages/deposits/depositPage.vue"
@@ -46,15 +48,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "index",
-    component: Index
-  },
-  {
-    path: "/login",
     component: Onboarding,
     children: [
       {
-        path: "",
+        path: "/",
+        name: "index",
+        component: Index
+      },
+      {
+        path: "login",
         name: "login",
         component: Login
       },
@@ -108,40 +110,39 @@ const routes = [
             component: depositPage,
             children: [
               {
-                path: "",
+                path: "/",
                 name: "deposit",
                 component: Deposit,
               },
               {
-                path: "",
+                path: "select_currency",
                 name: "selectCurrency",
                 component: selectCurrency,
               },
               {
-                path: "",
+                path: "deposit_details",
                 name: "depositDetails",
                 component: depositDetailPage,
                 props: true
               },
               {
-                path: "",
+                path: "bank_details",
                 name: "bankDetails",
                 component: bankDetails,
                 props: true
               },
               {
                 path: "",
-                name: "n",
+                name: "history",
                 component: depositHistory,
               },
             ]
           },
           {
-            path: "withdrawal",
+            path: "/withdrawal",
             name: "withdrawal",
             component: Withdrawal
           },
-
         ]
       },
       {
@@ -154,10 +155,14 @@ const routes = [
         name: "partnership",
         component: Partnership
       },
+      { path: "/kyc", name: "kyc", component: Kyc },
       {
         path: "/profile",
         name: "profile",
-        component: Profile
+        component: Profile,
+        // children: [
+        //   { path: "", name: "settings", component: Settings }
+        // ]
       },
       {
         path: "/promotion",

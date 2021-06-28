@@ -1,31 +1,40 @@
 <template>
-  <div class="row ma-3">
-    <v-text-field
-      class="mx-3 col-sm-1"
-      outlined
-      loading=""
-      type="number"
-      v-for="(key, i) in activationKeyFields"
-      :key="i"
-      onkeydown="javascript: return event.keyCode === 8 ||event.keyCode === 46 ? true : !isNaN(Number(event.key))"
-      :data-length="key.length"
-      :data-index="i"
-      :ref="`input-${i}`"
-      v-model="key.value"
-      maxlength="1"
-      @keyup="handleActivationInput($event)"
-    ></v-text-field>
+  <div>
+    <p style="font-size: 12px; font-weight: normal; font-family: roboto">
+      {{ messages }}<span class="active_link--text"> {{ phoneNumber }}</span>
+      <v-chip link class="ma-2 caption" small @click="goBack"> change </v-chip>
+    </p>
+    <div class="d-flex">
+      <v-text-field
+        class="mr-2 mb-0 pb-0"
+        autocomplete="off"
+        outlined
+        type="tel"
+        v-for="(key, i) in activationKeyFields"
+        :key="i"
+        onkeydown="javascript: return event.keyCode === 8 ||event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+        :data-length="key.length"
+        :data-index="i"
+        :ref="`input-${i}`"
+        v-model="otpp[i]"
+        maxlength="1"
+        @keyup="handleActivationInput($event)"
+        @input="checkFilledAllInputs"
+      ></v-text-field>
+    </div>
   </div>
 </template>
 
 <script>
 // import MobileNav from "@/components/layouts/mobilenav.vue";
 export default {
+  props: ["phoneNumber", "otpp"],
   components: {
     // MobileNav,
   },
   data() {
     return {
+      messages: "Kindly enter the code sent to",
       // Our input fields.
       // length is the max char allowed
       activationKeyFields: [
@@ -34,10 +43,31 @@ export default {
         { length: 1, value: "" },
         { length: 1, value: "" },
       ],
+      // otp: [],
     };
   },
 
+  created() {
+    // let checkinng = {}
+    // this.activationKeyFields.forEach((i) => {
+    //   i.varable = i.value;
+    // });
+  },
+
   methods: {
+    goBack() {
+      this.$emit("backToRegister");
+    },
+    // Helper to return OTP from input
+    checkFilledAllInputs() {
+      this.$emit("onComplete");
+      // console.log()
+      // if (this.otp.join("").length === this.activationKeyFields) {
+      //   return this.$emit("on-complete", this.otp.join(""));
+
+      // }
+      // return "Wait until the user enters the required number of characters";
+    },
     handleActivationInput(e) {
       // Grab input's value
       let value = e.target.value;
@@ -87,6 +117,14 @@ export default {
   },
 };
 </script>
-
-<style>
+<style lang="scss">
+div.d-flex.v-text-field--filled > .v-input__control > .v-input__slot,
+.v-text-field--full-width > .v-input__control > .v-input__slot,
+.v-text-field--outlined > .v-input__control > .v-input__slot {
+  align-items: stretch;
+  min-height: 30px;
+  border: green;
+}
 </style>
+
+

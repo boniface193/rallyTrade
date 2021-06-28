@@ -63,7 +63,6 @@ export default {
     neverShow() {
       if (
         this.$route.name == "emailverified" ||
-        this.$route.name == "register" ||
         this.$route.name == "verifyemail" ||
         this.$route.name == "changepwd"
       ) {
