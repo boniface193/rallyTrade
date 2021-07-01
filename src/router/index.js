@@ -12,36 +12,37 @@ import Register from "@/components/navRoutes/onboarding/register.vue"
 import emailVerified from "@/components/navRoutes/onboarding/emailVerified.vue"
 import verifyEmail from "@/components/navRoutes/onboarding/verifyEmail.vue"
 import changePwd from "@/components/navRoutes/onboarding/changePwd.vue"
-
 /******** onboarding **********/
 
-// client page
+/******** client page ********/ 
 import Home from "@/views/home.vue"
-/**trading**/
 import Trading from "@/views/trading.vue"
-import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
-import Accounts from "@/components/navRoutes/trading/accounts.vue"
-import Deposit from "@/components/navRoutes/trading/deposit.vue"
-import Kyc from "@/components/navRoutes/profiles/kyc.vue"
-// import Settings from "@/components/navRoutes/profiles/settings.vue"
-
-// Deposit Detail Page
-import depositPage from "@/components/detailPages/deposits/depositPage.vue"
-import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
-import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
-import bankDetails from "@/components/detailPages/deposits/bankingDetails.vue"
-import depositHistory from "@/components/detailPages/deposits/depositHistory.vue"
-
-
-import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
-
 import Contest from "@/views/contest.vue"
 import Partnership from "@/views/partnership.vue"
 import Profile from "@/views/profile.vue"
 import Promotion from "@/views/promotion.vue"
 import Document from "@/views/document.vue"
 import Announcement from "@/views/announcement.vue"
-// import store from "@/store";
+/******** client page ********/
+
+/**navRoutes components**/
+import Dashboard from "@/components/navRoutes/trading/dashboard.vue"
+import Accounts from "@/components/navRoutes/trading/accounts.vue"
+import Deposit from "@/components/navRoutes/trading/deposit.vue"
+import Kyc from "@/components/navRoutes/profiles/kyc.vue"
+import Withdrawal from "@/components/navRoutes/trading/withdrawal.vue"
+import bioDetails from "@/components/navRoutes/profiles/bioDetails.vue"
+import bankingDetails from "@/components/navRoutes/profiles/bankingDetails.vue"
+import Security from "@/components/navRoutes/profiles/security.vue"
+import yourActivity from "@/components/navRoutes/profiles/yourActivity.vue"
+
+/*****DetailPage components*****/
+import depositPage from "@/components/detailPages/deposits/depositPage.vue"
+import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
+import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
+import bankDetails from "@/components/detailPages/deposits/bankingDetails.vue"
+import depositHistory from "@/components/detailPages/deposits/depositHistory.vue"
+
 
 Vue.use(VueRouter);
 
@@ -158,11 +159,13 @@ const routes = [
       { path: "/kyc", name: "kyc", component: Kyc },
       {
         path: "/profile",
-        name: "profile",
         component: Profile,
-        // children: [
-        //   { path: "", name: "settings", component: Settings }
-        // ]
+        children: [
+          { path: "", name: "profile", component: bioDetails },
+          { path: "bankingDetails", name: "bankingDetails", component: bankingDetails },
+          { path: "security", name: "security", component: Security },
+          { path: "yourActivity", name: "yourActivity", component: yourActivity },
+        ]
       },
       {
         path: "/promotion",

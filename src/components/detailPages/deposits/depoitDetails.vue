@@ -524,7 +524,6 @@ export default {
       } else {
         this.$router.push({ name: "deposit" });
         const addProgressCard = this.chipCard.find((item) => item.id);
-        console.log(addProgressCard)
         this.chipCard.splice(0, addProgressCard.id == addProgressCard.id);
         this.$store.commit("trading/setChipCard", {
           id: uuidv4(),

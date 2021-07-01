@@ -15,7 +15,6 @@ export default {
 @media (min-width: 426px) {
   .show-mobile {
     display: none;
-
   }
 }
 @media (max-width: 426px) {
@@ -27,7 +26,6 @@ export default {
 @media (min-width: 600px) {
   .show-mobile-ex {
     display: none;
-
   }
 }
 @media (max-width: 599px) {
