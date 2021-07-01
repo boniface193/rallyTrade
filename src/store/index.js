@@ -1,10 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import trading from "./modules/trade";
+import profile from "./modules/profile";
 
 // initial state
 const initialState = {
     trading: trading.state,
+    profile: profile.state,
 
 }
 
@@ -16,6 +18,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         trading: trading,
+        profile: profile,
     },
 
     mutations: {

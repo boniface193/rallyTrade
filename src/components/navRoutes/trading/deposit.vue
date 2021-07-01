@@ -72,7 +72,9 @@
         <div class="float-right">
           <DateFilter />
         </div>
-        <div class="text-left text-md-h5 mt-3 text-sm-body-2  processed-text">Processed</div>
+        <div class="text-left text-md-h5 mt-3 text-sm-body-2 processed-text">
+          Processed
+        </div>
         <v-divider style="width: 18%"> </v-divider>
       </div>
 
@@ -90,37 +92,32 @@
           </transition>
 
           <div class="list-group" id="infinite-list">
-            <div
-              class="list-group-item"
-              v-for="item in items"
-              
-              :key="item.id"
-            >
-            <Chip-Card
-            :depositDetails="{
-              name: item.routes,
-              params: { id: item.id },
-            }"
-            :colors="item.outlined ? '' : item.color"
-            :time="item.time"
-            :day="item.day"
-            :moneySign="item.moneySign"
-            :status="item.outlined ? '' : item.status"
-            :statu="item.statu"
-            :statusColor="item.statusColor"
-            :active="item.active"
-            :icon="item.icon"
-            :depositType="item.depositType"
-            :outlined="item.outlined"
-            :msg="item.msg"
-            :padding="item.outlined ? 'py-1' : ''"
-            :acctNum="item.acctNum"
-            :amount="item.amount"
-            :addPaddingToChip="item.outlined ? 'white' : ''"
-            @getDeposit="submitDeposit()"
-            @deleteDeposit="cancelDeposit()"
-          >
-          </Chip-Card>
+            <div class="list-group-item" v-for="item in items" :key="item.id">
+              <Chip-Card
+                :depositDetails="{
+                  name: item.routes,
+                  params: { id: item.id },
+                }"
+                :colors="item.outlined ? '' : item.color"
+                :time="item.time"
+                :day="item.day"
+                :moneySign="item.moneySign"
+                :status="item.outlined ? '' : item.status"
+                :statu="item.statu"
+                :statusColor="item.statusColor"
+                :active="item.active"
+                :icon="item.icon"
+                :depositType="item.depositType"
+                :outlined="item.outlined"
+                :msg="item.msg"
+                :padding="item.outlined ? 'py-1' : ''"
+                :acctNum="item.acctNum"
+                :amount="item.amount"
+                :addPaddingToChip="item.outlined ? 'white' : ''"
+                @getDeposit="submitDeposit()"
+                @deleteDeposit="cancelDeposit()"
+              >
+              </Chip-Card>
             </div>
           </div>
         </div>
@@ -138,7 +135,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    
+
     <!-- error msg -->
   </div>
 </template>
@@ -217,43 +214,44 @@ export default {
       this.loading = true;
       setTimeout(() => {
         for (var i = 0; i < 20; i++) {
-          this.items.push({
-            id: uuidv4(),
-            time: moment(new Date()).format("LT"),
-            day: new Date().toLocaleDateString(),
-            msg: "message goes here",
-            moneySign: "mdi-currency-ngn",
-            icon: "wire.svg",
-            depositType: "WIRE",
-            color: "success_bg",
-            status: "mdi-check-circle-outline",
-            statu: "Status",
-            statusText: "APPROVED",
-            statusColor: "success",
-            bonus: true,
-            active: true,
-            routes: "",
-            amount: "45,7845",
-            acctNum: 8455633,
-        },
-        {
-            id: uuidv4(),
-            time: moment(new Date()).format("LT"),
-            day: new Date().toLocaleDateString(),
-            msg: "message goes here",
-            moneySign: "mdi-currency-ngn",
-            icon: "wire.svg",
-            depositType: "WIRE",
-            color: "error_bg",
-            status: "mdi-close-circle-outline",
-            statu: "Status",
-            statusText: "DELETED",
-            statusColor: "error",
-            routes: "",
-            amount: "474,578",
-            acctNum: 415556,
-        }
-        );
+          this.items.push(
+            {
+              id: uuidv4(),
+              time: moment(new Date()).format("LT"),
+              day: new Date().toLocaleDateString(),
+              msg: "message goes here",
+              moneySign: "mdi-currency-ngn",
+              icon: "wire.svg",
+              depositType: "WIRE",
+              color: "success_bg",
+              status: "mdi-check-circle-outline",
+              statu: "Status",
+              statusText: "APPROVED",
+              statusColor: "success",
+              bonus: true,
+              active: true,
+              routes: "",
+              amount: "45,7845",
+              acctNum: 8455633,
+            },
+            {
+              id: uuidv4(),
+              time: moment(new Date()).format("LT"),
+              day: new Date().toLocaleDateString(),
+              msg: "message goes here",
+              moneySign: "mdi-currency-ngn",
+              icon: "wire.svg",
+              depositType: "WIRE",
+              color: "error_bg",
+              status: "mdi-close-circle-outline",
+              statu: "Status",
+              statusText: "DELETED",
+              statusColor: "error",
+              routes: "",
+              amount: "474,578",
+              acctNum: 415556,
+            }
+          );
         }
         this.loading = false;
       }, 1000);
@@ -323,8 +321,8 @@ export default {
 .bottom {
   bottom: 40vh;
 }
-.margin-top {
-  padding-top: 30%;
+.margin-top-mobile {
+  margin-top: 0%;
 }
 .btn-width {
   width: 100%;
@@ -333,7 +331,7 @@ export default {
 }
 @media (max-width: 426px) {
   .margin-top-mobile {
-    margin-top: 30%;
+    margin-top: 32%;
   }
 }
 @media (max-width: 280px) {
@@ -401,11 +399,11 @@ export default {
   background: #555;
 }
 
-@media (min-width: 1366px){
-.list-group-item {
-  margin-bottom: 30px;
-  width: 70%;
-}
+@media (min-width: 1366px) {
+  .list-group-item {
+    margin-bottom: 30px;
+    width: 70%;
+  }
 }
 </style>
 

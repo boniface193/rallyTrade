@@ -1,16 +1,19 @@
 <template>
-  <button
+  <v-btn
+    type="type"
+    :loading="btnLoading"
+    :disabled="disabled"
     :class="btnColor"
-    class="my-5 white--text text-uppercase py-2 rounded button"
-    style="width: 100%"
+    class="my-5 text-uppercase white--text py-2 rounded elevation-0"
+    block
   >
     {{ btnTitle }}
-  </button>
+  </v-btn>
 </template>
 
 <script>
 export default {
-  props: ["btnColor", "btnTitle"],
+  props: ["btnColor", "btnTitle", "disabled", "btnLoading", "type"],
 };
 </script>
 
