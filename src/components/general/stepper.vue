@@ -15,6 +15,7 @@
             :complete="e1 > steps.completed"
             :step="steps.steps"
             color="active_link"
+            editable
           >
             {{ steps.title }}
           </v-stepper-step>
@@ -380,33 +381,6 @@
                 ></v-text-field>
               </v-flex>
 
-              <v-flex class="mx-1" xs="6"
-                ><v-menu
-                  v-model="sidModal"
-                  :close-on-content-click="false"
-                  max-width="290"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <input
-                      class="body-1 rounded pa-2 text-truncate"
-                      style="
-                        border: solid 1px #999a9e;
-                        width: 100%;
-                        max-width: 100%;
-                      "
-                      v-model="statementDate"
-                      placeholder="Statement Issue Date"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    />
-                  </template>
-                  <v-date-picker
-                    v-model="statementDate"
-                    @change="sidModal = false"
-                  ></v-date-picker> </v-menu
-              ></v-flex>
-
               <v-flex class="py-0 col-sm-6">
                 <hr />
                 <v-radio-group v-model="currency" row>
@@ -426,6 +400,9 @@
                   :rules="nameRules"
                 ></v-file-input>
               </v-flex>
+              <div class="caption success--text text-center">
+                Your statement should not be older than 3 months!
+              </div>
             </v-layout>
 
             <div :class="add_float_right">
@@ -450,7 +427,6 @@
                   clientName < 1 ||
                   selectBank < 1 ||
                   acctNumber < 1 ||
-                  statementDate < 1 ||
                   currency == null ||
                   uploadBankStatement < 1
                 "
@@ -507,13 +483,11 @@ export default {
       selectCert: "",
       showCert: false,
       showAdditionalFile: false,
-      uploadFile: "",
+      uploadFile: [],
       // certificate
       Cert: [{ item: "Certificate of Birth" }, { item: "Affidavit" }],
       // step 3
       clientName: "",
-      sidModal: false,
-      statementDate: "",
       selectBank: "",
       acctNumber: "",
       currency: null,
@@ -558,6 +532,7 @@ export default {
   },
 
   created() {
+    console.log("valid", this.valid)
     this.items = this.$store.getters["trading/getSelectBank"];
   },
 
@@ -613,7 +588,7 @@ export default {
         this.cvvBlurText = false;
       } else if (this.selectID == "Voter's Card") {
         this.expDate = true;
-        this.issueDate = true
+        this.issueDate = true;
         this.showUploadBack = true;
         this.showAdditionalFile = false;
         this.showNinPin = false;

@@ -32,24 +32,24 @@ export default {
     return {
       navbar: [
         {
-          icon: "mdi-folder-cog-outline",
+          icon: "",
           routes: "profile",
-          text: "Your Profile",
+          text: "Bio Details",
         },
         {
-          icon: "mdi-account-key-outline",
-          routes: "forgotPwd",
-          text: "password",
+          icon: "",
+          routes: "bankingDetails",
+          text: "Banking Details",
         },
         {
-          icon: "mdi-email-sync-outline",
-          routes: "deposit",
-          text: "Email Notification",
+          icon: "",
+          routes: "security",
+          text: "Security",
         },
         {
-          icon: "mdi-cog-outline",
-          routes: "withdrawal",
-          text: "Settings",
+          icon: "",
+          routes: "yourActivity",
+          text: "Your Activities",
         },
       ],
     };
