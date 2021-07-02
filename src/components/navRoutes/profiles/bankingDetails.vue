@@ -1,19 +1,184 @@
 <template>
   <div>
-      <ChipCard moneySign="naira"></ChipCard>
+    <div class="row">
+      <div class="col-sm-5 mt-sm-8" v-for="item in chipCard" :key="item.id">
+        <Currency
+          :moneySign="item.moneySign"
+          currencyColor="#9EE8FF"
+          style="z-index: 1"
+        />
+        <GenCard
+          class="elevation-0"
+          style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important"
+        >
+          <v-container class="mx-4" style="font-family: 'Inter', sans-serif">
+            <div class="d-flex py-3">
+              <img src="@/assets/images/bank-logo/gtbank.jpg" width="10%" />
+              <div class="text-sm-h6 text-subtitle-2 secondary--text mx-3">
+                GTBank
+              </div>
+            </div>
+            <div class="text-md-h6 text-subtitle-2">
+              Mihai Mladin Marius Razvan
+            </div>
+            <div class="text-md-h6 text-subtitle-2 my-3">12345678912</div>
+            <div
+              class="
+                text-sm-h6 text-subtitle-2
+                success--text
+                d-flex
+                mr-3
+                justify-end
+              "
+            >
+              APPROVED
+            </div>
+          </v-container>
+        </GenCard>
+      </div>
+    </div>
+    <v-fab-transition>
+      <v-btn
+        @click="addBankDetails"
+        color="pink"
+        style="margin-bottom: 150px"
+        dark
+        right
+        bottom
+        absolute
+        fab
+        fixed
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-fab-transition>
+    <Modal width="450" :dialog="dialog">
+      <GenCard>
+        <div class="d-flex justify-end pa-3">
+          <v-icon color="error" size="20" @click="dialog = false"
+            >mdi-close</v-icon
+          >
+        </div>
+        <v-divider></v-divider>
+        <div class="container">
+          <v-layout row wrap class="mt-3 mx-2">
+            <v-flex class="mx-1" xs="6">
+              <v-text-field
+                outlined
+                dense
+                v-model="clientName"
+                label="Cient Name"
+                required
+                type="text"
+                :rules="nameRules"
+              ></v-text-field
+            ></v-flex>
+            <v-flex class="mx-1" xs="6"
+              ><v-select
+                v-model="selectBank"
+                :items="items"
+                item-text="text"
+                label="Select your bank"
+                dense
+                outlined
+                class="text-caption pa-0"
+                :rules="nameRules"
+              >
+                <template v-slot:selection="{ item }">
+                  <img :src="item.icon" width="20px" />
+                  <span class="ml-1">{{ item.text }}</span>
+                </template>
+
+                <template v-slot:item="{ item }">
+                  <img :src="item.icon" width="20px" class="mr-2" />
+                  <span class="text-caption">{{ item.text }}</span>
+                </template>
+              </v-select></v-flex
+            >
+
+            <v-flex class="mx-1" xs="6">
+              <v-text-field
+                v-model="acctNumber"
+                :counter="10"
+                outlined
+                dense
+                label="10 Digit NUBAN Account Number"
+                required
+                type="tel"
+                :rules="maxRule"
+              ></v-text-field>
+            </v-flex>
+
+            <v-flex class="py-0 col-sm-6">
+              <v-radio-group v-model="currency" row>
+                <v-radio label="Naira" id="one" value="naira"></v-radio>
+                <v-radio id="two" label="Dollars" value="dollars"></v-radio>
+              </v-radio-group>
+            </v-flex>
+          </v-layout>
+
+          <div>
+            <v-btn
+              type="submit"
+              color="success"
+              depressed
+              class="mt-8"
+              block
+              :disabled="
+                clientName < 1 ||
+                selectBank < 1 ||
+                acctNumber < 1 ||
+                currency == null
+              "
+            >
+              Add
+            </v-btn>
+          </div>
+        </div>
+      </GenCard>
+    </Modal>
   </div>
 </template>
 
 <script>
-import ChipCard from "@/components/general/chipCard.vue"
+import Currency from "@/components/general/currencyBadge.vue";
+import GenCard from "@/components/general/genCard.vue";
+import Modal from "@/components/general/modal.vue";
+import { mapGetters } from "vuex";
 export default {
-    components: {
-        ChipCard
-    }
-
-}
+  components: {
+    Currency,
+    GenCard,
+    Modal,
+  },
+  data() {
+    return {
+      clientName: "",
+      selectBank: "",
+      acctNumber: "",
+      currency: null,
+      nameRules: [(v) => !!v || "this is required"],
+      maxRule: [
+        (v) => (v && v.length == 10) || "NUBAN Account Number must be 10 digit",
+      ],
+      // select bank name
+      items: [],
+      dialog: false,
+    };
+  },
+  computed: {
+    ...mapGetters({ chipCard: "profile/getBankingDetails" }),
+  },
+  created() {
+    this.items = this.$store.getters["trading/getSelectBank"];
+  },
+  methods: {
+    addBankDetails() {
+      this.dialog = true;
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

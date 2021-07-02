@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <v-container class="mt-16">
-      <Settings />
-    </v-container> -->
     <div>
       <div class="hide-desktop mx-8">
         <NavbarTab :navbar="navbar"></NavbarTab>
@@ -18,12 +15,10 @@
 </template>
 
 <script>
-// import Settings from "@/components/navRoutes/profiles/settings.vue";
 import NavbarTab from "@/components/layouts/navbar.vue";
 import MobileNavbar from "@/components/layouts/mNavbar.vue";
 export default {
   components: {
-    // Settings,
     MobileNavbar,
     NavbarTab,
   },
@@ -32,22 +27,22 @@ export default {
     return {
       navbar: [
         {
-          icon: "",
+          icon: "mdi-account",
           routes: "profile",
           text: "Bio Details",
         },
         {
-          icon: "",
+          icon: "mdi-bank",
           routes: "bankingDetails",
           text: "Banking Details",
         },
         {
-          icon: "",
+          icon: "mdi-lock",
           routes: "security",
           text: "Security",
         },
         {
-          icon: "",
+          icon: "mdi-progress-wrench",
           routes: "yourActivity",
           text: "Your Activities",
         },
