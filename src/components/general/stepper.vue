@@ -532,7 +532,6 @@ export default {
   },
 
   created() {
-    console.log("valid", this.valid)
     this.items = this.$store.getters["trading/getSelectBank"];
   },
 

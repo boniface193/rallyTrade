@@ -51,7 +51,9 @@
               </div>
             </div>
             <div class="d-flex justify-space-between">
-              <div class="my-md-4 text-left text-md-body-1 text-sm-caption ">{{ msg }}</div>
+              <div class="my-md-4 text-left text-md-body-1 text-sm-caption">
+                {{ msg }}
+              </div>
             </div>
           </v-col>
           <div class="d-flex border-all" v-if="outlined">
@@ -168,9 +170,9 @@ html {
   top: 90%;
 }
 
-  .sm-text {
-    font-size: 11px !important;
-  }
+.sm-text {
+  font-size: 11px !important;
+}
 
 .v-btn--outlined {
   border: thin solid;
@@ -178,7 +180,6 @@ html {
 }
 
 @media (max-width: 280px) {
-
   .border-all {
     left: 5%;
     bottom: 10%;
@@ -197,12 +198,12 @@ html {
   .border-all {
     margin-left: 30%;
   }
-    .sm-text {
+  .sm-text {
     font-size: 7px !important;
   }
 }
 
-@media (min-width: 600px) and (max-width: 900px){
+@media (min-width: 600px) and (max-width: 900px) {
   .border-all {
     margin-left: 33%;
   }
@@ -211,13 +212,13 @@ html {
     min-width: 50px;
     padding: 0 5.4444444444px;
     font-size: 8px;
-}
-.sm-text {
+  }
+  .sm-text {
     font-size: 7px !important;
     font-weight: bolder;
   }
-   .msg-goes-here{
-     font-size: 10px !important;
-   }
+  .msg-goes-here {
+    font-size: 10px !important;
+  }
 }
 </style>
