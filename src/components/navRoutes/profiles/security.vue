@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-16">
     <v-container>
       <div class="row">
         <div
@@ -83,7 +83,7 @@
                 </div>
                 <div class="col-sm-6">
                   <v-switch
-                    v-model="switch1"
+                    v-model="switch2"
                     label="Withdrawal Activate"
                   ></v-switch>
                 </div>
@@ -103,6 +103,7 @@ export default {
   data() {
     return {
       switch1: true,
+      switch2: true,
       repeatPwd: "",
       currentPwd: "",
       newPwd: "",
