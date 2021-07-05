@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="text-center my-16" v-if="chipCard.length < 1">
-      <img src="@/assets/images/emptyState/bank_empty.svg" width="50%" alt="">
-      <p class="text-sm-h5 mt-5 ">Add account Details</p>
+      <img src="@/assets/images/emptyState/bank_empty.svg" width="50%" alt="" />
+      <p class="text-sm-h5 mt-5">Add account Details</p>
     </div>
     <div class="row" v-else>
-      <div class="col-sm-5 mx-auto mt-sm-8 my-5" v-for="item in chipCard" :key="item.id">
+      <div
+        class="col-sm-5 mx-auto mt-sm-8 my-5"
+        v-for="item in chipCard"
+        :key="item.id"
+      >
         <Currency
           :moneySign="
             item.currency == 'naira' ? 'mdi-currency-ngn' : 'mdi-currency-usd'
@@ -13,10 +17,7 @@
           :currencyColor="item.currency == 'naira' ? '#9EE8FF' : '#A0FF9E'"
           style="z-index: 1"
         />
-        <GenCard
-          class="elevation-0"
-          style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important"
-        >
+        <GenCard class="elevation-0" style="border: solid 1px #EEEEEE">
           <v-container class="mx-4" style="font-family: 'Inter', sans-serif">
             <div class="d-flex py-3">
               <img :src="item.bankLogo" width="10%" />
@@ -82,8 +83,7 @@
                   :rules="nameRules"
                 ></v-text-field
               ></v-flex>
-              <v-flex class="mx-1" xs="6"
-                >
+              <v-flex class="mx-1" xs="6">
                 <v-select
                   v-model="selectBank"
                   :items="items"
@@ -94,7 +94,6 @@
                   class="text-caption pa-0"
                   :rules="nameRules"
                 >
-                
                   <template v-slot:selection="{ item }">
                     <img :src="item.icon" width="20px" />
                     <span class="ml-1">{{ item.text }}</span>
@@ -105,8 +104,7 @@
                     <span class="text-caption">{{ item.text }}</span>
                   </template>
                 </v-select>
-                </v-flex
-              >
+              </v-flex>
 
               <v-flex class="mx-1" xs="6">
                 <v-text-field
@@ -193,7 +191,9 @@ export default {
       this.dialog = true;
     },
     submitBankingDetails() {
-      this.collectBankImg = this.items.find(item => item.text == this.selectBank);
+      this.collectBankImg = this.items.find(
+        (item) => item.text == this.selectBank
+      );
       this.$store.commit("profile/setBankingDetails", {
         id: uuidv4(),
         msg: "message goes here",

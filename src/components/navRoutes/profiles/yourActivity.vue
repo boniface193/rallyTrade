@@ -8,7 +8,7 @@
         <div class="col-sm-4" v-for="item in bioDetails" :key="item.id">
           <GenCard
             class="elevation-0 mt-5"
-            style=" border: solid 1px grey"
+            style=" border: solid 1px #EEEEEE"
           >
             <div class="text-center py-3">
               <div class="text-caption text-sm-body-2 secondary--text">
