@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="text-center my-16" v-if="chipCard.length < 1">
-      <img src="@/assets/images/emptyState/bank_empty.svg" width="20%" alt="">
-      <p class="text-sm-h5 text-caption mt-5 ">Add account Details</p>
+      <img src="@/assets/images/emptyState/bank_empty.svg" width="50%" alt="">
+      <p class="text-sm-h5 mt-5 ">Add account Details</p>
     </div>
     <div class="row" v-else>
       <div class="col-sm-5 mx-auto mt-sm-8 my-5" v-for="item in chipCard" :key="item.id">
@@ -83,7 +83,8 @@
                 ></v-text-field
               ></v-flex>
               <v-flex class="mx-1" xs="6"
-                ><v-select
+                >
+                <v-select
                   v-model="selectBank"
                   :items="items"
                   item-text="text"
@@ -93,6 +94,7 @@
                   class="text-caption pa-0"
                   :rules="nameRules"
                 >
+                
                   <template v-slot:selection="{ item }">
                     <img :src="item.icon" width="20px" />
                     <span class="ml-1">{{ item.text }}</span>
@@ -102,7 +104,8 @@
                     <img :src="item.icon" width="20px" class="mr-2" />
                     <span class="text-caption">{{ item.text }}</span>
                   </template>
-                </v-select></v-flex
+                </v-select>
+                </v-flex
               >
 
               <v-flex class="mx-1" xs="6">
@@ -164,9 +167,10 @@ export default {
   },
   data() {
     return {
-      collect: "",
+      collectBankImg: {},
       clientName: "",
       selectBank: "",
+      selectIcon: "",
       acctNumber: "",
       currency: null,
       nameRules: [(v) => !!v || "this is required"],
@@ -189,19 +193,16 @@ export default {
       this.dialog = true;
     },
     submitBankingDetails() {
+      this.collectBankImg = this.items.find(item => item.text == this.selectBank);
       this.$store.commit("profile/setBankingDetails", {
         id: uuidv4(),
         msg: "message goes here",
         currency: this.currency,
         acctName: this.clientName,
         acctNum: this.acctNumber,
-        bankLogo: require("@/assets/images/bank-logo/gtbank.jpg"),
-        bankName: this.selectBank,
+        bankLogo: this.collectBankImg.icon,
+        bankName: this.collectBankImg.text,
       });
-      // this.currency = null;
-      // this.clientName = "";
-      // this.acctNumber = "";
-      // this.selectBank = "";
       this.dialog = false;
     },
   },
