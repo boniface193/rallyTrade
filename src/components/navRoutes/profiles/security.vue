@@ -94,7 +94,7 @@ export default {
   components: { GenCard },
   data() {
     return {
-      swaitch1: true,
+      switch1: true,
       bioDetails: [
         { title: "First Name", text: "Ikechukwu" },
         // { title: "Last Name", text: "Dennis" },

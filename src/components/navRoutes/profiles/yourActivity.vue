@@ -4,11 +4,11 @@
       <div class="d-flex justify-end">
         <DateFilter />
       </div>
-      <div class="row my-8 justify-space-around">
+      <div class="row my-8 pb-8 ">
         <div class="col-sm-4" v-for="item in bioDetails" :key="item.id">
           <GenCard
             class="elevation-0 mt-5"
-            style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important"
+            style=" border: solid 1px grey"
           >
             <div class="text-center py-3">
               <div class="text-caption text-sm-body-2 secondary--text">
