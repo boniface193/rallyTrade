@@ -28,6 +28,7 @@
                       label="Current Password"
                       required
                       type="password"
+                      :rules="[pwdRules.general]"
                     ></v-text-field>
                   </div>
                   <div class="col-sm-6 pb-0">
@@ -37,7 +38,10 @@
                       dense
                       label="New Password"
                       required
-                      type="password"
+                      :type="show1 ? 'text' : 'password'"
+                      :rules="[pwdRules.general]"
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      @click:append="show1 = !show1"
                     ></v-text-field>
                   </div>
                   <div class="col-sm-6 pb-0">
@@ -47,11 +51,26 @@
                       dense
                       label="Repeat Password"
                       required
-                      type="password"
+                      :type="show ? 'text' : 'password'"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :rules="[pwdRules.general, (newPwd === repeatPwd) || 'Password must match']"
+                      @click:append="show = !show"
                     ></v-text-field>
                   </div>
                   <div class="col-sm-6 pb-0">
-                    <v-btn block depressed color="success" :disabled="newPwd < 1 || currentPwd < 1 || repeatPwd < 1" type="submit">Change</v-btn>
+                    <v-btn
+                      block
+                      depressed
+                      color="success"
+                      :disabled="
+                        newPwd < 1 ||
+                        currentPwd < 1 ||
+                        repeatPwd < 1 ||
+                        newPwd !== repeatPwd
+                      "
+                      type="submit"
+                      >Change</v-btn
+                    >
                   </div>
                 </div>
               </v-form>
@@ -104,9 +123,14 @@ export default {
     return {
       switch1: true,
       switch2: true,
+      show: false,
+      show1: false,
       repeatPwd: "",
       currentPwd: "",
       newPwd: "",
+      pwdRules: {
+        general: (v) => !!v || "this is required"
+      },
       bioDetails: [{ title: "First Name", text: "Ikechukwu" }],
     };
   },

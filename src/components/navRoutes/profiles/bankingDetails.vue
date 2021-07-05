@@ -4,20 +4,39 @@
       <img src="@/assets/images/emptyState/bank_empty.svg" width="50%" alt="" />
       <p class="text-sm-h5 mt-5">Add account Details</p>
     </div>
-    <div class="row" v-else>
+    <div class="row mx-auto" v-else>
       <div
         class="col-sm-5 mx-auto mt-sm-8 my-5"
         v-for="item in chipCard"
         :key="item.id"
       >
+        <!-- <v-badge
+          color="success "
+          overlap
+          avatar
+          class="float-right pa-5"
+          style="z-index: 1"
+        >
+          <template v-slot:badge>
+            <v-icon class="text-center my-1">{{
+              item.currency == "naira" ? "mdi-currency-ngn" : "mdi-currency-usd"
+            }}</v-icon>
+          </template>
+          <v-icon></v-icon>
+        </v-badge> -->
         <Currency
+        size="20"
           :moneySign="
             item.currency == 'naira' ? 'mdi-currency-ngn' : 'mdi-currency-usd'
           "
-          :currencyColor="item.currency == 'naira' ? '#9EE8FF' : '#A0FF9E'"
+          :currencyColor="
+            item.currency == 'naira'
+              ? 'naira pb-6 rounded-pill'
+              : 'dollars pb-6 rounded-pill'
+          "
           style="z-index: 1"
         />
-        <GenCard class="elevation-0" style="border: solid 1px #EEEEEE">
+        <GenCard class="elevation-0" style="border: solid 1px #eeeeee">
           <v-container class="mx-4" style="font-family: 'Inter', sans-serif">
             <div class="d-flex py-3">
               <img :src="item.bankLogo" width="10%" />
@@ -105,7 +124,6 @@
                   </template>
                 </v-select>
               </v-flex>
-
               <v-flex class="mx-1" xs="6">
                 <v-text-field
                   v-model="acctNumber"
@@ -114,7 +132,7 @@
                   dense
                   label="10 Digit NUBAN Account Number"
                   required
-                  type="tel"
+                  type="number"
                   :rules="maxRule"
                 ></v-text-field>
               </v-flex>
@@ -152,16 +170,16 @@
 </template>
 
 <script>
-import Currency from "@/components/general/currencyBadge.vue";
 import GenCard from "@/components/general/genCard.vue";
 import Modal from "@/components/general/modal.vue";
+import Currency from "@/components/general/currencyBadge.vue";
 import { mapGetters } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 export default {
   components: {
-    Currency,
     GenCard,
     Modal,
+    Currency,
   },
   data() {
     return {
@@ -209,5 +227,22 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.v-badge__badge {
+  border-radius: 13px;
+  color: #fff;
+  font-size: 12px;
+  height: 25px !important;
+  letter-spacing: 0;
+  min-width: 25px;
+  padding: 4px 6px;
+  pointer-events: auto;
+  position: absolute;
+  text-align: center;
+  text-indent: 0;
+  top: auto;
+  bottom: auto;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  white-space: nowrap;
+}
 </style>

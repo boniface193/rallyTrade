@@ -18,6 +18,8 @@ export default new Vuetify({
                 icon_color: '#9b9ca7', //bluish grey
                 bg_color: '#252954', //deep blue
                 active_link: '#fb8c00', //yellow
+                dollars: "#A0FF9E",
+                naira: "#9EE8FF",
                 /****** card background color*******/
                 success_bg: '#EAFFEB',
                 secondary_bg: '#F3F3F3',

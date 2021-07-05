@@ -74,7 +74,12 @@
             active-class="active"
           >
             <v-list-item-icon>
-              <v-badge color="success" dot v-if="item.active"></v-badge>
+              <Currency
+                dot
+                currencyColor="success"
+                style="z-index: 1"
+                v-if="item.active"
+              />
               <v-icon color="icon_color" light>{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
@@ -89,7 +94,12 @@
   </div>
 </template>
 <script>
+import Currency from "@/components/general/currencyBadge.vue";
+
 export default {
+  components: {
+    Currency,
+  },
   data() {
     return {
       active: false,
@@ -157,10 +167,10 @@ export default {
 
       if (window.innerWidth >= 1400) {
         this.mini = false;
-        this.$refs.hidden_on_lager_screen.$el.classList.add('d-none')
+        this.$refs.hidden_on_lager_screen.$el.classList.add("d-none");
         // document.querySelector("#miniToggle").classList.add("d-none");
       } else {
-        this.$refs.hidden_on_lager_screen.$el.classList.remove('d-none')
+        this.$refs.hidden_on_lager_screen.$el.classList.remove("d-none");
         // document.querySelector("#miniToggle").classList.remove("d-none");
       }
     },
