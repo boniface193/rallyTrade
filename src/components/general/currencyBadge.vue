@@ -1,16 +1,16 @@
 <template>
-  <v-badge :color="currencyColor" avatar overlap class="float-right z-index">
+  <v-badge :color="currencyColor" overlap :dot="dot" class="float-right z-index">
     <template v-slot:badge>
-      <v-icon class="text-center my-1">{{ moneySign }}</v-icon>
+      <v-icon class="text-center" :size="size">{{ moneySign }}</v-icon>
     </template>
   </v-badge>
 </template>
 
 <script>
 export default {
-    props: ['moneySign', 'currencyColor']
+  props: ["moneySign", "currencyColor", "dot", "size"],
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>
