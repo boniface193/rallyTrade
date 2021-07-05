@@ -18,38 +18,43 @@
               Change Password
             </GenCard>
             <div class="container">
-              <div class="row py-3">
-                <div class="col-sm-6 pb-0">
-                  <v-text-field
-                    outlined
-                    dense
-                    label="Current Password"
-                    required
-                    type="password"
-                  ></v-text-field>
+              <v-form @submit.prevent="SubmitPwd">
+                <div class="row py-3">
+                  <div class="col-sm-6 pb-0">
+                    <v-text-field
+                      v-model="currentPwd"
+                      outlined
+                      dense
+                      label="Current Password"
+                      required
+                      type="password"
+                    ></v-text-field>
+                  </div>
+                  <div class="col-sm-6 pb-0">
+                    <v-text-field
+                      v-model="newPwd"
+                      outlined
+                      dense
+                      label="New Password"
+                      required
+                      type="password"
+                    ></v-text-field>
+                  </div>
+                  <div class="col-sm-6 pb-0">
+                    <v-text-field
+                      v-model="repeatPwd"
+                      outlined
+                      dense
+                      label="Repeat Password"
+                      required
+                      type="password"
+                    ></v-text-field>
+                  </div>
+                  <div class="col-sm-6 pb-0">
+                    <v-btn block depressed color="success" :disabled="newPwd < 1 || currentPwd < 1 || repeatPwd < 1" type="submit">Change</v-btn>
+                  </div>
                 </div>
-                <div class="col-sm-6 pb-0">
-                  <v-text-field
-                    outlined
-                    dense
-                    label="New Password"
-                    required
-                    type="password"
-                  ></v-text-field>
-                </div>
-                <div class="col-sm-6 pb-0">
-                  <v-text-field
-                    outlined
-                    dense
-                    label="Repeat Password"
-                    required
-                    type="password"
-                  ></v-text-field>
-                </div>
-                <div class="col-sm-6 pb-0">
-                  <v-btn block depressed>Change</v-btn>
-                </div>
-              </div>
+              </v-form>
             </div>
           </GenCard>
         </div>
@@ -77,7 +82,10 @@
                   <v-switch v-model="switch1" label="Login Activate"></v-switch>
                 </div>
                 <div class="col-sm-6">
-                  <v-switch v-model="switch1" label="Withdrawal Activate"></v-switch>
+                  <v-switch
+                    v-model="switch1"
+                    label="Withdrawal Activate"
+                  ></v-switch>
                 </div>
               </div>
             </div>
@@ -95,10 +103,10 @@ export default {
   data() {
     return {
       switch1: true,
-      bioDetails: [
-        { title: "First Name", text: "Ikechukwu" },
-        // { title: "Last Name", text: "Dennis" },
-      ],
+      repeatPwd: "",
+      currentPwd: "",
+      newPwd: "",
+      bioDetails: [{ title: "First Name", text: "Ikechukwu" }],
     };
   },
 };
