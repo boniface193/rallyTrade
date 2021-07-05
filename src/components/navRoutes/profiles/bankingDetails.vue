@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-sm-5 mt-sm-8" v-for="item in chipCard" :key="item.id">
+    <div class="text-center my-16" v-if="chipCard.length < 1">
+      <img src="@/assets/images/emptyState/bank_empty.svg" width="20%" alt="">
+      <p class="text-sm-h5 text-caption mt-5 ">Add account Details</p>
+    </div>
+    <div class="row" v-else>
+      <div class="col-sm-5 mx-auto mt-sm-8 my-5" v-for="item in chipCard" :key="item.id">
         <Currency
           :moneySign="
             item.currency == 'naira' ? 'mdi-currency-ngn' : 'mdi-currency-usd'
@@ -194,10 +198,10 @@ export default {
         bankLogo: require("@/assets/images/bank-logo/gtbank.jpg"),
         bankName: this.selectBank,
       });
-      this.currency = null;
-      this.clientName = "";
-      this.acctNumber = "";
-      this.selectBank = "";
+      // this.currency = null;
+      // this.clientName = "";
+      // this.acctNumber = "";
+      // this.selectBank = "";
       this.dialog = false;
     },
   },
