@@ -10,22 +10,8 @@
         v-for="item in chipCard"
         :key="item.id"
       >
-        <!-- <v-badge
-          color="success "
-          overlap
-          avatar
-          class="float-right pa-5"
-          style="z-index: 1"
-        >
-          <template v-slot:badge>
-            <v-icon class="text-center my-1">{{
-              item.currency == "naira" ? "mdi-currency-ngn" : "mdi-currency-usd"
-            }}</v-icon>
-          </template>
-          <v-icon></v-icon>
-        </v-badge> -->
         <Currency
-        size="20"
+          size="20"
           :moneySign="
             item.currency == 'naira' ? 'mdi-currency-ngn' : 'mdi-currency-usd'
           "
@@ -57,10 +43,14 @@
                 d-flex
                 mr-3
                 justify-end
+                text-uppercase
               "
             >
-              PENDING
+              {{item.status}}
+              <v-icon color="error" v-if="item.status == 'rejected'" >mdi-alert-circle</v-icon>
             </div>
+            <div class="text-subtitle-2
+                secondary--text text-center" v-if="item.status == 'rejected'">{{item.msg}}</div>
           </v-container>
         </GenCard>
       </div>
@@ -136,6 +126,9 @@
                   :rules="maxRule"
                 ></v-text-field>
               </v-flex>
+              <div class="caption success--text text-center">
+                Your statement should not be older than 3 months!
+              </div>
 
               <v-flex class="py-0 col-sm-6">
                 <v-radio-group v-model="currency" row>
@@ -220,6 +213,7 @@ export default {
         acctNum: this.acctNumber,
         bankLogo: this.collectBankImg.icon,
         bankName: this.collectBankImg.text,
+        status: 'PENDING'
       });
       this.dialog = false;
     },

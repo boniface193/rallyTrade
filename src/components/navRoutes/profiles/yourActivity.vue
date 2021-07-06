@@ -4,17 +4,27 @@
       <div class="d-flex justify-end">
         <DateFilter />
       </div>
-      <div class="row my-8 pb-8 ">
-        <div class="col-sm-4" v-for="item in bioDetails" :key="item.id">
-          <GenCard
-            class="elevation-0 mt-5"
-            style=" border: solid 1px #EEEEEE"
-          >
-            <div class="text-center py-3">
-              <div class="text-caption text-sm-body-2 secondary--text">
-                {{ item.title }}
+      <div class="row my-8 pb-8">
+        <div class="col-sm-6" v-for="item in bioDetails" :key="item.id">
+          <GenCard class="elevation-0 mt-5" style="border: solid 1px #eeeeee">
+            <div class="px-3 py-3">
+              <span class="text-caption text-sm-body-2 secondary--text mr-4"
+                >{{ item.title }}:
+              </span>
+              <div class="row text-center">
+                <div class="col-6">
+                  <div>Time</div>
+                  <span class="text-md-h6 text-subtitle-2">{{
+                    item.time
+                  }}</span>
+                </div>
+                <div class="col-6">
+                  <div>Date</div>
+                  <span class="text-md-h6 text-subtitle-2">{{
+                    item.date
+                  }}</span>
+                </div>
               </div>
-              <div class="text-md-h6 text-subtitle-2">{{ item.text }}</div>
             </div>
           </GenCard>
         </div>
@@ -31,14 +41,14 @@ export default {
   data() {
     return {
       bioDetails: [
-        { title: "Login:", text: "10:15am" },
-        { title: "Logout", text: "4:30pm" },
-        { title: "Deposit", text: "an hour ago" },
-        { title: "Withdrawer", text: "6 hour ago" },
-        { title: "Change Password", text: "6 hour ago" },
-        { title: "Bonuses", text: "6 hour ago" },
-        { title: "Internal Transfer", text: "6 hour ago" },
-        { title: "Account", text: "Last Week" },
+        { title: "Login", time: "10:15am", date: "5/6/2021" },
+        { title: "Logout", time: "10:15am", date: "5/6/2021" },
+        { title: "Deposit", time: "10:15am", date: "5/6/2021" },
+        { title: "Withdrawer", time: "10:15am", date: "5/6/2021" },
+        { title: "Change Password", time: "10:15am", date: "5/6/2021" },
+        { title: "Bonuses", time: "10:15am", date: "5/6/2021" },
+        { title: "Internal Transfer", time: "10:15am", date: "5/6/2021" },
+        { title: "Account", time: "10:15am", date: "5/6/2021" },
       ],
     };
   },
