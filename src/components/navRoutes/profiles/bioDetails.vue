@@ -1,20 +1,17 @@
 <template>
   <div>
     <v-container>
-        <div class="text-md-h6 text-subtitle-2">
-          Status: <span>Pending</span> 
-        </div>
+      <div class="text-md-h6 text-subtitle-2">Status: <span>Pending</span></div>
       <div class="row my-8 justify-space-around">
         <div class="col-sm-6" v-for="item in bioDetails" :key="item.id">
-          <GenCard
-            class="elevation-0 mt-5"
-            style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important"
-          >
-            <div class="text-center py-3">
-              <div class="text-caption text-sm-body-2 secondary--text">
-                {{ item.title }}
+          <GenCard class="elevation-0 mt-5" style="border: solid 1px #eeeeee">
+            <div class="py-3">
+              <div class="px-3">
+                <span class="text-caption text-sm-body-2 secondary--text mr-4">{{
+                  item.title
+                }}: </span>
+                <span class="text-md-h6 text-subtitle-2">{{ item.text }}</span>
               </div>
-              <div class="text-md-h6 text-subtitle-2">{{ item.text }}</div>
             </div>
           </GenCard>
         </div>
