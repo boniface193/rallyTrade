@@ -46,11 +46,17 @@
                 text-uppercase
               "
             >
-              {{item.status}}
-              <v-icon color="error" v-if="item.status == 'rejected'" >mdi-alert-circle</v-icon>
+              {{ item.status }}
+              <v-icon color="error" v-if="item.status == 'rejected'"
+                >mdi-alert-circle</v-icon
+              >
             </div>
-            <div class="text-subtitle-2
-                secondary--text text-center" v-if="item.status == 'rejected'">{{item.msg}}</div>
+            <div
+              class="text-subtitle-2 secondary--text text-center"
+              v-if="item.status == 'rejected'"
+            >
+              {{ item.msg }}
+            </div>
           </v-container>
         </GenCard>
       </div>
@@ -93,6 +99,18 @@
                 ></v-text-field
               ></v-flex>
               <v-flex class="mx-1" xs="6">
+                <v-text-field
+                  v-model="acctNumber"
+                  :counter="10"
+                  outlined
+                  dense
+                  label="10 Digit NUBAN Account Number"
+                  required
+                  type="number"
+                  :rules="maxRule"
+                ></v-text-field>
+              </v-flex>
+              <v-flex class="mx-1" xs="6">
                 <v-select
                   v-model="selectBank"
                   :items="items"
@@ -114,19 +132,19 @@
                   </template>
                 </v-select>
               </v-flex>
+
               <v-flex class="mx-1" xs="6">
-                <v-text-field
-                  v-model="acctNumber"
-                  :counter="10"
-                  outlined
+                <v-file-input
+                  v-model="uploadBankStatement"
                   dense
-                  label="10 Digit NUBAN Account Number"
-                  required
-                  type="number"
-                  :rules="maxRule"
-                ></v-text-field>
+                  outlined
+                  accept="image/png, image/jpeg, image/bmp"
+                  prepend-icon="mdi-camera"
+                  label="Upload bank statement"
+                  :rules="nameRules"
+                ></v-file-input>
               </v-flex>
-              <div class="caption success--text text-center">
+              <div class="caption success--text text-center mx-2">
                 Your statement should not be older than 3 months!
               </div>
 
@@ -149,6 +167,7 @@
                   clientName < 1 ||
                   selectBank < 1 ||
                   acctNumber < 1 ||
+                  uploadBankStatement.length < 1 ||
                   currency == null
                 "
               >
@@ -181,6 +200,7 @@ export default {
       selectBank: "",
       selectIcon: "",
       acctNumber: "",
+      uploadBankStatement: [],
       currency: null,
       nameRules: [(v) => !!v || "this is required"],
       maxRule: [
@@ -213,7 +233,7 @@ export default {
         acctNum: this.acctNumber,
         bankLogo: this.collectBankImg.icon,
         bankName: this.collectBankImg.text,
-        status: 'PENDING'
+        status: "PENDING",
       });
       this.dialog = false;
     },
