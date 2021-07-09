@@ -3,7 +3,7 @@
     <div class="col-lg-4 col-md-5 col-sm-5">
       <Mobile-Header
         v-if="active"
-        @click.native="selectCurrency"
+        @click.native="selectAccount"
         title="Deposit"
         colors="success"
         :fixed_top="fixed_top"
@@ -14,7 +14,7 @@
         title="Deposit"
         colors="grey"
         :fixed_top="fixed_top"
-        @click.native="tryToSelectCurrency"
+        @click.native="tryToSelectAccount"
       />
       <div class="mr-1 margin-top-mobile">
         <div v-show="chipCard < 1" class="text-center py-8">
@@ -162,7 +162,7 @@ export default {
       model: null,
       firstDepositeCard: {},
       reveal: false,
-      SelectCurrency: [],
+      SelectAccount: [],
       depositeType: [],
       fixed_top: null,
       loading: false,
@@ -175,7 +175,7 @@ export default {
   },
   created() {
     // get all account from store for desktop
-    this.SelectCurrency = this.$store.getters["trading/getCurrency"];
+    this.SelectAccount = this.$store.getters["trading/getAccount"];
     this.depositeType = this.$store.getters["trading/getAcct"];
 
     // chip card for mobile
@@ -198,7 +198,7 @@ export default {
     // Initially load some items.
     this.loadMore();
 
-    this.pushToSelectCurrency();
+    this.pushToSelectAccount();
     this.firstDepositeCard = this.chipCard.find(
       (item) => item.id === "deposit001"
     );
@@ -265,10 +265,10 @@ export default {
         this.fixed_top = false;
       }
     },
-    selectCurrency() {
-      this.$router.push({ name: "selectCurrency" });
+    selectAccount() {
+      this.$router.push({ name: "selectAccount" });
     },
-    tryToSelectCurrency() {
+    tryToSelectAccount() {
       this.snackbar = true;
       this.text = "Please confirm your deposit";
     },
@@ -308,9 +308,9 @@ export default {
     },
 
     // check if deposit is empty, and push route to selectCurrency
-    pushToSelectCurrency() {
+    pushToSelectAccount() {
       if (window.innerWidth >= 426 && this.chipCard.length < 1) {
-        this.$router.push({ name: "selectCurrency" });
+        this.$router.push({ name: "selectAccount" });
       }
     },
   },

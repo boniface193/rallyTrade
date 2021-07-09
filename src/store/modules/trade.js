@@ -61,42 +61,50 @@ const state = {
             text: "TELLER",
         },
     ],
-    selectCurrency: [
+    selectAccount: [
         {
             id: "001",
             currency: "mdi-currency-ngn",
             currencyColor: "#9EE8FF",
             acctType: "mt4",
+            text: 'MT4',
+            icon: require('@/assets/images/general/mt4.png'),
         },
         {
             id: "002",
             currency: "mdi-currency-usd",
             currencyColor: "#A0FF9E",
             acctType: "fx",
+            text: 'xStation ',
+            icon: require("@/assets/images/general/fx.svg"),
         },
         {
             id: "003",
             currency: "mdi-currency-usd",
             currencyColor: "#A0FF9E",
             acctType: "fx",
+            text: 'xStation ',
         },
         {
             id: "004",
             currency: "mdi-currency-usd",
             currencyColor: "#A0FF9E",
             acctType: "fx",
+            text: 'xStation ',
         },
         {
             id: "005",
             currency: "mdi-currency-usd",
             currencyColor: "#A0FF9E",
             acctType: "fx",
+            text: 'xStation ',
         },
         {
             id: "006",
             currency: "mdi-currency-usd",
             currencyColor: "#A0FF9E",
             acctType: "fx",
+            text: 'xStation ',
         },
     ],
     selectBank: [
@@ -173,7 +181,7 @@ const state = {
 };
 const getters = {
     getChipCard: state => state.chipCard,
-    getCurrency: state => state.selectCurrency,
+    getAccount: state => state.selectAccount,
     getAcct: state => state.depositeType,
     getSelectBank: state => state.selectBank,
     getFRNGBank: state => state.selectFRNGBank,
