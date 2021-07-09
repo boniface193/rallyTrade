@@ -39,7 +39,7 @@ import yourActivity from "@/components/navRoutes/profiles/yourActivity.vue"
 /*****DetailPage components*****/
 import depositPage from "@/components/detailPages/deposits/depositPage.vue"
 import depositDetailPage from "@/components/detailPages/deposits/depoitDetails.vue"
-import selectCurrency from "@/components/detailPages/deposits/selectCurrency.vue"
+import selectAccount from "@/components/detailPages/deposits/selectAccount.vue"
 import bankDetails from "@/components/detailPages/deposits/bankingDetails.vue"
 import depositHistory from "@/components/detailPages/deposits/depositHistory.vue"
 
@@ -116,9 +116,9 @@ const routes = [
                 component: Deposit,
               },
               {
-                path: "select_currency",
-                name: "selectCurrency",
-                component: selectCurrency,
+                path: "select_account",
+                name: "selectAccount",
+                component: selectAccount,
               },
               {
                 path: "deposit_details",

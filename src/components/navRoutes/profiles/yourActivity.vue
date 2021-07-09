@@ -47,27 +47,6 @@
               </div>
             </div>
           </GenCard>
-          <!-- <GenCard class="elevation-0 mt-5" style="border: solid 1px #eeeeee">
-            <div class="px-3 py-3">
-              <span class="text-caption text-sm-body-2 secondary--text mr-4"
-                >{{ item.title }}:
-              </span>
-              <div class="row text-center">
-                <div class="col-6">
-                  <div>Time</div>
-                  <span class="text-md-h6 text-subtitle-2">{{
-                    item.time
-                  }}</span>
-                </div>
-                <div class="col-6">
-                  <div>Date</div>
-                  <span class="text-md-h6 text-subtitle-2">{{
-                    item.date
-                  }}</span>
-                </div>
-              </div>
-            </div>
-          </GenCard> -->
         </div>
       </div>
     </v-container>
