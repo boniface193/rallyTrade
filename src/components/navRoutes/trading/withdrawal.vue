@@ -32,10 +32,7 @@
       </div>
       <div class="row" v-if="isAccountSelected">
         <div class="col-sm-4" v-for="item in bioDetails" :key="item.id">
-          <GenCard
-            class="elevation-0 mt-5"
-            style="border: solid 1px #eeeeee"
-          >
+          <GenCard class="elevation-0 mt-5" style="border: solid 1px #eeeeee">
             <div class="py-3 text-center">
               <div class="px-3">
                 <div class="mb-4">
@@ -62,6 +59,7 @@
             outlined
             class="text-caption pa-0"
             :rules="nameRules"
+            @change="selectBankItem"
           >
             <template v-slot:selection="{ item }">
               <img :src="item.icon" width="20px" />
@@ -75,6 +73,23 @@
           </v-select>
         </v-col>
       </v-row>
+
+      <div class="row justify-center" v-show="bankAcctSelected">
+        <div class="col-sm-4">
+          <v-text-field
+            outlined
+            dense
+            v-model="withdrawalAmt"
+            label="Amount to withdrawal"
+            required
+            type="tel"
+            :rules="nameRules"
+          ></v-text-field>
+        </div>
+      </div>
+      <div class="text-center"  v-show="bankAcctSelected">
+        <v-btn color="success" class="elevation-0">Withdraw</v-btn>
+      </div>
       <!-- empty State -->
       <!-- <div class="text-center my-16">
       <img src="@/assets/images/emptyState/bank_empty.svg" width="50%" alt="" />
@@ -95,6 +110,7 @@ export default {
       selectBankAcc: [],
       selectAcc: "",
       selectAcct: "",
+      bankAcctSelected: false,
       isAccountSelected: false,
       nameRules: [(v) => !!v || "this is required"],
       bioDetails: [
@@ -116,11 +132,13 @@ export default {
   },
 
   methods: {
-    selectAcctItem(){
-      this.isAccountSelected = true
-
-    }
-  }
+    selectAcctItem() {
+      this.isAccountSelected = true;
+    },
+    selectBankItem() {
+      this.bankAcctSelected = true;
+    },
+  },
 };
 </script>
 
