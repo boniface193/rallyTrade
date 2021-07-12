@@ -69,6 +69,7 @@ const state = {
             acctType: "mt4",
             text: 'MT4',
             icon: require('@/assets/images/general/mt4.png'),
+            acctNo: "889554"
         },
         {
             id: "002",
@@ -77,6 +78,7 @@ const state = {
             acctType: "fx",
             text: 'xStation ',
             icon: require("@/assets/images/general/fx.svg"),
+            acctNo: "8895555"
         },
         {
             id: "003",
@@ -108,20 +110,20 @@ const state = {
         },
     ],
     selectBank: [
-        { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg") },
-        { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png") },
-        { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png") },
+        { text: "GTbank", icon: require("@/assets/images/bank-logo/gtbank.jpg"), acctNo: "201201252" },
+        { text: "Wema", icon: require("@/assets/images/bank-logo/wema.png"), acctNo: "201201252" },
+        { text: "Zenith", icon: require("@/assets/images/bank-logo/zenith.png"), acctNo: "201201252" },
         {
             text: "Heritage",
-            icon: require("@/assets/images/bank-logo/heritage.jpg"),
+            icon: require("@/assets/images/bank-logo/heritage.jpg"), acctNo: "201201252"
         },
         {
             text: "Fidelity",
-            icon: require("@/assets/images/bank-logo/fidelity.svg"),
+            icon: require("@/assets/images/bank-logo/fidelity.svg"), acctNo: "201201252"
         },
         {
             text: "Sterling",
-            icon: require("@/assets/images/bank-logo/sterling.jpg"),
+            icon: require("@/assets/images/bank-logo/sterling.jpg"), acctNo: "201201252"
         },
         { text: "OTHER BANK" },
     ],

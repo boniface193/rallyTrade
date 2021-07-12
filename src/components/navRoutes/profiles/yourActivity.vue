@@ -5,9 +5,9 @@
         <DateFilter />
       </div>
       <div class="row my-8 pb-8">
-        <div class="col-sm-6" v-for="item in bioDetails" :key="item.id">
+        <div class="col-sm-12" v-for="item in bioDetails" :key="item.id">
           <GenCard class="elevation-0" style="border: solid 1px #eeeeee">
-            <div class="px-3 py-3 show-mobile">
+            <div class="px-3 py-3">
               <div class="row text-center">
                 <div class="col-4">
                   <span class="text-md-h6 text-subtitle-2">{{
@@ -27,7 +27,7 @@
               </div>
             </div>
 
-            <div class="px-3 py-3 hide-desktop">
+            <!-- <div class="px-3 py-3 hide-desktop">
               <span class="text-caption text-sm-body-2 secondary--text mr-4"
                 >{{ item.title }}:
               </span>
@@ -45,7 +45,7 @@
                   }}</span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </GenCard>
         </div>
       </div>

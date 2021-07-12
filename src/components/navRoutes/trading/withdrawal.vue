@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Destop View design -->
-    <div class="mb-16">
-      <div class="my-5 mx-8">
+    <div class="mb-16 mx-8">
+      <div class="my-5">
         <div class="text-h5">withdrawer</div>
         <v-row class="my-5">
           <v-col sm="4">
@@ -18,13 +18,17 @@
               @change="selectAcctItem"
             >
               <template v-slot:selection="{ item }">
+                <v-icon size="18" class="mr-8 d-flex justify-end">{{ item.currency }}</v-icon>
                 <img :src="item.icon" width="20px" />
-                <span class="ml-1">{{ item.text }}</span>
+                <span class="mx-3">{{ item.text }}</span>
+                <span>{{ item.acctNo }}</span>
               </template>
 
               <template v-slot:item="{ item }">
+                <v-icon size="18" class="mr-8">{{ item.currency }}</v-icon>
                 <img :src="item.icon" width="20px" class="mr-2" />
-                <span class="text-caption">{{ item.text }}</span>
+                <span class="text-caption mx-3">{{ item.text }}</span>
+                <span class="text-caption">{{ item.acctNo }}</span>
               </template>
             </v-select>
           </v-col>
@@ -37,10 +41,11 @@
               <div class="px-3">
                 <div class="mb-4">
                   <v-icon size="40">{{ item.icon }}</v-icon>
+                  {{ item.title }}
                 </div>
-                <div class="text-md-h6 text-subtitle-2 mr-4">
-                  {{ item.title }}:
-                </div>
+                <!-- <div class="text-md-h6 text-subtitle-2 mr-4">
+                  
+                </div> -->
                 <span class="caption">{{ item.hint }}</span>
               </div>
             </div>
@@ -63,12 +68,14 @@
           >
             <template v-slot:selection="{ item }">
               <img :src="item.icon" width="20px" />
-              <span class="ml-1">{{ item.text }}</span>
+              <span class="mx-3">{{ item.text }}</span>
+              <span>{{ item.acctNo }}</span>
             </template>
 
             <template v-slot:item="{ item }">
               <img :src="item.icon" width="20px" class="mr-2" />
-              <span class="text-caption">{{ item.text }}</span>
+              <span class="text-caption mx-3">{{ item.text }}</span>
+              <span class="text-caption">{{ item.acctNo }}</span>
             </template>
           </v-select>
         </v-col>

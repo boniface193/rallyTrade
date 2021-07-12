@@ -39,7 +39,7 @@
                 class="elevation-1"
                 v-else
               />
-              <div class="caption font-weight-black">889554</div>
+              <div class="caption font-weight-black">{{item.acctNo}}</div>
             </div>
             <div class="text-center py-2">
               <div class="caption">Balance</div>
