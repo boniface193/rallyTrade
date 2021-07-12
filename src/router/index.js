@@ -111,7 +111,7 @@ const routes = [
             component: depositPage,
             children: [
               {
-                path: "/",
+                path: "",
                 name: "deposit",
                 component: Deposit,
               },

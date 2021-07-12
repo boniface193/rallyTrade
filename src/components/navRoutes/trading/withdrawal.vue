@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Destop View design -->
-    <div>
+    <div class="mb-16">
       <div class="my-5 mx-8">
         <div class="text-h5">withdrawer</div>
         <v-row class="my-5">
@@ -87,7 +87,7 @@
           ></v-text-field>
         </div>
       </div>
-      <div class="text-center"  v-show="bankAcctSelected">
+      <div class="text-center pb-8" v-show="bankAcctSelected">
         <v-btn color="success" class="elevation-0">Withdraw</v-btn>
       </div>
       <!-- empty State -->
@@ -112,6 +112,8 @@ export default {
       selectAcct: "",
       bankAcctSelected: false,
       isAccountSelected: false,
+      selectBank: "",
+      withdrawalAmt: "",
       nameRules: [(v) => !!v || "this is required"],
       bioDetails: [
         { title: "Balance", text: "", icon: "mdi-scale-balance" },

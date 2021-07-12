@@ -9,7 +9,7 @@
       </div>
       <v-slide-group v-model="model" show-arrows class="py-2 offset-xl-2">
         <v-slide-item
-          v-for="item in selectCurrency"
+          v-for="item in selectAccount"
           :key="item.id"
           v-slot="{ active, toggle }"
         >
@@ -104,13 +104,13 @@ export default {
       dark: false,
       color: "",
       model: null,
-      selectCurrency: [],
+      selectAccount: [],
       depositeType: [],
     };
   },
   created() {
     // select currency
-    this.selectCurrency = this.$store.getters["trading/getCurrency"];
+    this.selectAccount = this.$store.getters["trading/getAccount"];
     // select acct
     this.depositeType = this.$store.getters["trading/getAcct"]
   },
