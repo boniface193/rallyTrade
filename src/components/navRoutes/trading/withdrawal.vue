@@ -57,7 +57,7 @@
         <v-col sm="4">
           <v-select
             v-model="selectBank"
-            :items="selectBankAcc"
+            :items="selectBankAcc.slice(-2)"
             item-text="text"
             label="Select your Bank"
             dense
