@@ -18,14 +18,14 @@
               @change="selectAcctItem"
             >
               <template v-slot:selection="{ item }">
-                <v-icon size="18" class="mr-8 d-flex justify-end">{{ item.currency }}</v-icon>
+                <v-icon size="18" class="mr-3 d-flex justify-end">{{ item.currency }}</v-icon>
                 <img :src="item.icon" width="20px" />
                 <span class="mx-3">{{ item.text }}</span>
                 <span>{{ item.acctNo }}</span>
               </template>
 
               <template v-slot:item="{ item }">
-                <v-icon size="18" class="mr-8">{{ item.currency }}</v-icon>
+                <v-icon size="18" class="mr-3">{{ item.currency }}</v-icon>
                 <img :src="item.icon" width="20px" class="mr-2" />
                 <span class="text-caption mx-3">{{ item.text }}</span>
                 <span class="text-caption">{{ item.acctNo }}</span>
@@ -35,7 +35,7 @@
         </v-row>
       </div>
       <div class="row" v-if="isAccountSelected">
-        <div class="col-sm-4" v-for="item in bioDetails" :key="item.id">
+        <div class="col-sm-4 py-0" v-for="item in bioDetails" :key="item.id">
           <GenCard class="elevation-0 mt-5" style="border: solid 1px #eeeeee">
             <div class="py-3 text-center">
               <div class="px-3">
@@ -43,9 +43,6 @@
                   <v-icon size="40">{{ item.icon }}</v-icon>
                   {{ item.title }}
                 </div>
-                <!-- <div class="text-md-h6 text-subtitle-2 mr-4">
-                  
-                </div> -->
                 <span class="caption">{{ item.hint }}</span>
               </div>
             </div>
@@ -82,15 +79,14 @@
       </v-row>
 
       <div class="row justify-center" v-show="bankAcctSelected">
-        <div class="col-sm-4">
-          <v-text-field
-            outlined
-            dense
-            v-model="withdrawalAmt"
-            label="Amount to withdrawal"
-            required
+        <div class="col-sm-4 text-h6 py-0 grey--text darken-4 font-weight-bold">
+           <v-text-field
+            label="Amount"
+            v-model="price"
+            class="pa-0"
             type="tel"
             :rules="nameRules"
+            outlined
           ></v-text-field>
         </div>
       </div>
@@ -117,6 +113,7 @@ export default {
       selectBankAcc: [],
       selectAcc: "",
       selectAcct: "",
+      price: "",
       bankAcctSelected: false,
       isAccountSelected: false,
       selectBank: "",
@@ -138,6 +135,15 @@ export default {
   created() {
     this.selectAccount = this.$store.getters["trading/getAccount"];
     this.selectBankAcc = this.$store.getters["trading/getSelectBank"];
+  },
+
+  watch: {
+    price: function (newValue) {
+      const result = newValue
+        .replace(/[^0-9a-zA-Z.]/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.price = result;
+    },
   },
 
   methods: {
